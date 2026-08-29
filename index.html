@@ -1,117 +1,94 @@
-<!DOCTYPE html>
+
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#05070b">
-
-<title>JARVIS • Personal Entertainment Hub</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+<title>JARVIS 7.0</title>
 
 <style>
+*{box-sizing:border-box;margin:0;padding:0}
+
 :root{
- --bg:#030508;
- --panel:#091017;
- --panel2:#0d1720;
- --line:#173b47;
- --text:#f4fbff;
- --muted:#8ca5af;
+ --bg:#030507;
+ --card:#0b1118;
+ --card2:#101923;
  --cyan:#00eaff;
  --red:#ed1d24;
- --gold:#ffd54a;
+ --gold:#ffd43b;
  --green:#00e676;
- --purple:#a86cff;
-}
-
-*{
- box-sizing:border-box;
- margin:0;
- padding:0;
-}
-
-html{
- scroll-behavior:smooth;
+ --text:#eefcff;
+ --muted:#8ca2aa;
+ --border:#173943;
 }
 
 body{
  background:
- radial-gradient(circle at 50% -20%,#123846 0,transparent 35%),
- radial-gradient(circle at 0 100%,#30090b 0,transparent 30%),
- #020406;
+ radial-gradient(circle at 50% -10%,#123d48 0,transparent 35%),
+ radial-gradient(circle at 100% 100%,#35090d 0,transparent 25%),
+ var(--bg);
  color:var(--text);
  font-family:Arial,Helvetica,sans-serif;
  min-height:100vh;
- overflow-x:hidden;
 }
 
-body::before{
+body:before{
  content:"";
  position:fixed;
  inset:0;
  pointer-events:none;
- opacity:.15;
+ opacity:.08;
  background-image:
- linear-gradient(#00eaff15 1px,transparent 1px),
- linear-gradient(90deg,#00eaff15 1px,transparent 1px);
+ linear-gradient(#00eaff 1px,transparent 1px),
+ linear-gradient(90deg,#00eaff 1px,transparent 1px);
  background-size:45px 45px;
- z-index:-1;
 }
 
-button,input,textarea{
- font:inherit;
-}
+button,input,textarea{font:inherit}
 
-button{
- cursor:pointer;
-}
+button{cursor:pointer}
 
-a{
- color:inherit;
- text-decoration:none;
-}
-
-/* NAV */
-
-.navbar{
+.nav{
  position:sticky;
  top:0;
  z-index:1000;
- min-height:68px;
- padding:10px 3%;
+ padding:13px 3%;
  display:flex;
  align-items:center;
  justify-content:space-between;
  gap:15px;
- background:#03070be8;
- border-bottom:1px solid var(--line);
+ background:#02070beF;
  backdrop-filter:blur(18px);
+ border-bottom:1px solid var(--border);
 }
 
-.brand{
+.logo{
  color:var(--cyan);
+ font-size:23px;
  font-weight:900;
  letter-spacing:5px;
- font-size:22px;
  text-shadow:0 0 20px #00eaff88;
 }
 
 .navlinks{
  display:flex;
  gap:7px;
- overflow:auto;
- max-width:80%;
+ overflow-x:auto;
 }
 
 .navlinks button{
- border:1px solid #17404d;
- background:#07131a;
- color:#a9edf5;
- border-radius:8px;
- padding:9px 11px;
  white-space:nowrap;
+ background:#07141b;
+ color:#b9edf4;
+ border:1px solid #17404b;
+ border-radius:8px;
+ padding:9px 12px;
 }
 
 .navlinks button:hover{
  border-color:var(--cyan);
+ color:#fff;
 }
 
 .container{
@@ -121,17 +98,13 @@ a{
 
 .page{
  display:none;
- padding:35px 0 90px;
+ padding:35px 0 80px;
 }
 
-.page.active{
- display:block;
-}
-
-/* HERO */
+.page.active{display:block}
 
 .hero{
- min-height:calc(100vh - 68px);
+ min-height:calc(100vh - 70px);
  display:flex;
  flex-direction:column;
  align-items:center;
@@ -140,124 +113,105 @@ a{
 }
 
 .eyebrow{
- color:#8deaf4;
+ color:#8be8f2;
  font-size:11px;
  letter-spacing:5px;
 }
 
 .hero h1{
- font-size:clamp(55px,11vw,125px);
- letter-spacing:13px;
- margin:12px 0;
+ font-size:clamp(60px,12vw,125px);
+ letter-spacing:12px;
+ margin:12px;
  text-shadow:
  0 0 15px var(--cyan),
- 0 0 60px #00eaff55;
+ 0 0 60px #00eaff66;
 }
 
-.hero p{
- color:var(--muted);
-}
+.hero p{color:var(--muted)}
 
 .reactor{
  width:155px;
  height:155px;
- margin:45px 0 25px;
  border:2px solid var(--cyan);
  border-radius:50%;
  display:grid;
  place-items:center;
+ margin:35px 0 20px;
  box-shadow:
- 0 0 35px #00eaff88,
- inset 0 0 40px #00eaff55;
- animation:reactor 2.5s infinite;
+ 0 0 35px #00eaff77,
+ inset 0 0 35px #00eaff33;
+ animation:pulse 2.4s infinite;
 }
 
 .core{
  width:55px;
  height:55px;
  border-radius:50%;
- background:white;
+ background:#fff;
  box-shadow:
- 0 0 20px white,
- 0 0 75px var(--cyan);
+ 0 0 20px #fff,
+ 0 0 70px var(--cyan);
 }
 
-@keyframes reactor{
+@keyframes pulse{
  50%{transform:scale(1.06)}
 }
 
-.clock{
- color:#8deaf4;
- font-size:13px;
- letter-spacing:2px;
- margin-bottom:25px;
-}
-
-.hero-actions{
+.actions{
  display:flex;
- gap:10px;
  flex-wrap:wrap;
  justify-content:center;
+ gap:9px;
+ margin-top:20px;
 }
 
-/* BUTTONS */
-
 .btn{
- padding:11px 16px;
+ border:1px solid var(--border);
+ background:#07151c;
+ color:#c2f5fc;
  border-radius:9px;
- border:1px solid var(--line);
- color:#c4f6fc;
- background:#07151d;
+ padding:11px 16px;
 }
 
 .btn:hover{
  border-color:var(--cyan);
- box-shadow:0 0 16px #00eaff18;
 }
 
-.btn.primary{
- border-color:var(--cyan);
- background:#07303a;
-}
-
-.btn.red{
+.redbtn{
  border-color:var(--red);
- background:#320a0c;
+ background:#30090d;
 }
 
-.btn.gold{
+.goldbtn{
  border-color:var(--gold);
- background:#2d2508;
- color:#ffe991;
+ background:#302707;
+ color:#ffe999;
 }
 
-.btn.green{
+.greenbtn{
  border-color:var(--green);
- background:#06301d;
+ background:#06331f;
 }
-
-/* STATS */
 
 .stats{
  display:grid;
  grid-template-columns:repeat(5,1fr);
  gap:12px;
- margin:30px 0;
+ margin:25px 0;
 }
 
 .stat{
- padding:20px 10px;
  text-align:center;
- background:linear-gradient(145deg,#0b171f,#05090d);
- border:1px solid var(--line);
+ padding:20px 8px;
+ border:1px solid var(--border);
  border-radius:14px;
+ background:linear-gradient(145deg,#0b171f,#04080c);
 }
 
 .stat strong{
  display:block;
- font-size:27px;
  color:var(--cyan);
- margin-bottom:5px;
+ font-size:27px;
 }
 
 .stat span{
@@ -266,124 +220,104 @@ a{
  letter-spacing:1px;
 }
 
-/* HUB */
-
 .hubs{
  display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:18px;
+ grid-template-columns:repeat(3,1fr);
+ gap:16px;
 }
 
 .hub{
- min-height:230px;
- padding:30px;
- border:1px solid var(--line);
- border-radius:20px;
- background:linear-gradient(145deg,#0c171f,#05090c);
- transition:.3s;
+ min-height:210px;
+ padding:28px;
+ border:1px solid var(--border);
+ border-radius:18px;
+ background:linear-gradient(145deg,#0b1720,#05090d);
  cursor:pointer;
+ transition:.3s;
 }
 
 .hub:hover{
- transform:translateY(-7px);
+ transform:translateY(-6px);
  border-color:var(--cyan);
- box-shadow:0 20px 50px #0007;
 }
 
-.hub.marvel:hover{
- border-color:var(--red);
-}
-
-.hub.anime:hover{
- border-color:var(--gold);
-}
+.hub.red:hover{border-color:var(--red)}
+.hub.gold:hover{border-color:var(--gold)}
 
 .hub-icon{
- font-size:55px;
+ font-size:48px;
  margin-bottom:15px;
-}
-
-.hub h2{
- margin-bottom:10px;
 }
 
 .hub p{
  color:var(--muted);
  line-height:1.7;
+ margin-top:10px;
 }
 
-/* HEADERS */
-
-.section-head{
+.head{
  text-align:center;
- margin:20px 0 30px;
+ margin-bottom:25px;
 }
 
-.section-head h1{
- font-size:clamp(32px,5vw,55px);
+.head h1{
+ font-size:clamp(32px,5vw,58px);
  margin-bottom:8px;
 }
 
-.section-head p{
- color:var(--muted);
-}
+.head p{color:var(--muted)}
 
-.marvel-title{
+.redtitle{
  color:var(--red);
  text-shadow:0 0 30px #ed1d2455;
 }
 
-.anime-title{
+.goldtitle{
  color:var(--gold);
- text-shadow:0 0 30px #ffd54a33;
+ text-shadow:0 0 30px #ffd43b33;
 }
 
-/* SEARCH */
-
-.search-row{
+.searchrow{
  display:grid;
  grid-template-columns:1fr auto;
  gap:10px;
- margin-bottom:12px;
+ margin-bottom:10px;
 }
 
 .search{
  width:100%;
- padding:15px;
- background:#071118;
- border:1px solid #1a4855;
- color:white;
- outline:none;
+ padding:14px;
+ background:#061118;
+ color:#fff;
+ border:1px solid #194650;
  border-radius:10px;
+ outline:none;
 }
 
 .search:focus{
  border-color:var(--cyan);
- box-shadow:0 0 20px #00eaff15;
 }
 
 .filters{
  display:flex;
  flex-wrap:wrap;
  gap:7px;
- margin-bottom:25px;
+ margin-bottom:22px;
 }
 
 .filters button{
  padding:8px 12px;
- border-radius:8px;
- border:1px solid #17414d;
- color:#a9edf5;
  background:#07141b;
+ color:#b6eaf2;
+ border:1px solid #17414d;
+ border-radius:8px;
 }
 
-.filters button.active,
-.filters button:hover{
+.filters button:hover,
+.filters button.active{
  border-color:var(--cyan);
  background:#0b2934;
 }
-
-/* GRID */
 
 .grid{
  display:grid;
@@ -393,23 +327,23 @@ a{
 
 .card{
  overflow:hidden;
- border:1px solid #153640;
+ background:var(--card);
+ border:1px solid #15343d;
  border-radius:13px;
- background:#071017;
  transition:.3s;
- position:relative;
 }
 
 .card:hover{
- transform:translateY(-6px);
- border-color:#71edff;
- box-shadow:0 15px 40px #0008;
+ transform:translateY(-5px);
+ border-color:#5beaff;
+ box-shadow:0 15px 40px #000b;
 }
 
 .poster{
- position:relative;
  height:350px;
- background:#101820;
+ position:relative;
+ background:#0b151b;
+ overflow:hidden;
 }
 
 .poster img{
@@ -417,86 +351,88 @@ a{
  height:100%;
  object-fit:cover;
  display:block;
+ transition:.4s;
+}
+
+.card:hover .poster img{
+ transform:scale(1.04);
 }
 
 .rank{
  position:absolute;
- z-index:2;
  top:8px;
  left:8px;
+ z-index:3;
  padding:5px 8px;
  border-radius:6px;
  background:#000d;
  color:var(--gold);
- font-weight:bold;
  font-size:12px;
-}
-
-.card-body{
- padding:13px;
-}
-
-.card-title{
  font-weight:bold;
- min-height:40px;
+}
+
+.cardbody{
+ padding:12px;
+}
+
+.title{
+ min-height:42px;
+ font-weight:bold;
  line-height:1.35;
 }
 
 .meta{
+ min-height:30px;
+ margin:7px 0 10px;
  color:var(--muted);
  font-size:11px;
- margin:6px 0 10px;
+ line-height:1.5;
 }
 
-.card-buttons{
+.cardbuttons{
  display:grid;
  grid-template-columns:1fr 1fr;
  gap:5px;
 }
 
-.card-buttons button{
+.cardbuttons button,
+.detailsbtn{
  padding:8px 4px;
+ background:#091b23;
+ color:#bceff6;
  border:1px solid #17424e;
  border-radius:7px;
- color:#bceff6;
- background:#091b23;
 }
 
-.card-buttons button:hover{
+.cardbuttons button:hover,
+.detailsbtn:hover{
  border-color:var(--cyan);
 }
 
-.done{
- color:#71ffb2!important;
- border-color:#00c976!important;
- background:#063320!important;
-}
-
-.small-btn{
+.detailsbtn{
  width:100%;
  margin-top:6px;
- padding:8px;
- border:1px solid #17424e;
- border-radius:7px;
- color:#bceff6;
- background:#091b23;
 }
 
-/* LOADING */
+.watched{
+ border-color:var(--green)!important;
+ color:#73ffb0!important;
+}
 
 .loading{
- padding:50px;
+ grid-column:1/-1;
  text-align:center;
+ padding:70px;
  color:var(--cyan);
 }
 
 .spinner{
- width:40px;
- height:40px;
- border:3px solid #19414d;
+ width:42px;
+ height:42px;
+ margin:0 auto 15px;
+ border:3px solid #173b46;
  border-top-color:var(--cyan);
  border-radius:50%;
- margin:0 auto 15px;
  animation:spin 1s linear infinite;
 }
 
@@ -504,23 +440,20 @@ a{
  to{transform:rotate(360deg)}
 }
 
-/* EMPTY */
-
 .empty{
- padding:50px 20px;
+ grid-column:1/-1;
+ padding:50px;
  text-align:center;
  color:var(--muted);
- border:1px dashed #214450;
+ border:1px dashed #214650;
  border-radius:15px;
 }
 
-/* MODAL */
-
 .modal{
+ display:none;
  position:fixed;
  inset:0;
- z-index:3000;
- display:none;
+ z-index:5000;
  align-items:center;
  justify-content:center;
  padding:20px;
@@ -528,27 +461,24 @@ a{
  backdrop-filter:blur(12px);
 }
 
-.modal.show{
- display:flex;
-}
+.modal.show{display:flex}
 
-.modal-box{
- width:min(950px,100%);
+.modalbox{
+ width:min(900px,100%);
  max-height:90vh;
  overflow:auto;
  background:#071117;
- border:1px solid #246273;
+ border:1px solid #236273;
  border-radius:18px;
  padding:25px;
- box-shadow:0 0 80px #00eaff15;
 }
 
 .close{
  float:right;
- border:0;
  background:none;
- color:white;
- font-size:28px;
+ border:0;
+ color:#fff;
+ font-size:30px;
 }
 
 .detail{
@@ -564,58 +494,101 @@ a{
 
 .detail h2{
  color:var(--cyan);
- margin-bottom:8px;
+ margin-bottom:12px;
 }
 
 .detail p{
- color:#aabcc2;
- line-height:1.75;
- margin:10px 0;
+ color:#a9bdc5;
+ line-height:1.7;
+ margin:15px 0;
 }
 
 .tag{
  display:inline-block;
  padding:5px 8px;
  margin:3px;
- border:1px solid #1c4c59;
+ border:1px solid #1b4b58;
  border-radius:6px;
  color:#9debf4;
  font-size:11px;
 }
 
-/* TIMELINE */
-
 .timeline{
  max-width:900px;
  margin:auto;
  border-left:2px solid var(--cyan);
- padding-left:22px;
+ padding-left:20px;
 }
 
-.timeline-item{
- margin-bottom:13px;
- padding:18px;
- border:1px solid #173e4a;
- border-radius:12px;
+.timelineitem{
+ margin-bottom:10px;
+ padding:16px;
+ border:1px solid var(--border);
+ border-radius:10px;
  background:#08131a;
 }
 
-.timeline-item strong{
- color:var(--cyan);
- margin-right:8px;
+.timelineitem b{color:var(--cyan)}
+
+.quiz{
+ max-width:800px;
+ margin:auto;
+ padding:30px;
+ border:1px solid var(--border);
+ border-radius:18px;
+ background:#08131a;
 }
 
-/* DASHBOARD */
+.question{
+ font-size:22px;
+ margin:20px 0;
+}
 
-.dashboard{
+.answers{
  display:grid;
- grid-template-columns:repeat(3,1fr);
+ gap:8px;
+}
+
+.answers button{
+ text-align:left;
+ padding:13px;
+ background:#07141b;
+ color:#bceff6;
+ border:1px solid #19414e;
+ border-radius:9px;
+}
+
+.answers button:hover{
+ border-color:var(--cyan);
+}
+
+.battle{
+ display:grid;
+ grid-template-columns:1fr 100px 1fr;
  gap:15px;
+ align-items:center;
+}
+
+.fighter{
+ text-align:center;
+ padding:30px;
+ border:1px solid var(--border);
+ border-radius:15px;
+ background:#08131a;
+}
+
+.fighter h2{color:var(--cyan)}
+
+.vs{
+ text-align:center;
+ color:var(--red);
+ font-size:30px;
+ font-weight:bold;
 }
 
 .panel{
  padding:22px;
- border:1px solid var(--line);
+ border:1px solid var(--border);
  border-radius:15px;
  background:#08131a;
 }
@@ -630,185 +603,36 @@ a{
  line-height:1.7;
 }
 
-/* QUIZ */
-
-.quiz{
- max-width:800px;
- margin:auto;
- padding:30px;
- border:1px solid var(--line);
- border-radius:18px;
- background:#08131a;
-}
-
-.quiz-question{
- font-size:22px;
- margin-bottom:20px;
-}
-
-.answers{
- display:grid;
- gap:8px;
-}
-
-.answers button{
- padding:13px;
- text-align:left;
- border:1px solid #19414e;
- border-radius:9px;
- background:#07141b;
- color:#bceff6;
-}
-
-.answers button:hover{
- border-color:var(--cyan);
-}
-
-/* BATTLE */
-
-.battle{
- display:grid;
- grid-template-columns:1fr 100px 1fr;
- gap:15px;
- align-items:center;
-}
-
-.fighter{
- padding:25px;
- text-align:center;
- border:1px solid var(--line);
- border-radius:15px;
- background:#08131a;
-}
-
-.fighter h2{
- color:var(--cyan);
- margin-bottom:8px;
-}
-
-.vs{
- text-align:center;
- font-size:30px;
- color:var(--red);
- font-weight:bold;
-}
-
-/* VAULT */
-
-.vault{
- max-width:1000px;
- margin:auto;
-}
-
-.vault-lock{
- max-width:500px;
- margin:auto;
- padding:30px;
- border:1px solid var(--line);
- border-radius:18px;
- background:#08131a;
- text-align:center;
-}
-
-.vault-lock input{
- width:100%;
- padding:13px;
- margin:8px 0;
- border:1px solid #1a4855;
- border-radius:9px;
- background:#050b0f;
- color:white;
-}
-
-.vault-content{
- display:none;
-}
-
-.vault-content.open{
- display:block;
-}
-
-.drop{
- margin:20px 0;
- padding:35px;
- text-align:center;
- border:2px dashed #1a4c59;
- border-radius:15px;
- color:var(--muted);
-}
-
-.file-grid{
- display:grid;
- grid-template-columns:repeat(4,1fr);
- gap:12px;
-}
-
-.file-card{
- padding:10px;
- border:1px solid var(--line);
- border-radius:10px;
- background:#08131a;
-}
-
-.file-card img{
- width:100%;
- height:170px;
- object-fit:cover;
- border-radius:7px;
-}
-
-.file-card p{
- color:#9cb0b7;
- font-size:11px;
- margin-top:7px;
- overflow:hidden;
- white-space:nowrap;
- text-overflow:ellipsis;
-}
-
-/* NOTES */
-
 textarea{
  width:100%;
  min-height:180px;
  padding:15px;
- color:white;
  background:#050b0f;
+ color:#fff;
  border:1px solid #1a4855;
  border-radius:10px;
- resize:vertical;
- outline:none;
 }
-
-/* FOOTER */
 
 footer{
- padding:30px 20px;
+ padding:30px;
  text-align:center;
- color:#657d86;
+ color:#617983;
+ border-top:1px solid #102b34;
  font-size:11px;
- border-top:1px solid #102a33;
 }
-
-footer b{
- color:#8deaf4;
-}
-
-/* TOAST */
 
 .toast{
  position:fixed;
  right:20px;
  bottom:20px;
- z-index:5000;
+ z-index:6000;
+ padding:13px 16px;
+ background:#061219;
+ border:1px solid var(--cyan);
+ border-radius:9px;
  transform:translateY(100px);
  opacity:0;
  transition:.3s;
- padding:13px 16px;
- border:1px solid var(--cyan);
- border-radius:9px;
- background:#061219;
- color:#c7f8ff;
 }
 
 .toast.show{
@@ -816,74 +640,59 @@ footer b{
  opacity:1;
 }
 
-/* MOBILE */
-
-@media(max-width:1150px){
- .grid{
-  grid-template-columns:repeat(4,1fr);
- }
+@media(max-width:1200px){
+ .grid{grid-template-columns:repeat(4,1fr)}
 }
 
-@media(max-width:800px){
- .navbar{
-  align-items:flex-start;
+@media(max-width:850px){
+ .nav{
   flex-direction:column;
+  align-items:flex-start;
  }
- .navlinks{
-  max-width:100%;
-  width:100%;
- }
+
+ .navlinks{width:100%}
+
  .stats{
   grid-template-columns:repeat(2,1fr);
  }
+
  .hubs{
   grid-template-columns:1fr;
  }
+
  .grid{
   grid-template-columns:repeat(3,1fr);
  }
- .dashboard{
-  grid-template-columns:1fr;
- }
+
  .battle{
   grid-template-columns:1fr;
  }
- .vs{
-  order:2;
- }
+
  .detail{
   grid-template-columns:1fr;
  }
+
  .detail img{
   width:220px;
- }
- .file-grid{
-  grid-template-columns:repeat(2,1fr);
  }
 }
 
 @media(max-width:520px){
- .container{
-  width:94%;
- }
  .grid{
   grid-template-columns:repeat(2,1fr);
   gap:9px;
  }
+
  .poster{
   height:285px;
  }
- .stats{
-  gap:8px;
- }
- .search-row{
+
+ .searchrow{
   grid-template-columns:1fr;
  }
+
  .hero h1{
   letter-spacing:6px;
- }
- .file-grid{
-  grid-template-columns:1fr;
  }
 }
 </style>
@@ -893,20 +702,30 @@ footer b{
 
 <!-- ================= NAV ================= -->
 
-<nav class="navbar">
+<nav class="nav">
 
-<div class="brand">JARVIS</div>
+<div class="logo">JARVIS</div>
 
 <div class="navlinks">
-<button onclick="showPage('home')">🏠 HOME</button>
-<button onclick="showPage('marvel')">🦸 MARVEL</button>
-<button onclick="showPage('anime')">🍥 ANIME</button>
-<button onclick="showPage('watchlist')">❤️ LIST</button>
-<button onclick="showPage('timeline')">🗺️ ORDER</button>
-<button onclick="showPage('quiz')">🧩 QUIZ</button>
-<button onclick="showPage('battle')">⚔️ BATTLE</button>
-<button onclick="showPage('vault')">🔐 VAULT</button>
-<button onclick="showPage('settings')">⚙️</button>
+
+<button onclick="page('home')">🏠 HOME</button>
+
+<button onclick="page('marvel')">🦸 MARVEL</button>
+
+<button onclick="page('anime')">🍥 ANIME</button>
+
+<button onclick="page('tv')">📺 TV</button>
+
+<button onclick="page('saved')">❤️ MY LIST</button>
+
+<button onclick="page('order')">🗺️ ORDER</button>
+
+<button onclick="page('quiz')">🧩 QUIZ</button>
+
+<button onclick="page('battle')">⚔️ BATTLE</button>
+
+<button onclick="page('vault')">🔐 VAULT</button>
+
 </div>
 
 </nav>
@@ -926,27 +745,33 @@ PERSONAL ENTERTAINMENT INTELLIGENCE
 
 <h1>JARVIS</h1>
 
-<p>
-MARVEL × ANIME × YOUR PERSONAL WORLD
-</p>
+<p>MARVEL • ANIME • TV • YOUR PERSONAL WORLD</p>
 
 <div class="reactor">
 <div class="core"></div>
 </div>
 
-<div id="clock" class="clock"></div>
+<div id="clock"></div>
 
-<div class="hero-actions">
+<div class="actions">
 
-<button class="btn primary" onclick="showPage('marvel')">
+<button class="btn redbtn"
+onclick="page('marvel')">
 🦸 MARVEL
 </button>
 
-<button class="btn gold" onclick="showPage('anime')">
+<button class="btn goldbtn"
+onclick="page('anime')">
 🍥 ANIME
 </button>
 
-<button class="btn" onclick="randomPick()">
+<button class="btn"
+onclick="page('tv')">
+📺 TV SERIES
+</button>
+
+<button class="btn"
+onclick="randomPick()">
 🎲 SURPRISE ME
 </button>
 
@@ -958,28 +783,28 @@ MARVEL × ANIME × YOUR PERSONAL WORLD
 <div class="stats">
 
 <div class="stat">
-<strong id="statTotal">0</strong>
+<strong id="total">0</strong>
 <span>TOTAL</span>
 </div>
 
 <div class="stat">
-<strong id="statWatched">0</strong>
+<strong id="watched">0</strong>
 <span>WATCHED</span>
 </div>
 
 <div class="stat">
-<strong id="statFav">0</strong>
+<strong id="favorites">0</strong>
 <span>FAVORITES</span>
 </div>
 
 <div class="stat">
-<strong id="statProgress">0%</strong>
+<strong id="progress">0%</strong>
 <span>PROGRESS</span>
 </div>
 
 <div class="stat">
-<strong id="statFiles">0</strong>
-<span>VAULT FILES</span>
+<strong>7.0</strong>
+<span>VERSION</span>
 </div>
 
 </div>
@@ -987,29 +812,43 @@ MARVEL × ANIME × YOUR PERSONAL WORLD
 
 <div class="hubs">
 
-<div class="hub marvel" onclick="showPage('marvel')">
+<div class="hub red"
+onclick="page('marvel')">
 
 <div class="hub-icon">🦸</div>
 
 <h2>MARVEL UNIVERSE</h2>
 
 <p>
-MCU, Spider-Man, X-Men, Deadpool, Venom,
-Fantastic Four and more.
+MCU • Spider-Man • X-Men • Deadpool • Venom • Fantastic Four
 </p>
 
 </div>
 
 
-<div class="hub anime" onclick="showPage('anime')">
+<div class="hub gold"
+onclick="page('anime')">
 
 <div class="hub-icon">🍥</div>
 
-<h2>ANIME UNIVERSE</h2>
+<h2>TOP 100 ANIME</h2>
 
 <p>
-Top 100 anime series, Top 100 anime movies,
-genres, rankings, facts and watch tracking.
+Top 100 Anime Series and Top 100 Anime Movies with real posters.
+</p>
+
+</div>
+
+
+<div class="hub"
+onclick="page('tv')">
+
+<div class="hub-icon">📺</div>
+
+<h2>TOP 100 TV SERIES</h2>
+
+<p>
+Popular TV shows with real posters, ratings and information.
 </p>
 
 </div>
@@ -1027,12 +866,20 @@ genres, rankings, facts and watch tracking.
 
 <div class="container">
 
-<div class="section-head">
-<h1 class="marvel-title">MARVEL UNIVERSE</h1>
-<p>Movies • Series • Facts • Cast • Trailers</p>
+<div class="head">
+
+<h1 class="redtitle">
+🦸 MARVEL UNIVERSE
+</h1>
+
+<p>
+Marvel Movies • Spider-Man • X-Men • Watch Order
+</p>
+
 </div>
 
-<div class="search-row">
+
+<div class="searchrow">
 
 <input
 id="marvelSearch"
@@ -1040,23 +887,33 @@ class="search"
 placeholder="🔎 Search Marvel..."
 oninput="renderMarvel()">
 
-<button class="btn red" onclick="loadMarvelAPI()">
-☁ API DISCOVER
+</div>
+
+
+<div class="filters">
+
+<button class="active"
+onclick="marvelFilter='all';renderMarvel();active(this)">
+ALL
+</button>
+
+<button
+onclick="marvelFilter='MCU';renderMarvel();active(this)">
+MCU
+</button>
+
+<button
+onclick="marvelFilter='Spider-Man';renderMarvel();active(this)">
+SPIDER-MAN
+</button>
+
+<button
+onclick="marvelFilter='X-Men';renderMarvel();active(this)">
+X-MEN
 </button>
 
 </div>
 
-<div class="filters">
-
-<button class="active" onclick="setMarvelFilter('all',this)">ALL</button>
-<button onclick="setMarvelFilter('mcu',this)">MCU</button>
-<button onclick="setMarvelFilter('spider',this)">SPIDER-MAN</button>
-<button onclick="setMarvelFilter('xmen',this)">X-MEN</button>
-<button onclick="setMarvelFilter('deadpool',this)">DEADPOOL</button>
-<button onclick="setMarvelFilter('venom',this)">VENOM</button>
-<button onclick="setMarvelFilter('fantastic',this)">FANTASTIC FOUR</button>
-
-</div>
 
 <div id="marvelGrid" class="grid"></div>
 
@@ -1071,12 +928,20 @@ oninput="renderMarvel()">
 
 <div class="container">
 
-<div class="section-head">
-<h1 class="anime-title">🍥 ANIME UNIVERSE</h1>
-<p>Top 100 Series • Top 100 Movies • Search • Ranking</p>
+<div class="head">
+
+<h1 class="goldtitle">
+🍥 ANIME UNIVERSE
+</h1>
+
+<p>
+Top 100 Anime Series • Top 100 Anime Movies • Real Posters
+</p>
+
 </div>
 
-<div class="search-row">
+
+<div class="searchrow">
 
 <input
 id="animeSearch"
@@ -1084,35 +949,34 @@ class="search"
 placeholder="🔎 Search anime..."
 oninput="renderAnime()">
 
-<button class="btn gold" onclick="loadAnimeAPI()">
-☁ LOAD TOP 100
+<button
+class="btn goldbtn"
+onclick="loadAnime()">
+⚡ LOAD TOP 100
 </button>
 
 </div>
 
+
 <div class="filters">
 
-<button class="active" onclick="setAnimeFilter('series',this)">
+<button class="active"
+onclick="animeMode='series';renderAnime();active(this)">
 🏆 TOP 100 SERIES
 </button>
 
-<button onclick="setAnimeFilter('movies',this)">
+<button
+onclick="animeMode='movies';renderAnime();active(this)">
 🎬 TOP 100 MOVIES
 </button>
 
-<button onclick="setAnimeFilter('action',this)">
-⚔️ ACTION
-</button>
-
-<button onclick="setAnimeFilter('romance',this)">
-❤️ ROMANCE
-</button>
-
-<button onclick="setAnimeFilter('all',this)">
+<button
+onclick="animeMode='all';renderAnime();active(this)">
 ALL
 </button>
 
 </div>
+
 
 <div id="animeGrid" class="grid"></div>
 
@@ -1121,51 +985,103 @@ ALL
 </section>
 
 
-<!-- ================= WATCHLIST ================= -->
+<!-- ================= TV ================= -->
 
-<section id="watchlist" class="page">
+<section id="tv" class="page">
 
 <div class="container">
 
-<div class="section-head">
-<h1>❤️ MY COLLECTION</h1>
-<p>Your saved and watched titles</p>
+<div class="head">
+
+<h1>📺 TOP 100 TV SERIES</h1>
+
+<p>
+Real posters • Ratings • Genres • Synopsis
+</p>
+
 </div>
 
-<div class="filters">
-<button class="active" onclick="renderWatchlist('fav',this)">❤️ FAVORITES</button>
-<button onclick="renderWatchlist('watched',this)">✅ WATCHED</button>
+
+<div class="searchrow">
+
+<input
+id="tvSearch"
+class="search"
+placeholder="🔎 Search TV series..."
+oninput="renderTV()">
+
+<button
+class="btn"
+onclick="loadTV()">
+⚡ LOAD TOP 100
+</button>
+
 </div>
 
-<div id="watchlistGrid" class="grid"></div>
+
+<div id="tvGrid" class="grid"></div>
 
 </div>
 
 </section>
 
 
-<!-- ================= TIMELINE ================= -->
+<!-- ================= SAVED ================= -->
 
-<section id="timeline" class="page">
+<section id="saved" class="page">
 
 <div class="container">
 
-<div class="section-head">
-<h1>🗺️ MARVEL WATCH ORDER</h1>
-<p>MCU chronological starter order</p>
+<div class="head">
+
+<h1>❤️ MY COLLECTION</h1>
+
+<p>
+Your watched and favorite titles
+</p>
+
 </div>
+
 
 <div class="filters">
-<button class="active" onclick="timelineMode='chronological';renderTimeline()">
-CHRONOLOGICAL
+
+<button class="active"
+onclick="savedMode='fav';renderSaved();active(this)">
+❤️ FAVORITES
 </button>
 
-<button onclick="timelineMode='release';renderTimeline()">
-RELEASE
+<button
+onclick="savedMode='watched';renderSaved();active(this)">
+✅ WATCHED
 </button>
+
 </div>
 
-<div id="timelineBox" class="timeline"></div>
+
+<div id="savedGrid" class="grid"></div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ORDER ================= -->
+
+<section id="order" class="page">
+
+<div class="container">
+
+<div class="head">
+
+<h1>🗺️ MARVEL WATCH ORDER</h1>
+
+<p>
+MCU chronological starter order
+</p>
+
+</div>
+
+<div id="timeline" class="timeline"></div>
 
 </div>
 
@@ -1178,29 +1094,32 @@ RELEASE
 
 <div class="container">
 
-<div class="section-head">
+<div class="head">
+
 <h1>🧩 JARVIS QUIZ</h1>
-<p>Test your Marvel & Anime knowledge</p>
+
+<p>
+Test your Marvel and Anime knowledge
+</p>
+
 </div>
+
 
 <div class="quiz">
 
-<div id="quizScore">
+<div id="score">
 Score: 0
 </div>
 
-<br>
+<div id="question" class="question"></div>
 
-<div id="quizQuestion" class="quiz-question">
-Loading...
-</div>
-
-<div id="quizAnswers" class="answers"></div>
+<div id="answers" class="answers"></div>
 
 <br>
 
-<button class="btn primary" onclick="nextQuestion()">
-NEXT QUESTION
+<button class="btn"
+onclick="nextQuestion()">
+NEXT
 </button>
 
 </div>
@@ -1216,27 +1135,40 @@ NEXT QUESTION
 
 <div class="container">
 
-<div class="section-head">
+<div class="head">
+
 <h1>⚔️ CHARACTER BATTLE</h1>
-<p>JARVIS chooses two characters</p>
+
+<p>
+Choose your champion
+</p>
+
 </div>
+
 
 <div class="battle">
 
 <div id="fighterA" class="fighter"></div>
 
-<div class="vs">VS</div>
+<div class="vs">
+VS
+</div>
 
 <div id="fighterB" class="fighter"></div>
 
 </div>
 
+
 <br>
 
 <center>
-<button class="btn red" onclick="newBattle()">
+
+<button
+class="btn redbtn"
+onclick="newBattle()">
 ⚔️ NEW BATTLE
 </button>
+
 </center>
 
 </div>
@@ -1248,176 +1180,57 @@ NEXT QUESTION
 
 <section id="vault" class="page">
 
-<div class="container vault">
+<div class="container">
 
-<div class="section-head">
-<h1>🔐 JARVIS PRIVATE VAULT</h1>
-<p>Files stay inside this browser's local storage database.</p>
-</div>
+<div class="head">
 
-<div id="vaultLock" class="vault-lock">
+<h1>🔐 PRIVATE VAULT</h1>
 
-<h2>🔒 VAULT LOCKED</h2>
-
-<p style="color:#8ca5af;margin:12px 0">
-Create a PIN on first use.
+<p>
+Local notes and file information
 </p>
 
-<input
-id="pinInput"
-type="password"
-inputmode="numeric"
-maxlength="12"
-placeholder="Enter PIN">
-
-<button class="btn primary" onclick="unlockVault()">
-🔓 UNLOCK
-</button>
-
 </div>
 
-
-<div id="vaultContent" class="vault-content">
 
 <div class="panel">
 
 <h3>📁 Personal Files</h3>
 
-<div class="drop">
+<br>
 
 <input
 id="fileInput"
 type="file"
-multiple
-accept="image/*,.pdf,.txt,.doc,.docx,.zip">
+multiple>
 
 <br><br>
 
-<p>
-Select photos or personal files.
-They remain local to this browser.
-</p>
-
-</div>
-
-<div id="fileGrid" class="file-grid"></div>
+<div id="files"></div>
 
 </div>
 
 
 <br>
 
+
 <div class="panel">
 
-<h3>📝 Personal Notes</h3>
+<h3>📝 Private Notes</h3>
+
+<br>
 
 <textarea
 id="notes"
-placeholder="Write your private notes here..."></textarea>
+placeholder="Write your private notes..."></textarea>
 
 <br><br>
 
-<button class="btn primary" onclick="saveNotes()">
+<button
+class="btn greenbtn"
+onclick="saveNotes()">
 💾 SAVE NOTES
 </button>
-
-</div>
-
-
-<br>
-
-<button class="btn red" onclick="lockVault()">
-🔒 LOCK VAULT
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- ================= SETTINGS ================= -->
-
-<section id="settings" class="page">
-
-<div class="container">
-
-<div class="section-head">
-<h1>⚙️ JARVIS SETTINGS</h1>
-<p>Configure your personal entertainment hub</p>
-</div>
-
-<div class="dashboard">
-
-<div class="panel">
-
-<h3>🎬 TMDB API</h3>
-
-<p>
-Enter your own TMDB Read Access Token.
-It is stored only in this browser.
-</p>
-
-<br>
-
-<input
-id="tmdbToken"
-class="search"
-type="password"
-placeholder="Paste TMDB API Read Access Token">
-
-<button class="btn primary" onclick="saveTMDB()">
-💾 SAVE TOKEN
-</button>
-
-</div>
-
-
-<div class="panel">
-
-<h3>🧹 Reset Data</h3>
-
-<p>
-Remove watched/favorite data from this browser.
-</p>
-
-<br>
-
-<button class="btn red" onclick="resetTracking()">
-RESET TRACKING
-</button>
-
-</div>
-
-
-<div class="panel">
-
-<h3>🤖 System</h3>
-
-<p>
-JARVIS Personal Entertainment Hub<br>
-Version 5.0<br>
-Marvel × Anime
-</p>
-
-</div>
-
-</div>
-
-<br>
-
-<div class="panel">
-
-<h3>TMDB Attribution</h3>
-
-<p>
-This product uses the TMDB API but is not endorsed or certified by TMDB.
-</p>
-
-<p style="margin-top:10px">
-Movie, TV and image data may be supplied by TMDB.
-</p>
 
 </div>
 
@@ -1430,9 +1243,13 @@ Movie, TV and image data may be supplied by TMDB.
 
 <div id="modal" class="modal">
 
-<div class="modal-box">
+<div class="modalbox">
 
-<button class="close" onclick="closeModal()">×</button>
+<button
+class="close"
+onclick="closeModal()">
+×
+</button>
 
 <div id="modalContent"></div>
 
@@ -1441,28 +1258,43 @@ Movie, TV and image data may be supplied by TMDB.
 </div>
 
 
-<!-- ================= TOAST ================= -->
-
 <div id="toast" class="toast"></div>
 
 
 <footer>
 
-<b>JARVIS</b> • Personal Entertainment Hub<br><br>
-
-This product uses the TMDB API but is not endorsed or certified by TMDB.
+<b>JARVIS 7.0</b>
+<br><br>
+Personal Entertainment Hub
+<br><br>
+Anime data: Jikan / MyAnimeList • TV data: TVmaze
 
 </footer>
 
 
 <script>
 
-/* =========================================================
-   JARVIS 5.0
-   DATA
-========================================================= */
+/* =========================================
+   DATABASE
+========================================= */
 
-const MARVEL_DATA=[
+const JIKAN="https://api.jikan.moe/v4";
+
+const TVMAZE="https://api.tvmaze.com";
+
+
+let animeSeries=[];
+
+let animeMovies=[];
+
+let tvSeries=[];
+
+
+/* =========================================
+   MARVEL CATALOGUE
+========================================= */
+
+const marvelData=[
 
 ["Iron Man",2008,"MCU"],
 ["The Incredible Hulk",2008,"MCU"],
@@ -1498,7 +1330,6 @@ const MARVEL_DATA=[
 ["Guardians of the Galaxy Vol. 3",2023,"MCU"],
 ["The Marvels",2023,"MCU"],
 ["Deadpool & Wolverine",2024,"Deadpool"],
-["Iron Man",2008,"MCU"],
 ["Spider-Man",2002,"Spider-Man"],
 ["Spider-Man 2",2004,"Spider-Man"],
 ["Spider-Man 3",2007,"Spider-Man"],
@@ -1515,797 +1346,1001 @@ const MARVEL_DATA=[
 ["X-Men: Days of Future Past",2014,"X-Men"],
 ["X-Men: Apocalypse",2016,"X-Men"],
 ["Logan",2017,"X-Men"],
-["Dark Phoenix",2019,"X-Men"],
-["Fantastic Four",2005,"Fantastic Four"],
-["Fantastic Four: Rise of the Silver Surfer",2007,"Fantastic Four"],
-["Fantastic Four",2015,"Fantastic Four"],
-["Fantastic Four: First Steps",2025,"Fantastic Four"]
+["Dark Phoenix",2019,"X-Men"]
 
 ].map((x,i)=>({
+
  title:x[0],
  year:x[1],
  category:x[2],
- order:i+1,
+ rank:i+1,
  type:"Marvel",
- poster:"",
- overview:"Marvel title. Connect TMDB in Settings to load official database metadata, posters, cast and trailers."
+ poster:""
+
 }));
 
-
-/* TOP 100 ANIME SERIES */
-
-const ANIME_SERIES=[
-
-"Fullmetal Alchemist: Brotherhood",
-"Attack on Titan",
-"One Piece",
-"Death Note",
-"Hunter x Hunter",
-"Demon Slayer",
-"Jujutsu Kaisen",
-"Steins;Gate",
-"Code Geass",
-"Naruto",
-"Naruto: Shippuden",
-"Bleach",
-"Dragon Ball Z",
-"Dragon Ball",
-"Dragon Ball Super",
-"My Hero Academia",
-"One Punch Man",
-"Mob Psycho 100",
-"Vinland Saga",
-"Monster",
-"Cowboy Bebop",
-"Neon Genesis Evangelion",
-"Frieren: Beyond Journey's End",
-"Haikyuu!!",
-"Chainsaw Man",
-"Spy x Family",
-"JoJo's Bizarre Adventure",
-"Violet Evergarden",
-"Your Lie in April",
-"Clannad",
-"Clannad: After Story",
-"Made in Abyss",
-"Re:Zero",
-"Sword Art Online",
-"Tokyo Ghoul",
-"Parasyte: The Maxim",
-"Erased",
-"Black Clover",
-"Fairy Tail",
-"Dr. Stone",
-"Fire Force",
-"Tokyo Revengers",
-"Solo Leveling",
-"Pluto",
-"Odd Taxi",
-"86 Eighty-Six",
-"Cyberpunk: Edgerunners",
-"Samurai Champloo",
-"Trigun",
-"Monster",
-"Mushishi",
-"Ping Pong the Animation",
-"March Comes in Like a Lion",
-"Fruits Basket",
-"Toradora!",
-"Your Name",
-"Blue Lock",
-"Haikyuu!!",
-"Assassination Classroom",
-"Classroom of the Elite",
-"Overlord",
-"That Time I Got Reincarnated as a Slime",
-"Konosuba",
-"Steins;Gate 0",
-"Black Lagoon",
-"Ghost in the Shell: Stand Alone Complex",
-"Serial Experiments Lain",
-"Perfect Blue",
-"Paranoia Agent",
-"Cyberpunk: Edgerunners",
-"Devilman Crybaby",
-"Beastars",
-"Ranking of Kings",
-"Land of the Lustrous",
-"Vivy: Fluorite Eye's Song",
-"86 Eighty-Six",
-"Link Click",
-"To Your Eternity",
-"Scum's Wish",
-"Horimiya",
-"Kaguya-sama: Love Is War",
-"Rascal Does Not Dream of Bunny Girl Senpai",
-"Golden Kamuy",
-"Kingdom",
-"Bungo Stray Dogs",
-"Durarara!!",
-"Noragami",
-"Fire Force",
-"Yu Yu Hakusho",
-"Rurouni Kenshin",
-"Great Teacher Onizuka",
-"Initial D",
-"Nana",
-"Bakuman",
-"Food Wars!",
-"Shangri-La Frontier",
-"Delicious in Dungeon",
-"The Apothecary Diaries",
-"Kaiju No. 8",
-"Wind Breaker",
-"Solo Leveling Season 2"
-
-].slice(0,100).map((title,i)=>({
- title,
- rank:i+1,
- type:"Anime Series",
- year:"",
- genre:"",
- episodes:"",
- poster:"",
- overview:"Connect TMDB to load current poster, description, rating, cast and trailer."
-}));
-
-
-/* TOP 100 ANIME MOVIES */
-
-const ANIME_MOVIES=[
-
-"Your Name",
-"A Silent Voice",
-"Spirited Away",
-"Princess Mononoke",
-"My Neighbor Totoro",
-"Howl's Moving Castle",
-"Weathering With You",
-"I Want to Eat Your Pancreas",
-"Grave of the Fireflies",
-"The Garden of Words",
-"5 Centimeters per Second",
-"Perfect Blue",
-"Paprika",
-"Akira",
-"Ghost in the Shell",
-"Josee, the Tiger and the Fish",
-"Wolf Children",
-"The Girl Who Leapt Through Time",
-"Summer Wars",
-"Tokyo Godfathers",
-"Castle in the Sky",
-"Nausicaä of the Valley of the Wind",
-"Porco Rosso",
-"Kiki's Delivery Service",
-"Whisper of the Heart",
-"Arrietty",
-"The Wind Rises",
-"From Up on Poppy Hill",
-"When Marnie Was There",
-"Pom Poko",
-"Ocean Waves",
-"Only Yesterday",
-"The Tale of the Princess Kaguya",
-"Maquia: When the Promised Flower Blooms",
-"Redline",
-"Promare",
-"Akira",
-"Millennium Actress",
-"Mind Game",
-"Metropolis",
-"Colorful",
-"Patema Inverted",
-"Summer Ghost",
-"Bubble",
-"Words Bubble Up Like Soda Pop",
-"Ride Your Wave",
-"Lu Over the Wall",
-"Children of the Sea",
-"Penguin Highway",
-"Mirai",
-"Belle",
-"Fireworks",
-"Her Blue Sky",
-"Anthem of the Heart",
-"The Anthem of the Heart",
-"To Every You I've Loved Before",
-"To Me, The One Who Loved You",
-"Black Clover: Sword of the Wizard King",
-"Jujutsu Kaisen 0",
-"Demon Slayer: Mugen Train",
-"One Piece Film: Red",
-"Dragon Ball Super: Broly",
-"Dragon Ball Super: Super Hero",
-"My Hero Academia: Two Heroes",
-"My Hero Academia: Heroes Rising",
-"My Hero Academia: World Heroes' Mission",
-"Naruto the Movie: Ninja Clash in the Land of Snow",
-"Naruto Shippuden the Movie",
-"Road to Ninja: Naruto the Movie",
-"The Last: Naruto the Movie",
-"Boruto: Naruto the Movie",
-"Bleach: Memories of Nobody",
-"Bleach: The DiamondDust Rebellion",
-"Bleach: Fade to Black",
-"Bleach: Hell Verse",
-"One Piece: Strong World",
-"One Piece Film: Z",
-"One Piece Film: Gold",
-"One Piece: Stampede",
-"Detective Conan: The Time Bombed Skyscraper",
-"Detective Conan: The Fourteenth Target",
-"Detective Conan: Captured in Her Eyes",
-"Detective Conan: The Phantom of Baker Street",
-"Detective Conan: Zero the Enforcer",
-"Detective Conan: Black Iron Submarine",
-"Evangelion: 1.0 You Are Not Alone",
-"Evangelion: 2.0 You Can (Not) Advance",
-"Evangelion: 3.0 You Can (Not) Redo",
-"Evangelion: 3.0+1.0 Thrice Upon a Time",
-"Made in Abyss: Dawn of the Deep Soul",
-"Made in Abyss: Journey's Dawn",
-"Violet Evergarden: The Movie",
-"Violet Evergarden: Eternity and the Auto Memory Doll",
-"Fate/stay night: Heaven's Feel I",
-"Fate/stay night: Heaven's Feel II",
-"Fate/stay night: Heaven's Feel III",
-"Fate/Grand Order: Divine Realm",
-"Fate/Grand Order: Camelot",
-"Mobile Suit Gundam Hathaway",
-"Macross Plus Movie Edition",
-"Promare",
-"Words Bubble Up Like Soda Pop",
-"Sing a Bit of Harmony"
-
-].slice(0,100).map((title,i)=>({
- title,
- rank:i+1,
- type:"Anime Movie",
- year:"",
- genre:"",
- episodes:1,
- poster:"",
- overview:"Connect TMDB to load current poster, description, rating, cast and trailer."
-}));
-
-
-/* COMBINE */
-
-let allItems=[
- ...MARVEL_DATA,
- ...ANIME_SERIES,
- ...ANIME_MOVIES
-];
 
 let marvelFilter="all";
-let animeFilter="series";
-let timelineMode="chronological";
 
-let quizIndex=0;
-let quizScore=0;
+let animeMode="series";
+
+let savedMode="fav";
 
 
-/* =========================================================
-   STORAGE HELPERS
-========================================================= */
+/* =========================================
+   API
+========================================= */
 
-function key(type,title){
- return "JARVIS_"+type+"_"+title;
+async function api(url){
+
+ const response=await fetch(url);
+
+ if(!response.ok)
+   throw new Error("API Error");
+
+ return await response.json();
+
 }
+
+
+/* =========================================
+   ANIME LOADER
+========================================= */
+
+async function loadAnime(){
+
+ const grid=document.getElementById("animeGrid");
+
+ grid.innerHTML=`
+
+ <div class="loading">
+
+   <div class="spinner"></div>
+
+   🍥 Loading Top 100 Anime...
+
+ </div>
+
+ `;
+
+
+ try{
+
+   const results=await Promise.all([
+
+     api(`${JIKAN}/top/anime?type=tv&page=1`),
+
+     api(`${JIKAN}/top/anime?type=tv&page=2`),
+
+     api(`${JIKAN}/top/anime?type=movie&page=1`),
+
+     api(`${JIKAN}/top/anime?type=movie&page=2`)
+
+   ]);
+
+
+   animeSeries=[
+
+     ...results[0].data,
+     ...results[1].data
+
+   ].slice(0,100).map((x,i)=>({
+
+     title:x.title,
+
+     rank:x.rank||i+1,
+
+     year:x.aired?.from
+       ?x.aired.from.substring(0,4)
+       :"",
+
+     type:"Anime Series",
+
+     poster:
+       x.images?.jpg?.large_image_url||
+       x.images?.jpg?.image_url||
+       "",
+
+     rating:x.score||"N/A",
+
+     episodes:x.episodes||"N/A",
+
+     overview:
+       x.synopsis||
+       "No synopsis available.",
+
+     fact:
+       `MyAnimeList Rank #${x.rank||i+1}`
+
+   }));
+
+
+   animeMovies=[
+
+     ...results[2].data,
+     ...results[3].data
+
+   ].slice(0,100).map((x,i)=>({
+
+     title:x.title,
+
+     rank:x.rank||i+1,
+
+     year:x.aired?.from
+       ?x.aired.from.substring(0,4)
+       :"",
+
+     type:"Anime Movie",
+
+     poster:
+       x.images?.jpg?.large_image_url||
+       x.images?.jpg?.image_url||
+       "",
+
+     rating:x.score||"N/A",
+
+     overview:
+       x.synopsis||
+       "No synopsis available.",
+
+     fact:
+       `MyAnimeList Rank #${x.rank||i+1}`
+
+   }));
+
+
+   renderAnime();
+
+   updateStats();
+
+   toast("🍥 Anime loaded!");
+
+ }catch(error){
+
+   console.error(error);
+
+   grid.innerHTML=`
+
+   <div class="empty">
+
+     ❌ Anime loading failed.
+
+     <br><br>
+
+     Try again.
+
+   </div>
+
+   `;
+
+ }
+
+}
+
+
+/* =========================================
+   TV LOADER
+========================================= */
+
+async function loadTV(){
+
+ const grid=document.getElementById("tvGrid");
+
+ grid.innerHTML=`
+
+ <div class="loading">
+
+   <div class="spinner"></div>
+
+   📺 Loading Top 100 TV Series...
+
+ </div>
+
+ `;
+
+
+ try{
+
+   /*
+     TVmaze show index is paginated.
+     We fetch several pages so we have
+     enough titles to rank/filter.
+   */
+
+   const pages=await Promise.all([
+
+     api(`${TVMAZE}/shows?page=0`),
+
+     api(`${TVMAZE}/shows?page=1`),
+
+     api(`${TVMAZE}/shows?page=2`),
+
+     api(`${TVMAZE}/shows?page=3`)
+
+   ]);
+
+
+   const all=pages.flat();
+
+
+   tvSeries=all
+
+     .filter(x=>x && x.name)
+
+     .sort((a,b)=>
+       (b.rating?.average||0)-
+       (a.rating?.average||0)
+     )
+
+     .slice(0,100)
+
+     .map((x,i)=>({
+
+       title:x.name,
+
+       rank:i+1,
+
+       year:x.premiered
+         ?x.premiered.substring(0,4)
+         :"",
+
+       type:"TV Series",
+
+       poster:
+         x.image?.original||
+         x.image?.medium||
+         "",
+
+       rating:
+         x.rating?.average||
+         "N/A",
+
+       overview:
+         stripHTML(x.summary)||
+         "No synopsis available.",
+
+       genres:x.genres||[],
+
+       status:x.status||"",
+
+       network:
+         x.network?.name||
+         x.webChannel?.name||
+         ""
+
+     }));
+
+
+   renderTV();
+
+   updateStats();
+
+   toast("📺 Top 100 TV Series loaded!");
+
+ }catch(error){
+
+   console.error(error);
+
+   grid.innerHTML=`
+
+   <div class="empty">
+
+     ❌ TV database could not load.
+
+     <br><br>
+
+     Try again.
+
+   </div>
+
+   `;
+
+ }
+
+}
+
+
+function stripHTML(text){
+
+ if(!text)return"";
+
+ const div=document.createElement("div");
+
+ div.innerHTML=text;
+
+ return div.textContent||div.innerText||"";
+
+}
+
+
+/* =========================================
+   POSTER FALLBACK
+========================================= */
+
+function fallback(title){
+
+ return "https://placehold.co/500x750/07131a/00eaff?text="+
+ encodeURIComponent(title);
+
+}
+
+
+/* =========================================
+   STORAGE
+========================================= */
 
 function isWatched(title){
- return localStorage.getItem(key("watched",title))==="1";
+
+ return localStorage.getItem(
+   "jarvis_watched_"+title
+ )==="1";
+
 }
+
 
 function isFavorite(title){
- return localStorage.getItem(key("favorite",title))==="1";
+
+ return localStorage.getItem(
+   "jarvis_favorite_"+title
+ )==="1";
+
 }
+
 
 function toggleWatched(title){
- const k=key("watched",title);
 
- if(isWatched(title)){
-  localStorage.removeItem(k);
-  toast("Removed from watched");
- }else{
-  localStorage.setItem(k,"1");
-  toast("Marked as watched ✓");
- }
+ const key="jarvis_watched_"+title;
+
+ if(isWatched(title))
+   localStorage.removeItem(key);
+ else
+   localStorage.setItem(key,"1");
 
  updateStats();
- renderMarvel();
- renderAnime();
+
+ renderAll();
+
+ toast(
+   isWatched(title)
+   ?"✅ Marked watched"
+   :"Removed from watched"
+ );
+
 }
+
 
 function toggleFavorite(title){
- const k=key("favorite",title);
 
- if(isFavorite(title)){
-  localStorage.removeItem(k);
-  toast("Removed from favorites");
- }else{
-  localStorage.setItem(k,"1");
-  toast("Added to favorites ❤️");
- }
+ const key="jarvis_favorite_"+title;
+
+ if(isFavorite(title))
+   localStorage.removeItem(key);
+ else
+   localStorage.setItem(key,"1");
 
  updateStats();
- renderMarvel();
- renderAnime();
-}
 
-function resetTracking(){
+ renderAll();
 
- if(!confirm("Reset watched and favorite data?")) return;
+ toast(
+   isFavorite(title)
+   ?"❤️ Added to favorites"
+   :"Removed from favorites"
+ );
 
- Object.keys(localStorage)
- .filter(k=>k.startsWith("JARVIS_watched_")||k.startsWith("JARVIS_favorite_"))
- .forEach(k=>localStorage.removeItem(k));
-
- updateStats();
- renderMarvel();
- renderAnime();
-
- toast("Tracking reset");
 }
 
 
-/* =========================================================
-   PAGE SYSTEM
-========================================================= */
-
-function showPage(id){
-
- document.querySelectorAll(".page")
- .forEach(p=>p.classList.remove("active"));
-
- document.getElementById(id)
- .classList.add("active");
-
- window.scrollTo({
-  top:0,
-  behavior:"smooth"
- });
-
- if(id==="watchlist") renderWatchlist("fav");
- if(id==="timeline") renderTimeline();
- if(id==="quiz") nextQuestion(true);
- if(id==="battle") newBattle();
-}
-
-
-/* =========================================================
-   ESCAPE
-========================================================= */
-
-function esc(v){
-
- return String(v||"")
- .replaceAll("&","&amp;")
- .replaceAll("<","&lt;")
- .replaceAll(">","&gt;")
- .replaceAll('"',"&quot;")
- .replaceAll("'","&#039;");
-}
-
-
-/* =========================================================
-   POSTER
-========================================================= */
-
-function placeholder(title,type){
-
- const text=
- type==="Marvel"
- ?"MARVEL"
- :"ANIME";
-
- return "https://placehold.co/500x750/0b141b/00eaff?text="+
- encodeURIComponent(text);
-}
-
-
-/* =========================================================
+/* =========================================
    CARD
-========================================================= */
+========================================= */
 
-function card(item,index){
+function makeCard(item,index){
 
- const watched=isWatched(item.title);
- const fav=isFavorite(item.title);
+ const poster=
+   item.poster||
+   fallback(item.title);
 
- const image=
- item.poster ||
- placeholder(item.title,item.type);
 
- const meta=[
-  item.year,
-  item.category||item.type,
-  item.rating?`⭐ ${item.rating}`:""
- ].filter(Boolean).join(" • ");
+ const rating=
+   item.rating
+   ?`⭐ ${item.rating}`
+   :"";
+
 
  return `
 
  <article class="card">
 
- <div class="poster">
+   <div class="poster">
 
- <div class="rank">#${item.rank||item.order||index+1}</div>
+     <div class="rank">
+       #${item.rank||index+1}
+     </div>
 
- <img
- src="${image}"
- loading="lazy"
- alt="${esc(item.title)}"
- onerror="this.src='${placeholder(item.title,item.type)}'">
+     <img
+       src="${poster}"
+       alt="${escapeHTML(item.title)}"
+       loading="lazy"
+       onerror="
+         this.onerror=null;
+         this.src='${fallback(item.title)}';
+       "
+     >
 
- </div>
+   </div>
 
- <div class="card-body">
 
- <div class="card-title">
- ${esc(item.title)}
- </div>
+   <div class="cardbody">
 
- <div class="meta">
- ${esc(meta||item.type)}
- </div>
+     <div class="title">
+       ${escapeHTML(item.title)}
+     </div>
 
- <div class="card-buttons">
 
- <button
- class="${watched?'done':''}"
- onclick="toggleWatched('${esc(item.title)}')">
+     <div class="meta">
 
- ${watched?"✓ WATCHED":"✓ WATCH"}
+       ${escapeHTML(
 
- </button>
+         [
+           item.year,
+           rating,
+           item.type
+         ]
+         .filter(Boolean)
+         .join(" • ")
 
- <button
- onclick="toggleFavorite('${esc(item.title)}')">
+       )}
 
- ${fav?"❤️ SAVED":"♡ SAVE"}
+     </div>
 
- </button>
 
- </div>
+     <div class="cardbuttons">
 
- <button
- class="small-btn"
- onclick="openDetailsByTitle('${esc(item.title)}')">
+       <button
+         class="${isWatched(item.title)?"watched":""}"
+         onclick="toggleWatched('${escapeHTML(item.title)}')">
 
- 🧠 DETAILS
+         ${
+           isWatched(item.title)
+           ?"✓ WATCHED"
+           :"✓ WATCH"
+         }
 
- </button>
+       </button>
 
- </div>
+
+       <button
+         onclick="toggleFavorite('${escapeHTML(item.title)}')">
+
+         ${
+           isFavorite(item.title)
+           ?"❤️ SAVED"
+           :"♡ SAVE"
+         }
+
+       </button>
+
+     </div>
+
+
+     <button
+       class="detailsbtn"
+       onclick="showDetails('${escapeHTML(item.title)}')">
+
+       🧠 DETAILS
+
+     </button>
+
+   </div>
 
  </article>
+
  `;
+
 }
 
 
-/* =========================================================
-   MARVEL
-========================================================= */
+function escapeHTML(text){
 
-function setMarvelFilter(filter,btn){
+ return String(text||"")
+ .replace(/&/g,"&amp;")
+ .replace(/</g,"&lt;")
+ .replace(/>/g,"&gt;")
+ .replace(/"/g,"&quot;")
+ .replace(/'/g,"&#039;");
 
- marvelFilter=filter;
-
- btn.parentElement
- .querySelectorAll("button")
- .forEach(x=>x.classList.remove("active"));
-
- btn.classList.add("active");
-
- renderMarvel();
 }
+
+
+/* =========================================
+   RENDER MARVEL
+========================================= */
 
 function renderMarvel(){
 
- const q=
- document.getElementById("marvelSearch")
- .value.toLowerCase();
+ const grid=
+   document.getElementById("marvelGrid");
 
- let list=MARVEL_DATA.filter(x=>
- x.title.toLowerCase().includes(q)
+ if(!grid)return;
+
+
+ const search=
+   (
+     document.getElementById("marvelSearch")
+     ?.value||
+     ""
+   ).toLowerCase();
+
+
+ let list=marvelMovies.filter(x=>
+   x.title.toLowerCase().includes(search)
  );
+
 
  if(marvelFilter!=="all"){
 
-  const map={
-   mcu:"MCU",
-   spider:"Spider-Man",
-   xmen:"X-Men",
-   deadpool:"Deadpool",
-   venom:"Venom",
-   fantastic:"Fantastic Four"
-  };
+   list=list.filter(x=>
+     x.category===marvelFilter
+   );
 
-  list=list.filter(x=>x.category===map[marvelFilter]);
  }
 
- document.getElementById("marvelGrid").innerHTML=
- list.length
- ?list.map(card).join("")
- :`<div class="empty">No Marvel title found.</div>`;
+
+ grid.innerHTML=
+   list.map(makeCard).join("");
+
 }
 
 
-/* =========================================================
-   ANIME
-========================================================= */
-
-function setAnimeFilter(filter,btn){
-
- animeFilter=filter;
-
- btn.parentElement
- .querySelectorAll("button")
- .forEach(x=>x.classList.remove("active"));
-
- btn.classList.add("active");
-
- renderAnime();
-}
+/* =========================================
+   RENDER ANIME
+========================================= */
 
 function renderAnime(){
 
- const q=
- document.getElementById("animeSearch")
- .value.toLowerCase();
+ const grid=
+   document.getElementById("animeGrid");
 
- let list;
+ if(!grid)return;
 
- if(animeFilter==="series"){
-  list=ANIME_SERIES;
- }
 
- else if(animeFilter==="movies"){
-  list=ANIME_MOVIES;
- }
+ const search=
+   (
+     document.getElementById("animeSearch")
+     ?.value||
+     ""
+   ).toLowerCase();
 
- else{
-  list=[
-   ...ANIME_SERIES,
-   ...ANIME_MOVIES
-  ];
- }
+
+ let list=[];
+
+
+ if(animeMode==="series")
+   list=animeSeries;
+
+ else if(animeMode==="movies")
+   list=animeMovies;
+
+ else
+   list=[
+     ...animeSeries,
+     ...animeMovies
+   ];
+
 
  list=list.filter(x=>
- x.title.toLowerCase().includes(q)
+   x.title.toLowerCase().includes(search)
  );
 
- document.getElementById("animeGrid").innerHTML=
- list.length
- ?list.map(card).join("")
- :`<div class="empty">No anime found.</div>`;
-}
 
+ if(!list.length){
 
-/* =========================================================
-   DETAILS
-========================================================= */
+   grid.innerHTML=`
 
-function findItem(title){
+   <div class="empty">
 
- return allItems.find(x=>x.title===title);
-}
+     🍥 Press "LOAD TOP 100"
 
-function openDetailsByTitle(title){
+   </div>
 
- const item=findItem(title);
+   `;
 
- if(!item){
-  toast("Details unavailable");
-  return;
+   return;
+
  }
 
- openDetails(item);
+
+ grid.innerHTML=
+   list.map(makeCard).join("");
+
 }
 
-function openDetails(item){
 
- const image=
- item.poster ||
- placeholder(item.title,item.type);
+/* =========================================
+   RENDER TV
+========================================= */
 
- const tags=[
-  item.type,
-  item.category,
-  item.genre,
-  item.year?String(item.year):""
- ].filter(Boolean);
+function renderTV(){
 
- document.getElementById("modalContent").innerHTML=`
+ const grid=
+   document.getElementById("tvGrid");
+
+ if(!grid)return;
+
+
+ const search=
+   (
+     document.getElementById("tvSearch")
+     ?.value||
+     ""
+   ).toLowerCase();
+
+
+ const list=
+   tvSeries.filter(x=>
+     x.title.toLowerCase().includes(search)
+   );
+
+
+ if(!list.length){
+
+   grid.innerHTML=`
+
+   <div class="empty">
+
+     📺 Press "LOAD TOP 100"
+
+   </div>
+
+   `;
+
+   return;
+
+ }
+
+
+ grid.innerHTML=
+   list.map(makeCard).join("");
+
+}
+
+
+/* =========================================
+   SAVED
+========================================= */
+
+function allItems(){
+
+ return [
+
+   ...marvelMovies,
+   ...animeSeries,
+   ...animeMovies,
+   ...tvSeries
+
+ ];
+
+}
+
+
+function renderSaved(){
+
+ const grid=
+   document.getElementById("savedGrid");
+
+ if(!grid)return;
+
+
+ const list=
+   allItems().filter(x=>
+
+     savedMode==="fav"
+     ?isFavorite(x.title)
+     :isWatched(x.title)
+
+   );
+
+
+ grid.innerHTML=
+   list.length
+
+   ?list.map(makeCard).join("")
+
+   :`
+
+   <div class="empty">
+
+     ${
+       savedMode==="fav"
+       ?"❤️ No favorites yet."
+       :"✅ No watched titles yet."
+     }
+
+   </div>
+
+   `;
+
+}
+
+
+/* =========================================
+   DETAILS
+========================================= */
+
+function showDetails(title){
+
+ const item=
+   allItems().find(x=>
+     x.title===title
+   );
+
+ if(!item)return;
+
+
+ const poster=
+   item.poster||
+   fallback(item.title);
+
+
+ document.getElementById("modalContent")
+ .innerHTML=`
 
  <div class="detail">
 
- <div>
+   <div>
 
- <img
- src="${image}"
- onerror="this.src='${placeholder(item.title,item.type)}'">
+     <img
+       src="${poster}"
+       alt="${escapeHTML(item.title)}">
+
+   </div>
+
+
+   <div>
+
+     <h2>
+       ${escapeHTML(item.title)}
+     </h2>
+
+
+     <div>
+
+       <span class="tag">
+         ${escapeHTML(item.type)}
+       </span>
+
+       ${
+         item.year
+         ?`
+           <span class="tag">
+             ${item.year}
+           </span>
+         `
+         :""
+       }
+
+       ${
+         item.rating
+         ?`
+           <span class="tag">
+             ⭐ ${item.rating}
+           </span>
+         `
+         :""
+       }
+
+     </div>
+
+
+     <p>
+
+       <b>📖 SYNOPSIS</b>
+
+       <br><br>
+
+       ${escapeHTML(
+         item.overview||
+         "No synopsis available."
+       )}
+
+     </p>
+
+
+     ${
+       item.genres?.length
+       ?`
+
+         <p>
+
+         <b>🎭 GENRES</b>
+
+         <br>
+
+         ${item.genres.map(g=>
+           `<span class="tag">
+             ${escapeHTML(g)}
+           </span>`
+         ).join("")}
+
+         </p>
+
+       `
+       :""
+     }
+
+
+     ${
+       item.network
+       ?`
+         <p>
+           📺 Network:
+           ${escapeHTML(item.network)}
+         </p>
+       `
+       :""
+     }
+
+
+     <button
+       class="btn greenbtn"
+       onclick="
+         toggleWatched('${escapeHTML(item.title)}');
+         closeModal();
+       ">
+
+       ✓ MARK WATCHED
+
+     </button>
+
+
+     <button
+       class="btn"
+       onclick="
+         toggleFavorite('${escapeHTML(item.title)}');
+         closeModal();
+       ">
+
+       ❤️ FAVORITE
+
+     </button>
+
+   </div>
 
  </div>
 
- <div>
-
- <h2>${esc(item.title)}</h2>
-
- <div>
- ${tags.map(x=>`<span class="tag">${esc(x)}</span>`).join("")}
- </div>
-
- <p>
- <b>📖 Overview</b><br>
- ${esc(item.overview)}
- </p>
-
- <p>
- <b>🧠 JARVIS FACT</b><br>
- ${esc(
- item.fact||
- "Detailed facts will appear automatically when TMDB is connected."
- )}
- </p>
-
- ${
- item.rating
- ?`<p>⭐ Rating: ${esc(item.rating)}</p>`
- :""
- }
-
- ${
- item.trailer
- ?`
- <a
- class="btn red"
- target="_blank"
- href="${item.trailer}">
- ▶ WATCH TRAILER
- </a>
- `
- :""
- }
-
- <br><br>
-
- <button
- class="btn green"
- onclick="toggleWatched('${esc(item.title)}');closeModal()">
-
- ${isWatched(item.title)?"✓ WATCHED":"✓ MARK WATCHED"}
-
- </button>
-
- <button
- class="btn"
- onclick="toggleFavorite('${esc(item.title)}');closeModal()">
-
- ${isFavorite(item.title)?"❤️ SAVED":"♡ FAVORITE"}
-
- </button>
-
- </div>
-
- </div>
  `;
+
 
  document.getElementById("modal")
  .classList.add("show");
+
 }
+
 
 function closeModal(){
 
  document.getElementById("modal")
  .classList.remove("show");
+
 }
 
-document.getElementById("modal")
-.addEventListener("click",e=>{
- if(e.target.id==="modal") closeModal();
-});
 
+/* =========================================
+   NAVIGATION
+========================================= */
 
-/* =========================================================
-   RANDOM
-========================================================= */
+function page(id){
 
-function randomPick(){
-
- const item=
- allItems[
- Math.floor(Math.random()*allItems.length)
- ];
-
- showPage(
- item.type==="Marvel"
- ?"marvel"
- :"anime"
+ document.querySelectorAll(".page")
+ .forEach(x=>
+   x.classList.remove("active")
  );
 
- setTimeout(()=>{
-  openDetails(item);
- },300);
+
+ document.getElementById(id)
+ .classList.add("active");
+
+
+ window.scrollTo({
+   top:0,
+   behavior:"smooth"
+ });
+
+
+ if(id==="anime" &&
+    animeSeries.length===0)
+   loadAnime();
+
+
+ if(id==="tv" &&
+    tvSeries.length===0)
+   loadTV();
+
+
+ if(id==="saved")
+   renderSaved();
+
 }
 
 
-/* =========================================================
+function renderAll(){
+
+ renderMarvel();
+ renderAnime();
+ renderTV();
+ renderSaved();
+
+}
+
+
+/* =========================================
+   FILTER
+========================================= */
+
+function active(btn){
+
+ btn.parentElement
+ .querySelectorAll("button")
+ .forEach(x=>
+   x.classList.remove("active")
+ );
+
+ btn.classList.add("active");
+
+}
+
+
+/* =========================================
    STATS
-========================================================= */
+========================================= */
 
 function updateStats(){
 
- const total=allItems.length;
+ const items=allItems();
+
 
  const watched=
- allItems.filter(x=>isWatched(x.title)).length;
+   items.filter(x=>
+     isWatched(x.title)
+   ).length;
+
 
  const fav=
- allItems.filter(x=>isFavorite(x.title)).length;
+   items.filter(x=>
+     isFavorite(x.title)
+   ).length;
 
- const progress=
- total
- ?Math.round(watched/total*100)
- :0;
 
- document.getElementById("statTotal")
+ const total=items.length;
+
+
+ document.getElementById("total")
  .textContent=total;
 
- document.getElementById("statWatched")
+
+ document.getElementById("watched")
  .textContent=watched;
 
- document.getElementById("statFav")
+
+ document.getElementById("favorites")
  .textContent=fav;
 
- document.getElementById("statProgress")
- .textContent=progress+"%";
 
- document.getElementById("statFiles")
- .textContent=fileCount();
+ document.getElementById("progress")
+ .textContent=
+   total
+   ?Math.round(watched/total*100)+"%"
+   :"0%";
+
 }
 
 
-/* =========================================================
-   WATCHLIST
-========================================================= */
+/* =========================================
+   MARVEL WATCH ORDER
+========================================= */
 
-function renderWatchlist(mode="fav",btn){
-
- if(btn){
-
-  btn.parentElement
-  .querySelectorAll("button")
-  .forEach(x=>x.classList.remove("active"));
-
-  btn.classList.add("active");
- }
-
- const list=allItems.filter(x=>
- mode==="fav"
- ?isFavorite(x.title)
- :isWatched(x.title)
- );
-
- document.getElementById("watchlistGrid").innerHTML=
- list.length
- ?list.map(card).join("")
- :`<div class="empty">
- ${
- mode==="fav"
- ?"No favorites yet ❤️"
- :"Nothing marked watched yet ✓"
- }
- </div>`;
-}
-
-
-/* =========================================================
-   TIMELINE
-========================================================= */
-
-const MCU_ORDER=[
+const MCU=[
 
 "Captain America: The First Avenger",
 "Captain Marvel",
@@ -2331,840 +2366,463 @@ const MCU_ORDER=[
 "Spider-Man: Far From Home",
 "Spider-Man: No Way Home",
 "Doctor Strange in the Multiverse of Madness",
-"Black Panther: Wakanda Forever",
 "Thor: Love and Thunder",
+"Black Panther: Wakanda Forever",
 "Ant-Man and the Wasp: Quantumania",
 "Guardians of the Galaxy Vol. 3",
 "The Marvels"
 
 ];
 
+
 function renderTimeline(){
 
- let names=MCU_ORDER;
+ document.getElementById("timeline")
+ .innerHTML=
+ MCU.map((x,i)=>`
 
- if(timelineMode==="release"){
-  names=MARVEL_DATA
-  .filter(x=>x.category==="MCU")
-  .sort((a,b)=>a.year-b.year)
-  .map(x=>x.title);
- }
+ <div class="timelineitem">
 
- document.getElementById("timelineBox")
- .innerHTML=names.map((name,i)=>`
+   <b>
+     ${String(i+1).padStart(2,"0")}
+   </b>
 
- <div class="timeline-item">
+   ${escapeHTML(x)}
 
- <strong>${String(i+1).padStart(2,"0")}</strong>
+   <br>
 
- ${esc(name)}
+   <small style="color:#718991">
 
- <br>
+     ${
+       isWatched(x)
+       ?"✓ Watched"
+       :"Not watched"
+     }
 
- <small style="color:#6f858d">
- ${isWatched(name)?"✓ Watched":"Not watched"}
- </small>
+   </small>
 
  </div>
 
  `).join("");
+
 }
 
 
-/* =========================================================
+/* =========================================
+   RANDOM
+========================================= */
+
+function randomPick(){
+
+ const items=allItems();
+
+ if(!items.length)return;
+
+
+ const item=
+   items[
+     Math.floor(
+       Math.random()*items.length
+     )
+   ];
+
+
+ if(item.type==="Marvel")
+   page("marvel");
+
+ else if(item.type==="TV Series")
+   page("tv");
+
+ else
+   page("anime");
+
+
+ setTimeout(()=>
+   showDetails(item.title)
+ ,250);
+
+}
+
+
+/* =========================================
    QUIZ
-========================================================= */
+========================================= */
 
-const QUIZ=[
+const questions=[
 
-{
-q:"Who created the Iron Man armor?",
-a:["Tony Stark","Steve Rogers","Bruce Banner","Peter Parker"],
-c:0
-},
+ [
+  "Who is Tony Stark?",
+  ["Thor","Iron Man","Hulk","Loki"],
+  1
+ ],
 
-{
-q:"What is Luffy's dream?",
-a:["Become Hokage","Become Pirate King","Become a Hunter","Become a Hero"],
-c:1
-},
+ [
+  "Which anime has Titans?",
+  ["Naruto","Bleach","Attack on Titan","One Piece"],
+  2
+ ],
 
-{
-q:"What is Captain America's real name?",
-a:["Tony Stark","Steve Rogers","Clint Barton","Sam Wilson"],
-c:1
-},
+ [
+  "Who is Luffy?",
+  ["Pirate","Ninja","Soul Reaper","Wizard"],
+  0
+ ],
 
-{
-q:"Which anime features Titans?",
-a:["Bleach","Attack on Titan","Naruto","One Piece"],
-c:1
-},
+ [
+  "Who uses Mjolnir?",
+  ["Loki","Thor","Thanos","Hulk"],
+  1
+ ],
 
-{
-q:"What is Peter Parker's superhero identity?",
-a:["Iron Man","Spider-Man","Daredevil","Moon Knight"],
-c:1
-},
-
-{
-q:"Which anime follows Tanjiro?",
-a:["Demon Slayer","One Piece","Bleach","Death Note"],
-c:0
-}
+ [
+  "Tanjiro belongs to?",
+  ["Demon Slayer","Naruto","Bleach","JJK"],
+  0
+ ]
 
 ];
 
-function nextQuestion(reset=false){
 
- if(reset){
-  quizIndex=0;
-  quizScore=0;
- }
+let questionIndex=0;
 
- const q=QUIZ[
- quizIndex%QUIZ.length
- ];
+let quizScore=0;
 
- document.getElementById("quizScore")
- .textContent="Score: "+quizScore;
 
- document.getElementById("quizQuestion")
- .textContent=q.q;
+function nextQuestion(){
 
- document.getElementById("quizAnswers")
- .innerHTML=q.a.map((x,i)=>`
+ const q=
+   questions[
+     questionIndex%
+     questions.length
+   ];
 
- <button onclick="answerQuiz(${i},${q.c})">
- ${String.fromCharCode(65+i)}. ${esc(x)}
- </button>
 
- `).join("");
+ document.getElementById("score")
+ .textContent=
+   "Score: "+quizScore;
+
+
+ document.getElementById("question")
+ .textContent=q[0];
+
+
+ document.getElementById("answers")
+ .innerHTML=
+   q[1].map((answer,i)=>`
+
+     <button
+       onclick="answer(${i},${q[2]})">
+
+       ${String.fromCharCode(65+i)}.
+       ${escapeHTML(answer)}
+
+     </button>
+
+   `).join("");
+
 }
 
-function answerQuiz(answer,correct){
 
- if(answer===correct){
-  quizScore++;
-  toast("Correct! 🔥");
+function answer(selected,correct){
+
+ if(selected===correct){
+
+   quizScore++;
+
+   toast("🔥 Correct!");
+
  }else{
-  toast("Wrong answer 😅");
+
+   toast("❌ Wrong!");
+
  }
 
- document.getElementById("quizScore")
- .textContent="Score: "+quizScore;
 
- quizIndex++;
+ questionIndex++;
+
+ nextQuestion();
+
 }
 
 
-/* =========================================================
+/* =========================================
    BATTLE
-========================================================= */
+========================================= */
 
-const CHARACTERS=[
+const fighters=[
 
-["Spider-Man","Marvel"],
-["Iron Man","Marvel"],
-["Thor","Marvel"],
-["Hulk","Marvel"],
-["Captain America","Marvel"],
-["Doctor Strange","Marvel"],
-["Thanos","Marvel"],
-["Wolverine","Marvel"],
-["Deadpool","Marvel"],
-["Loki","Marvel"],
-["Gojo Satoru","Anime"],
-["Goku","Anime"],
-["Luffy","Anime"],
-["Naruto","Anime"],
-["Saitama","Anime"],
-["Ichigo","Anime"],
-["Tanjiro","Anime"],
-["Eren Yeager","Anime"],
-["Levi Ackerman","Anime"],
-["Sukuna","Anime"]
+"Spider-Man",
+"Iron Man",
+"Thor",
+"Hulk",
+"Captain America",
+"Doctor Strange",
+"Thanos",
+"Wolverine",
+"Deadpool",
+"Goku",
+"Luffy",
+"Naruto",
+"Saitama",
+"Ichigo",
+"Gojo",
+"Sukuna",
+"Tanjiro",
+"Eren"
+
 ];
+
 
 function newBattle(){
 
- const a=
- CHARACTERS[
- Math.floor(Math.random()*CHARACTERS.length)
- ];
+ let a=
+   fighters[
+     Math.floor(
+       Math.random()*fighters.length
+     )
+   ];
+
 
  let b=
- CHARACTERS[
- Math.floor(Math.random()*CHARACTERS.length)
- ];
+   fighters[
+     Math.floor(
+       Math.random()*fighters.length
+     )
+   ];
 
- while(b[0]===a[0]){
-  b=
-  CHARACTERS[
-   Math.floor(Math.random()*CHARACTERS.length)
-  ];
+
+ while(a===b){
+
+   b=
+     fighters[
+       Math.floor(
+         Math.random()*fighters.length
+       )
+     ];
+
  }
 
- document.getElementById("fighterA").innerHTML=`
 
- <h2>${esc(a[0])}</h2>
- <p>${esc(a[1])}</p>
+ document.getElementById("fighterA")
+ .innerHTML=`
+
+ <h2>${escapeHTML(a)}</h2>
+
  <br>
- <button class="btn primary" onclick="battleResult('${esc(a[0])}','${esc(b[0])}')">
- SELECT
+
+ <button
+   class="btn redbtn"
+   onclick="toast('${escapeHTML(a)} wins! ⚔️')">
+
+   CHOOSE
+
  </button>
+
  `;
 
- document.getElementById("fighterB").innerHTML=`
 
- <h2>${esc(b[0])}</h2>
- <p>${esc(b[1])}</p>
+ document.getElementById("fighterB")
+ .innerHTML=`
+
+ <h2>${escapeHTML(b)}</h2>
+
  <br>
- <button class="btn red" onclick="battleResult('${esc(b[1])}','${esc(a[0])}')">
- SELECT
+
+ <button
+   class="btn goldbtn"
+   onclick="toast('${escapeHTML(b)} wins! ⚔️')">
+
+   CHOOSE
+
  </button>
+
  `;
-}
 
-function battleResult(winner,loser){
-
- toast(
- winner+
- " wins this JARVIS battle! ⚔️"
- );
 }
 
 
-/* =========================================================
-   CLOCK
-========================================================= */
+/* =========================================
+   NOTES
+========================================= */
 
-function updateClock(){
-
- const d=new Date();
-
- document.getElementById("clock")
- .textContent=
- d.toLocaleDateString()+
- " • "+
- d.toLocaleTimeString();
-}
-
-setInterval(updateClock,1000);
-updateClock();
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-let toastTimer;
-
-function toast(message){
-
- const el=document.getElementById("toast");
-
- el.textContent=message;
- el.classList.add("show");
-
- clearTimeout(toastTimer);
-
- toastTimer=setTimeout(()=>{
-  el.classList.remove("show");
- },2200);
-}
-
-
-/* =========================================================
-   TMDB
-========================================================= */
-
-function getToken(){
-
- return localStorage.getItem("JARVIS_TMDB_TOKEN")||"";
-}
-
-function saveTMDB(){
-
- const token=
- document.getElementById("tmdbToken")
- .value.trim();
-
- if(!token){
-  toast("Enter a TMDB token");
-  return;
- }
+function saveNotes(){
 
  localStorage.setItem(
- "JARVIS_TMDB_TOKEN",
- token
+   "jarvis_notes",
+   document.getElementById("notes").value
  );
 
- toast("TMDB token saved ✓");
-}
 
-async function tmdb(path){
-
- const token=getToken();
-
- if(!token){
-
-  toast("Add TMDB token in Settings first");
-
-  showPage("settings");
-
-  return null;
- }
-
- const response=
- await fetch(
- "https://api.themoviedb.org/3"+path,
- {
-  headers:{
-   Authorization:"Bearer "+token,
-   accept:"application/json"
-  }
- }
- );
-
- if(!response.ok){
-  throw new Error("TMDB request failed");
- }
-
- return response.json();
-}
-
-
-/* =========================================================
-   TMDB IMAGE
-========================================================= */
-
-function tmdbImage(path){
-
- if(!path)
-  return "";
-
- return "https://image.tmdb.org/t/p/w500"+path;
-}
-
-
-/* =========================================================
-   LOAD ANIME TOP 100
-========================================================= */
-
-async function loadAnimeAPI(){
-
- const grid=document.getElementById("animeGrid");
-
- grid.innerHTML=`
- <div class="loading">
- <div class="spinner"></div>
- Loading Top Anime...
- </div>
- `;
-
- try{
-
-  const [series1,series2,movies1,movies2]=
-  await Promise.all([
-
-   tmdb(
-    "/discover/tv?with_genres=16&with_origin_country=JP&sort_by=vote_average.desc&vote_count.gte=500"
-   ),
-
-   tmdb(
-    "/discover/tv?with_genres=16&with_origin_country=JP&sort_by=popularity.desc&page=2"
-   ),
-
-   tmdb(
-    "/discover/movie?with_genres=16&with_original_language=ja&sort_by=vote_average.desc&vote_count.gte=300"
-   ),
-
-   tmdb(
-    "/discover/movie?with_genres=16&with_original_language=ja&sort_by=popularity.desc&page=2"
-   )
-
-  ]);
-
-  if(!series1||!movies1) return;
-
-  ANIME_SERIES.length=0;
-  ANIME_MOVIES.length=0;
-
-  const series=[
-   ...(series1.results||[]),
-   ...(series2?.results||[])
-  ].slice(0,100);
-
-  const movies=[
-   ...(movies1.results||[]),
-   ...(movies2?.results||[])
-  ].slice(0,100);
-
-  series.forEach((x,i)=>{
-
-   ANIME_SERIES.push({
-
-    title:x.name,
-    rank:i+1,
-    type:"Anime Series",
-    year:x.first_air_date?.slice(0,4)||"",
-    genre:"Anime",
-    episodes:"",
-    poster:tmdbImage(x.poster_path),
-    rating:x.vote_average?.toFixed(1),
-    overview:x.overview||"No overview available.",
-    fact:"TMDB rating: "+(x.vote_average?.toFixed(1)||"N/A")
-
-   });
-
-  });
-
-  movies.forEach((x,i)=>{
-
-   ANIME_MOVIES.push({
-
-    title:x.title,
-    rank:i+1,
-    type:"Anime Movie",
-    year:x.release_date?.slice(0,4)||"",
-    genre:"Anime",
-    episodes:1,
-    poster:tmdbImage(x.poster_path),
-    rating:x.vote_average?.toFixed(1),
-    overview:x.overview||"No overview available.",
-    fact:"TMDB rating: "+(x.vote_average?.toFixed(1)||"N/A")
-
-   });
-
-  });
-
-  rebuildItems();
-
-  renderAnime();
-
-  toast("Top 100 Anime loaded ✓");
-
- }catch(error){
-
-  console.error(error);
-
-  grid.innerHTML=`
-  <div class="empty">
-  TMDB could not be loaded.<br><br>
-  Check your token and internet connection.
-  </div>
-  `;
-
- }
+ toast("📝 Notes saved!");
 
 }
 
 
-/* =========================================================
-   MARVEL API
-========================================================= */
-
-async function loadMarvelAPI(){
-
- const grid=document.getElementById("marvelGrid");
-
- grid.innerHTML=`
- <div class="loading">
- <div class="spinner"></div>
- Loading Marvel data...
- </div>
- `;
-
- try{
-
-  const data=
-  await tmdb(
-   "/discover/movie?with_companies=420&sort_by=popularity.desc&page=1"
-  );
-
-  if(!data) return;
-
-  const apiItems=(data.results||[])
-  .slice(0,100)
-  .map((x,i)=>({
-
-   title:x.title,
-   year:x.release_date?.slice(0,4)||"",
-   category:"Marvel",
-   order:i+1,
-   rank:i+1,
-   type:"Marvel",
-   poster:tmdbImage(x.poster_path),
-   rating:x.vote_average?.toFixed(1),
-   overview:x.overview||"No overview available.",
-   fact:"TMDB rating: "+(x.vote_average?.toFixed(1)||"N/A")
-
-  }));
-
-  const existingTitles=
-  new Set(MARVEL_DATA.map(x=>x.title));
-
-  apiItems.forEach(x=>{
-   if(!existingTitles.has(x.title))
-    MARVEL_DATA.push(x);
-  });
-
-  rebuildItems();
-
-  renderMarvel();
-
-  toast("Marvel database updated ✓");
-
- }catch(error){
-
-  console.error(error);
-
-  grid.innerHTML=`
-  <div class="empty">
-  Marvel API could not be loaded.
-  </div>
-  `;
-
- }
-
-}
-
-
-/* =========================================================
-   REBUILD
-========================================================= */
-
-function rebuildItems(){
-
- allItems=[
-  ...MARVEL_DATA,
-  ...ANIME_SERIES,
-  ...ANIME_MOVIES
- ];
-
- updateStats();
-}
-
-
-/* =========================================================
-   VAULT
-========================================================= */
-
-const DB_NAME="JARVIS_VAULT_DB";
-const DB_VERSION=1;
-
-let vaultDB=null;
-
-function openVaultDB(){
-
- return new Promise((resolve,reject)=>{
-
-  const request=
-  indexedDB.open(DB_NAME,DB_VERSION);
-
-  request.onupgradeneeded=e=>{
-
-   const db=e.target.result;
-
-   if(!db.objectStoreNames.contains("files")){
-    db.createObjectStore(
-     "files",
-     {keyPath:"id",autoIncrement:true}
-    );
-   }
-
-  };
-
-  request.onsuccess=e=>{
-   vaultDB=e.target.result;
-   resolve(vaultDB);
-  };
-
-  request.onerror=()=>{
-   reject(request.error);
-  };
-
- });
-}
-
-openVaultDB();
-
-
-/* PIN HASH */
-
-async function hashPin(pin){
-
- const data=
- new TextEncoder().encode(pin);
-
- const hash=
- await crypto.subtle.digest(
-  "SHA-256",
-  data
- );
-
- return Array.from(
-  new Uint8Array(hash)
- )
- .map(x=>x.toString(16).padStart(2,"0"))
- .join("");
-}
-
-async function unlockVault(){
-
- const pin=
- document.getElementById("pinInput")
- .value;
-
- if(pin.length<4){
-
-  toast("PIN must be at least 4 digits");
-
-  return;
- }
-
- const hash=
- await hashPin(pin);
-
- const stored=
- localStorage.getItem("JARVIS_VAULT_PIN");
-
- if(!stored){
-
-  localStorage.setItem(
-   "JARVIS_VAULT_PIN",
-   hash
-  );
-
-  toast("PIN created ✓");
-
- }else if(stored!==hash){
-
-  toast("Wrong PIN ❌");
-
-  return;
- }
-
- document.getElementById("vaultLock")
- .style.display="none";
-
- document.getElementById("vaultContent")
- .classList.add("open");
-
- loadFiles();
- loadNotes();
-}
-
-function lockVault(){
-
- document.getElementById("vaultLock")
- .style.display="block";
-
- document.getElementById("vaultContent")
- .classList.remove("open");
-
- document.getElementById("pinInput")
- .value="";
-
- toast("Vault locked 🔒");
-}
-
-
-/* FILE UPLOAD */
+/* =========================================
+   FILES
+========================================= */
 
 document.getElementById("fileInput")
-.addEventListener("change",async function(){
+.addEventListener("change",function(){
 
- if(!vaultDB){
-  await openVaultDB();
- }
+ const old=
+   JSON.parse(
+     localStorage.getItem(
+       "jarvis_files"
+     )||"[]"
+   );
 
- for(const file of this.files){
 
-  const buffer=
-  await file.arrayBuffer();
+ [...this.files].forEach(file=>{
 
-  const tx=
-  vaultDB.transaction(
-   "files",
-   "readwrite"
-  );
+   old.push({
 
-  tx.objectStore("files").add({
+     name:file.name,
 
-   name:file.name,
-   type:file.type,
-   size:file.size,
-   data:buffer,
-   created:Date.now()
+     size:file.size,
 
-  });
+     date:
+       new Date()
+       .toLocaleString()
 
-  await new Promise(resolve=>{
-   tx.oncomplete=resolve;
-  });
+   });
 
- }
+ });
 
- this.value="";
 
- loadFiles();
+ localStorage.setItem(
+   "jarvis_files",
+   JSON.stringify(old)
+ );
 
- toast("Files saved locally ✓");
+
+ renderFiles();
+
+ toast("📁 File saved locally!");
 
 });
 
 
-function loadFiles(){
+function renderFiles(){
 
- if(!vaultDB) return;
+ const files=
+   JSON.parse(
+     localStorage.getItem(
+       "jarvis_files"
+     )||"[]"
+   );
 
- const tx=
- vaultDB.transaction("files","readonly");
 
- const request=
- tx.objectStore("files").getAll();
+ document.getElementById("files")
+ .innerHTML=
 
- request.onsuccess=()=>{
+ files.length
 
-  const files=request.result;
+ ?files.map(x=>`
 
-  document.getElementById("fileGrid")
-  .innerHTML=
-  files.length
-  ?files.map(fileCard).join("")
-  :`<div class="empty">No files in your vault.</div>`;
+   <div class="panel"
+        style="margin-top:8px">
 
-  updateStats();
- };
+     📄 ${escapeHTML(x.name)}
 
-}
+     <small style="color:#718991">
 
-function fileCard(file){
+       • ${escapeHTML(x.date)}
 
- let preview="";
+     </small>
 
- if(file.type.startsWith("image/")){
+   </div>
 
-  const blob=
-  new Blob([file.data],{type:file.type});
+ `).join("")
 
-  const url=
-  URL.createObjectURL(blob);
-
-  preview=
-  `<img src="${url}" alt="">`;
-
- }else{
-
-  preview=
-  `<div style="
-  height:170px;
-  display:grid;
-  place-items:center;
-  font-size:45px">
-  📄
-  </div>`;
-
- }
-
- return `
-
- <div class="file-card">
-
- ${preview}
-
- <p>${esc(file.name)}</p>
-
- <button
- class="small-btn"
- onclick="deleteFile(${file.id})">
-
- 🗑 DELETE
-
- </button>
-
- </div>
-
- `;
-}
-
-function deleteFile(id){
-
- if(!confirm("Delete this file?")) return;
-
- const tx=
- vaultDB.transaction(
-  "files",
-  "readwrite"
- );
-
- tx.objectStore("files")
- .delete(id);
-
- tx.oncomplete=()=>{
-
-  loadFiles();
-
-  toast("File deleted");
- };
-
-}
-
-function fileCount(){
-
- return new Promise(()=>{});
+ :"<p>No files added.</p>";
 
 }
 
 
-/* =========================================================
-   NOTES
-========================================================= */
+/* =========================================
+   CLOCK
+========================================= */
 
-function saveNotes(){
+function updateClock(){
 
- const notes=
- document.getElementById("notes")
- .value;
+ const now=new Date();
 
- localStorage.setItem(
-  "JARVIS_PRIVATE_NOTES",
-  notes
- );
+ document.getElementById("clock")
+ .textContent=
+   now.toLocaleDateString()+
+   " • "+
+   now.toLocaleTimeString();
 
- toast("Notes saved ✓");
 }
 
-function loadNotes(){
+setInterval(updateClock,1000);
 
- document.getElementById("notes")
- .value=
- localStorage.getItem(
-  "JARVIS_PRIVATE_NOTES"
- )||"";
+updateClock();
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+let toastTimer;
+
+
+function toast(message){
+
+ const el=
+   document.getElementById("toast");
+
+
+ el.textContent=message;
+
+ el.classList.add("show");
+
+
+ clearTimeout(toastTimer);
+
+
+ toastTimer=setTimeout(()=>{
+
+   el.classList.remove("show");
+
+ },2200);
+
 }
 
 
-/* =========================================================
-   TOKEN LOAD
-========================================================= */
-
-document.getElementById("tmdbToken")
-.value=getToken();
-
-
-/* =========================================================
-   INIT
-========================================================= */
+/* =========================================
+   START JARVIS
+========================================= */
 
 renderMarvel();
-renderAnime();
+
 renderTimeline();
-nextQuestion(true);
+
+nextQuestion();
+
 newBattle();
+
+renderFiles();
+
 updateStats();
+
+
+const savedNotes=
+ localStorage.getItem("jarvis_notes");
+
+
+if(savedNotes){
+
+ document.getElementById("notes")
+ .value=savedNotes;
+
+}
+
+
+console.log(
+ "JARVIS 7.0 ONLINE 🤖"
+);
 
 </script>
 
