@@ -2794,6 +2794,1526 @@ if(savedNotes){
 console.log("JARVIS V8 ONLINE 🤖");
 
 </script>
+<!-- =========================================================
+     JARVIS ANIME V8 MODULE
+     Paste everything BEFORE your existing </body>
+========================================================= -->
 
+<style>
+
+.jarvisAnime{
+  width:min(1450px,94%);
+  margin:0 auto;
+  padding:50px 0 80px;
+  color:#f5fdff;
+}
+
+.jarvisAnime *{
+  box-sizing:border-box;
+}
+
+.animeHero{
+  text-align:center;
+  padding:25px 10px 35px;
+}
+
+.animeHero .small{
+  color:#00eaff;
+  letter-spacing:4px;
+  font-size:11px;
+}
+
+.animeHero h1{
+  margin:12px 0;
+  font-size:clamp(38px,7vw,75px);
+  color:#ffd43b;
+  text-shadow:0 0 30px #ffd43b55;
+}
+
+.animeHero p{
+  color:#849ba4;
+}
+
+.animeControls{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.animeSearch{
+  width:100%;
+  padding:14px 16px;
+  background:#061118;
+  border:1px solid #19444f;
+  border-radius:10px;
+  color:white;
+  outline:none;
+}
+
+.animeSearch:focus{
+  border-color:#00eaff;
+  box-shadow:0 0 15px #00eaff22;
+}
+
+.animeBtn{
+  padding:12px 18px;
+  border-radius:9px;
+  border:1px solid #1d4b56;
+  background:#07171e;
+  color:#c9f7fc;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.animeBtn:hover{
+  border-color:#00eaff;
+  transform:translateY(-1px);
+}
+
+.animeBtn.gold{
+  border-color:#ffd43b;
+  color:#ffe78a;
+  background:#241d07;
+}
+
+.animeTabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:15px 0 25px;
+}
+
+.animeTabs button{
+  padding:9px 13px;
+  border-radius:8px;
+  border:1px solid #19434d;
+  background:#07141a;
+  color:#a9dce4;
+  cursor:pointer;
+}
+
+.animeTabs button.active{
+  border-color:#ffd43b;
+  color:#ffd43b;
+  background:#211b08;
+}
+
+.animeInfo{
+  margin-bottom:20px;
+  padding:13px 15px;
+  background:#071219;
+  border:1px solid #17353e;
+  border-radius:10px;
+  color:#829aa3;
+  font-size:13px;
+}
+
+.animeGrid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:15px;
+}
+
+.animeCard{
+  overflow:hidden;
+  background:#081218;
+  border:1px solid #15353e;
+  border-radius:13px;
+  transition:.3s;
+}
+
+.animeCard:hover{
+  transform:translateY(-6px);
+  border-color:#ffd43b;
+  box-shadow:0 18px 40px #000b;
+}
+
+.animePoster{
+  height:350px;
+  position:relative;
+  background:#0b151a;
+  overflow:hidden;
+}
+
+.animePoster img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:.35s;
+}
+
+.animeCard:hover .animePoster img{
+  transform:scale(1.04);
+}
+
+.animeRank{
+  position:absolute;
+  z-index:2;
+  left:8px;
+  top:8px;
+  padding:5px 8px;
+  border-radius:6px;
+  background:#000d;
+  color:#ffd43b;
+  font-weight:bold;
+  font-size:12px;
+}
+
+.animeType{
+  position:absolute;
+  z-index:2;
+  right:8px;
+  top:8px;
+  padding:5px 7px;
+  border-radius:6px;
+  background:#000d;
+  color:#00eaff;
+  font-size:10px;
+}
+
+.animeBody{
+  padding:12px;
+}
+
+.animeTitle{
+  min-height:43px;
+  font-weight:bold;
+  line-height:1.35;
+}
+
+.animeMeta{
+  color:#81979f;
+  font-size:11px;
+  line-height:1.6;
+  margin:7px 0 10px;
+}
+
+.animeStars{
+  color:#ffd43b;
+}
+
+.animeActions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5px;
+}
+
+.animeActions button{
+  padding:8px 4px;
+  border-radius:7px;
+  border:1px solid #19424c;
+  background:#091b22;
+  color:#bcecf2;
+  cursor:pointer;
+}
+
+.animeActions button:hover{
+  border-color:#00eaff;
+}
+
+.animeDetails{
+  width:100%;
+  margin-top:6px;
+  padding:8px;
+  border-radius:7px;
+  border:1px solid #19424c;
+  background:#091b22;
+  color:#bcecf2;
+  cursor:pointer;
+}
+
+.animeDetails:hover{
+  border-color:#ffd43b;
+  color:#ffd43b;
+}
+
+.animeWatched{
+  border-color:#00e676 !important;
+  color:#70ffae !important;
+}
+
+.animeEmpty{
+  grid-column:1/-1;
+  text-align:center;
+  padding:70px 20px;
+  border:1px dashed #24505b;
+  border-radius:14px;
+  color:#78919a;
+}
+
+.animeLoading{
+  grid-column:1/-1;
+  text-align:center;
+  padding:70px 20px;
+  color:#00eaff;
+}
+
+.animeSpinner{
+  width:42px;
+  height:42px;
+  margin:0 auto 15px;
+  border:3px solid #173a43;
+  border-top-color:#ffd43b;
+  border-radius:50%;
+  animation:jarvisAnimeSpin 1s linear infinite;
+}
+
+@keyframes jarvisAnimeSpin{
+  to{transform:rotate(360deg)}
+}
+
+/* Anime popup */
+
+.animeModal{
+  display:none;
+  position:fixed;
+  z-index:99999;
+  inset:0;
+  padding:20px;
+  align-items:center;
+  justify-content:center;
+  background:#000d;
+  backdrop-filter:blur(10px);
+}
+
+.animeModal.show{
+  display:flex;
+}
+
+.animeModalBox{
+  width:min(900px,100%);
+  max-height:90vh;
+  overflow:auto;
+  padding:25px;
+  background:#071117;
+  border:1px solid #285864;
+  border-radius:17px;
+}
+
+.animeClose{
+  float:right;
+  border:0;
+  background:none;
+  color:white;
+  font-size:30px;
+  cursor:pointer;
+}
+
+.animeDetailLayout{
+  display:grid;
+  grid-template-columns:240px 1fr;
+  gap:25px;
+}
+
+.animeDetailLayout img{
+  width:100%;
+  border-radius:12px;
+}
+
+.animeDetailLayout h2{
+  color:#ffd43b;
+  margin-bottom:12px;
+}
+
+.animeDetailLayout p{
+  color:#a7bbc2;
+  line-height:1.7;
+  margin:15px 0;
+}
+
+.animeTag{
+  display:inline-block;
+  margin:3px;
+  padding:5px 8px;
+  border:1px solid #24515c;
+  border-radius:6px;
+  color:#9debf3;
+  font-size:11px;
+}
+
+.animeToast{
+  position:fixed;
+  z-index:100000;
+  right:20px;
+  bottom:20px;
+  padding:13px 16px;
+  background:#061219;
+  border:1px solid #00eaff;
+  border-radius:9px;
+  color:white;
+  transform:translateY(100px);
+  opacity:0;
+  transition:.25s;
+}
+
+.animeToast.show{
+  transform:translateY(0);
+  opacity:1;
+}
+
+@media(max-width:1200px){
+  .animeGrid{
+    grid-template-columns:repeat(4,1fr);
+  }
+}
+
+@media(max-width:800px){
+  .animeGrid{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .animePoster{
+    height:320px;
+  }
+
+  .animeDetailLayout{
+    grid-template-columns:1fr;
+  }
+
+  .animeDetailLayout img{
+    width:210px;
+  }
+}
+
+@media(max-width:550px){
+  .animeControls{
+    grid-template-columns:1fr;
+  }
+
+  .animeGrid{
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+  }
+
+  .animePoster{
+    height:285px;
+  }
+
+  .animeTitle{
+    font-size:13px;
+  }
+}
+
+</style>
+
+
+<!-- ===================== ANIME SECTION ===================== -->
+
+<section id="jarvisAnimeSection" class="jarvisAnime">
+
+  <div class="animeHero">
+
+    <div class="small">
+      JARVIS ENTERTAINMENT DATABASE
+    </div>
+
+    <h1>🍥 ANIME UNIVERSE</h1>
+
+    <p>
+      Top 100 Anime Series & Top 100 Anime Movies
+      • Real Posters • Ratings • Details
+    </p>
+
+  </div>
+
+
+  <div class="animeControls">
+
+    <input
+      id="jarvisAnimeSearch"
+      class="animeSearch"
+      type="text"
+      placeholder="🔎 Search anime..."
+      oninput="jarvisAnimeRender()"
+    >
+
+    <button
+      class="animeBtn gold"
+      onclick="jarvisAnimeLoad()"
+    >
+      ⚡ LOAD TOP 100
+    </button>
+
+  </div>
+
+
+  <div class="animeTabs">
+
+    <button
+      id="animeSeriesTab"
+      class="active"
+      onclick="
+        jarvisAnimeMode='series';
+        jarvisAnimeRender();
+        jarvisAnimeActive(this);
+      "
+    >
+      🏆 TOP 100 SERIES
+    </button>
+
+
+    <button
+      onclick="
+        jarvisAnimeMode='movies';
+        jarvisAnimeRender();
+        jarvisAnimeActive(this);
+      "
+    >
+      🎬 TOP 100 MOVIES
+    </button>
+
+
+    <button
+      onclick="
+        jarvisAnimeMode='all';
+        jarvisAnimeRender();
+        jarvisAnimeActive(this);
+      "
+    >
+      🍥 ALL ANIME
+    </button>
+
+
+    <button
+      onclick="jarvisAnimeLoad()"
+    >
+      🔄 REFRESH
+    </button>
+
+  </div>
+
+
+  <div id="jarvisAnimeInfo" class="animeInfo">
+
+    🍥 Press <b>LOAD TOP 100</b> to load anime posters.
+
+  </div>
+
+
+  <div id="jarvisAnimeGrid" class="animeGrid">
+
+    <div class="animeEmpty">
+
+      🍥
+
+      <br><br>
+
+      <b>ANIME DATABASE READY</b>
+
+      <br><br>
+
+      Press <b>LOAD TOP 100</b>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ===================== ANIME MODAL ===================== -->
+
+<div
+  id="jarvisAnimeModal"
+  class="animeModal"
+  onclick="
+    if(event.target===this)
+      jarvisAnimeCloseModal();
+  "
+>
+
+  <div class="animeModalBox">
+
+    <button
+      class="animeClose"
+      onclick="jarvisAnimeCloseModal()"
+    >
+      ×
+    </button>
+
+    <div id="jarvisAnimeModalContent"></div>
+
+  </div>
+
+</div>
+
+
+<div id="jarvisAnimeToast" class="animeToast"></div>
+
+
+<script>
+
+/* =========================================================
+   JARVIS ANIME ENGINE
+========================================================= */
+
+const JARVIS_JIKAN_API =
+  "https://api.jikan.moe/v4";
+
+let jarvisAnimeSeries = [];
+let jarvisAnimeMovies = [];
+
+let jarvisAnimeMode = "series";
+
+
+/* =========================================================
+   API
+========================================================= */
+
+async function jarvisAnimeAPI(url){
+
+  const response = await fetch(url);
+
+  if(!response.ok){
+    throw new Error("Anime API Error");
+  }
+
+  return await response.json();
+
+}
+
+
+/* =========================================================
+   LOAD TOP 100
+========================================================= */
+
+async function jarvisAnimeLoad(){
+
+  const grid =
+    document.getElementById(
+      "jarvisAnimeGrid"
+    );
+
+  const info =
+    document.getElementById(
+      "jarvisAnimeInfo"
+    );
+
+
+  grid.innerHTML = `
+
+    <div class="animeLoading">
+
+      <div class="animeSpinner"></div>
+
+      🍥 Loading Top Anime...
+
+      <br>
+
+      <small>
+        Connecting to anime database...
+      </small>
+
+    </div>
+
+  `;
+
+
+  try{
+
+    info.innerHTML =
+      "🔄 Downloading Top 100 Anime Series & Movies...";
+
+
+    /*
+      Two pages for series
+      Two pages for movies
+
+      Jikan uses MyAnimeList ranking.
+    */
+
+    const results =
+      await Promise.all([
+
+        jarvisAnimeAPI(
+          `${JARVIS_JIKAN_API}/top/anime?type=tv&page=1`
+        ),
+
+        jarvisAnimeAPI(
+          `${JARVIS_JIKAN_API}/top/anime?type=tv&page=2`
+        ),
+
+        jarvisAnimeAPI(
+          `${JARVIS_JIKAN_API}/top/anime?type=movie&page=1`
+        ),
+
+        jarvisAnimeAPI(
+          `${JARVIS_JIKAN_API}/top/anime?type=movie&page=2`
+        )
+
+      ]);
+
+
+    /* ================= SERIES ================= */
+
+    jarvisAnimeSeries = [
+
+      ...(results[0].data || []),
+
+      ...(results[1].data || [])
+
+    ]
+
+    .slice(0,100)
+
+    .map((anime,index)=>({
+
+      id:
+        anime.mal_id,
+
+      title:
+        anime.title,
+
+      titleEnglish:
+        anime.title_english || "",
+
+      rank:
+        anime.rank || index+1,
+
+      score:
+        anime.score || "N/A",
+
+      year:
+        anime.aired?.from
+        ? anime.aired.from.substring(0,4)
+        : "",
+
+      episodes:
+        anime.episodes || "N/A",
+
+      status:
+        anime.status || "",
+
+      type:
+        "Anime Series",
+
+      poster:
+        anime.images?.jpg?.large_image_url ||
+        anime.images?.jpg?.image_url ||
+        "",
+
+      synopsis:
+        anime.synopsis ||
+        "No synopsis available.",
+
+      genres:
+        anime.genres?.map(x=>x.name) || [],
+
+      studios:
+        anime.studios?.map(x=>x.name) || []
+
+    }));
+
+
+    /* ================= MOVIES ================= */
+
+    jarvisAnimeMovies = [
+
+      ...(results[2].data || []),
+
+      ...(results[3].data || [])
+
+    ]
+
+    .slice(0,100)
+
+    .map((anime,index)=>({
+
+      id:
+        anime.mal_id,
+
+      title:
+        anime.title,
+
+      titleEnglish:
+        anime.title_english || "",
+
+      rank:
+        anime.rank || index+1,
+
+      score:
+        anime.score || "N/A",
+
+      year:
+        anime.aired?.from
+        ? anime.aired.from.substring(0,4)
+        : "",
+
+      episodes:
+        anime.episodes || "",
+
+      status:
+        anime.status || "",
+
+      type:
+        "Anime Movie",
+
+      poster:
+        anime.images?.jpg?.large_image_url ||
+        anime.images?.jpg?.image_url ||
+        "",
+
+      synopsis:
+        anime.synopsis ||
+        "No synopsis available.",
+
+      genres:
+        anime.genres?.map(x=>x.name) || [],
+
+      studios:
+        anime.studios?.map(x=>x.name) || []
+
+    }));
+
+
+    info.innerHTML = `
+
+      ✅ <b>Anime database loaded!</b>
+
+      &nbsp; • &nbsp;
+
+      ${jarvisAnimeSeries.length} Series
+
+      &nbsp; • &nbsp;
+
+      ${jarvisAnimeMovies.length} Movies
+
+      &nbsp; • &nbsp;
+
+      🖼️ Real posters
+
+    `;
+
+
+    jarvisAnimeRender();
+
+    jarvisAnimeToast(
+      "🍥 Anime posters loaded!"
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    grid.innerHTML = `
+
+      <div class="animeEmpty">
+
+        ❌ <b>Could not load anime.</b>
+
+        <br><br>
+
+        Check your internet connection
+        and press <b>REFRESH</b>.
+
+      </div>
+
+    `;
+
+    info.innerHTML =
+      "❌ Anime database connection failed.";
+
+  }
+
+}
+
+
+/* =========================================================
+   STORAGE
+========================================================= */
+
+function jarvisAnimeWatched(title){
+
+  return localStorage.getItem(
+    "jarvis_anime_watched_"+title
+  ) === "1";
+
+}
+
+
+function jarvisAnimeFavorite(title){
+
+  return localStorage.getItem(
+    "jarvis_anime_favorite_"+title
+  ) === "1";
+
+}
+
+
+function jarvisAnimeToggleWatched(title){
+
+  const key =
+    "jarvis_anime_watched_"+title;
+
+
+  if(
+    jarvisAnimeWatched(title)
+  ){
+
+    localStorage.removeItem(key);
+
+    jarvisAnimeToast(
+      "Removed from watched"
+    );
+
+  }else{
+
+    localStorage.setItem(key,"1");
+
+    jarvisAnimeToast(
+      "✅ Added to watched"
+    );
+
+  }
+
+
+  jarvisAnimeRender();
+
+}
+
+
+function jarvisAnimeToggleFavorite(title){
+
+  const key =
+    "jarvis_anime_favorite_"+title;
+
+
+  if(
+    jarvisAnimeFavorite(title)
+  ){
+
+    localStorage.removeItem(key);
+
+    jarvisAnimeToast(
+      "Removed from favorites"
+    );
+
+  }else{
+
+    localStorage.setItem(key,"1");
+
+    jarvisAnimeToast(
+      "❤️ Added to favorites"
+    );
+
+  }
+
+
+  jarvisAnimeRender();
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function jarvisAnimeEscape(value){
+
+  return String(value || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   FALLBACK POSTER
+========================================================= */
+
+function jarvisAnimeFallback(title){
+
+  return (
+    "https://placehold.co/500x750/07131a/ffd43b?text="+
+    encodeURIComponent(title)
+  );
+
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+function jarvisAnimeCard(anime,index){
+
+  const poster =
+    anime.poster ||
+    jarvisAnimeFallback(anime.title);
+
+
+  const watched =
+    jarvisAnimeWatched(anime.title);
+
+
+  const favorite =
+    jarvisAnimeFavorite(anime.title);
+
+
+  return `
+
+  <article class="animeCard">
+
+    <div class="animePoster">
+
+      <div class="animeRank">
+
+        #${anime.rank || index+1}
+
+      </div>
+
+
+      <div class="animeType">
+
+        ${jarvisAnimeEscape(anime.type)}
+
+      </div>
+
+
+      <img
+
+        src="${poster}"
+
+        alt="${jarvisAnimeEscape(anime.title)}"
+
+        loading="lazy"
+
+        onerror="
+          this.onerror=null;
+          this.src='${jarvisAnimeFallback(anime.title)}';
+        "
+
+      >
+
+    </div>
+
+
+    <div class="animeBody">
+
+      <div class="animeTitle">
+
+        ${jarvisAnimeEscape(anime.title)}
+
+      </div>
+
+
+      <div class="animeMeta">
+
+        ${
+          anime.year
+          ? "📅 "+anime.year+" • "
+          : ""
+        }
+
+        <span class="animeStars">
+
+          ⭐ ${anime.score}
+
+        </span>
+
+
+        ${
+          anime.episodes
+          ? " • "+anime.episodes+" eps"
+          : ""
+        }
+
+      </div>
+
+
+      <div class="animeActions">
+
+        <button
+
+          class="${watched ? "animeWatched" : ""}"
+
+          onclick="
+            jarvisAnimeToggleWatched(
+              '${jarvisAnimeEscape(anime.title)}'
+            )
+          "
+
+        >
+
+          ${
+            watched
+            ? "✓ WATCHED"
+            : "✓ WATCH"
+          }
+
+        </button>
+
+
+        <button
+
+          onclick="
+            jarvisAnimeToggleFavorite(
+              '${jarvisAnimeEscape(anime.title)}'
+            )
+          "
+
+        >
+
+          ${
+            favorite
+            ? "❤️ SAVED"
+            : "♡ SAVE"
+          }
+
+        </button>
+
+      </div>
+
+
+      <button
+
+        class="animeDetails"
+
+        onclick="
+          jarvisAnimeDetails(
+            '${jarvisAnimeEscape(anime.title)}'
+          )
+        "
+
+      >
+
+        🧠 DETAILS
+
+      </button>
+
+    </div>
+
+  </article>
+
+  `;
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function jarvisAnimeRender(){
+
+  const grid =
+    document.getElementById(
+      "jarvisAnimeGrid"
+    );
+
+
+  if(!grid)return;
+
+
+  const search =
+    (
+      document.getElementById(
+        "jarvisAnimeSearch"
+      )?.value || ""
+    ).toLowerCase();
+
+
+  let list=[];
+
+
+  if(jarvisAnimeMode==="series"){
+
+    list = jarvisAnimeSeries;
+
+  }else if(
+    jarvisAnimeMode==="movies"
+  ){
+
+    list = jarvisAnimeMovies;
+
+  }else{
+
+    list = [
+
+      ...jarvisAnimeSeries,
+
+      ...jarvisAnimeMovies
+
+    ];
+
+  }
+
+
+  list =
+    list.filter(anime=>
+
+      anime.title
+      .toLowerCase()
+      .includes(search)
+
+    );
+
+
+  if(!list.length){
+
+    grid.innerHTML = `
+
+      <div class="animeEmpty">
+
+        ${
+          jarvisAnimeSeries.length===0
+          ? "🍥 Press LOAD TOP 100 first."
+          : "🔎 No anime found."
+        }
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML =
+    list.map(
+      (anime,index)=>
+        jarvisAnimeCard(anime,index)
+    ).join("");
+
+}
+
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+function jarvisAnimeDetails(title){
+
+  const anime = [
+
+    ...jarvisAnimeSeries,
+
+    ...jarvisAnimeMovies
+
+  ].find(x=>x.title===title);
+
+
+  if(!anime)return;
+
+
+  const genres =
+    anime.genres?.length
+
+    ? anime.genres.map(g=>
+
+        `<span class="animeTag">
+          ${jarvisAnimeEscape(g)}
+        </span>`
+
+      ).join("")
+
+    : "N/A";
+
+
+  const studios =
+    anime.studios?.length
+
+    ? anime.studios.map(s=>
+
+        `<span class="animeTag">
+          ${jarvisAnimeEscape(s)}
+        </span>`
+
+      ).join("")
+
+    : "N/A";
+
+
+  document.getElementById(
+    "jarvisAnimeModalContent"
+  ).innerHTML = `
+
+    <div class="animeDetailLayout">
+
+      <div>
+
+        <img
+
+          src="${
+            anime.poster ||
+            jarvisAnimeFallback(anime.title)
+          }"
+
+          alt="${jarvisAnimeEscape(anime.title)}"
+
+        >
+
+      </div>
+
+
+      <div>
+
+        <h2>
+
+          ${jarvisAnimeEscape(anime.title)}
+
+        </h2>
+
+
+        ${
+          anime.titleEnglish
+          ?`
+
+            <div class="animeTag">
+
+              ${jarvisAnimeEscape(
+                anime.titleEnglish
+              )}
+
+            </div>
+
+          `
+          :""
+        }
+
+
+        <p>
+
+          <span class="animeTag">
+
+            🏆 Rank #${anime.rank}
+
+          </span>
+
+
+          <span class="animeTag">
+
+            ⭐ ${anime.score}
+
+          </span>
+
+
+          ${
+            anime.year
+            ?`
+
+              <span class="animeTag">
+
+                📅 ${anime.year}
+
+              </span>
+
+            `
+            :""
+          }
+
+
+          <span class="animeTag">
+
+            ${jarvisAnimeEscape(anime.type)}
+
+          </span>
+
+        </p>
+
+
+        <p>
+
+          <b>📖 SYNOPSIS</b>
+
+          <br><br>
+
+          ${jarvisAnimeEscape(
+            anime.synopsis
+          )}
+
+        </p>
+
+
+        <p>
+
+          <b>🎭 GENRES</b>
+
+          <br><br>
+
+          ${genres}
+
+        </p>
+
+
+        <p>
+
+          <b>🏢 STUDIOS</b>
+
+          <br><br>
+
+          ${studios}
+
+        </p>
+
+
+        ${
+          anime.episodes
+          ?`
+
+            <p>
+
+              🎞️ Episodes:
+              <b>${anime.episodes}</b>
+
+            </p>
+
+          `
+          :""
+        }
+
+
+        <button
+
+          class="animeBtn gold"
+
+          onclick="
+            jarvisAnimeToggleWatched(
+              '${jarvisAnimeEscape(anime.title)}'
+            );
+            jarvisAnimeCloseModal();
+          "
+
+        >
+
+          ${
+            jarvisAnimeWatched(anime.title)
+            ? "✓ WATCHED"
+            : "✓ MARK WATCHED"
+          }
+
+        </button>
+
+
+        <button
+
+          class="animeBtn"
+
+          onclick="
+            jarvisAnimeToggleFavorite(
+              '${jarvisAnimeEscape(anime.title)}'
+            );
+            jarvisAnimeCloseModal();
+          "
+
+        >
+
+          ${
+            jarvisAnimeFavorite(anime.title)
+            ? "❤️ SAVED"
+            : "♡ ADD FAVORITE"
+          }
+
+        </button>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  document.getElementById(
+    "jarvisAnimeModal"
+  ).classList.add("show");
+
+}
+
+
+/* =========================================================
+   CLOSE MODAL
+========================================================= */
+
+function jarvisAnimeCloseModal(){
+
+  document.getElementById(
+    "jarvisAnimeModal"
+  ).classList.remove("show");
+
+}
+
+
+/* =========================================================
+   TAB
+========================================================= */
+
+function jarvisAnimeActive(button){
+
+  document
+    .querySelectorAll(
+      "#jarvisAnimeSection .animeTabs button"
+    )
+    .forEach(btn=>
+      btn.classList.remove("active")
+    );
+
+
+  button.classList.add("active");
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let jarvisAnimeToastTimer;
+
+
+function jarvisAnimeToast(message){
+
+  const toast =
+    document.getElementById(
+      "jarvisAnimeToast"
+    );
+
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+
+  clearTimeout(
+    jarvisAnimeToastTimer
+  );
+
+
+  jarvisAnimeToastTimer =
+    setTimeout(()=>{
+
+      toast.classList.remove("show");
+
+    },2200);
+
+}
+
+
+/* =========================================================
+   AUTO LOAD
+========================================================= */
+
+/*
+  Uncomment the next line if you want
+  Anime to load automatically whenever
+  the page opens.
+
+  jarvisAnimeLoad();
+*/
+
+
+console.log(
+  "🍥 JARVIS Anime V8 Module ONLINE"
+);
+
+</script>
+
+<!-- ================= END ANIME MODULE ================= -->
 </body>
 </html>
