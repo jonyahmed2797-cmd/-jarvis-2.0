@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+8<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -4313,7 +4313,1137 @@ console.log(
 );
 
 </script>
+<!-- ================= JARVIS ANIME V9 ================= -->
 
-<!-- ================= END ANIME MODULE ================= -->
+<style>
+#jarvisAnimeV9{
+  width:94%;
+  max-width:1450px;
+  margin:50px auto;
+  color:#fff;
+  font-family:Arial,sans-serif;
+}
+
+.jv9-title{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.jv9-title h1{
+  font-size:clamp(38px,7vw,75px);
+  margin:8px;
+  color:#ffd43b;
+  text-shadow:0 0 30px #ffd43b55;
+}
+
+.jv9-title p{
+  color:#8da3aa;
+}
+
+.jv9-controls{
+  display:flex;
+  gap:10px;
+  margin-bottom:15px;
+}
+
+#jv9Search{
+  flex:1;
+  padding:14px;
+  border-radius:10px;
+  border:1px solid #214b55;
+  background:#07141a;
+  color:white;
+  outline:none;
+}
+
+.jv9-btn{
+  padding:12px 18px;
+  border-radius:9px;
+  border:1px solid #214b55;
+  background:#071820;
+  color:#d5faff;
+  cursor:pointer;
+}
+
+.jv9-btn:hover{
+  border-color:#00eaff;
+}
+
+.jv9-gold{
+  border-color:#ffd43b;
+  color:#ffd43b;
+}
+
+.jv9-tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:20px;
+}
+
+.jv9-tabs button{
+  padding:9px 14px;
+  border-radius:8px;
+  border:1px solid #214b55;
+  background:#071820;
+  color:#9fc7ce;
+  cursor:pointer;
+}
+
+.jv9-tabs button.active{
+  border-color:#ffd43b;
+  color:#ffd43b;
+}
+
+#jv9Status{
+  padding:13px;
+  border-radius:9px;
+  background:#07141a;
+  border:1px solid #173a43;
+  color:#8da3aa;
+  margin-bottom:20px;
+}
+
+.jv9-grid{
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:15px;
+}
+
+.jv9-card{
+  overflow:hidden;
+  background:#081218;
+  border:1px solid #17353e;
+  border-radius:13px;
+  transition:.25s;
+}
+
+.jv9-card:hover{
+  transform:translateY(-6px);
+  border-color:#ffd43b;
+}
+
+.jv9-poster{
+  height:350px;
+  position:relative;
+  background:#10191d;
+}
+
+.jv9-poster img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+.jv9-rank{
+  position:absolute;
+  top:8px;
+  left:8px;
+  z-index:2;
+  padding:5px 8px;
+  background:#000d;
+  border-radius:6px;
+  color:#ffd43b;
+  font-weight:bold;
+}
+
+.jv9-type{
+  position:absolute;
+  top:8px;
+  right:8px;
+  z-index:2;
+  padding:5px 7px;
+  background:#000d;
+  border-radius:6px;
+  color:#00eaff;
+  font-size:10px;
+}
+
+.jv9-body{
+  padding:12px;
+}
+
+.jv9-name{
+  font-weight:bold;
+  min-height:42px;
+  line-height:1.4;
+}
+
+.jv9-meta{
+  margin:8px 0;
+  color:#81979f;
+  font-size:11px;
+}
+
+.jv9-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:5px;
+}
+
+.jv9-actions button{
+  padding:8px 3px;
+  border-radius:7px;
+  border:1px solid #19424c;
+  background:#091b22;
+  color:#c2eef3;
+  cursor:pointer;
+}
+
+.jv9-details{
+  width:100%;
+  margin-top:6px;
+  padding:8px;
+  border-radius:7px;
+  border:1px solid #19424c;
+  background:#091b22;
+  color:#c2eef3;
+  cursor:pointer;
+}
+
+.jv9-loading{
+  grid-column:1/-1;
+  text-align:center;
+  padding:70px;
+  color:#00eaff;
+}
+
+.jv9-error{
+  grid-column:1/-1;
+  text-align:center;
+  padding:60px;
+  border:1px dashed #704848;
+  border-radius:12px;
+  color:#ff9999;
+}
+
+.jv9-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  background:#000d;
+  backdrop-filter:blur(10px);
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.jv9-modal.show{
+  display:flex;
+}
+
+.jv9-modal-box{
+  width:min(900px,100%);
+  max-height:90vh;
+  overflow:auto;
+  padding:25px;
+  border-radius:15px;
+  background:#071117;
+  border:1px solid #285864;
+}
+
+.jv9-close{
+  float:right;
+  border:0;
+  background:none;
+  color:white;
+  font-size:30px;
+  cursor:pointer;
+}
+
+.jv9-detail{
+  display:grid;
+  grid-template-columns:230px 1fr;
+  gap:25px;
+}
+
+.jv9-detail img{
+  width:100%;
+  border-radius:12px;
+}
+
+.jv9-detail h2{
+  color:#ffd43b;
+}
+
+.jv9-detail p{
+  color:#a9bcc2;
+  line-height:1.7;
+}
+
+.jv9-tag{
+  display:inline-block;
+  padding:5px 8px;
+  margin:3px;
+  border:1px solid #24515c;
+  border-radius:6px;
+  color:#9debf3;
+  font-size:11px;
+}
+
+@media(max-width:1200px){
+  .jv9-grid{grid-template-columns:repeat(4,1fr);}
+}
+
+@media(max-width:800px){
+  .jv9-grid{grid-template-columns:repeat(3,1fr);}
+  .jv9-poster{height:320px;}
+  .jv9-detail{grid-template-columns:1fr;}
+  .jv9-detail img{width:210px;}
+}
+
+@media(max-width:550px){
+  .jv9-controls{flex-direction:column;}
+  .jv9-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:9px;
+  }
+  .jv9-poster{height:280px;}
+  .jv9-name{font-size:13px;}
+}
+</style>
+
+
+<section id="jarvisAnimeV9">
+
+  <div class="jv9-title">
+    <div>JARVIS ENTERTAINMENT DATABASE</div>
+    <h1>🍥 ANIME UNIVERSE</h1>
+    <p>Top 100 Anime Series • Top 100 Anime Movies</p>
+  </div>
+
+
+  <div class="jv9-controls">
+
+    <input
+      id="jv9Search"
+      placeholder="🔎 Search anime..."
+      oninput="jv9Render()"
+    >
+
+    <button
+      class="jv9-btn jv9-gold"
+      onclick="jv9Start()"
+    >
+      ⚡ LOAD TOP 100
+    </button>
+
+  </div>
+
+
+  <div class="jv9-tabs">
+
+    <button
+      class="active"
+      onclick="jv9Mode='series';jv9Tab(this);jv9Render()"
+    >
+      🏆 TOP 100 SERIES
+    </button>
+
+    <button
+      onclick="jv9Mode='movies';jv9Tab(this);jv9Render()"
+    >
+      🎬 TOP 100 MOVIES
+    </button>
+
+    <button
+      onclick="jv9Mode='all';jv9Tab(this);jv9Render()"
+    >
+      🍥 ALL
+    </button>
+
+    <button
+      onclick="jv9Start()"
+    >
+      🔄 RELOAD
+    </button>
+
+  </div>
+
+
+  <div id="jv9Status">
+    🍥 Press LOAD TOP 100 to start.
+  </div>
+
+
+  <div id="jv9Grid" class="jv9-grid">
+
+    <div class="jv9-loading">
+      🍥 Anime database ready.
+    </div>
+
+  </div>
+
+</section>
+
+
+<div
+  id="jv9Modal"
+  class="jv9-modal"
+  onclick="if(event.target===this)jv9Close()"
+>
+
+  <div class="jv9-modal-box">
+
+    <button
+      class="jv9-close"
+      onclick="jv9Close()"
+    >
+      ×
+    </button>
+
+    <div id="jv9ModalContent"></div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const JV9_API="https://api.jikan.moe/v4";
+
+let jv9Series=[];
+let jv9Movies=[];
+let jv9Mode="series";
+
+
+/* ---------- WAIT ---------- */
+
+function jv9Wait(ms){
+  return new Promise(resolve=>setTimeout(resolve,ms));
+}
+
+
+/* ---------- API WITH RETRY ---------- */
+
+async function jv9Fetch(url,tries=4){
+
+  for(let i=0;i<tries;i++){
+
+    try{
+
+      const res=await fetch(url);
+
+      if(res.ok){
+
+        return await res.json();
+
+      }
+
+      /* Rate limit / temporary error */
+
+      if(
+        res.status===429 ||
+        res.status>=500
+      ){
+
+        await jv9Wait(
+          1500*(i+1)
+        );
+
+        continue;
+
+      }
+
+      throw new Error(
+        "HTTP "+res.status
+      );
+
+    }catch(error){
+
+      if(i===tries-1)
+        throw error;
+
+      await jv9Wait(
+        1500*(i+1)
+      );
+
+    }
+
+  }
+
+  throw new Error("API unavailable");
+
+}
+
+
+/* ---------- NORMALIZE ---------- */
+
+function jv9Normalize(a,type){
+
+  return {
+
+    id:a.mal_id,
+
+    title:a.title || "Unknown",
+
+    english:a.title_english || "",
+
+    rank:a.rank || "N/A",
+
+    score:a.score || "N/A",
+
+    year:a.aired?.from
+      ?a.aired.from.substring(0,4)
+      :"",
+
+    episodes:a.episodes || "",
+
+    type:type,
+
+    poster:
+      a.images?.jpg?.large_image_url ||
+      a.images?.jpg?.image_url ||
+      "",
+
+    synopsis:
+      a.synopsis ||
+      "No synopsis available.",
+
+    genres:
+      a.genres?.map(x=>x.name)||[],
+
+    studios:
+      a.studios?.map(x=>x.name)||[]
+
+  };
+
+}
+
+
+/* ---------- LOAD ONE PAGE ---------- */
+
+async function jv9LoadPage(type,page){
+
+  const url=
+    type==="series"
+
+    ?`${JV9_API}/top/anime?type=tv&page=${page}`
+
+    :`${JV9_API}/top/anime?type=movie&page=${page}`;
+
+
+  const data=
+    await jv9Fetch(url);
+
+
+  return data.data || [];
+
+}
+
+
+/* ---------- START ---------- */
+
+async function jv9Start(){
+
+  const grid=
+    document.getElementById("jv9Grid");
+
+  const status=
+    document.getElementById("jv9Status");
+
+
+  grid.innerHTML=`
+
+    <div class="jv9-loading">
+
+      ⏳ Connecting to MyAnimeList database...
+
+      <br><br>
+
+      Please wait...
+
+    </div>
+
+  `;
+
+
+  status.innerHTML=
+    "🔄 Loading Anime Series...";
+
+
+  try{
+
+    jv9Series=[];
+    jv9Movies=[];
+
+
+    /* SERIES PAGE 1 */
+
+    status.innerHTML=
+      "🍥 Loading Series 1–25...";
+
+    let page1=
+      await jv9LoadPage(
+        "series",
+        1
+      );
+
+
+    jv9Series.push(
+      ...page1.map(
+        x=>jv9Normalize(
+          x,
+          "SERIES"
+        )
+      )
+    );
+
+
+    await jv9Wait(1200);
+
+
+    /* SERIES PAGE 2 */
+
+    status.innerHTML=
+      "🍥 Loading Series 26–50...";
+
+    let page2=
+      await jv9LoadPage(
+        "series",
+        2
+      );
+
+
+    jv9Series.push(
+      ...page2.map(
+        x=>jv9Normalize(
+          x,
+          "SERIES"
+        )
+      )
+    );
+
+
+    await jv9Wait(1200);
+
+
+    /* MOVIES PAGE 1 */
+
+    status.innerHTML=
+      "🎬 Loading Movies 1–25...";
+
+    let movie1=
+      await jv9LoadPage(
+        "movies",
+        1
+      );
+
+
+    jv9Movies.push(
+      ...movie1.map(
+        x=>jv9Normalize(
+          x,
+          "MOVIE"
+        )
+      )
+    );
+
+
+    await jv9Wait(1200);
+
+
+    /* MOVIES PAGE 2 */
+
+    status.innerHTML=
+      "🎬 Loading Movies 26–50...";
+
+    let movie2=
+      await jv9LoadPage(
+        "movies",
+        2
+      );
+
+
+    jv9Movies.push(
+      ...movie2.map(
+        x=>jv9Normalize(
+          x,
+          "MOVIE"
+        )
+      )
+    );
+
+
+    /*
+      We take the best 100 available
+      according to MAL rank.
+    */
+
+    jv9Series=
+      jv9Series
+      .filter(x=>x.rank!=="N/A")
+      .sort(
+        (a,b)=>a.rank-b.rank
+      )
+      .slice(0,100);
+
+
+    jv9Movies=
+      jv9Movies
+      .filter(x=>x.rank!=="N/A")
+      .sort(
+        (a,b)=>a.rank-b.rank
+      )
+      .slice(0,100);
+
+
+    status.innerHTML=`
+
+      ✅ <b>DATABASE ONLINE</b>
+
+      &nbsp; • &nbsp;
+
+      🍥 ${jv9Series.length} Series
+
+      &nbsp; • &nbsp;
+
+      🎬 ${jv9Movies.length} Movies
+
+      &nbsp; • &nbsp;
+
+      🖼️ Posters Ready
+
+    `;
+
+
+    jv9Render();
+
+
+  }catch(error){
+
+    console.error(
+      "JARVIS Anime V9:",
+      error
+    );
+
+
+    grid.innerHTML=`
+
+      <div class="jv9-error">
+
+        ❌ <b>Anime API temporarily unavailable.</b>
+
+        <br><br>
+
+        Wait 10–20 seconds and press
+        <b>RELOAD</b>.
+
+        <br><br>
+
+        The website itself is working.
+
+      </div>
+
+    `;
+
+
+    status.innerHTML=
+      "❌ API connection failed — automatic retry was exhausted.";
+
+  }
+
+}
+
+
+/* ---------- ESCAPE ---------- */
+
+function jv9Esc(x){
+
+  return String(x||"")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* ---------- FALLBACK ---------- */
+
+function jv9Fallback(title){
+
+  return(
+    "https://placehold.co/500x750/07131a/ffd43b?text="+
+    encodeURIComponent(title)
+  );
+
+}
+
+
+/* ---------- CARD ---------- */
+
+function jv9Card(a){
+
+  const poster=
+    a.poster ||
+    jv9Fallback(a.title);
+
+
+  return`
+
+    <article class="jv9-card">
+
+      <div class="jv9-poster">
+
+        <div class="jv9-rank">
+          #${a.rank}
+        </div>
+
+        <div class="jv9-type">
+          ${a.type}
+        </div>
+
+        <img
+          src="${poster}"
+          alt="${jv9Esc(a.title)}"
+          loading="lazy"
+          onerror="
+            this.onerror=null;
+            this.src='${jv9Fallback(a.title)}';
+          "
+        >
+
+      </div>
+
+
+      <div class="jv9-body">
+
+        <div class="jv9-name">
+
+          ${jv9Esc(a.title)}
+
+        </div>
+
+
+        <div class="jv9-meta">
+
+          ⭐ ${a.score}
+
+          ${a.year?" • 📅 "+a.year:""}
+
+          ${a.episodes?" • 🎞️ "+a.episodes+" eps":""}
+
+        </div>
+
+
+        <div class="jv9-actions">
+
+          <button
+            onclick="jv9Watched('${jv9Esc(a.title)}')"
+          >
+            ✓ WATCH
+          </button>
+
+          <button
+            onclick="jv9Save('${jv9Esc(a.title)}')"
+          >
+            ❤️ SAVE
+          </button>
+
+        </div>
+
+
+        <button
+          class="jv9-details"
+          onclick="jv9Details('${jv9Esc(a.title)}')"
+        >
+          🧠 DETAILS
+        </button>
+
+      </div>
+
+    </article>
+
+  `;
+
+}
+
+
+/* ---------- RENDER ---------- */
+
+function jv9Render(){
+
+  const grid=
+    document.getElementById("jv9Grid");
+
+  if(!grid)return;
+
+
+  const search=
+    (
+      document.getElementById("jv9Search")
+      ?.value||""
+    ).toLowerCase();
+
+
+  let list=[];
+
+
+  if(jv9Mode==="series"){
+
+    list=jv9Series;
+
+  }else if(jv9Mode==="movies"){
+
+    list=jv9Movies;
+
+  }else{
+
+    list=[
+      ...jv9Series,
+      ...jv9Movies
+    ];
+
+  }
+
+
+  list=list.filter(a=>
+    a.title
+    .toLowerCase()
+    .includes(search)
+  );
+
+
+  if(!list.length){
+
+    grid.innerHTML=`
+
+      <div class="jv9-error">
+
+        🍥 Press <b>LOAD TOP 100</b>
+        first.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML=
+    list.map(
+      a=>jv9Card(a)
+    ).join("");
+
+}
+
+
+/* ---------- WATCH ---------- */
+
+function jv9Watched(title){
+
+  localStorage.setItem(
+    "jv9_watched_"+title,
+    "1"
+  );
+
+  alert(
+    "✅ Added to watched: "+title
+  );
+
+}
+
+
+/* ---------- SAVE ---------- */
+
+function jv9Save(title){
+
+  localStorage.setItem(
+    "jv9_saved_"+title,
+    "1"
+  );
+
+  alert(
+    "❤️ Saved: "+title
+  );
+
+}
+
+
+/* ---------- DETAILS ---------- */
+
+function jv9Details(title){
+
+  const a=[
+
+    ...jv9Series,
+    ...jv9Movies
+
+  ].find(
+    x=>x.title===title
+  );
+
+
+  if(!a)return;
+
+
+  const genres=
+    a.genres.length
+
+    ?a.genres.map(g=>
+      `<span class="jv9-tag">
+        ${jv9Esc(g)}
+      </span>`
+    ).join("")
+
+    :"N/A";
+
+
+  const studios=
+    a.studios.length
+
+    ?a.studios.map(s=>
+      `<span class="jv9-tag">
+        ${jv9Esc(s)}
+      </span>`
+    ).join("")
+
+    :"N/A";
+
+
+  document.getElementById(
+    "jv9ModalContent"
+  ).innerHTML=`
+
+    <div class="jv9-detail">
+
+      <div>
+
+        <img
+          src="${
+            a.poster ||
+            jv9Fallback(a.title)
+          }"
+        >
+
+      </div>
+
+
+      <div>
+
+        <h2>
+          ${jv9Esc(a.title)}
+        </h2>
+
+
+        ${
+          a.english
+          ?`
+            <span class="jv9-tag">
+              ${jv9Esc(a.english)}
+            </span>
+          `
+          :""
+        }
+
+
+        <p>
+
+          <span class="jv9-tag">
+            🏆 Rank #${a.rank}
+          </span>
+
+          <span class="jv9-tag">
+            ⭐ ${a.score}
+          </span>
+
+          ${
+            a.year
+            ?`
+              <span class="jv9-tag">
+                📅 ${a.year}
+              </span>
+            `
+            :""
+          }
+
+        </p>
+
+
+        <p>
+
+          <b>📖 SYNOPSIS</b>
+
+          <br><br>
+
+          ${jv9Esc(a.synopsis)}
+
+        </p>
+
+
+        <p>
+
+          <b>🎭 GENRES</b>
+
+          <br>
+
+          ${genres}
+
+        </p>
+
+
+        <p>
+
+          <b>🏢 STUDIOS</b>
+
+          <br>
+
+          ${studios}
+
+        </p>
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  document.getElementById(
+    "jv9Modal"
+  ).classList.add("show");
+
+}
+
+
+/* ---------- CLOSE ---------- */
+
+function jv9Close(){
+
+  document.getElementById(
+    "jv9Modal"
+  ).classList.remove("show");
+
+}
+
+
+/* ---------- TAB ---------- */
+
+function jv9Tab(btn){
+
+  document
+    .querySelectorAll(
+      "#jarvisAnimeV9 .jv9-tabs button"
+    )
+    .forEach(
+      x=>x.classList.remove("active")
+    );
+
+  btn.classList.add("active");
+
+}
+
+</script>
+
+<!-- =============== END ANIME V9 =============== -->
+
+<!-
 </body>
 </html>
