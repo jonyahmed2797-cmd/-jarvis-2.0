@@ -1,32 +1,33 @@
-
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#050505">
-<title>JARVIS 7.0</title>
+<title>JARVIS V8 — Ultimate Entertainment Hub</title>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 
 :root{
- --bg:#030507;
- --card:#0b1118;
- --card2:#101923;
+ --bg:#030508;
+ --panel:#091017;
+ --panel2:#0d1820;
  --cyan:#00eaff;
  --red:#ed1d24;
  --gold:#ffd43b;
  --green:#00e676;
- --text:#eefcff;
- --muted:#8ca2aa;
+ --text:#f2fcff;
+ --muted:#829aa3;
  --border:#173943;
 }
 
+html{scroll-behavior:smooth}
+
 body{
  background:
- radial-gradient(circle at 50% -10%,#123d48 0,transparent 35%),
- radial-gradient(circle at 100% 100%,#35090d 0,transparent 25%),
+ radial-gradient(circle at 50% -10%,#16434d 0,transparent 35%),
+ radial-gradient(circle at 100% 100%,#3a080d 0,transparent 28%),
  var(--bg);
  color:var(--text);
  font-family:Arial,Helvetica,sans-serif;
@@ -38,35 +39,35 @@ body:before{
  position:fixed;
  inset:0;
  pointer-events:none;
- opacity:.08;
+ opacity:.055;
  background-image:
  linear-gradient(#00eaff 1px,transparent 1px),
  linear-gradient(90deg,#00eaff 1px,transparent 1px);
  background-size:45px 45px;
+ z-index:-1;
 }
 
 button,input,textarea{font:inherit}
-
 button{cursor:pointer}
 
 .nav{
  position:sticky;
  top:0;
  z-index:1000;
- padding:13px 3%;
  display:flex;
  align-items:center;
  justify-content:space-between;
  gap:15px;
- background:#02070beF;
+ padding:13px 3%;
+ background:#02070bed;
  backdrop-filter:blur(18px);
  border-bottom:1px solid var(--border);
 }
 
 .logo{
  color:var(--cyan);
- font-size:23px;
  font-weight:900;
+ font-size:23px;
  letter-spacing:5px;
  text-shadow:0 0 20px #00eaff88;
 }
@@ -79,16 +80,16 @@ button{cursor:pointer}
 
 .navlinks button{
  white-space:nowrap;
+ color:#bdeef5;
  background:#07141b;
- color:#b9edf4;
  border:1px solid #17404b;
  border-radius:8px;
  padding:9px 12px;
 }
 
 .navlinks button:hover{
- border-color:var(--cyan);
  color:#fff;
+ border-color:var(--cyan);
 }
 
 .container{
@@ -114,8 +115,8 @@ button{cursor:pointer}
 
 .eyebrow{
  color:#8be8f2;
- font-size:11px;
  letter-spacing:5px;
+ font-size:11px;
 }
 
 .hero h1{
@@ -148,9 +149,7 @@ button{cursor:pointer}
  height:55px;
  border-radius:50%;
  background:#fff;
- box-shadow:
- 0 0 20px #fff,
- 0 0 70px var(--cyan);
+ box-shadow:0 0 20px #fff,0 0 70px var(--cyan);
 }
 
 @keyframes pulse{
@@ -173,9 +172,7 @@ button{cursor:pointer}
  padding:11px 16px;
 }
 
-.btn:hover{
- border-color:var(--cyan);
-}
+.btn:hover{border-color:var(--cyan)}
 
 .redbtn{
  border-color:var(--red);
@@ -294,9 +291,7 @@ button{cursor:pointer}
  outline:none;
 }
 
-.search:focus{
- border-color:var(--cyan);
-}
+.search:focus{border-color:var(--cyan)}
 
 .filters{
  display:flex;
@@ -327,7 +322,7 @@ button{cursor:pointer}
 
 .card{
  overflow:hidden;
- background:var(--card);
+ background:var(--panel);
  border:1px solid #15343d;
  border-radius:13px;
  transition:.3s;
@@ -354,9 +349,7 @@ button{cursor:pointer}
  transition:.4s;
 }
 
-.card:hover .poster img{
- transform:scale(1.04);
-}
+.card:hover .poster img{transform:scale(1.04)}
 
 .rank{
  position:absolute;
@@ -371,9 +364,19 @@ button{cursor:pointer}
  font-weight:bold;
 }
 
-.cardbody{
- padding:12px;
+.badge{
+ position:absolute;
+ right:8px;
+ top:8px;
+ z-index:3;
+ padding:5px 7px;
+ border-radius:6px;
+ background:#000d;
+ color:var(--cyan);
+ font-size:10px;
 }
+
+.cardbody{padding:12px}
 
 .title{
  min-height:42px;
@@ -405,9 +408,7 @@ button{cursor:pointer}
 }
 
 .cardbuttons button:hover,
-.detailsbtn:hover{
- border-color:var(--cyan);
-}
+.detailsbtn:hover{border-color:var(--cyan)}
 
 .detailsbtn{
  width:100%;
@@ -464,7 +465,7 @@ button{cursor:pointer}
 .modal.show{display:flex}
 
 .modalbox{
- width:min(900px,100%);
+ width:min(950px,100%);
  max-height:90vh;
  overflow:auto;
  background:#071117;
@@ -483,7 +484,7 @@ button{cursor:pointer}
 
 .detail{
  display:grid;
- grid-template-columns:230px 1fr;
+ grid-template-columns:240px 1fr;
  gap:25px;
 }
 
@@ -558,9 +559,7 @@ button{cursor:pointer}
  border-radius:9px;
 }
 
-.answers button:hover{
- border-color:var(--cyan);
-}
+.answers button:hover{border-color:var(--cyan)}
 
 .battle{
  display:grid;
@@ -613,6 +612,15 @@ textarea{
  border-radius:10px;
 }
 
+.api-status{
+ padding:12px;
+ margin-bottom:20px;
+ border:1px solid var(--border);
+ border-radius:10px;
+ color:var(--muted);
+ background:#061017;
+}
+
 footer{
  padding:30px;
  text-align:center;
@@ -656,25 +664,15 @@ footer{
   grid-template-columns:repeat(2,1fr);
  }
 
- .hubs{
-  grid-template-columns:1fr;
- }
+ .hubs{grid-template-columns:1fr}
 
- .grid{
-  grid-template-columns:repeat(3,1fr);
- }
+ .grid{grid-template-columns:repeat(3,1fr)}
 
- .battle{
-  grid-template-columns:1fr;
- }
+ .battle{grid-template-columns:1fr}
 
- .detail{
-  grid-template-columns:1fr;
- }
+ .detail{grid-template-columns:1fr}
 
- .detail img{
-  width:220px;
- }
+ .detail img{width:220px}
 }
 
 @media(max-width:520px){
@@ -683,13 +681,9 @@ footer{
   gap:9px;
  }
 
- .poster{
-  height:285px;
- }
+ .poster{height:285px}
 
- .searchrow{
-  grid-template-columns:1fr;
- }
+ .searchrow{grid-template-columns:1fr}
 
  .hero h1{
   letter-spacing:6px;
@@ -700,30 +694,20 @@ footer{
 
 <body>
 
-<!-- ================= NAV ================= -->
-
 <nav class="nav">
 
-<div class="logo">JARVIS</div>
+<div class="logo">JARVIS V8</div>
 
 <div class="navlinks">
 
 <button onclick="page('home')">🏠 HOME</button>
-
 <button onclick="page('marvel')">🦸 MARVEL</button>
-
 <button onclick="page('anime')">🍥 ANIME</button>
-
 <button onclick="page('tv')">📺 TV</button>
-
 <button onclick="page('saved')">❤️ MY LIST</button>
-
 <button onclick="page('order')">🗺️ ORDER</button>
-
 <button onclick="page('quiz')">🧩 QUIZ</button>
-
 <button onclick="page('battle')">⚔️ BATTLE</button>
-
 <button onclick="page('vault')">🔐 VAULT</button>
 
 </div>
@@ -731,7 +715,7 @@ footer{
 </nav>
 
 
-<!-- ================= HOME ================= -->
+<!-- HOME -->
 
 <section id="home" class="page active">
 
@@ -755,23 +739,19 @@ PERSONAL ENTERTAINMENT INTELLIGENCE
 
 <div class="actions">
 
-<button class="btn redbtn"
-onclick="page('marvel')">
+<button class="btn redbtn" onclick="page('marvel')">
 🦸 MARVEL
 </button>
 
-<button class="btn goldbtn"
-onclick="page('anime')">
+<button class="btn goldbtn" onclick="page('anime')">
 🍥 ANIME
 </button>
 
-<button class="btn"
-onclick="page('tv')">
+<button class="btn" onclick="page('tv')">
 📺 TV SERIES
 </button>
 
-<button class="btn"
-onclick="randomPick()">
+<button class="btn" onclick="randomPick()">
 🎲 SURPRISE ME
 </button>
 
@@ -803,7 +783,7 @@ onclick="randomPick()">
 </div>
 
 <div class="stat">
-<strong>7.0</strong>
+<strong>8.0</strong>
 <span>VERSION</span>
 </div>
 
@@ -812,45 +792,22 @@ onclick="randomPick()">
 
 <div class="hubs">
 
-<div class="hub red"
-onclick="page('marvel')">
-
+<div class="hub red" onclick="page('marvel')">
 <div class="hub-icon">🦸</div>
-
 <h2>MARVEL UNIVERSE</h2>
-
-<p>
-MCU • Spider-Man • X-Men • Deadpool • Venom • Fantastic Four
-</p>
-
+<p>Real movie posters • MCU • Spider-Man • X-Men • Deadpool • Venom</p>
 </div>
 
-
-<div class="hub gold"
-onclick="page('anime')">
-
+<div class="hub gold" onclick="page('anime')">
 <div class="hub-icon">🍥</div>
-
 <h2>TOP 100 ANIME</h2>
-
-<p>
-Top 100 Anime Series and Top 100 Anime Movies with real posters.
-</p>
-
+<p>Top 100 Anime Series and Top 100 Anime Movies with real posters.</p>
 </div>
 
-
-<div class="hub"
-onclick="page('tv')">
-
+<div class="hub" onclick="page('tv')">
 <div class="hub-icon">📺</div>
-
 <h2>TOP 100 TV SERIES</h2>
-
-<p>
-Popular TV shows with real posters, ratings and information.
-</p>
-
+<p>Popular TV shows with real posters, ratings, genres and information.</p>
 </div>
 
 </div>
@@ -860,60 +817,58 @@ Popular TV shows with real posters, ratings and information.
 </section>
 
 
-<!-- ================= MARVEL ================= -->
+<!-- MARVEL -->
 
 <section id="marvel" class="page">
 
 <div class="container">
 
 <div class="head">
-
-<h1 class="redtitle">
-🦸 MARVEL UNIVERSE
-</h1>
-
-<p>
-Marvel Movies • Spider-Man • X-Men • Watch Order
-</p>
-
+<h1 class="redtitle">🦸 MARVEL UNIVERSE</h1>
+<p>Real posters • Movie details • Ratings • Search</p>
 </div>
 
+<div class="api-status" id="tmdbStatus">
+🔄 Checking poster system...
+</div>
 
 <div class="searchrow">
 
 <input
 id="marvelSearch"
 class="search"
-placeholder="🔎 Search Marvel..."
+placeholder="🔎 Search Marvel movie..."
 oninput="renderMarvel()">
 
-</div>
+<button class="btn redbtn" onclick="loadMarvel()">
+⚡ LOAD POSTERS
+</button>
 
+</div>
 
 <div class="filters">
 
-<button class="active"
-onclick="marvelFilter='all';renderMarvel();active(this)">
+<button class="active" onclick="marvelFilter='all';renderMarvel();active(this)">
 ALL
 </button>
 
-<button
-onclick="marvelFilter='MCU';renderMarvel();active(this)">
+<button onclick="marvelFilter='MCU';renderMarvel();active(this)">
 MCU
 </button>
 
-<button
-onclick="marvelFilter='Spider-Man';renderMarvel();active(this)">
+<button onclick="marvelFilter='Spider-Man';renderMarvel();active(this)">
 SPIDER-MAN
 </button>
 
-<button
-onclick="marvelFilter='X-Men';renderMarvel();active(this)">
+<button onclick="marvelFilter='X-Men';renderMarvel();active(this)">
 X-MEN
 </button>
 
-</div>
+<button onclick="marvelFilter='Sony';renderMarvel();active(this)">
+VENOM / SONY
+</button>
 
+</div>
 
 <div id="marvelGrid" class="grid"></div>
 
@@ -922,24 +877,16 @@ X-MEN
 </section>
 
 
-<!-- ================= ANIME ================= -->
+<!-- ANIME -->
 
 <section id="anime" class="page">
 
 <div class="container">
 
 <div class="head">
-
-<h1 class="goldtitle">
-🍥 ANIME UNIVERSE
-</h1>
-
-<p>
-Top 100 Anime Series • Top 100 Anime Movies • Real Posters
-</p>
-
+<h1 class="goldtitle">🍥 ANIME UNIVERSE</h1>
+<p>Top 100 Series • Top 100 Movies • Real posters</p>
 </div>
-
 
 <div class="searchrow">
 
@@ -949,34 +896,27 @@ class="search"
 placeholder="🔎 Search anime..."
 oninput="renderAnime()">
 
-<button
-class="btn goldbtn"
-onclick="loadAnime()">
+<button class="btn goldbtn" onclick="loadAnime()">
 ⚡ LOAD TOP 100
 </button>
 
 </div>
 
-
 <div class="filters">
 
-<button class="active"
-onclick="animeMode='series';renderAnime();active(this)">
+<button class="active" onclick="animeMode='series';renderAnime();active(this)">
 🏆 TOP 100 SERIES
 </button>
 
-<button
-onclick="animeMode='movies';renderAnime();active(this)">
+<button onclick="animeMode='movies';renderAnime();active(this)">
 🎬 TOP 100 MOVIES
 </button>
 
-<button
-onclick="animeMode='all';renderAnime();active(this)">
+<button onclick="animeMode='all';renderAnime();active(this)">
 ALL
 </button>
 
 </div>
-
 
 <div id="animeGrid" class="grid"></div>
 
@@ -985,22 +925,16 @@ ALL
 </section>
 
 
-<!-- ================= TV ================= -->
+<!-- TV -->
 
 <section id="tv" class="page">
 
 <div class="container">
 
 <div class="head">
-
 <h1>📺 TOP 100 TV SERIES</h1>
-
-<p>
-Real posters • Ratings • Genres • Synopsis
-</p>
-
+<p>Real posters • Ratings • Genres • Synopsis</p>
 </div>
-
 
 <div class="searchrow">
 
@@ -1010,14 +944,11 @@ class="search"
 placeholder="🔎 Search TV series..."
 oninput="renderTV()">
 
-<button
-class="btn"
-onclick="loadTV()">
+<button class="btn" onclick="loadTV()">
 ⚡ LOAD TOP 100
 </button>
 
 </div>
-
 
 <div id="tvGrid" class="grid"></div>
 
@@ -1026,37 +957,28 @@ onclick="loadTV()">
 </section>
 
 
-<!-- ================= SAVED ================= -->
+<!-- SAVED -->
 
 <section id="saved" class="page">
 
 <div class="container">
 
 <div class="head">
-
 <h1>❤️ MY COLLECTION</h1>
-
-<p>
-Your watched and favorite titles
-</p>
-
+<p>Your watched and favorite titles</p>
 </div>
-
 
 <div class="filters">
 
-<button class="active"
-onclick="savedMode='fav';renderSaved();active(this)">
+<button class="active" onclick="savedMode='fav';renderSaved();active(this)">
 ❤️ FAVORITES
 </button>
 
-<button
-onclick="savedMode='watched';renderSaved();active(this)">
+<button onclick="savedMode='watched';renderSaved();active(this)">
 ✅ WATCHED
 </button>
 
 </div>
-
 
 <div id="savedGrid" class="grid"></div>
 
@@ -1065,20 +987,15 @@ onclick="savedMode='watched';renderSaved();active(this)">
 </section>
 
 
-<!-- ================= ORDER ================= -->
+<!-- ORDER -->
 
 <section id="order" class="page">
 
 <div class="container">
 
 <div class="head">
-
 <h1>🗺️ MARVEL WATCH ORDER</h1>
-
-<p>
-MCU chronological starter order
-</p>
-
+<p>MCU chronological starter order</p>
 </div>
 
 <div id="timeline" class="timeline"></div>
@@ -1088,28 +1005,20 @@ MCU chronological starter order
 </section>
 
 
-<!-- ================= QUIZ ================= -->
+<!-- QUIZ -->
 
 <section id="quiz" class="page">
 
 <div class="container">
 
 <div class="head">
-
 <h1>🧩 JARVIS QUIZ</h1>
-
-<p>
-Test your Marvel and Anime knowledge
-</p>
-
+<p>Test your Marvel and Anime knowledge</p>
 </div>
-
 
 <div class="quiz">
 
-<div id="score">
-Score: 0
-</div>
+<div id="score">Score: 0</div>
 
 <div id="question" class="question"></div>
 
@@ -1117,10 +1026,7 @@ Score: 0
 
 <br>
 
-<button class="btn"
-onclick="nextQuestion()">
-NEXT
-</button>
+<button class="btn" onclick="nextQuestion()">NEXT</button>
 
 </div>
 
@@ -1129,46 +1035,33 @@ NEXT
 </section>
 
 
-<!-- ================= BATTLE ================= -->
+<!-- BATTLE -->
 
 <section id="battle" class="page">
 
 <div class="container">
 
 <div class="head">
-
 <h1>⚔️ CHARACTER BATTLE</h1>
-
-<p>
-Choose your champion
-</p>
-
+<p>Choose your champion</p>
 </div>
-
 
 <div class="battle">
 
 <div id="fighterA" class="fighter"></div>
 
-<div class="vs">
-VS
-</div>
+<div class="vs">VS</div>
 
 <div id="fighterB" class="fighter"></div>
 
 </div>
 
-
 <br>
 
 <center>
-
-<button
-class="btn redbtn"
-onclick="newBattle()">
+<button class="btn redbtn" onclick="newBattle()">
 ⚔️ NEW BATTLE
 </button>
-
 </center>
 
 </div>
@@ -1176,22 +1069,16 @@ onclick="newBattle()">
 </section>
 
 
-<!-- ================= VAULT ================= -->
+<!-- VAULT -->
 
 <section id="vault" class="page">
 
 <div class="container">
 
 <div class="head">
-
 <h1>🔐 PRIVATE VAULT</h1>
-
-<p>
-Local notes and file information
-</p>
-
+<p>Local notes and file information</p>
 </div>
-
 
 <div class="panel">
 
@@ -1199,10 +1086,7 @@ Local notes and file information
 
 <br>
 
-<input
-id="fileInput"
-type="file"
-multiple>
+<input id="fileInput" type="file" multiple>
 
 <br><br>
 
@@ -1210,9 +1094,7 @@ multiple>
 
 </div>
 
-
 <br>
-
 
 <div class="panel">
 
@@ -1220,15 +1102,11 @@ multiple>
 
 <br>
 
-<textarea
-id="notes"
-placeholder="Write your private notes..."></textarea>
+<textarea id="notes" placeholder="Write your private notes..."></textarea>
 
 <br><br>
 
-<button
-class="btn greenbtn"
-onclick="saveNotes()">
+<button class="btn greenbtn" onclick="saveNotes()">
 💾 SAVE NOTES
 </button>
 
@@ -1239,17 +1117,13 @@ onclick="saveNotes()">
 </section>
 
 
-<!-- ================= MODAL ================= -->
+<!-- MODAL -->
 
 <div id="modal" class="modal">
 
 <div class="modalbox">
 
-<button
-class="close"
-onclick="closeModal()">
-×
-</button>
+<button class="close" onclick="closeModal()">×</button>
 
 <div id="modalContent"></div>
 
@@ -1263,38 +1137,48 @@ onclick="closeModal()">
 
 <footer>
 
-<b>JARVIS 7.0</b>
+<b>JARVIS V8</b>
 <br><br>
 Personal Entertainment Hub
 <br><br>
-Anime data: Jikan / MyAnimeList • TV data: TVmaze
+Movie & TV poster data powered by TMDB when API key is configured.
+Anime data powered by Jikan / MyAnimeList.
 
 </footer>
 
 
 <script>
 
-/* =========================================
-   DATABASE
-========================================= */
+/* =====================================================
+   CONFIG
+===================================================== */
+
+/*
+ IMPORTANT:
+
+ If you have a TMDB API key, put it between the quotes.
+
+ Example:
+
+ const TMDB_API_KEY="YOUR_KEY_HERE";
+
+ Do NOT post your API key publicly.
+*/
+
+const TMDB_API_KEY="";
+
+const TMDB_IMAGE="https://image.tmdb.org/t/p/w500";
 
 const JIKAN="https://api.jikan.moe/v4";
 
 const TVMAZE="https://api.tvmaze.com";
 
 
-let animeSeries=[];
+/* =====================================================
+   DATA
+===================================================== */
 
-let animeMovies=[];
-
-let tvSeries=[];
-
-
-/* =========================================
-   MARVEL CATALOGUE
-========================================= */
-
-const marvelData=[
+let marvelMovies=[
 
 ["Iron Man",2008,"MCU"],
 ["The Incredible Hulk",2008,"MCU"],
@@ -1329,15 +1213,15 @@ const marvelData=[
 ["Ant-Man and the Wasp: Quantumania",2023,"MCU"],
 ["Guardians of the Galaxy Vol. 3",2023,"MCU"],
 ["The Marvels",2023,"MCU"],
-["Deadpool & Wolverine",2024,"Deadpool"],
+["Deadpool & Wolverine",2024,"Sony"],
 ["Spider-Man",2002,"Spider-Man"],
 ["Spider-Man 2",2004,"Spider-Man"],
 ["Spider-Man 3",2007,"Spider-Man"],
 ["The Amazing Spider-Man",2012,"Spider-Man"],
 ["The Amazing Spider-Man 2",2014,"Spider-Man"],
-["Venom",2018,"Venom"],
-["Venom: Let There Be Carnage",2021,"Venom"],
-["Venom: The Last Dance",2024,"Venom"],
+["Venom",2018,"Sony"],
+["Venom: Let There Be Carnage",2021,"Sony"],
+["Venom: The Last Dance",2024,"Sony"],
 ["X-Men",2000,"X-Men"],
 ["X2",2003,"X-Men"],
 ["X-Men: The Last Stand",2006,"X-Men"],
@@ -1355,41 +1239,242 @@ const marvelData=[
  category:x[2],
  rank:i+1,
  type:"Marvel",
- poster:""
+ poster:"",
+ overview:"",
+ rating:"",
+ genres:[]
 
 }));
 
 
+let animeSeries=[];
+let animeMovies=[];
+let tvSeries=[];
+
 let marvelFilter="all";
-
 let animeMode="series";
-
 let savedMode="fav";
 
 
-/* =========================================
-   API
-========================================= */
+/* =====================================================
+   HELPERS
+===================================================== */
 
 async function api(url){
 
  const response=await fetch(url);
 
  if(!response.ok)
-   throw new Error("API Error");
+   throw new Error("API request failed");
 
  return await response.json();
 
 }
 
 
-/* =========================================
-   ANIME LOADER
-========================================= */
+function fallback(title){
+
+ return "https://placehold.co/500x750/07131a/00eaff?text="+
+ encodeURIComponent(title);
+
+}
+
+
+function escapeHTML(text){
+
+ return String(text||"")
+ .replace(/&/g,"&amp;")
+ .replace(/</g,"&lt;")
+ .replace(/>/g,"&gt;")
+ .replace(/"/g,"&quot;")
+ .replace(/'/g,"&#039;");
+
+}
+
+
+function stripHTML(text){
+
+ if(!text)return"";
+
+ const div=document.createElement("div");
+
+ div.innerHTML=text;
+
+ return div.textContent||div.innerText||"";
+
+}
+
+
+/* =====================================================
+   TMDB SEARCH
+===================================================== */
+
+async function tmdbSearch(title,year){
+
+ if(!TMDB_API_KEY)
+   return null;
+
+
+ const url=
+   `https://api.themoviedb.org/3/search/movie`+
+   `?api_key=${encodeURIComponent(TMDB_API_KEY)}`+
+   `&query=${encodeURIComponent(title)}`+
+   `&include_adult=false`;
+
+
+ try{
+
+   const data=await api(url);
+
+   let results=data.results||[];
+
+   if(year){
+
+     const exact=
+       results.find(x=>
+         x.release_date &&
+         x.release_date.startsWith(String(year))
+       );
+
+     if(exact)
+       return exact;
+
+   }
+
+   return results[0]||null;
+
+ }catch(e){
+
+   return null;
+
+ }
+
+}
+
+
+/* =====================================================
+   LOAD MARVEL POSTERS
+===================================================== */
+
+async function loadMarvel(){
+
+ const grid=
+   document.getElementById("marvelGrid");
+
+ grid.innerHTML=`
+
+ <div class="loading">
+
+   <div class="spinner"></div>
+
+   🦸 Loading real Marvel posters...
+
+ </div>
+
+ `;
+
+
+ if(!TMDB_API_KEY){
+
+   document.getElementById("tmdbStatus")
+   .innerHTML=
+   `⚠️ TMDB API key not configured. Add your key in the JavaScript <b>TMDB_API_KEY</b> variable to enable real movie posters.`;
+
+   grid.innerHTML=`
+
+   <div class="empty">
+
+     🦸 Marvel database ready.
+
+     <br><br>
+
+     <b>Real posters need your TMDB API key.</b>
+
+     <br><br>
+
+     Add the key to <b>TMDB_API_KEY</b> near the top of the code,
+     then press <b>LOAD POSTERS</b>.
+
+   </div>
+
+   `;
+
+   return;
+
+ }
+
+
+ let completed=0;
+
+
+ for(const movie of marvelMovies){
+
+   const result=
+     await tmdbSearch(
+       movie.title,
+       movie.year
+     );
+
+
+   if(result){
+
+     movie.poster=
+       result.poster_path
+       ?TMDB_IMAGE+result.poster_path
+       :"";
+
+     movie.overview=
+       result.overview||"";
+
+     movie.rating=
+       result.vote_average
+       ?result.vote_average.toFixed(1)
+       :"";
+
+     movie.genres=[];
+
+   }
+
+
+   completed++;
+
+   grid.innerHTML=`
+
+   <div class="loading">
+
+     <div class="spinner"></div>
+
+     🦸 Poster ${completed}/${marvelMovies.length}
+
+   </div>
+
+   `;
+
+ }
+
+
+ document.getElementById("tmdbStatus")
+ .innerHTML=
+ `✅ TMDB poster system active. Real movie posters loaded.`;
+
+
+ renderMarvel();
+
+ updateStats();
+
+ toast("🦸 Marvel posters loaded!");
+
+}
+
+
+/* =====================================================
+   ANIME
+===================================================== */
 
 async function loadAnime(){
 
- const grid=document.getElementById("animeGrid");
+ const grid=
+   document.getElementById("animeGrid");
 
  grid.innerHTML=`
 
@@ -1449,8 +1534,8 @@ async function loadAnime(){
        x.synopsis||
        "No synopsis available.",
 
-     fact:
-       `MyAnimeList Rank #${x.rank||i+1}`
+     genres:
+       x.genres?.map(g=>g.name)||[]
 
    }));
 
@@ -1483,8 +1568,8 @@ async function loadAnime(){
        x.synopsis||
        "No synopsis available.",
 
-     fact:
-       `MyAnimeList Rank #${x.rank||i+1}`
+     genres:
+       x.genres?.map(g=>g.name)||[]
 
    }));
 
@@ -1495,15 +1580,13 @@ async function loadAnime(){
 
    toast("🍥 Anime loaded!");
 
- }catch(error){
-
-   console.error(error);
+ }catch(e){
 
    grid.innerHTML=`
 
    <div class="empty">
 
-     ❌ Anime loading failed.
+     ❌ Anime API failed.
 
      <br><br>
 
@@ -1518,13 +1601,14 @@ async function loadAnime(){
 }
 
 
-/* =========================================
-   TV LOADER
-========================================= */
+/* =====================================================
+   TV
+===================================================== */
 
 async function loadTV(){
 
- const grid=document.getElementById("tvGrid");
+ const grid=
+   document.getElementById("tvGrid");
 
  grid.innerHTML=`
 
@@ -1532,7 +1616,7 @@ async function loadTV(){
 
    <div class="spinner"></div>
 
-   📺 Loading Top 100 TV Series...
+   📺 Loading TV posters...
 
  </div>
 
@@ -1541,20 +1625,11 @@ async function loadTV(){
 
  try{
 
-   /*
-     TVmaze show index is paginated.
-     We fetch several pages so we have
-     enough titles to rank/filter.
-   */
-
    const pages=await Promise.all([
 
      api(`${TVMAZE}/shows?page=0`),
-
      api(`${TVMAZE}/shows?page=1`),
-
      api(`${TVMAZE}/shows?page=2`),
-
      api(`${TVMAZE}/shows?page=3`)
 
    ]);
@@ -1563,9 +1638,11 @@ async function loadTV(){
    const all=pages.flat();
 
 
-   tvSeries=all
+   tvSeries=
 
-     .filter(x=>x && x.name)
+     all
+
+     .filter(x=>x&&x.name)
 
      .sort((a,b)=>
        (b.rating?.average||0)-
@@ -1601,8 +1678,6 @@ async function loadTV(){
 
        genres:x.genres||[],
 
-       status:x.status||"",
-
        network:
          x.network?.name||
          x.webChannel?.name||
@@ -1615,17 +1690,15 @@ async function loadTV(){
 
    updateStats();
 
-   toast("📺 Top 100 TV Series loaded!");
+   toast("📺 TV posters loaded!");
 
- }catch(error){
-
-   console.error(error);
+ }catch(e){
 
    grid.innerHTML=`
 
    <div class="empty">
 
-     ❌ TV database could not load.
+     ❌ TV API failed.
 
      <br><br>
 
@@ -1640,34 +1713,9 @@ async function loadTV(){
 }
 
 
-function stripHTML(text){
-
- if(!text)return"";
-
- const div=document.createElement("div");
-
- div.innerHTML=text;
-
- return div.textContent||div.innerText||"";
-
-}
-
-
-/* =========================================
-   POSTER FALLBACK
-========================================= */
-
-function fallback(title){
-
- return "https://placehold.co/500x750/07131a/00eaff?text="+
- encodeURIComponent(title);
-
-}
-
-
-/* =========================================
+/* =====================================================
    STORAGE
-========================================= */
+===================================================== */
 
 function isWatched(title){
 
@@ -1700,12 +1748,6 @@ function toggleWatched(title){
 
  renderAll();
 
- toast(
-   isWatched(title)
-   ?"✅ Marked watched"
-   :"Removed from watched"
- );
-
 }
 
 
@@ -1722,18 +1764,12 @@ function toggleFavorite(title){
 
  renderAll();
 
- toast(
-   isFavorite(title)
-   ?"❤️ Added to favorites"
-   :"Removed from favorites"
- );
-
 }
 
 
-/* =========================================
+/* =====================================================
    CARD
-========================================= */
+===================================================== */
 
 function makeCard(item,index){
 
@@ -1742,97 +1778,95 @@ function makeCard(item,index){
    fallback(item.title);
 
 
- const rating=
-   item.rating
-   ?`⭐ ${item.rating}`
-   :"";
-
-
  return `
 
  <article class="card">
 
-   <div class="poster">
+ <div class="poster">
 
-     <div class="rank">
-       #${item.rank||index+1}
-     </div>
+   <div class="rank">
+     #${item.rank||index+1}
+   </div>
 
-     <img
-       src="${poster}"
-       alt="${escapeHTML(item.title)}"
-       loading="lazy"
-       onerror="
-         this.onerror=null;
-         this.src='${fallback(item.title)}';
-       "
-     >
+   <div class="badge">
+     ${escapeHTML(item.type||"")}
+   </div>
+
+   <img
+     src="${poster}"
+     alt="${escapeHTML(item.title)}"
+     loading="lazy"
+     onerror="
+       this.onerror=null;
+       this.src='${fallback(item.title)}';
+     "
+   >
+
+ </div>
+
+
+ <div class="cardbody">
+
+   <div class="title">
+     ${escapeHTML(item.title)}
+   </div>
+
+
+   <div class="meta">
+
+     ${
+       item.year
+       ?escapeHTML(item.year)+" • "
+       :""
+     }
+
+     ${
+       item.rating
+       ?`⭐ ${escapeHTML(item.rating)}`
+       :""
+     }
 
    </div>
 
 
-   <div class="cardbody">
+   <div class="cardbuttons">
 
-     <div class="title">
-       ${escapeHTML(item.title)}
-     </div>
+     <button
+       class="${isWatched(item.title)?"watched":""}"
+       onclick="toggleWatched('${escapeHTML(item.title)}')">
 
+       ${
+         isWatched(item.title)
+         ?"✓ WATCHED"
+         :"✓ WATCH"
+       }
 
-     <div class="meta">
-
-       ${escapeHTML(
-
-         [
-           item.year,
-           rating,
-           item.type
-         ]
-         .filter(Boolean)
-         .join(" • ")
-
-       )}
-
-     </div>
-
-
-     <div class="cardbuttons">
-
-       <button
-         class="${isWatched(item.title)?"watched":""}"
-         onclick="toggleWatched('${escapeHTML(item.title)}')">
-
-         ${
-           isWatched(item.title)
-           ?"✓ WATCHED"
-           :"✓ WATCH"
-         }
-
-       </button>
-
-
-       <button
-         onclick="toggleFavorite('${escapeHTML(item.title)}')">
-
-         ${
-           isFavorite(item.title)
-           ?"❤️ SAVED"
-           :"♡ SAVE"
-         }
-
-       </button>
-
-     </div>
+     </button>
 
 
      <button
-       class="detailsbtn"
-       onclick="showDetails('${escapeHTML(item.title)}')">
+       onclick="toggleFavorite('${escapeHTML(item.title)}')">
 
-       🧠 DETAILS
+       ${
+         isFavorite(item.title)
+         ?"❤️ SAVED"
+         :"♡ SAVE"
+       }
 
      </button>
 
    </div>
+
+
+   <button
+     class="detailsbtn"
+     onclick="showDetails('${escapeHTML(item.title)}')">
+
+     🧠 DETAILS
+
+   </button>
+
+ </div>
 
  </article>
 
@@ -1841,21 +1875,9 @@ function makeCard(item,index){
 }
 
 
-function escapeHTML(text){
-
- return String(text||"")
- .replace(/&/g,"&amp;")
- .replace(/</g,"&lt;")
- .replace(/>/g,"&gt;")
- .replace(/"/g,"&quot;")
- .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================================
-   RENDER MARVEL
-========================================= */
+/* =====================================================
+   RENDER
+===================================================== */
 
 function renderMarvel(){
 
@@ -1868,14 +1890,14 @@ function renderMarvel(){
  const search=
    (
      document.getElementById("marvelSearch")
-     ?.value||
-     ""
+     ?.value||""
    ).toLowerCase();
 
 
- let list=marvelMovies.filter(x=>
-   x.title.toLowerCase().includes(search)
- );
+ let list=
+   marvelMovies.filter(x=>
+     x.title.toLowerCase().includes(search)
+   );
 
 
  if(marvelFilter!=="all"){
@@ -1893,10 +1915,6 @@ function renderMarvel(){
 }
 
 
-/* =========================================
-   RENDER ANIME
-========================================= */
-
 function renderAnime(){
 
  const grid=
@@ -1908,8 +1926,7 @@ function renderAnime(){
  const search=
    (
      document.getElementById("animeSearch")
-     ?.value||
-     ""
+     ?.value||""
    ).toLowerCase();
 
 
@@ -1923,10 +1940,7 @@ function renderAnime(){
    list=animeMovies;
 
  else
-   list=[
-     ...animeSeries,
-     ...animeMovies
-   ];
+   list=[...animeSeries,...animeMovies];
 
 
  list=list.filter(x=>
@@ -1957,10 +1971,6 @@ function renderAnime(){
 }
 
 
-/* =========================================
-   RENDER TV
-========================================= */
-
 function renderTV(){
 
  const grid=
@@ -1972,8 +1982,7 @@ function renderTV(){
  const search=
    (
      document.getElementById("tvSearch")
-     ?.value||
-     ""
+     ?.value||""
    ).toLowerCase();
 
 
@@ -2006,67 +2015,21 @@ function renderTV(){
 }
 
 
-/* =========================================
-   SAVED
-========================================= */
+/* =====================================================
+   DETAILS
+===================================================== */
 
 function allItems(){
 
  return [
-
    ...marvelMovies,
    ...animeSeries,
    ...animeMovies,
    ...tvSeries
-
  ];
 
 }
 
-
-function renderSaved(){
-
- const grid=
-   document.getElementById("savedGrid");
-
- if(!grid)return;
-
-
- const list=
-   allItems().filter(x=>
-
-     savedMode==="fav"
-     ?isFavorite(x.title)
-     :isWatched(x.title)
-
-   );
-
-
- grid.innerHTML=
-   list.length
-
-   ?list.map(makeCard).join("")
-
-   :`
-
-   <div class="empty">
-
-     ${
-       savedMode==="fav"
-       ?"❤️ No favorites yet."
-       :"✅ No watched titles yet."
-     }
-
-   </div>
-
-   `;
-
-}
-
-
-/* =========================================
-   DETAILS
-========================================= */
 
 function showDetails(title){
 
@@ -2078,134 +2041,121 @@ function showDetails(title){
  if(!item)return;
 
 
- const poster=
-   item.poster||
-   fallback(item.title);
-
-
  document.getElementById("modalContent")
  .innerHTML=`
 
  <div class="detail">
 
+ <div>
+
+   <img
+     src="${item.poster||fallback(item.title)}"
+     alt="${escapeHTML(item.title)}">
+
+ </div>
+
+
+ <div>
+
+   <h2>
+     ${escapeHTML(item.title)}
+   </h2>
+
+
    <div>
 
-     <img
-       src="${poster}"
-       alt="${escapeHTML(item.title)}">
+     <span class="tag">
+       ${escapeHTML(item.type)}
+     </span>
+
+     ${
+       item.year
+       ?`
+       <span class="tag">
+         ${item.year}
+       </span>
+       `
+       :""
+     }
+
+     ${
+       item.rating
+       ?`
+       <span class="tag">
+         ⭐ ${item.rating}
+       </span>
+       `
+       :""
+     }
 
    </div>
 
 
-   <div>
+   <p>
 
-     <h2>
-       ${escapeHTML(item.title)}
-     </h2>
+   <b>📖 SYNOPSIS</b>
+
+   <br><br>
+
+   ${escapeHTML(
+     item.overview||
+     "No synopsis available."
+   )}
+
+   </p>
 
 
-     <div>
-
-       <span class="tag">
-         ${escapeHTML(item.type)}
-       </span>
-
-       ${
-         item.year
-         ?`
-           <span class="tag">
-             ${item.year}
-           </span>
-         `
-         :""
-       }
-
-       ${
-         item.rating
-         ?`
-           <span class="tag">
-             ⭐ ${item.rating}
-           </span>
-         `
-         :""
-       }
-
-     </div>
-
+   ${
+     item.genres?.length
+     ?`
 
      <p>
 
-       <b>📖 SYNOPSIS</b>
+     <b>🎭 GENRES</b>
 
-       <br><br>
+     <br>
 
+     ${item.genres.map(g=>
+       `<span class="tag">
        ${escapeHTML(
-         item.overview||
-         "No synopsis available."
+         typeof g==="string"
+         ?g
+         :g.name
        )}
+       </span>`
+     ).join("")}
 
      </p>
 
-
-     ${
-       item.genres?.length
-       ?`
-
-         <p>
-
-         <b>🎭 GENRES</b>
-
-         <br>
-
-         ${item.genres.map(g=>
-           `<span class="tag">
-             ${escapeHTML(g)}
-           </span>`
-         ).join("")}
-
-         </p>
-
-       `
-       :""
-     }
+     `
+     :""
+   }
 
 
-     ${
-       item.network
-       ?`
-         <p>
-           📺 Network:
-           ${escapeHTML(item.network)}
-         </p>
-       `
-       :""
-     }
+   <button
+     class="btn greenbtn"
+     onclick="
+       toggleWatched('${escapeHTML(item.title)}');
+       closeModal();
+     ">
+
+     ✓ WATCHED
+
+   </button>
 
 
-     <button
-       class="btn greenbtn"
-       onclick="
-         toggleWatched('${escapeHTML(item.title)}');
-         closeModal();
-       ">
+   <button
+     class="btn"
+     onclick="
+       toggleFavorite('${escapeHTML(item.title)}');
+       closeModal();
+     ">
 
-       ✓ MARK WATCHED
+     ❤️ FAVORITE
 
-     </button>
+   </button>
 
-
-     <button
-       class="btn"
-       onclick="
-         toggleFavorite('${escapeHTML(item.title)}');
-         closeModal();
-       ">
-
-       ❤️ FAVORITE
-
-     </button>
-
-   </div>
+ </div>
 
  </div>
 
@@ -2226,9 +2176,64 @@ function closeModal(){
 }
 
 
-/* =========================================
+/* =====================================================
+   SAVED
+===================================================== */
+
+function renderSaved(){
+
+ const grid=
+   document.getElementById("savedGrid");
+
+ if(!grid)return;
+
+
+ const list=
+   allItems().filter(x=>
+
+     savedMode==="fav"
+     ?isFavorite(x.title)
+     :isWatched(x.title)
+
+   );
+
+
+ grid.innerHTML=
+
+ list.length
+
+ ?list.map(makeCard).join("")
+
+ :`
+
+ <div class="empty">
+
+ ${
+   savedMode==="fav"
+   ?"❤️ No favorites yet."
+   :"✅ No watched titles yet."
+ }
+
+ </div>
+
+ `;
+
+}
+
+
+function renderAll(){
+
+ renderMarvel();
+ renderAnime();
+ renderTV();
+ renderSaved();
+
+}
+
+
+/* =====================================================
    NAVIGATION
-========================================= */
+===================================================== */
 
 function page(id){
 
@@ -2258,25 +2263,15 @@ function page(id){
    loadTV();
 
 
+ if(id==="marvel")
+   renderMarvel();
+
+
  if(id==="saved")
    renderSaved();
 
 }
 
-
-function renderAll(){
-
- renderMarvel();
- renderAnime();
- renderTV();
- renderSaved();
-
-}
-
-
-/* =========================================
-   FILTER
-========================================= */
 
 function active(btn){
 
@@ -2291,26 +2286,23 @@ function active(btn){
 }
 
 
-/* =========================================
+/* =====================================================
    STATS
-========================================= */
+===================================================== */
 
 function updateStats(){
 
  const items=allItems();
-
 
  const watched=
    items.filter(x=>
      isWatched(x.title)
    ).length;
 
-
  const fav=
    items.filter(x=>
      isFavorite(x.title)
    ).length;
-
 
  const total=items.length;
 
@@ -2318,14 +2310,11 @@ function updateStats(){
  document.getElementById("total")
  .textContent=total;
 
-
  document.getElementById("watched")
  .textContent=watched;
 
-
  document.getElementById("favorites")
  .textContent=fav;
-
 
  document.getElementById("progress")
  .textContent=
@@ -2336,9 +2325,9 @@ function updateStats(){
 }
 
 
-/* =========================================
-   MARVEL WATCH ORDER
-========================================= */
+/* =====================================================
+   MARVEL ORDER
+===================================================== */
 
 const MCU=[
 
@@ -2383,23 +2372,23 @@ function renderTimeline(){
 
  <div class="timelineitem">
 
-   <b>
-     ${String(i+1).padStart(2,"0")}
-   </b>
+ <b>
+ ${String(i+1).padStart(2,"0")}
+ </b>
 
-   ${escapeHTML(x)}
+ ${escapeHTML(x)}
 
-   <br>
+ <br>
 
-   <small style="color:#718991">
+ <small style="color:#718991">
 
-     ${
-       isWatched(x)
-       ?"✓ Watched"
-       :"Not watched"
-     }
+ ${
+   isWatched(x)
+   ?"✓ Watched"
+   :"Not watched"
+ }
 
-   </small>
+ </small>
 
  </div>
 
@@ -2408,9 +2397,9 @@ function renderTimeline(){
 }
 
 
-/* =========================================
+/* =====================================================
    RANDOM
-========================================= */
+===================================================== */
 
 function randomPick(){
 
@@ -2444,9 +2433,9 @@ function randomPick(){
 }
 
 
-/* =========================================
+/* =====================================================
    QUIZ
-========================================= */
+===================================================== */
 
 const questions=[
 
@@ -2484,7 +2473,6 @@ const questions=[
 
 
 let questionIndex=0;
-
 let quizScore=0;
 
 
@@ -2492,8 +2480,7 @@ function nextQuestion(){
 
  const q=
    questions[
-     questionIndex%
-     questions.length
+     questionIndex%questions.length
    ];
 
 
@@ -2510,13 +2497,13 @@ function nextQuestion(){
  .innerHTML=
    q[1].map((answer,i)=>`
 
-     <button
-       onclick="answer(${i},${q[2]})">
+   <button
+     onclick="answer(${i},${q[2]})">
 
-       ${String.fromCharCode(65+i)}.
-       ${escapeHTML(answer)}
+     ${String.fromCharCode(65+i)}.
+     ${escapeHTML(answer)}
 
-     </button>
+   </button>
 
    `).join("");
 
@@ -2545,9 +2532,9 @@ function answer(selected,correct){
 }
 
 
-/* =========================================
+/* =====================================================
    BATTLE
-========================================= */
+===================================================== */
 
 const fighters=[
 
@@ -2614,7 +2601,7 @@ function newBattle(){
    class="btn redbtn"
    onclick="toast('${escapeHTML(a)} wins! ⚔️')">
 
-   CHOOSE
+ CHOOSE
 
  </button>
 
@@ -2632,7 +2619,7 @@ function newBattle(){
    class="btn goldbtn"
    onclick="toast('${escapeHTML(b)} wins! ⚔️')">
 
-   CHOOSE
+ CHOOSE
 
  </button>
 
@@ -2641,9 +2628,9 @@ function newBattle(){
 }
 
 
-/* =========================================
-   NOTES
-========================================= */
+/* =====================================================
+   VAULT
+===================================================== */
 
 function saveNotes(){
 
@@ -2652,24 +2639,17 @@ function saveNotes(){
    document.getElementById("notes").value
  );
 
-
  toast("📝 Notes saved!");
 
 }
 
-
-/* =========================================
-   FILES
-========================================= */
 
 document.getElementById("fileInput")
 .addEventListener("change",function(){
 
  const old=
    JSON.parse(
-     localStorage.getItem(
-       "jarvis_files"
-     )||"[]"
+     localStorage.getItem("jarvis_files")||"[]"
    );
 
 
@@ -2681,9 +2661,7 @@ document.getElementById("fileInput")
 
      size:file.size,
 
-     date:
-       new Date()
-       .toLocaleString()
+     date:new Date().toLocaleString()
 
    });
 
@@ -2698,7 +2676,7 @@ document.getElementById("fileInput")
 
  renderFiles();
 
- toast("📁 File saved locally!");
+ toast("📁 File information saved!");
 
 });
 
@@ -2707,9 +2685,7 @@ function renderFiles(){
 
  const files=
    JSON.parse(
-     localStorage.getItem(
-       "jarvis_files"
-     )||"[]"
+     localStorage.getItem("jarvis_files")||"[]"
    );
 
 
@@ -2720,8 +2696,7 @@ function renderFiles(){
 
  ?files.map(x=>`
 
-   <div class="panel"
-        style="margin-top:8px">
+   <div class="panel" style="margin-top:8px">
 
      📄 ${escapeHTML(x.name)}
 
@@ -2740,9 +2715,9 @@ function renderFiles(){
 }
 
 
-/* =========================================
+/* =====================================================
    CLOCK
-========================================= */
+===================================================== */
 
 function updateClock(){
 
@@ -2757,13 +2732,12 @@ function updateClock(){
 }
 
 setInterval(updateClock,1000);
-
 updateClock();
 
 
-/* =========================================
+/* =====================================================
    TOAST
-========================================= */
+===================================================== */
 
 let toastTimer;
 
@@ -2773,14 +2747,11 @@ function toast(message){
  const el=
    document.getElementById("toast");
 
-
  el.textContent=message;
 
  el.classList.add("show");
 
-
  clearTimeout(toastTimer);
-
 
  toastTimer=setTimeout(()=>{
 
@@ -2791,9 +2762,9 @@ function toast(message){
 }
 
 
-/* =========================================
-   START JARVIS
-========================================= */
+/* =====================================================
+   START
+===================================================== */
 
 renderMarvel();
 
@@ -2820,9 +2791,7 @@ if(savedNotes){
 }
 
 
-console.log(
- "JARVIS 7.0 ONLINE 🤖"
-);
+console.log("JARVIS V8 ONLINE 🤖");
 
 </script>
 
