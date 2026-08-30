@@ -1080,6 +1080,2236 @@ console.log(
 );
 
 </script>
+<!-- =====================================================
+     JARVIS V10 — PART 2
+     MOVIES + ANIME + TV SERIES + MARVEL
+===================================================== -->
+
+<style>
+
+.jv10-library{
+  width:min(1450px,94%);
+  margin:auto;
+  padding:35px 0 90px;
+}
+
+.jv10-library-title{
+  margin-bottom:25px;
+}
+
+.jv10-library-title h1{
+  font-size:clamp(35px,6vw,65px);
+  margin-bottom:8px;
+}
+
+.jv10-library-title h1 span{
+  color:#ffd43b;
+}
+
+.jv10-library-title p{
+  color:#718991;
+}
+
+.jv10-tabs{
+  display:flex;
+  gap:8px;
+  overflow-x:auto;
+  padding-bottom:10px;
+  margin-bottom:25px;
+}
+
+.jv10-tab{
+  flex:0 0 auto;
+  padding:10px 15px;
+  border-radius:8px;
+  border:1px solid #173d47;
+  background:#071219;
+  color:#8ba7ae;
+  cursor:pointer;
+}
+
+.jv10-tab.active,
+.jv10-tab:hover{
+  color:#00eaff;
+  border-color:#00eaff;
+}
+
+.jv10-library-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(6,1fr);
+  gap:16px;
+}
+
+.jv10-card{
+  position:relative;
+  overflow:hidden;
+  border-radius:13px;
+  background:#071117;
+  border:1px solid #14343d;
+  transition:.25s;
+}
+
+.jv10-card:hover{
+  transform:translateY(-5px);
+  border-color:#00eaff;
+  box-shadow:0 15px 35px #000b;
+}
+
+.jv10-poster{
+  width:100%;
+  aspect-ratio:2/3;
+  object-fit:cover;
+  display:block;
+  background:#0b171c;
+}
+
+.jv10-card-body{
+  padding:12px;
+}
+
+.jv10-card-title{
+  font-size:14px;
+  font-weight:700;
+  line-height:1.35;
+  min-height:38px;
+}
+
+.jv10-card-meta{
+  display:flex;
+  justify-content:space-between;
+  gap:5px;
+  margin-top:8px;
+  font-size:11px;
+  color:#7f9ba3;
+}
+
+.jv10-rating{
+  color:#ffd43b;
+}
+
+.jv10-card-buttons{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin-top:10px;
+}
+
+.jv10-card-btn{
+  border:1px solid #214a55;
+  background:#09181e;
+  color:#a8d9df;
+  border-radius:7px;
+  padding:7px 3px;
+  font-size:10px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.jv10-card-btn:hover{
+  border-color:#00eaff;
+  color:#00eaff;
+}
+
+.jv10-fav{
+  position:absolute;
+  top:8px;
+  right:8px;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  border:1px solid #ffffff35;
+  background:#000a;
+  color:white;
+  cursor:pointer;
+  backdrop-filter:blur(5px);
+}
+
+.jv10-fav.saved{
+  color:#ff4960;
+  border-color:#ff4960;
+}
+
+.jv10-badge{
+  position:absolute;
+  top:8px;
+  left:8px;
+  padding:5px 8px;
+  border-radius:6px;
+  background:#000b;
+  border:1px solid #ffffff25;
+  color:#ffd43b;
+  font-size:9px;
+  font-weight:bold;
+}
+
+.jv10-empty{
+  padding:50px;
+  text-align:center;
+  color:#627b83;
+  border:1px dashed #21434b;
+  border-radius:12px;
+}
+
+@media(max-width:1200px){
+
+  .jv10-library-grid{
+    grid-template-columns:
+      repeat(5,1fr);
+  }
+
+}
+
+@media(max-width:900px){
+
+  .jv10-library-grid{
+    grid-template-columns:
+      repeat(4,1fr);
+  }
+
+}
+
+@media(max-width:650px){
+
+  .jv10-library-grid{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+}
+
+</style>
+
+
+<script>
+
+/* =====================================================
+   DATABASE
+===================================================== */
+
+
+/* ---------- MOVIES ---------- */
+
+const JARVIS_MOVIES = [
+
+  ["Iron Man","2008",7.9,"https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg"],
+
+  ["The Incredible Hulk","2008",6.6,"https://image.tmdb.org/t/p/w500/gKzYx79y0AQTL4UAkJ3QnB9Fj4F.jpg"],
+
+  ["Iron Man 2","2010",6.8,"https://image.tmdb.org/t/p/w500/6WBeq4fCfn7ANtbhD6X5F8Wm2mV.jpg"],
+
+  ["Thor","2011",7.0,"https://image.tmdb.org/t/p/w500/prSfAi1xGrhLQNxVSUFh61xQ4Qy.jpg"],
+
+  ["Captain America: The First Avenger","2011",7.0,"https://image.tmdb.org/t/p/w500/vSNxAJTlD0r02V9sPYpOjqDZXGe.jpg"],
+
+  ["The Avengers","2012",8.0,"https://image.tmdb.org/t/p/w500/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg"],
+
+  ["Iron Man 3","2013",7.1,"https://image.tmdb.org/t/p/w500/qhTqZ6L1vX9TzT9Vj5T2b7k6W6.jpg"],
+
+  ["Thor: The Dark World","2013",6.8,"https://image.tmdb.org/t/p/w500/wp6OxE4poJ4G7c0U2Z8Qf1K8.jpg"],
+
+  ["Captain America: The Winter Soldier","2014",7.7,"https://image.tmdb.org/t/p/w500/tVFRpFw3xTedgPGqxW0AOI8Qhh0.jpg"],
+
+  ["Guardians of the Galaxy","2014",8.0,"https://image.tmdb.org/t/p/w500/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg"],
+
+  ["Avengers: Age of Ultron","2015",7.3,"https://image.tmdb.org/t/p/w500/4ssDuvEDkSArWEdyBl2X5EHv6Gv.jpg"],
+
+  ["Ant-Man","2015",7.0,"https://image.tmdb.org/t/p/w500/rQRnQfUl3k5Rh5y9LOV3Zd7F8.jpg"],
+
+  ["Captain America: Civil War","2016",7.8,"https://image.tmdb.org/t/p/w500/rAGiXaUfPzY7CDEyNKUofk3G.jpg"],
+
+  ["Doctor Strange","2016",7.5,"https://image.tmdb.org/t/p/w500/uGBVj3bEbCoqSiN1H3M1c7r8M.jpg"],
+
+  ["Guardians of the Galaxy Vol. 2","2017",7.6,"https://image.tmdb.org/t/p/w500/y4MBh0EjBlMuOzv9axM4qJf3.jpg"],
+
+  ["Spider-Man: Homecoming","2017",7.4,"https://image.tmdb.org/t/p/w500/c24sv2weTHPsmDa7jEMN0m2.jpg"],
+
+  ["Thor: Ragnarok","2017",7.9,"https://image.tmdb.org/t/p/w500/rzRwTcFvttcN1ZpX2xv0V.jpg"],
+
+  ["Black Panther","2018",7.4,"https://image.tmdb.org/t/p/w500/uxzzxijgPIY7slzFvMotPv8wjKA.jpg"],
+
+  ["Avengers: Infinity War","2018",8.2,"https://image.tmdb.org/t/p/w500/7WsyChQLEftFiDOVTGkv3hFQ.jpg"],
+
+  ["Ant-Man and the Wasp","2018",7.0,"https://image.tmdb.org/t/p/w500/cFQH0L5T7F4Qx7Z.jpg"],
+
+  ["Captain Marvel","2019",6.8,"https://image.tmdb.org/t/p/w500/AtsgWhDnHTq68L0lLsUr.jpg"],
+
+  ["Avengers: Endgame","2019",8.3,"https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg"],
+
+  ["Spider-Man: Far From Home","2019",7.4,"https://image.tmdb.org/t/p/w500/4q2NNj4S5d7k3.jpg"],
+
+  ["Black Widow","2021",6.7,"https://image.tmdb.org/t/p/w500/qAZ0pzat24kLdO3o4.jpg"],
+
+  ["Shang-Chi and the Legend of the Ten Rings","2021",7.4,"https://image.tmdb.org/t/p/w500/1BIoJGKbXjdFDAqUEiA6uk.jpg"],
+
+  ["Eternals","2021",6.3,"https://image.tmdb.org/t/p/w500/lFByFSLV5WDJEv3KabBdQ.jpg"],
+
+  ["Spider-Man: No Way Home","2021",8.2,"https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4.jpg"],
+
+  ["Doctor Strange in the Multiverse of Madness","2022",6.9,"https://image.tmdb.org/t/p/w500/9Gtg2DzBhmYamXBS1hKaW.jpg"],
+
+  ["Thor: Love and Thunder","2022",6.2,"https://image.tmdb.org/t/p/w500/pIkRyD18kl4FhoCNQuWxWu5c.jpg"],
+
+  ["Black Panther: Wakanda Forever","2022",7.0,"https://image.tmdb.org/t/p/w500/sv1xJUazXeYqALzczSZ3O6nkH.jpg"],
+
+  ["Ant-Man and the Wasp: Quantumania","2023",6.0,"https://image.tmdb.org/t/p/w500/qnqGbB22YJ7.jpg"],
+
+  ["Guardians of the Galaxy Vol. 3","2023",7.9,"https://image.tmdb.org/t/p/w500/r2J02Z2OpNTctfOSN1Ydgii51I.jpg"],
+
+  ["The Marvels","2023",5.5,"https://image.tmdb.org/t/p/w500/9GBhzXMFjgcZ3FdR9wJYqY3.jpg"]
+
+];
+
+
+/* ---------- ANIME ---------- */
+
+const JARVIS_ANIME = [
+
+  ["One Piece","Series",9.0,"https://cdn.myanimelist.net/images/anime/1244/138851.jpg"],
+
+  ["Attack on Titan","Series",9.1,"https://cdn.myanimelist.net/images/anime/10/47347.jpg"],
+
+  ["Demon Slayer","Series",8.6,"https://cdn.myanimelist.net/images/anime/1286/99889.jpg"],
+
+  ["Death Note","Series",8.6,"https://cdn.myanimelist.net/images/anime/9/9453.jpg"],
+
+  ["Naruto: Shippuden","Series",8.6,"https://cdn.myanimelist.net/images/anime/1565/111305.jpg"],
+
+  ["Jujutsu Kaisen","Series",8.6,"https://cdn.myanimelist.net/images/anime/1171/109222.jpg"],
+
+  ["My Hero Academia","Series",8.0,"https://cdn.myanimelist.net/images/anime/10/78745.jpg"],
+
+  ["Hunter x Hunter","Series",9.0,"https://cdn.myanimelist.net/images/anime/1337/99013.jpg"],
+
+  ["Fullmetal Alchemist: Brotherhood","Series",9.1,"https://cdn.myanimelist.net/images/anime/1223/96541.jpg"],
+
+  ["Tokyo Ghoul","Series",7.7,"https://cdn.myanimelist.net/images/anime/1498/134443.jpg"],
+
+  ["Your Name","Movie",8.8,"https://cdn.myanimelist.net/images/anime/5/87048.jpg"],
+
+  ["A Silent Voice","Movie",8.9,"https://cdn.myanimelist.net/images/anime/1122/96435.jpg"],
+
+  ["Weathering With You","Movie",8.3,"https://cdn.myanimelist.net/images/anime/1341/101362.jpg"],
+
+  ["I Want to Eat Your Pancreas","Movie",8.5,"https://cdn.myanimelist.net/images/anime/1176/92110.jpg"],
+
+  ["Suzume","Movie",8.2,"https://cdn.myanimelist.net/images/anime/1598/132696.jpg"],
+
+  ["Spirited Away","Movie",8.8,"https://cdn.myanimelist.net/images/anime/6/79597.jpg"],
+
+  ["Howl's Moving Castle","Movie",8.7,"https://cdn.myanimelist.net/images/anime/5/75810.jpg"],
+
+  ["Your Lie in April","Series",8.6,"https://cdn.myanimelist.net/images/anime/3/67177.jpg"],
+
+  ["Haikyuu!!","Series",8.7,"https://cdn.myanimelist.net/images/anime/7/76014.jpg"],
+
+  ["Vinland Saga","Series",8.8,"https://cdn.myanimelist.net/images/anime/1500/103005.jpg"]
+
+];
+
+
+/* ---------- TV SERIES ---------- */
+
+const JARVIS_SERIES = [
+
+  ["Breaking Bad",9.5,"https://image.tmdb.org/t/p/w500/ztkUQFLlC1T1.jpg"],
+
+  ["Game of Thrones",9.2,"https://image.tmdb.org/t/p/w500/1XS1oqL89opfnbLl8WnZY1O1.jpg"],
+
+  ["The Sopranos",9.2,"https://image.tmdb.org/t/p/w500/rTc7ZXdroqjkKIVFjCwW0.jpg"],
+
+  ["The Wire",9.3,"https://image.tmdb.org/t/p/w500/4lbclFySvugI51fwsyxBTo2h.jpg"],
+
+  ["Stranger Things",8.6,"https://image.tmdb.org/t/p/w500/x2LSRK2Cnvv9.jpg"],
+
+  ["Dark",8.7,"https://image.tmdb.org/t/p/w500/apbrbWs8M9lyOpJYU5WXrpFbk.jpg"],
+
+  ["Peaky Blinders",8.8,"https://image.tmdb.org/t/p/w500/vUUqzWa2LnHIVqkaKVlVGk.jpg"],
+
+  ["The Boys",8.7,"https://image.tmdb.org/t/p/w500/stTEycfG9928HYGEISBFaG.jpg"],
+
+  ["The Last of Us",8.7,"https://image.tmdb.org/t/p/w500/uKvVjHNqB5VmOrdxqAt2F7J.jpg"],
+
+  ["Sherlock",9.1,"https://image.tmdb.org/t/p/w500/7WTsnHkbA0FaG6.jpg"],
+
+  ["Friends",8.9,"https://image.tmdb.org/t/p/w500/f496cm9enuEsZkSP0.jpg"],
+
+  ["The Office",8.9,"https://image.tmdb.org/t/p/w500/qWnJzyZhyy74gjpSjIXWmuk.jpg"],
+
+  ["Better Call Saul",9.0,"https://image.tmdb.org/t/p/w500/fC2HDm5t0kHl7mTm7jxMR31b7.jpg"],
+
+  ["Narcos",8.7,"https://image.tmdb.org/t/p/w500/rTmal9fDbwh5F0waol2.jpg"],
+
+  ["Money Heist",8.2,"https://image.tmdb.org/t/p/w500/reEMJA1uzscCbkpeRJeTT2.jpg"],
+
+  ["The Walking Dead",8.1,"https://image.tmdb.org/t/p/w500/ng3c0m7.jpg"],
+
+  ["House of the Dragon",8.4,"https://image.tmdb.org/t/p/w500/z2yahl2uefxDCl0nogcRBstw.jpg"],
+
+  ["Succession",8.9,"https://image.tmdb.org/t/p/w500/7A0.jpg"],
+
+  ["Black Mirror",8.7,"https://image.tmdb.org/t/p/w500/7PRddO7z7mcPi21nZTCMGShAyy.jpg"],
+
+  ["The Mandalorian",8.5,"https://image.tmdb.org/t/p/w500/eWZsZ9.jpg"]
+
+];
+
+
+/* ---------- MARVEL WATCH ORDER ---------- */
+
+const JARVIS_MARVEL = [
+
+  ["Iron Man","2008",7.9],
+
+  ["The Incredible Hulk","2008",6.6],
+
+  ["Iron Man 2","2010",6.8],
+
+  ["Thor","2011",7.0],
+
+  ["Captain America: The First Avenger","2011",7.0],
+
+  ["The Avengers","2012",8.0],
+
+  ["Iron Man 3","2013",7.1],
+
+  ["Thor: The Dark World","2013",6.8],
+
+  ["Captain America: The Winter Soldier","2014",7.7],
+
+  ["Guardians of the Galaxy","2014",8.0],
+
+  ["Avengers: Age of Ultron","2015",7.3],
+
+  ["Ant-Man","2015",7.0],
+
+  ["Captain America: Civil War","2016",7.8],
+
+  ["Doctor Strange","2016",7.5],
+
+  ["Guardians of the Galaxy Vol. 2","2017",7.6],
+
+  ["Spider-Man: Homecoming","2017",7.4],
+
+  ["Thor: Ragnarok","2017",7.9],
+
+  ["Black Panther","2018",7.4],
+
+  ["Avengers: Infinity War","2018",8.2],
+
+  ["Avengers: Endgame","2019",8.3],
+
+  ["Spider-Man: Far From Home","2019",7.4],
+
+  ["Black Widow","2021",6.7],
+
+  ["Shang-Chi","2021",7.4],
+
+  ["Eternals","2021",6.3],
+
+  ["Spider-Man: No Way Home","2021",8.2],
+
+  ["Doctor Strange 2","2022",6.9],
+
+  ["Thor: Love and Thunder","2022",6.2],
+
+  ["Black Panther: Wakanda Forever","2022",7.0],
+
+  ["Ant-Man: Quantumania","2023",6.0],
+
+  ["Guardians of the Galaxy Vol. 3","2023",7.9],
+
+  ["The Marvels","2023",5.5]
+
+];
+
+
+/* =====================================================
+   BUILD LIBRARY
+===================================================== */
+
+function jv10CreateCard(
+  item,
+  type,
+  index
+){
+
+  let title,
+      year="",
+      rating,
+      poster;
+
+
+  if(type==="movie"){
+
+    title=item[0];
+    year=item[1];
+    rating=item[2];
+    poster=item[3];
+
+  }
+
+
+  if(type==="anime"){
+
+    title=item[0];
+    year=item[1];
+    rating=item[2];
+    poster=item[3];
+
+  }
+
+
+  if(type==="series"){
+
+    title=item[0];
+    year="";
+    rating=item[1];
+    poster=item[2];
+
+  }
+
+
+  const key =
+    type+"-"+index;
+
+
+  const saved =
+    JSON.parse(
+      localStorage.getItem(
+        "jv10Favorites"
+      ) || "[]"
+    );
+
+
+  const isSaved =
+    saved.includes(key);
+
+
+  return `
+
+    <article
+      class="jv10-card"
+      data-title="${title.toLowerCase()}"
+    >
+
+      <button
+        class="jv10-fav ${isSaved ? "saved":""}"
+        onclick="
+          jv10Favorite(
+            '${key}',
+            this
+          )
+        "
+      >
+        ${isSaved ? "♥":"♡"}
+      </button>
+
+
+      <div class="jv10-badge">
+
+        #${index+1}
+
+      </div>
+
+
+      <img
+        class="jv10-poster"
+        src="${poster}"
+        alt="${title}"
+        loading="lazy"
+        onerror="
+          this.src='https://via.placeholder.com/500x750/071117/00eaff?text=JARVIS'
+        "
+      >
+
+
+      <div class="jv10-card-body">
+
+        <div class="jv10-card-title">
+
+          ${title}
+
+        </div>
+
+
+        <div class="jv10-card-meta">
+
+          <span>
+            ${year}
+          </span>
+
+          <span class="jv10-rating">
+            ⭐ ${rating}
+          </span>
+
+        </div>
+
+
+        <div class="jv10-card-buttons">
+
+          <button
+            class="jv10-card-btn"
+            onclick="
+              jv10Trailer('${title.replace(/'/g,"\\'")}')
+            "
+          >
+            ▶ TRAILER
+          </button>
+
+
+          <button
+            class="jv10-card-btn"
+            onclick="
+              jv10Watch('${title.replace(/'/g,"\\'")}')
+            "
+          >
+            🔗 WATCH
+          </button>
+
+
+          <button
+            class="jv10-card-btn"
+            onclick="
+              jv10Fact('${title.replace(/'/g,"\\'")}')
+            "
+          >
+            🧠 FACT
+          </button>
+
+
+          <button
+            class="jv10-card-btn"
+            onclick="
+              jv10Watched(
+                '${key}',
+                this
+              )
+            "
+          >
+            ✓ WATCHED
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+
+  `;
+
+}
+
+
+/* =====================================================
+   RENDER SECTION
+===================================================== */
+
+function jv10RenderLibrary(
+  elementId,
+  data,
+  type
+){
+
+  const box =
+    document.getElementById(
+      elementId
+    );
+
+
+  if(!box) return;
+
+
+  box.innerHTML =
+    data.map(
+      (item,index)=>
+        jv10CreateCard(
+          item,
+          type,
+          index
+        )
+    ).join("");
+
+}
+
+
+/* =====================================================
+   FAVORITES
+===================================================== */
+
+function jv10Favorite(
+  key,
+  button
+){
+
+  let saved =
+    JSON.parse(
+      localStorage.getItem(
+        "jv10Favorites"
+      ) || "[]"
+    );
+
+
+  if(saved.includes(key)){
+
+    saved =
+      saved.filter(
+        x=>x!==key
+      );
+
+    button.textContent="♡";
+    button.classList.remove("saved");
+
+  }else{
+
+    saved.push(key);
+
+    button.textContent="♥";
+    button.classList.add("saved");
+
+  }
+
+
+  localStorage.setItem(
+    "jv10Favorites",
+    JSON.stringify(saved)
+  );
+
+}
+
+
+/* =====================================================
+   WATCHED
+===================================================== */
+
+function jv10Watched(
+  key,
+  button
+){
+
+  let watched =
+    JSON.parse(
+      localStorage.getItem(
+        "jv10Watched"
+      ) || "[]"
+    );
+
+
+  if(watched.includes(key)){
+
+    watched =
+      watched.filter(
+        x=>x!==key
+      );
+
+    button.textContent="✓ WATCHED";
+
+  }else{
+
+    watched.push(key);
+
+    button.textContent="✓ DONE";
+
+  }
+
+
+  localStorage.setItem(
+    "jv10Watched",
+    JSON.stringify(watched)
+  );
+
+}
+
+
+/* =====================================================
+   CREATE LIBRARY HTML
+===================================================== */
+
+function jv10PreparePages(){
+
+  const pages = {
+
+    movies:`
+      <div class="jv10-library">
+
+        <div class="jv10-library-title">
+
+          <h1>
+            🎬 <span>MOVIES</span>
+          </h1>
+
+          <p>
+            JARVIS Movie Database
+          </p>
+
+        </div>
+
+
+        <div class="jv10-tabs">
+
+          <button
+            class="jv10-tab active"
+          >
+            🔥 Popular Movies
+          </button>
+
+          <button
+            class="jv10-tab"
+          >
+            ⭐ Top Rated
+          </button>
+
+        </div>
+
+
+        <div
+          id="jv10MovieGrid"
+          class="jv10-library-grid"
+        ></div>
+
+      </div>
+    `,
+
+
+    anime:`
+      <div class="jv10-library">
+
+        <div class="jv10-library-title">
+
+          <h1>
+            🍥 <span>ANIME</span>
+          </h1>
+
+          <p>
+            Top Anime Movies & Series
+          </p>
+
+        </div>
+
+
+        <div class="jv10-tabs">
+
+          <button
+            class="jv10-tab active"
+            onclick="jv10AnimeMode('all',this)"
+          >
+            🔥 Top Anime
+          </button>
+
+          <button
+            class="jv10-tab"
+            onclick="jv10AnimeMode('series',this)"
+          >
+            📺 Series
+          </button>
+
+          <button
+            class="jv10-tab"
+            onclick="jv10AnimeMode('movie',this)"
+          >
+            🎬 Movies
+          </button>
+
+        </div>
+
+
+        <div
+          id="jv10AnimeGrid"
+          class="jv10-library-grid"
+        ></div>
+
+      </div>
+    `,
+
+
+    series:`
+      <div class="jv10-library">
+
+        <div class="jv10-library-title">
+
+          <h1>
+            📺 <span>TV SERIES</span>
+          </h1>
+
+          <p>
+            Top TV Series Database
+          </p>
+
+        </div>
+
+
+        <div
+          id="jv10SeriesGrid"
+          class="jv10-library-grid"
+        ></div>
+
+      </div>
+    `,
+
+
+    marvel:`
+      <div class="jv10-library">
+
+        <div class="jv10-library-title">
+
+          <h1>
+            🦸 <span>MARVEL</span>
+          </h1>
+
+          <p>
+            MCU Release Watch Order
+          </p>
+
+        </div>
+
+
+        <div
+          id="jv10MarvelGrid"
+          class="jv10-library-grid"
+        ></div>
+
+      </div>
+    `
+
+  };
+
+
+  Object.keys(pages)
+    .forEach(page=>{
+
+      const section =
+        document.getElementById(
+          "jv10-"+page
+        );
+
+
+      if(section){
+
+        section.innerHTML =
+          pages[page];
+
+      }
+
+    });
+
+
+  jv10RenderLibrary(
+    "jv10MovieGrid",
+    JARVIS_MOVIES,
+    "movie"
+  );
+
+
+  jv10RenderLibrary(
+    "jv10AnimeGrid",
+    JARVIS_ANIME,
+    "anime"
+  );
+
+
+  jv10RenderLibrary(
+    "jv10SeriesGrid",
+    JARVIS_SERIES,
+    "series"
+  );
+
+
+  jv10RenderMarvel();
+
+}
+
+
+/* =====================================================
+   MARVEL RENDER
+===================================================== */
+
+function jv10RenderMarvel(){
+
+  const box =
+    document.getElementById(
+      "jv10MarvelGrid"
+    );
+
+
+  if(!box) return;
+
+
+  box.innerHTML =
+    JARVIS_MARVEL
+      .map((item,index)=>{
+
+        const title=item[0];
+        const year=item[1];
+        const rating=item[2];
+
+
+        const movie =
+          JARVIS_MOVIES.find(
+            x=>x[0]===title
+          );
+
+
+        const poster =
+          movie
+          ? movie[3]
+          : "https://via.placeholder.com/500x750/071117/00eaff?text=MARVEL";
+
+
+        return `
+
+          <article class="jv10-card">
+
+            <div class="jv10-badge">
+              MCU #${index+1}
+            </div>
+
+
+            <img
+              class="jv10-poster"
+              src="${poster}"
+              alt="${title}"
+              loading="lazy"
+            >
+
+
+            <div class="jv10-card-body">
+
+              <div class="jv10-card-title">
+                ${title}
+              </div>
+
+
+              <div class="jv10-card-meta">
+
+                <span>
+                  ${year}
+                </span>
+
+                <span class="jv10-rating">
+                  ⭐ ${rating}
+                </span>
+
+              </div>
+
+
+              <div class="jv10-card-buttons">
+
+                <button
+                  class="jv10-card-btn"
+                  onclick="
+                    jv10Trailer('${title.replace(/'/g,"\\'")}')
+                  "
+                >
+                  ▶ TRAILER
+                </button>
+
+
+                <button
+                  class="jv10-card-btn"
+                  onclick="
+                    jv10Watch('${title.replace(/'/g,"\\'")}')
+                  "
+                >
+                  🔗 WATCH
+                </button>
+
+              </div>
+
+            </div>
+
+          </article>
+
+        `;
+
+      })
+      .join("");
+
+}
+
+
+/* =====================================================
+   ANIME FILTER
+===================================================== */
+
+function jv10AnimeMode(
+  mode,
+  button
+){
+
+  document
+    .querySelectorAll(
+      "#jv10-anime .jv10-tab"
+    )
+    .forEach(
+      x=>x.classList.remove("active")
+    );
+
+
+  if(button)
+    button.classList.add("active");
+
+
+  let data =
+    JARVIS_ANIME;
+
+
+  if(mode==="series"){
+
+    data =
+      JARVIS_ANIME.filter(
+        x=>x[1]==="Series"
+      );
+
+  }
+
+
+  if(mode==="movie"){
+
+    data =
+      JARVIS_ANIME.filter(
+        x=>x[1]==="Movie"
+      );
+
+  }
+
+
+  jv10RenderLibrary(
+    "jv10AnimeGrid",
+    data,
+    "anime"
+  );
+
+}
+
+
+/* =====================================================
+   GLOBAL SEARCH
+===================================================== */
+
+function jv10SearchAll(
+  query
+){
+
+  query =
+    query.trim().toLowerCase();
+
+
+  document
+    .querySelectorAll(
+      ".jv10-card"
+    )
+    .forEach(card=>{
+
+      const title =
+        card.dataset.title || "";
+
+
+      card.style.display =
+        !query ||
+        title.includes(query)
+        ? ""
+        : "none";
+
+    });
+
+}
+
+
+/* Connect search */
+
+const jv10OriginalSearch =
+  window.jv10Search;
+
+
+window.jv10Search =
+  function(value){
+
+    jv10SearchAll(value);
+
+  };
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+jv10PreparePages();
+
+
+console.log(
+  "🎬 MOVIE DATABASE ONLINE"
+);
+
+console.log(
+  "🍥 ANIME DATABASE ONLINE"
+);
+
+console.log(
+  "📺 TV SERIES DATABASE ONLINE"
+);
+
+console.log(
+  "🦸 MARVEL DATABASE ONLINE"
+);
+
+</script> 
+<!-- =====================================================
+     JARVIS V10 — PART 3
+     FINAL ENGINE
+===================================================== -->
+
+<style>
+
+/* ---------- DETAILS MODAL ---------- */
+
+.jv10-modal{
+  position:fixed;
+  inset:0;
+  z-index:20000;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(0,0,0,.82);
+  backdrop-filter:blur(10px);
+}
+
+.jv10-modal.open{
+  display:flex;
+}
+
+.jv10-modal-box{
+  width:min(700px,100%);
+  max-height:90vh;
+  overflow:auto;
+  border:1px solid #1d5662;
+  border-radius:18px;
+  background:
+    linear-gradient(145deg,#0a1c23,#03080c);
+  box-shadow:0 25px 100px #000;
+  padding:25px;
+  position:relative;
+}
+
+.jv10-modal-close{
+  position:absolute;
+  top:12px;
+  right:12px;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  border:1px solid #34535a;
+  background:#071219;
+  color:white;
+  cursor:pointer;
+  font-size:18px;
+}
+
+.jv10-modal-close:hover{
+  border-color:#00eaff;
+  color:#00eaff;
+}
+
+.jv10-modal h2{
+  color:#00eaff;
+  margin-bottom:12px;
+  padding-right:40px;
+}
+
+.jv10-modal p{
+  color:#8ba3aa;
+  line-height:1.75;
+  margin-bottom:15px;
+}
+
+.jv10-modal-actions{
+  display:grid;
+  grid-template-columns:
+    repeat(2,1fr);
+  gap:9px;
+}
+
+.jv10-modal-btn{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  padding:12px;
+  border-radius:9px;
+  border:1px solid #214852;
+  background:#07151b;
+  color:#c9f7fc;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.jv10-modal-btn:hover{
+  border-color:#00eaff;
+  color:#00eaff;
+}
+
+.jv10-download{
+  color:#ffd43b;
+  border-color:#66551e;
+}
+
+
+/* ---------- COLLECTION ---------- */
+
+.jv10-collection-wrap{
+  width:min(1450px,94%);
+  margin:auto;
+  padding:45px 0 90px;
+}
+
+.jv10-collection-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(6,1fr);
+  gap:15px;
+}
+
+.jv10-collection-info{
+  margin-bottom:25px;
+  color:#718991;
+}
+
+@media(max-width:1100px){
+
+  .jv10-collection-grid{
+    grid-template-columns:
+      repeat(4,1fr);
+  }
+
+}
+
+@media(max-width:700px){
+
+  .jv10-collection-grid{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .jv10-modal-actions{
+    grid-template-columns:1fr;
+  }
+
+}
+
+</style>
+
+
+<!-- =====================================================
+     DETAILS MODAL
+===================================================== -->
+
+<div
+  id="jv10Modal"
+  class="jv10-modal"
+  onclick="jv10CloseModal(event)"
+>
+
+  <div
+    class="jv10-modal-box"
+    onclick="event.stopPropagation()"
+  >
+
+    <button
+      class="jv10-modal-close"
+      onclick="jv10CloseModal()"
+    >
+      ×
+    </button>
+
+
+    <h2 id="jv10ModalTitle">
+      JARVIS
+    </h2>
+
+
+    <p id="jv10ModalText">
+      Loading...
+    </p>
+
+
+    <div
+      id="jv10ModalActions"
+      class="jv10-modal-actions"
+    ></div>
+
+  </div>
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   JARVIS V10 — FINAL ENGINE
+===================================================== */
+
+
+/* ---------- MOVIE FACT DATABASE ---------- */
+
+const JARVIS_FACTS = {
+
+  "Iron Man":
+    "Iron Man introduced Tony Stark and started the Marvel Cinematic Universe in 2008.",
+
+  "The Avengers":
+    "The Avengers was the first MCU film to unite the original major Avengers team.",
+
+  "Captain America: The Winter Soldier":
+    "The Winter Soldier is widely known for combining superhero storytelling with a political thriller style.",
+
+  "Guardians of the Galaxy":
+    "Guardians of the Galaxy expanded the MCU into a much larger cosmic setting.",
+
+  "Avengers: Infinity War":
+    "Infinity War brought together heroes from across the MCU to confront Thanos.",
+
+  "Avengers: Endgame":
+    "Endgame concluded the central Infinity Saga storyline.",
+
+  "Spider-Man: No Way Home":
+    "No Way Home uses the multiverse to connect multiple cinematic Spider-Man worlds.",
+
+  "Black Panther":
+    "Black Panther introduced Wakanda as one of the MCU's most important fictional nations.",
+
+  "Doctor Strange":
+    "Doctor Strange introduced major mystical concepts and alternate realities to the MCU.",
+
+  "Your Name":
+    "Your Name is a Japanese animated romantic fantasy film directed by Makoto Shinkai.",
+
+  "A Silent Voice":
+    "A Silent Voice explores bullying, guilt, friendship and redemption.",
+
+  "Attack on Titan":
+    "Attack on Titan is known for its large-scale world-building and mystery-driven story.",
+
+  "One Piece":
+    "One Piece follows Monkey D. Luffy and his crew on their journey to find the legendary One Piece.",
+
+  "Death Note":
+    "Death Note centers on Light Yagami and a supernatural notebook capable of killing people.",
+
+  "Breaking Bad":
+    "Breaking Bad follows Walter White as his life changes after entering the illegal drug trade.",
+
+  "Game of Thrones":
+    "Game of Thrones is based on George R. R. Martin's A Song of Ice and Fire novels.",
+
+  "Stranger Things":
+    "Stranger Things combines science fiction, horror and 1980s-inspired adventure."
+};
+
+
+/* ---------- FACT ---------- */
+
+function jv10Fact(movie){
+
+  const fact =
+    JARVIS_FACTS[movie] ||
+
+    movie+
+    " is included in the JARVIS entertainment database. More detailed information can be added later.";
+
+
+  jv10OpenModal(
+    "🧠 "+movie,
+    fact,
+    [
+      {
+        text:"▶ OFFICIAL TRAILER",
+        action:()=>jv10Trailer(movie)
+      },
+
+      {
+        text:"🔗 WHERE TO WATCH",
+        action:()=>jv10Watch(movie)
+      }
+    ]
+  );
+
+}
+
+
+/* ---------- TRAILER ---------- */
+
+function jv10Trailer(movie){
+
+  const url =
+    "https://www.youtube.com/results?search_query="+
+    encodeURIComponent(
+      movie+" official trailer"
+    );
+
+
+  window.open(
+    url,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+}
+
+
+/* ---------- LEGAL WATCH ---------- */
+
+function jv10Watch(movie){
+
+  const url =
+    "https://www.justwatch.com/us/search?q="+
+    encodeURIComponent(movie);
+
+
+  window.open(
+    url,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+}
+
+
+/* ---------- LEGAL DOWNLOAD / BUY ---------- */
+
+function jv10Download(movie){
+
+  const url =
+    "https://www.google.com/search?q="+
+    encodeURIComponent(
+      movie+
+      " official digital download buy"
+    );
+
+
+  window.open(
+    url,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+}
+
+
+/* ---------- DETAILS ---------- */
+
+function jv10Details(movie){
+
+  const fact =
+    JARVIS_FACTS[movie] ||
+
+    "No detailed fact has been added yet.";
+
+
+  jv10OpenModal(
+
+    "🎬 "+movie,
+
+    fact,
+
+    [
+
+      {
+        text:"▶ TRAILER",
+        action:()=>jv10Trailer(movie)
+      },
+
+      {
+        text:"🔗 WATCH",
+        action:()=>jv10Watch(movie)
+      },
+
+      {
+        text:"📥 DOWNLOAD / BUY",
+        action:()=>jv10Download(movie)
+      }
+
+    ]
+
+  );
+
+}
+
+
+/* ---------- MODAL ---------- */
+
+function jv10OpenModal(
+  title,
+  text,
+  actions=[]
+){
+
+  const modal =
+    document.getElementById(
+      "jv10Modal"
+    );
+
+
+  document.getElementById(
+    "jv10ModalTitle"
+  ).textContent=title;
+
+
+  document.getElementById(
+    "jv10ModalText"
+  ).textContent=text;
+
+
+  const box =
+    document.getElementById(
+      "jv10ModalActions"
+    );
+
+
+  box.innerHTML="";
+
+
+  actions.forEach(item=>{
+
+    const button =
+      document.createElement(
+        "button"
+      );
+
+
+    button.className=
+      "jv10-modal-btn";
+
+
+    if(
+      item.text.includes("DOWNLOAD")
+    ){
+
+      button.classList.add(
+        "jv10-download"
+      );
+
+    }
+
+
+    button.textContent=
+      item.text;
+
+
+    button.onclick=()=>{
+
+      item.action();
+
+      modal.classList.remove(
+        "open"
+      );
+
+    };
+
+
+    box.appendChild(button);
+
+  });
+
+
+  modal.classList.add(
+    "open"
+  );
+
+}
+
+
+function jv10CloseModal(event){
+
+  if(
+    !event ||
+    event.target.id==="jv10Modal"
+  ){
+
+    document
+      .getElementById(
+        "jv10Modal"
+      )
+      .classList.remove(
+        "open"
+      );
+
+  }
+
+}
+
+
+/* ---------- ESCAPE KEY ---------- */
+
+document.addEventListener(
+  "keydown",
+  function(event){
+
+    if(event.key==="Escape"){
+
+      jv10CloseModal();
+
+    }
+
+  }
+);
+
+
+/* =====================================================
+   REPLACE CARD ACTIONS
+===================================================== */
+
+function jv10UpgradeCards(){
+
+  document
+    .querySelectorAll(
+      ".jv10-card"
+    )
+    .forEach(card=>{
+
+      const title =
+        card.dataset.title;
+
+
+      if(!title) return;
+
+
+      const buttons =
+        card.querySelectorAll(
+          ".jv10-card-btn"
+        );
+
+
+      if(buttons.length>=3){
+
+        /*
+          Keep existing buttons.
+          Add a details button.
+        */
+
+        const body =
+          card.querySelector(
+            ".jv10-card-buttons"
+          );
+
+
+        if(
+          body &&
+          !body.querySelector(
+            ".jv10-details-btn"
+          )
+        ){
+
+          const button =
+            document.createElement(
+              "button"
+            );
+
+
+          button.className=
+            "jv10-card-btn jv10-details-btn";
+
+
+          button.textContent=
+            "ℹ DETAILS";
+
+
+          button.onclick=()=>{
+
+            jv10Details(
+              title
+            );
+
+          };
+
+
+          body.appendChild(
+            button
+          );
+
+        }
+
+      }
+
+    });
+
+}
+
+
+/* =====================================================
+   FAVORITES DATABASE
+===================================================== */
+
+function jv10GetFavorites(){
+
+  return JSON.parse(
+
+    localStorage.getItem(
+      "jv10Favorites"
+    ) || "[]"
+
+  );
+
+}
+
+
+function jv10GetWatched(){
+
+  return JSON.parse(
+
+    localStorage.getItem(
+      "jv10Watched"
+    ) || "[]"
+
+  );
+
+}
+
+
+/* =====================================================
+   COLLECTION PAGE
+===================================================== */
+
+function jv10RenderCollection(){
+
+  const section =
+    document.getElementById(
+      "jv10-collection"
+    );
+
+
+  if(!section) return;
+
+
+  const favorites =
+    jv10GetFavorites();
+
+
+  const watched =
+    jv10GetWatched();
+
+
+  section.innerHTML=`
+
+    <div class="jv10-collection-wrap">
+
+      <div class="jv10-library-title">
+
+        <h1>
+          ❤️ <span>MY COLLECTION</span>
+        </h1>
+
+        <p>
+          Your personal JARVIS watch database
+        </p>
+
+      </div>
+
+
+      <div class="jv10-collection-info">
+
+        ❤️ Favorites:
+        ${favorites.length}
+
+        &nbsp;&nbsp;|&nbsp;&nbsp;
+
+        ✓ Watched:
+        ${watched.length}
+
+      </div>
+
+
+      <div
+        id="jv10CollectionGrid"
+        class="jv10-collection-grid"
+      ></div>
+
+    </div>
+
+  `;
+
+
+  const grid =
+    document.getElementById(
+      "jv10CollectionGrid"
+    );
+
+
+  if(!favorites.length){
+
+    grid.innerHTML=`
+
+      <div class="jv10-empty">
+
+        ❤️ No favorites yet.
+
+        <br><br>
+
+        Press the ♡ button on any title
+        to add it here.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  const allData=[];
+
+
+  JARVIS_MOVIES.forEach(
+    (item,index)=>{
+
+      allData.push({
+        key:"movie-"+index,
+        item:item,
+        type:"movie"
+      });
+
+    }
+  );
+
+
+  JARVIS_ANIME.forEach(
+    (item,index)=>{
+
+      allData.push({
+        key:"anime-"+index,
+        item:item,
+        type:"anime"
+      });
+
+    }
+  );
+
+
+  JARVIS_SERIES.forEach(
+    (item,index)=>{
+
+      allData.push({
+        key:"series-"+index,
+        item:item,
+        type:"series"
+      });
+
+    }
+  );
+
+
+  const selected =
+    allData.filter(
+      x=>favorites.includes(x.key)
+    );
+
+
+  if(!selected.length){
+
+    grid.innerHTML=`
+
+      <div class="jv10-empty">
+
+        Your saved items are from an
+        older database version.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  selected.forEach(
+    x=>{
+
+      grid.insertAdjacentHTML(
+        "beforeend",
+
+        jv10CreateCard(
+          x.item,
+          x.type,
+          0
+        )
+
+      );
+
+    }
+  );
+
+
+  jv10UpgradeCards();
+
+}
+
+
+/* =====================================================
+   PATCH NAVIGATION
+===================================================== */
+
+const jv10OldGo =
+  window.jv10Go;
+
+
+window.jv10Go =
+  function(page,button){
+
+    jv10OldGo(
+      page,
+      button
+    );
+
+
+    if(page==="collection"){
+
+      setTimeout(
+        jv10RenderCollection,
+        50
+      );
+
+    }
+
+  };
+
+
+/* =====================================================
+   PATCH SEARCH
+===================================================== */
+
+const jv10OldSearch =
+  window.jv10Search;
+
+
+window.jv10Search =
+  function(value){
+
+    const query =
+      value.trim().toLowerCase();
+
+
+    document
+      .querySelectorAll(
+        ".jv10-card"
+      )
+      .forEach(card=>{
+
+        const title =
+          card.dataset.title || "";
+
+
+        card.style.display =
+          !query ||
+          title.includes(query)
+          ? ""
+          : "none";
+
+      });
+
+};
+
+
+/* =====================================================
+   ADD DOWNLOAD + DETAILS BUTTONS
+===================================================== */
+
+function jv10AddFinalButtons(){
+
+  document
+    .querySelectorAll(
+      ".jv10-card"
+    )
+    .forEach(card=>{
+
+      const title =
+        card.dataset.title;
+
+
+      if(!title) return;
+
+
+      const body =
+        card.querySelector(
+          ".jv10-card-buttons"
+        );
+
+
+      if(!body) return;
+
+
+      if(
+        !body.querySelector(
+          ".jv10-download-card"
+        )
+      ){
+
+        const download =
+          document.createElement(
+            "button"
+          );
+
+
+        download.className=
+          "jv10-card-btn jv10-download-card";
+
+
+        download.textContent=
+          "📥 BUY/DL";
+
+
+        download.onclick=()=>{
+
+          jv10Download(
+            title
+          );
+
+        };
+
+
+        body.appendChild(
+          download
+        );
+
+      }
+
+
+      if(
+        !body.querySelector(
+          ".jv10-details-final"
+        )
+      ){
+
+        const details =
+          document.createElement(
+            "button"
+          );
+
+
+        details.className=
+          "jv10-card-btn jv10-details-final";
+
+
+        details.textContent=
+          "ℹ DETAILS";
+
+
+        details.onclick=()=>{
+
+          jv10Details(
+            title
+          );
+
+        };
+
+
+        body.appendChild(
+          details
+        );
+
+      }
+
+    });
+
+}
+
+
+/* =====================================================
+   AUTO REFRESH
+===================================================== */
+
+setTimeout(
+  jv10AddFinalButtons,
+  500
+);
+
+
+/* =====================================================
+   OBSERVER
+   Detects newly rendered cards
+===================================================== */
+
+const jv10Observer =
+  new MutationObserver(
+    function(){
+
+      jv10AddFinalButtons();
+
+    }
+  );
+
+
+jv10Observer.observe(
+  document.body,
+  {
+    childList:true,
+    subtree:true
+  }
+);
+
+
+/* =====================================================
+   JARVIS READY
+===================================================== */
+
+console.log(
+  "⚡ JARVIS V10 FINAL ENGINE ONLINE"
+);
+
+console.log(
+  "▶ TRAILER SYSTEM READY"
+);
+
+console.log(
+  "🔗 LEGAL WATCH SYSTEM READY"
+);
+
+console.log(
+  "📥 LEGAL DOWNLOAD/BUY SYSTEM READY"
+);
+
+console.log(
+  "❤️ FAVORITES SYSTEM READY"
+);
+
+console.log(
+  "✓ WATCHED SYSTEM READY"
+);
+
+</script>
+
+
+<!-- =====================================================
+     FINAL FOOTER
+===================================================== -->
+
+<footer class="jv10-footer">
+
+  <b>JARVIS V10</b>
+
+  • Ultimate Entertainment Database
+
+  <br><br>
+
+  🎬 Movies
+  • 🍥 Anime
+  • 📺 TV Series
+  • 🦸 Marvel
+
+  <br><br>
+
+  ▶ Official Trailers
+  • 🔗 Legal Watch
+  • 📥 Legal Download / Buy
+
+  <br><br>
+
+  <span>
+    Personal project • JARVIS SYSTEM ONLINE ⚡
+  </span>
+
+</footer>
+
 
 </body>
 </html>
