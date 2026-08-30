@@ -3386,5 +3386,945 @@ console.log(
 
 </section>
 
+<!-- =====================================================
+     JARVIS PRIVATE VAULT
+===================================================== -->
+
+<style>
+
+.jv-vault{
+  width:min(1400px,94%);
+  margin:55px auto;
+  padding:30px;
+  border:1px solid #173f49;
+  border-radius:20px;
+  background:#050d12;
+  box-shadow:0 20px 60px #0008;
+}
+
+.jv-vault-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  flex-wrap:wrap;
+  margin-bottom:25px;
+}
+
+.jv-vault-title h2{
+  margin:0;
+  font-size:clamp(28px,5vw,48px);
+  color:#fff;
+}
+
+.jv-vault-title h2 span{
+  color:#00eaff;
+}
+
+.jv-vault-title p{
+  color:#718991;
+  margin:7px 0 0;
+}
+
+.jv-vault-add{
+  padding:12px 18px;
+  border:1px solid #00eaff;
+  border-radius:9px;
+  background:#071a20;
+  color:#00eaff;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+.jv-vault-add:hover{
+  background:#00eaff;
+  color:#001015;
+}
+
+.jv-vault-tools{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:20px;
+}
+
+.jv-vault-search{
+  flex:1;
+  min-width:200px;
+  padding:12px 14px;
+  border-radius:9px;
+  border:1px solid #214650;
+  background:#071319;
+  color:white;
+  outline:none;
+}
+
+.jv-vault-search:focus{
+  border-color:#00eaff;
+}
+
+.jv-vault-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fill,minmax(180px,1fr));
+  gap:16px;
+}
+
+.jv-file{
+  overflow:hidden;
+  border:1px solid #163640;
+  border-radius:13px;
+  background:#08141a;
+  transition:.2s;
+}
+
+.jv-file:hover{
+  transform:translateY(-4px);
+  border-color:#00eaff;
+}
+
+.jv-file-preview{
+  width:100%;
+  height:210px;
+  object-fit:cover;
+  display:block;
+  background:#02080b;
+}
+
+.jv-file-icon{
+  height:210px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:60px;
+  background:#061016;
+}
+
+.jv-file-body{
+  padding:12px;
+}
+
+.jv-file-name{
+  color:#fff;
+  font-weight:bold;
+  font-size:13px;
+  word-break:break-word;
+}
+
+.jv-file-size{
+  color:#6f858c;
+  font-size:10px;
+  margin-top:5px;
+}
+
+.jv-file-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:6px;
+  margin-top:10px;
+}
+
+.jv-file-btn{
+  padding:8px 4px;
+  border-radius:7px;
+  border:1px solid #234650;
+  background:#07171d;
+  color:#b8e9ee;
+  cursor:pointer;
+  font-size:10px;
+  font-weight:bold;
+}
+
+.jv-file-btn:hover{
+  border-color:#00eaff;
+  color:#00eaff;
+}
+
+.jv-file-delete{
+  color:#ff7180;
+}
+
+.jv-vault-empty{
+  grid-column:1/-1;
+  text-align:center;
+  padding:55px 20px;
+  border:1px dashed #234650;
+  border-radius:12px;
+  color:#718991;
+}
+
+.jv-vault-note{
+  margin-top:20px;
+  padding:12px;
+  border-left:3px solid #ffd43b;
+  background:#0a1114;
+  color:#788c92;
+  font-size:11px;
+  line-height:1.6;
+}
+
+@media(max-width:600px){
+
+  .jv-vault{
+    padding:20px 14px;
+  }
+
+  .jv-vault-grid{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+  .jv-file-preview,
+  .jv-file-icon{
+    height:170px;
+  }
+
+}
+
+</style>
+
+
+<section class="jv-vault" id="jvPrivateVault">
+
+  <div class="jv-vault-head">
+
+    <div class="jv-vault-title">
+
+      <h2>
+        🔐 <span>PRIVATE VAULT</span>
+      </h2>
+
+      <p>
+        Your personal files — stored locally in this browser
+      </p>
+
+    </div>
+
+
+    <button
+      class="jv-vault-add"
+      onclick="jvVaultChooseFile()"
+    >
+      ＋ ADD FILE
+    </button>
+
+  </div>
+
+
+  <div class="jv-vault-tools">
+
+    <input
+      id="jvVaultSearch"
+      class="jv-vault-search"
+      type="search"
+      placeholder="🔎 Search your files..."
+      oninput="jvVaultRender()"
+    >
+
+  </div>
+
+
+  <input
+    id="jvVaultInput"
+    type="file"
+    multiple
+    hidden
+    onchange="jvVaultAddFiles(this.files)"
+  >
+
+
+  <div
+    id="jvVaultGrid"
+    class="jv-vault-grid"
+  ></div>
+
+
+  <div class="jv-vault-note">
+
+    🔒 <b>Privacy:</b>
+    Files added here stay inside this browser's
+    local storage system. They are NOT uploaded to
+    GitHub. Clearing browser data can remove them.
+    For true cloud/private access from multiple devices,
+    a secure backend will be needed.
+
+  </div>
+
+</section>
+
+
+<script>
+
+/* =====================================================
+   JARVIS PRIVATE VAULT ENGINE
+===================================================== */
+
+const JV_VAULT_DB =
+  "JARVIS_PRIVATE_VAULT";
+
+const JV_VAULT_STORE =
+  "files";
+
+let jvVaultDatabase;
+
+
+/* ---------- OPEN DATABASE ---------- */
+
+function jvVaultOpen(){
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      const request =
+        indexedDB.open(
+          JV_VAULT_DB,
+          1
+        );
+
+
+      request.onupgradeneeded =
+        function(event){
+
+          const db =
+            event.target.result;
+
+
+          if(
+            !db.objectStoreNames
+              .contains(JV_VAULT_STORE)
+          ){
+
+            db.createObjectStore(
+              JV_VAULT_STORE,
+              {
+                keyPath:"id",
+                autoIncrement:true
+              }
+            );
+
+          }
+
+        };
+
+
+      request.onsuccess =
+        function(event){
+
+          jvVaultDatabase =
+            event.target.result;
+
+          resolve(
+            jvVaultDatabase
+          );
+
+        };
+
+
+      request.onerror =
+        function(){
+
+          reject(
+            request.error
+          );
+
+        };
+
+    }
+  );
+
+}
+
+
+/* ---------- SELECT FILE ---------- */
+
+function jvVaultChooseFile(){
+
+  document
+    .getElementById(
+      "jvVaultInput"
+    )
+    .click();
+
+}
+
+
+/* ---------- ADD FILES ---------- */
+
+async function jvVaultAddFiles(
+  files
+){
+
+  if(!files || !files.length)
+    return;
+
+
+  if(!jvVaultDatabase)
+    await jvVaultOpen();
+
+
+  for(
+    const file of files
+  ){
+
+    await new Promise(
+      (resolve,reject)=>{
+
+        const tx =
+          jvVaultDatabase.transaction(
+            JV_VAULT_STORE,
+            "readwrite"
+          );
+
+
+        const store =
+          tx.objectStore(
+            JV_VAULT_STORE
+          );
+
+
+        store.add({
+
+          name:file.name,
+
+          type:file.type,
+
+          size:file.size,
+
+          date:new Date()
+            .toISOString(),
+
+          blob:file
+
+        });
+
+
+        tx.oncomplete =
+          ()=>resolve();
+
+
+        tx.onerror =
+          ()=>reject(tx.error);
+
+      }
+    );
+
+  }
+
+
+  document
+    .getElementById(
+      "jvVaultInput"
+    )
+    .value="";
+
+
+  jvVaultRender();
+
+}
+
+
+/* ---------- GET FILES ---------- */
+
+function jvVaultGetFiles(){
+
+  return new Promise(
+    (resolve,reject)=>{
+
+      const tx =
+        jvVaultDatabase.transaction(
+          JV_VAULT_STORE,
+          "readonly"
+        );
+
+
+      const store =
+        tx.objectStore(
+          JV_VAULT_STORE
+        );
+
+
+      const request =
+        store.getAll();
+
+
+      request.onsuccess =
+        ()=>resolve(
+          request.result
+        );
+
+
+      request.onerror =
+        ()=>reject(
+          request.error
+        );
+
+    }
+  );
+
+}
+
+
+/* ---------- FORMAT SIZE ---------- */
+
+function jvVaultFormatSize(
+  bytes
+){
+
+  if(bytes < 1024)
+    return bytes+" B";
+
+
+  if(bytes < 1024*1024)
+    return (
+      bytes/1024
+    ).toFixed(1)+" KB";
+
+
+  if(bytes < 1024*1024*1024)
+    return (
+      bytes/(1024*1024)
+    ).toFixed(1)+" MB";
+
+
+  return (
+    bytes/(1024*1024*1024)
+  ).toFixed(2)+" GB";
+
+}
+
+
+/* ---------- FILE ICON ---------- */
+
+function jvVaultIcon(
+  type
+){
+
+  if(type.startsWith("video"))
+    return "🎥";
+
+  if(type.startsWith("audio"))
+    return "🎵";
+
+  if(type.includes("pdf"))
+    return "📕";
+
+  if(type.includes("word"))
+    return "📘";
+
+  if(type.includes("sheet") ||
+     type.includes("excel"))
+    return "📗";
+
+  if(type.startsWith("image"))
+    return "🖼️";
+
+  return "📄";
+
+}
+
+
+/* ---------- ESCAPE HTML ---------- */
+
+function jvVaultEscape(
+  text
+){
+
+  return text
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+/* ---------- RENDER ---------- */
+
+async function jvVaultRender(){
+
+  const grid =
+    document.getElementById(
+      "jvVaultGrid"
+    );
+
+
+  if(!grid)
+    return;
+
+
+  if(!jvVaultDatabase)
+    await jvVaultOpen();
+
+
+  const files =
+    await jvVaultGetFiles();
+
+
+  const search =
+    document
+      .getElementById(
+        "jvVaultSearch"
+      )
+      .value
+      .toLowerCase()
+      .trim();
+
+
+  const filtered =
+    files.filter(
+      file=>
+        file.name
+          .toLowerCase()
+          .includes(search)
+    );
+
+
+  if(!filtered.length){
+
+    grid.innerHTML=`
+
+      <div class="jv-vault-empty">
+
+        🔐
+
+        <br><br>
+
+        ${
+          search
+          ? "No matching files found."
+          : "Your Private Vault is empty."
+        }
+
+        <br><br>
+
+        Click <b>＋ ADD FILE</b> to begin.
+
+      </div>
+
+    `;
+
+    return;
+
+  }
+
+
+  grid.innerHTML="";
+
+
+  filtered.forEach(
+    file=>{
+
+      const card =
+        document.createElement(
+          "article"
+        );
+
+
+      card.className=
+        "jv-file";
+
+
+      const body =
+        document.createElement(
+          "div"
+        );
+
+
+      body.className=
+        "jv-file-body";
+
+
+      const name =
+        document.createElement(
+          "div"
+        );
+
+
+      name.className=
+        "jv-file-name";
+
+
+      name.textContent=
+        file.name;
+
+
+      const size =
+        document.createElement(
+          "div"
+        );
+
+
+      size.className=
+        "jv-file-size";
+
+
+      size.textContent=
+        jvVaultFormatSize(
+          file.size
+        );
+
+
+      const actions =
+        document.createElement(
+          "div"
+        );
+
+
+      actions.className=
+        "jv-file-actions";
+
+
+      const open =
+        document.createElement(
+          "button"
+        );
+
+
+      open.className=
+        "jv-file-btn";
+
+
+      open.textContent=
+        "👁 OPEN";
+
+
+      open.onclick=
+        ()=>jvVaultOpenFile(
+          file
+        );
+
+
+      const download =
+        document.createElement(
+          "button"
+        );
+
+
+      download.className=
+        "jv-file-btn";
+
+
+      download.textContent=
+        "📥 SAVE";
+
+
+      download.onclick=
+        ()=>jvVaultDownload(
+          file
+        );
+
+
+      const remove =
+        document.createElement(
+          "button"
+        );
+
+
+      remove.className=
+        "jv-file-btn jv-file-delete";
+
+
+      remove.textContent=
+        "🗑 DELETE";
+
+
+      remove.onclick=
+        ()=>jvVaultDelete(
+          file.id
+        );
+
+
+      actions.appendChild(open);
+      actions.appendChild(download);
+      actions.appendChild(remove);
+
+
+      body.appendChild(name);
+      body.appendChild(size);
+      body.appendChild(actions);
+
+
+      if(
+        file.type &&
+        file.type.startsWith("image/")
+      ){
+
+        const img =
+          document.createElement(
+            "img"
+          );
+
+
+        img.className=
+          "jv-file-preview";
+
+
+        img.src=
+          URL.createObjectURL(
+            file.blob
+          );
+
+
+        card.appendChild(img);
+
+      }else{
+
+        const icon =
+          document.createElement(
+            "div"
+          );
+
+
+        icon.className=
+          "jv-file-icon";
+
+
+        icon.textContent=
+          jvVaultIcon(
+            file.type || ""
+          );
+
+
+        card.appendChild(icon);
+
+      }
+
+
+      card.appendChild(body);
+
+
+      grid.appendChild(card);
+
+    }
+  );
+
+}
+
+
+/* ---------- OPEN FILE ---------- */
+
+function jvVaultOpenFile(
+  file
+){
+
+  const url =
+    URL.createObjectURL(
+      file.blob
+    );
+
+
+  window.open(
+    url,
+    "_blank",
+    "noopener,noreferrer"
+  );
+
+}
+
+
+/* ---------- DOWNLOAD ---------- */
+
+function jvVaultDownload(
+  file
+){
+
+  const url =
+    URL.createObjectURL(
+      file.blob
+    );
+
+
+  const link =
+    document.createElement(
+      "a"
+    );
+
+
+  link.href=url;
+
+  link.download=
+    file.name;
+
+
+  document
+    .body
+    .appendChild(link);
+
+
+  link.click();
+
+
+  link.remove();
+
+
+  setTimeout(
+    ()=>URL.revokeObjectURL(url),
+    1000
+  );
+
+}
+
+
+/* ---------- DELETE ---------- */
+
+async function jvVaultDelete(
+  id
+){
+
+  const confirmDelete =
+    confirm(
+      "Delete this file from your Private Vault?"
+    );
+
+
+  if(!confirmDelete)
+    return;
+
+
+  const tx =
+    jvVaultDatabase.transaction(
+      JV_VAULT_STORE,
+      "readwrite"
+    );
+
+
+  tx.objectStore(
+    JV_VAULT_STORE
+  ).delete(id);
+
+
+  tx.oncomplete =
+    ()=>jvVaultRender();
+
+}
+
+
+/* ---------- START ---------- */
+
+(async function(){
+
+  try{
+
+    await jvVaultOpen();
+
+    await jvVaultRender();
+
+    console.log(
+      "🔐 JARVIS PRIVATE VAULT ONLINE"
+    );
+
+  }catch(error){
+
+    console.error(
+      "Private Vault error:",
+      error
+    );
+
+  }
+
+})();
+
+</script>
 </body>
 </html>
