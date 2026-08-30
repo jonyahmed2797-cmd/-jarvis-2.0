@@ -1,43 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
 <title>JARVIS — Character Encyclopedia</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 
-/* =====================================================
-   JARVIS — PART 1 + PART 2
-   CHARACTER ENCYCLOPEDIA
-   ===================================================== */
-
 :root{
-
-    --bg:#050507;
-    --bg-soft:#090a0f;
-
+    --bg:#050609;
+    --panel:#0b0d13;
+    --panel2:#10131b;
     --text:#f5f7ff;
-    --muted:#8d94a5;
-
+    --muted:#858d9e;
     --purple:#8b5cf6;
     --cyan:#22d3ee;
-
     --border:rgba(255,255,255,.09);
-
 }
-
-
-/* =====================================================
-   RESET
-   ===================================================== */
 
 *{
     margin:0;
@@ -50,1134 +34,500 @@ html{
 }
 
 body{
-
-    min-height:100vh;
-
     background:
-
-        radial-gradient(
-            circle at 10% 10%,
-            rgba(139,92,246,.09),
-            transparent 30%
-        ),
-
-        radial-gradient(
-            circle at 90% 20%,
-            rgba(34,211,238,.06),
-            transparent 25%
-        ),
-
+        radial-gradient(circle at 10% 10%,rgba(139,92,246,.10),transparent 30%),
+        radial-gradient(circle at 90% 20%,rgba(34,211,238,.07),transparent 28%),
         var(--bg);
-
     color:var(--text);
-
     font-family:Inter,Arial,sans-serif;
-
     overflow-x:hidden;
-
 }
 
-
-/* =====================================================
-   BACKGROUND GRID
-   ===================================================== */
-
-body::before{
-
+body:before{
     content:"";
-
     position:fixed;
-
     inset:0;
-
     pointer-events:none;
-
     z-index:-1;
-
     background-image:
-
-        linear-gradient(
-            rgba(255,255,255,.018) 1px,
-            transparent 1px
-        ),
-
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.018) 1px,
-            transparent 1px
-        );
-
+        linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
     background-size:60px 60px;
+}
 
-    mask-image:
-        linear-gradient(
-            to bottom,
-            black,
-            transparent 85%
-        );
+a{
+    color:inherit;
+    text-decoration:none;
+}
 
+button,input{
+    font:inherit;
 }
 
 
-/* =====================================================
-   NAVBAR
-   ===================================================== */
+/* ================= NAVBAR ================= */
 
 .navbar{
-
     position:fixed;
-
     top:0;
     left:0;
     right:0;
-
-    height:76px;
-
+    height:74px;
     z-index:1000;
 
     display:flex;
-
     align-items:center;
+    gap:28px;
 
-    justify-content:space-between;
+    padding:0 clamp(18px,5vw,70px);
 
-    padding:
-        0 clamp(18px,5vw,70px);
+    background:rgba(5,6,9,.72);
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
 
-    background:
-        rgba(5,5,7,.68);
-
-    backdrop-filter:
-        blur(22px);
-
-    -webkit-backdrop-filter:
-        blur(22px);
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.065);
-
+    border-bottom:1px solid var(--border);
 }
-
-
-/* =====================================================
-   LOGO
-   ===================================================== */
 
 .logo{
-
     display:flex;
-
     align-items:center;
-
     gap:10px;
 
-    color:white;
-
-    text-decoration:none;
-
     font-family:Orbitron,sans-serif;
-
-    font-size:19px;
-
+    font-size:18px;
     font-weight:800;
-
     letter-spacing:2px;
-
     white-space:nowrap;
-
 }
 
-
-.logo-icon{
-
+.logo-box{
     width:34px;
     height:34px;
-
     display:grid;
-
     place-items:center;
 
     border-radius:10px;
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--purple),
-            var(--cyan)
-        );
+    background:linear-gradient(135deg,var(--purple),var(--cyan));
+    box-shadow:0 0 25px rgba(139,92,246,.3);
 
-    box-shadow:
-        0 0 22px
-        rgba(139,92,246,.30);
-
-    font-size:14px;
-
+    font-size:13px;
 }
 
-
-.logo span{
+.logo em{
     color:#a78bfa;
+    font-style:normal;
 }
-
-
-/* =====================================================
-   DESKTOP NAV
-   ===================================================== */
 
 .nav-links{
-
     display:flex;
-
     align-items:center;
-
-    gap:28px;
-
+    gap:26px;
     margin-left:auto;
-
-    margin-right:28px;
-
 }
-
 
 .nav-links a{
-
-    position:relative;
-
-    color:#9da5b5;
-
-    text-decoration:none;
-
-    font-size:12px;
-
-    font-weight:600;
-
-    letter-spacing:.5px;
-
-    transition:color .25s ease;
-
+    color:#949cac;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.6px;
+    transition:.25s;
 }
-
-
-.nav-links a::after{
-
-    content:"";
-
-    position:absolute;
-
-    left:50%;
-
-    bottom:-9px;
-
-    width:0;
-
-    height:2px;
-
-    transform:translateX(-50%);
-
-    border-radius:20px;
-
-    background:
-        linear-gradient(
-            90deg,
-            var(--purple),
-            var(--cyan)
-        );
-
-    transition:width .25s ease;
-
-}
-
 
 .nav-links a:hover{
     color:white;
 }
 
-
-.nav-links a:hover::after{
-    width:70%;
-}
-
-
-/* =====================================================
-   SEARCH
-   ===================================================== */
-
 .nav-search{
-
     width:190px;
-
-    height:40px;
+    height:38px;
 
     display:flex;
-
     align-items:center;
-
-    gap:9px;
+    gap:8px;
 
     padding:0 12px;
 
-    border:
-        1px solid
-        var(--border);
+    border:1px solid var(--border);
+    border-radius:11px;
 
-    border-radius:12px;
-
-    background:
-        rgba(255,255,255,.035);
-
+    background:rgba(255,255,255,.035);
 }
 
-
-.nav-search:focus-within{
-
-    border-color:
-        rgba(139,92,246,.55);
-
-    background:
-        rgba(139,92,246,.055);
-
-    box-shadow:
-        0 0 25px
-        rgba(139,92,246,.08);
-
+.nav-search span{
+    color:#737b8a;
 }
-
-
-.search-icon{
-
-    color:#747d8e;
-
-    font-size:16px;
-
-}
-
 
 .nav-search input{
-
     width:100%;
-
     border:0;
-
     outline:0;
-
     background:none;
-
     color:white;
-
-    font-size:11px;
-
+    font-size:10px;
 }
-
 
 .nav-search input::placeholder{
-    color:#687080;
+    color:#626a79;
 }
 
-
-/* =====================================================
-   MOBILE BUTTON
-   ===================================================== */
-
-.menu-button{
-
+.menu{
     display:none;
 
     width:40px;
     height:40px;
 
-    border:
-        1px solid
-        var(--border);
+    border:1px solid var(--border);
+    border-radius:10px;
 
-    border-radius:11px;
-
-    background:
-        rgba(255,255,255,.04);
-
+    background:rgba(255,255,255,.04);
     color:white;
-
-    cursor:pointer;
-
-    font-size:20px;
-
 }
 
 
-/* =====================================================
-   MOBILE MENU
-   ===================================================== */
+/* ================= HERO ================= */
 
-.mobile-menu{
-
-    position:fixed;
-
-    top:76px;
-
-    left:0;
-    right:0;
-
-    z-index:999;
-
-    padding:15px 18px 22px;
-
-    background:
-        rgba(5,5,7,.94);
-
-    backdrop-filter:
-        blur(25px);
-
-    border-bottom:
-        1px solid
-        var(--border);
-
-    transform:translateY(-120%);
-
-    opacity:0;
-
-    pointer-events:none;
-
-    transition:
-        transform .35s ease,
-        opacity .35s ease;
-
-}
-
-
-.mobile-menu.active{
-
-    transform:translateY(0);
-
-    opacity:1;
-
-    pointer-events:auto;
-
-}
-
-
-.mobile-menu a{
-
-    display:block;
-
-    padding:14px 5px;
-
-    color:#aeb5c4;
-
-    text-decoration:none;
-
-    font-size:13px;
-
-    font-weight:600;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.045);
-
-}
-
-
-/* =====================================================
-   PART 2 — HERO SECTION
-   ===================================================== */
-
-.hero-section{
-
+.hero{
     position:relative;
 
     min-height:100vh;
 
-    margin-top:76px;
-
     padding:
-        70px
-        clamp(25px,6vw,90px);
+        130px
+        clamp(22px,7vw,100px)
+        70px;
 
     display:grid;
-
-    grid-template-columns:
-        1.05fr
-        .95fr;
-
+    grid-template-columns:1.05fr .95fr;
     align-items:center;
 
     overflow:hidden;
-
 }
 
-
-/* =====================================================
-   HERO BACKGROUND
-   ===================================================== */
-
 .hero-grid{
-
     position:absolute;
-
     inset:0;
 
-    opacity:.35;
-
     background-image:
-
-        linear-gradient(
-            rgba(139,92,246,.035) 1px,
-            transparent 1px
-        ),
-
-        linear-gradient(
-            90deg,
-            rgba(34,211,238,.035) 1px,
-            transparent 1px
-        );
+        linear-gradient(rgba(139,92,246,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(34,211,238,.035) 1px,transparent 1px);
 
     background-size:70px 70px;
 
-    mask-image:
-        radial-gradient(
-            circle at center,
-            black,
-            transparent 75%
-        );
-
+    mask-image:radial-gradient(circle at center,black,transparent 75%);
 }
 
-
-.hero-glow{
-
+.glow{
     position:absolute;
-
     border-radius:50%;
-
-    filter:blur(90px);
-
+    filter:blur(100px);
     pointer-events:none;
-
 }
 
-
-.glow-one{
-
+.glow.a{
     width:500px;
     height:500px;
-
-    left:-220px;
-    top:80px;
-
-    background:
-        rgba(139,92,246,.13);
-
+    left:-250px;
+    top:100px;
+    background:rgba(139,92,246,.12);
 }
 
-
-.glow-two{
-
-    width:550px;
-    height:550px;
-
-    right:-150px;
+.glow.b{
+    width:500px;
+    height:500px;
+    right:-180px;
     bottom:-150px;
-
-    background:
-        rgba(34,211,238,.08);
-
+    background:rgba(34,211,238,.07);
 }
-
-
-/* =====================================================
-   ENERGY RINGS
-   ===================================================== */
-
-.energy-ring{
-
-    position:absolute;
-
-    border-radius:50%;
-
-    border:
-        1px solid
-        rgba(139,92,246,.08);
-
-    pointer-events:none;
-
-}
-
-
-.ring-one{
-
-    width:650px;
-    height:650px;
-
-    right:-120px;
-    top:40px;
-
-}
-
-
-.ring-two{
-
-    width:470px;
-    height:470px;
-
-    right:-30px;
-    top:130px;
-
-    border-color:
-        rgba(34,211,238,.07);
-
-}
-
-
-/* =====================================================
-   HERO COPY
-   ===================================================== */
 
 .hero-copy{
-
     position:relative;
-
-    z-index:5;
-
-    max-width:720px;
-
+    z-index:3;
+    max-width:700px;
 }
 
-
-.system-status{
-
+.status{
     display:inline-flex;
-
     align-items:center;
-
-    gap:9px;
+    gap:8px;
 
     padding:8px 13px;
 
-    border:
-        1px solid
-        rgba(139,92,246,.25);
-
+    border:1px solid rgba(139,92,246,.25);
     border-radius:100px;
 
-    background:
-        rgba(139,92,246,.055);
+    color:#a9a0ca;
+    background:rgba(139,92,246,.05);
 
-    color:#aaa0d4;
-
-    font-size:9px;
-
+    font-size:8px;
     font-weight:800;
-
     letter-spacing:1.8px;
-
 }
 
-
-.status-dot{
-
+.dot{
     width:6px;
     height:6px;
-
     border-radius:50%;
-
     background:#8b5cf6;
-
-    box-shadow:
-        0 0 12px #8b5cf6;
-
+    box-shadow:0 0 12px #8b5cf6;
 }
 
-
-.hero-kicker{
-
+.kicker{
     margin-top:28px;
 
-    color:#8e78d6;
+    color:#9b82e7;
 
-    font-size:11px;
-
+    font-size:10px;
     font-weight:800;
-
     letter-spacing:3px;
-
 }
 
-
-.hero-title{
-
-    margin-top:14px;
+.hero h1{
+    margin-top:13px;
 
     font-family:Orbitron,sans-serif;
 
-    font-size:
-        clamp(48px,6.2vw,88px);
-
-    line-height:.99;
-
+    font-size:clamp(45px,6.5vw,88px);
+    line-height:1;
     letter-spacing:-4px;
-
-    font-weight:800;
-
 }
 
-
-.hero-title span{
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #b8a2ff 45%,
-            #67e8f9
-        );
-
+.gradient{
+    background:linear-gradient(90deg,#fff,#b9a4ff,#67e8f9);
     -webkit-background-clip:text;
-
     background-clip:text;
-
     color:transparent;
-
 }
 
+.hero-description{
+    max-width:590px;
 
-.hero-text{
+    margin-top:24px;
 
-    max-width:600px;
-
-    margin-top:25px;
-
-    color:#8f97a7;
+    color:#8d95a5;
 
     font-size:14px;
-
     line-height:1.9;
-
 }
 
-
-/* =====================================================
-   HERO BUTTONS
-   ===================================================== */
-
-.hero-actions{
-
+.actions{
     display:flex;
-
-    align-items:center;
-
     gap:12px;
-
-    margin-top:32px;
-
+    margin-top:31px;
 }
 
-
-.hero-btn{
-
+.btn{
     min-height:48px;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
+    gap:14px;
 
-    gap:18px;
-
-    padding:0 18px;
+    padding:0 19px;
 
     border-radius:13px;
 
-    text-decoration:none;
-
-    font-size:11px;
-
+    font-size:10px;
     font-weight:800;
+    letter-spacing:.5px;
 
-    letter-spacing:.6px;
-
-    transition:
-        transform .3s ease,
-        box-shadow .3s ease,
-        background .3s ease;
-
+    transition:.3s;
 }
 
-
-.primary-btn{
-
-    color:white;
-
-    background:
-        linear-gradient(
-            135deg,
-            #8b5cf6,
-            #06b6d4
-        );
-
-    box-shadow:
-        0 12px 35px
-        rgba(139,92,246,.20);
-
+.btn-primary{
+    background:linear-gradient(135deg,#8b5cf6,#06b6d4);
+    box-shadow:0 15px 35px rgba(139,92,246,.18);
 }
 
-
-.primary-btn b{
-
-    font-size:17px;
-
-    font-weight:400;
-
-}
-
-
-.primary-btn:hover{
-
+.btn-primary:hover{
     transform:translateY(-3px);
-
-    box-shadow:
-        0 18px 45px
-        rgba(139,92,246,.32);
-
+    box-shadow:0 20px 45px rgba(139,92,246,.3);
 }
 
-
-.secondary-btn{
-
+.btn-secondary{
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.035);
     color:#c4c9d4;
-
-    background:
-        rgba(255,255,255,.035);
-
-    border:
-        1px solid
-        rgba(255,255,255,.10);
-
 }
 
-
-.secondary-btn:hover{
-
+.btn-secondary:hover{
     transform:translateY(-3px);
-
-    background:
-        rgba(255,255,255,.07);
-
+    background:rgba(255,255,255,.07);
 }
 
 
-/* =====================================================
-   HERO STATS
-   ===================================================== */
+/* ================= STATS ================= */
 
-.hero-stats{
-
-    margin-top:55px;
-
+.stats{
     display:flex;
-
     align-items:center;
-
-    gap:24px;
-
+    gap:23px;
+    margin-top:52px;
 }
 
-
-.hero-stat{
-
+.stat{
     display:flex;
-
     flex-direction:column;
-
     gap:5px;
-
 }
 
-
-.hero-stat strong{
-
+.stat strong{
     font-family:Orbitron,sans-serif;
-
     font-size:17px;
-
 }
 
-
-.hero-stat span{
-
-    color:#636c7c;
-
-    font-size:8px;
-
+.stat small{
+    color:#626a78;
+    font-size:7px;
     font-weight:800;
-
-    letter-spacing:1.5px;
-
+    letter-spacing:1.4px;
 }
 
-
-.hero-stat-line{
-
+.stat-line{
     width:1px;
-
-    height:32px;
-
-    background:
-        rgba(255,255,255,.10);
-
+    height:30px;
+    background:rgba(255,255,255,.1);
 }
 
 
-/* =====================================================
-   CHARACTER SHOWCASE
-   ===================================================== */
+/* ================= FEATURED CHARACTER ================= */
 
-.hero-character{
-
+.showcase{
     position:relative;
 
     min-height:620px;
 
     display:flex;
-
     align-items:center;
-
     justify-content:center;
-
 }
 
-
-.character-aura{
-
+.aura{
     position:absolute;
 
-    width:390px;
-    height:390px;
+    width:400px;
+    height:400px;
 
     border-radius:50%;
 
-    background:
-        radial-gradient(
-            circle,
-            rgba(139,92,246,.28),
-            rgba(34,211,238,.08),
-            transparent 70%
-        );
+    background:radial-gradient(
+        circle,
+        rgba(139,92,246,.3),
+        rgba(34,211,238,.08),
+        transparent 70%
+    );
 
-    filter:blur(10px);
+    filter:blur(8px);
 
-    animation:
-        auraPulse 5s ease-in-out infinite;
-
+    animation:pulse 5s ease-in-out infinite;
 }
 
-
-@keyframes auraPulse{
-
-    0%,100%{
-        transform:scale(1);
-        opacity:.75;
-    }
-
-    50%{
-        transform:scale(1.12);
-        opacity:1;
-    }
-
+@keyframes pulse{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.1)}
 }
 
-
-.character-circle{
-
+.circle{
     position:absolute;
 
     width:520px;
     height:520px;
 
+    border:1px solid rgba(139,92,246,.09);
     border-radius:50%;
-
-    border:
-        1px solid
-        rgba(139,92,246,.11);
-
 }
 
-
-/* =====================================================
-   FEATURED CHARACTER CARD
-   ===================================================== */
-
-.featured-character{
-
+.character{
     position:relative;
+    z-index:4;
 
-    width:min(390px,70vw);
-
+    width:min(390px,72vw);
     height:560px;
 
     overflow:hidden;
 
+    border:1px solid rgba(255,255,255,.12);
     border-radius:30px;
 
-    border:
-        1px solid
-        rgba(255,255,255,.12);
-
     background:
-        linear-gradient(
-            145deg,
-            rgba(139,92,246,.09),
-            rgba(255,255,255,.025) 45%,
-            rgba(6,182,212,.06)
-        );
+        linear-gradient(145deg,#171321,#07080c);
 
     box-shadow:
-        0 40px 100px
-        rgba(0,0,0,.55),
+        0 40px 100px rgba(0,0,0,.6),
+        0 0 70px rgba(139,92,246,.1);
 
-        0 0 80px
-        rgba(139,92,246,.10);
+    transform:perspective(1000px) rotateY(-5deg);
 
-    z-index:4;
-
-    transform:
-        perspective(1000px)
-        rotateY(-5deg);
-
-    transition:
-        transform .5s ease;
-
+    transition:.5s;
 }
 
-
-.featured-character:hover{
-
-    transform:
-        perspective(1000px)
-        rotateY(0deg)
-        translateY(-7px);
-
+.character:hover{
+    transform:perspective(1000px) rotateY(0deg) translateY(-7px);
 }
-
-
-/* =====================================================
-   CHARACTER ART
-   ===================================================== */
 
 .character-art{
-
     position:absolute;
-
     inset:0;
+
+    display:grid;
+    place-items:center;
 
     background:
+        radial-gradient(circle at 50% 35%,rgba(139,92,246,.3),transparent 30%),
+        radial-gradient(circle at 65% 65%,rgba(34,211,238,.1),transparent 30%);
+}
 
-        radial-gradient(
-            circle at 50% 32%,
-            rgba(139,92,246,.30),
-            transparent 32%
-        ),
+.character-art::before{
+    content:"";
+    width:230px;
+    height:320px;
 
-        radial-gradient(
-            circle at 70% 60%,
-            rgba(34,211,238,.10),
-            transparent 30%
-        ),
+    border-radius:50% 50% 45% 45%;
 
+    background:
         linear-gradient(
-            145deg,
-            #171321,
-            #08090d 65%
+            135deg,
+            rgba(139,92,246,.17),
+            rgba(34,211,238,.04)
         );
 
+    filter:blur(2px);
+
+    box-shadow:
+        0 0 90px rgba(139,92,246,.18);
 }
-
-
-.character-placeholder{
-
-    position:absolute;
-
-    inset:0;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-}
-
 
 .character-symbol{
-
-    position:relative;
-
-    top:-35px;
+    position:absolute;
 
     font-family:Orbitron,sans-serif;
-
-    font-size:
-        clamp(60px,8vw,95px);
-
+    font-size:64px;
     font-weight:900;
+    letter-spacing:-4px;
 
-    letter-spacing:-5px;
+    color:rgba(255,255,255,.07);
 
-    color:
-        rgba(255,255,255,.055);
-
-    text-shadow:
-        0 0 60px
-        rgba(139,92,246,.4);
-
+    text-shadow:0 0 60px rgba(139,92,246,.5);
 }
 
-
-.character-energy{
-
+.character-icon{
     position:absolute;
 
-    font-size:85px;
+    font-size:80px;
 
-    color:
-        rgba(255,255,255,.08);
+    color:rgba(255,255,255,.08);
 
-    filter:
-        drop-shadow(
-            0 0 35px
-            rgba(139,92,246,.6)
-        );
-
-    animation:
-        energyFloat 4s ease-in-out infinite;
-
+    animation:float 4s ease-in-out infinite;
 }
 
-
-@keyframes energyFloat{
-
-    0%,100%{
-        transform:
-            translateY(-8px)
-            rotate(-3deg);
-    }
-
-    50%{
-        transform:
-            translateY(8px)
-            rotate(3deg);
-    }
-
+@keyframes float{
+    0%,100%{transform:translateY(-8px)}
+    50%{transform:translateY(8px)}
 }
 
-
-/* =====================================================
-   FEATURED INFO
-   ===================================================== */
-
-.featured-info{
-
+.character-info{
     position:absolute;
-
     left:0;
     right:0;
     bottom:0;
@@ -1187,188 +537,124 @@ body::before{
     background:
         linear-gradient(
             to top,
-            #050608 5%,
-            rgba(5,6,8,.92) 45%,
+            #050609 8%,
+            rgba(5,6,9,.92) 50%,
             transparent
         );
-
 }
 
-
-.featured-label{
-
+.character-info label{
     color:#a78bfa;
 
     font-size:8px;
-
     font-weight:800;
-
     letter-spacing:2px;
-
 }
 
-
-.featured-info h2{
-
+.character-info h2{
     margin-top:6px;
 
     font-family:Orbitron,sans-serif;
-
     font-size:38px;
-
 }
 
-
-.featured-info p{
-
+.character-info p{
     margin-top:6px;
 
-    color:#777f8f;
+    color:#777f8e;
 
     font-size:10px;
-
     font-weight:600;
-
     letter-spacing:.7px;
-
 }
 
-
-.featured-info p span{
-
-    margin:0 6px;
-
-    color:#8b5cf6;
-
-}
-
-
-.featured-tags{
-
+.tags{
     display:flex;
-
     gap:7px;
-
     margin-top:15px;
-
 }
 
-
-.featured-tags span{
-
+.tags span{
     padding:5px 8px;
 
+    border:1px solid rgba(255,255,255,.07);
     border-radius:6px;
 
-    background:
-        rgba(255,255,255,.07);
+    background:rgba(255,255,255,.06);
 
-    border:
-        1px solid
-        rgba(255,255,255,.07);
-
-    color:#9ba3b1;
+    color:#a0a7b5;
 
     font-size:7px;
-
     font-weight:800;
-
     letter-spacing:1px;
-
 }
 
-
-/* =====================================================
-   CHARACTER NUMBER
-   ===================================================== */
-
-.character-number{
-
+.number{
     position:absolute;
-
     top:22px;
     right:22px;
 
-    color:
-        rgba(255,255,255,.25);
+    color:rgba(255,255,255,.25);
 
     font-family:Orbitron,sans-serif;
-
     font-size:9px;
-
     letter-spacing:2px;
-
 }
 
 
-/* =====================================================
-   FLOATING POWER CARDS
-   ===================================================== */
+/* ================= FLOATING CARDS ================= */
 
-.floating-card{
-
+.float-card{
     position:absolute;
-
-    z-index:7;
-
-    min-width:125px;
+    z-index:6;
 
     padding:13px 15px;
 
+    min-width:125px;
+
+    border:1px solid rgba(255,255,255,.1);
     border-radius:13px;
 
-    background:
-        rgba(8,9,13,.72);
+    background:rgba(8,9,13,.72);
 
-    backdrop-filter:
-        blur(18px);
+    backdrop-filter:blur(18px);
 
-    border:
-        1px solid
-        rgba(255,255,255,.10);
+    box-shadow:0 15px 40px rgba(0,0,0,.35);
 
-    box-shadow:
-        0 15px 40px
-        rgba(0,0,0,.35);
-
-    animation:
-        floatCard 5s ease-in-out infinite;
-
+    animation:cardFloat 5s ease-in-out infinite;
 }
 
+.float-card.one{
+    top:105px;
+    left:-20px;
+}
 
-.floating-card span{
+.float-card.two{
+    right:-25px;
+    bottom:120px;
+    animation-delay:-2.5s;
+}
 
+.float-card small{
     display:block;
 
-    color:#687181;
+    color:#697181;
 
     font-size:7px;
-
     font-weight:800;
-
-    letter-spacing:1.5px;
-
+    letter-spacing:1.4px;
 }
 
-
-.floating-card strong{
-
+.float-card strong{
     display:block;
 
-    margin-top:4px;
-
-    color:#ddd9ed;
+    margin-top:5px;
 
     font-family:Orbitron,sans-serif;
-
     font-size:14px;
-
 }
 
-
-.floating-card small{
-
+.float-card span{
     display:block;
 
     margin-top:3px;
@@ -1376,367 +662,350 @@ body::before{
     color:#8071b2;
 
     font-size:7px;
+}
 
+@keyframes cardFloat{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-10px)}
 }
 
 
-.power-card-one{
+/* ================= NEXT SECTION PREVIEW ================= */
 
-    top:115px;
+.database-preview{
+    position:relative;
 
-    left:-25px;
+    padding:90px clamp(20px,7vw,100px) 110px;
 
+    border-top:1px solid rgba(255,255,255,.05);
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(139,92,246,.025),
+            transparent
+        );
+}
+
+.section-label{
+    color:#8b72ce;
+
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:2.5px;
+}
+
+.database-preview h2{
+    margin-top:12px;
+
+    font-family:Orbitron,sans-serif;
+
+    font-size:clamp(28px,4vw,48px);
+}
+
+.database-preview>p{
+    max-width:650px;
+
+    margin-top:15px;
+
+    color:#7f8796;
+
+    font-size:13px;
+    line-height:1.8;
+}
+
+.category-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+
+    margin-top:35px;
+}
+
+.category{
+    min-height:150px;
+
+    padding:23px;
+
+    border:1px solid var(--border);
+    border-radius:20px;
+
+    background:rgba(255,255,255,.025);
+
+    transition:.3s;
+}
+
+.category:hover{
+    transform:translateY(-5px);
+
+    border-color:rgba(139,92,246,.35);
+
+    background:rgba(139,92,246,.055);
+}
+
+.category-icon{
+    font-size:26px;
+}
+
+.category h3{
+    margin-top:18px;
+
+    font-family:Orbitron,sans-serif;
+    font-size:14px;
+}
+
+.category p{
+    margin-top:7px;
+
+    color:#707887;
+
+    font-size:10px;
+    line-height:1.6;
 }
 
 
-.power-card-two{
+/* ================= FOOTER ================= */
 
-    bottom:125px;
+footer{
+    padding:35px 20px;
 
-    right:-35px;
+    text-align:center;
 
-    animation-delay:-2.5s;
+    color:#505766;
 
+    border-top:1px solid rgba(255,255,255,.05);
+
+    font-size:9px;
+    letter-spacing:1px;
 }
 
 
-@keyframes floatCard{
-
-    0%,100%{
-        transform:translateY(0);
-    }
-
-    50%{
-        transform:translateY(-10px);
-    }
-
-}
-
-
-/* =====================================================
-   TABLET
-   ===================================================== */
+/* ================= TABLET ================= */
 
 @media(max-width:1000px){
 
-    .hero-section{
+    .nav-links{
+        gap:15px;
+    }
 
-        grid-template-columns:
-            1fr .8fr;
+    .nav-links a{
+        font-size:9px;
+    }
 
+    .nav-search{
+        width:145px;
+    }
+
+    .hero{
+        grid-template-columns:1fr .8fr;
         padding-left:35px;
         padding-right:35px;
-
     }
 
-    .hero-title{
-
-        font-size:
-            clamp(42px,6vw,65px);
-
+    .hero h1{
+        font-size:clamp(40px,6vw,64px);
     }
 
-    .featured-character{
-
-        width:310px;
-        height:490px;
-
+    .character{
+        width:300px;
+        height:480px;
     }
 
-    .character-circle{
-
-        width:420px;
-        height:420px;
-
+    .circle{
+        width:410px;
+        height:410px;
     }
 
+    .category-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
 }
 
 
-/* =====================================================
-   MOBILE
-   ===================================================== */
+/* ================= MOBILE ================= */
 
 @media(max-width:700px){
 
     .navbar{
-
         height:68px;
-
         padding:0 16px;
-
     }
 
     .nav-links,
     .nav-search{
-
         display:none;
-
     }
 
-    .menu-button{
-
+    .menu{
         display:block;
-
+        margin-left:auto;
+        cursor:pointer;
     }
 
-    .mobile-menu{
-
-        top:68px;
-
-    }
-
-
-    .hero-section{
-
-        margin-top:68px;
+    .hero{
+        display:block;
 
         min-height:auto;
 
         padding:
-            55px 18px 60px;
-
-        display:block;
-
+            110px 18px 55px;
     }
 
-
-    .hero-title{
-
-        font-size:
-            clamp(39px,11vw,56px);
-
+    .hero h1{
+        font-size:clamp(38px,11vw,55px);
         letter-spacing:-2px;
-
     }
 
-
-    .hero-text{
-
+    .hero-description{
         font-size:13px;
-
         line-height:1.8;
-
     }
 
-
-    .hero-actions{
-
+    .actions{
         flex-direction:column;
-
-        align-items:stretch;
-
-        margin-top:27px;
-
     }
 
-
-    .hero-btn{
-
+    .btn{
         width:100%;
-
     }
 
-
-    .hero-stats{
-
-        margin-top:40px;
-
+    .stats{
         justify-content:space-between;
-
         gap:10px;
-
+        margin-top:40px;
     }
 
-
-    .hero-character{
-
-        min-height:520px;
-
-        margin-top:35px;
-
+    .stat strong{
+        font-size:14px;
     }
 
+    .stat small{
+        font-size:6px;
+    }
 
-    .featured-character{
+    .showcase{
+        min-height:510px;
+        margin-top:20px;
+    }
 
+    .character{
         width:280px;
-
         height:420px;
-
-        border-radius:24px;
-
         transform:none;
-
     }
 
-
-    .featured-character:hover{
-
-        transform:
-            translateY(-5px);
-
+    .character:hover{
+        transform:translateY(-5px);
     }
 
-
-    .character-circle{
-
+    .circle{
         width:350px;
         height:350px;
-
     }
 
-
-    .character-aura{
-
+    .aura{
         width:300px;
         height:300px;
-
     }
 
-
-    .featured-info{
-
+    .character-info{
         padding:22px;
-
     }
 
-
-    .featured-info h2{
-
+    .character-info h2{
         font-size:28px;
-
     }
 
-
-    .character-symbol{
-
-        font-size:60px;
-
-    }
-
-
-    .character-energy{
-
-        font-size:65px;
-
-    }
-
-
-    .power-card-one{
-
+    .float-card.one{
         left:0;
-
-        top:80px;
-
-        transform:scale(.88);
-
+        top:65px;
+        transform:scale(.85);
     }
 
-
-    .power-card-two{
-
-        right:-2px;
-
-        bottom:80px;
-
-        transform:scale(.88);
-
+    .float-card.two{
+        right:0;
+        bottom:65px;
+        transform:scale(.85);
     }
 
+    .database-preview{
+        padding:65px 18px 80px;
+    }
+
+    .category-grid{
+        grid-template-columns:1fr;
+    }
 }
 
 
-/* =====================================================
-   SMALL PHONES
-   ===================================================== */
+/* ================= SMALL PHONE ================= */
 
 @media(max-width:390px){
 
-    .hero-title{
-
-        font-size:37px;
-
+    .hero h1{
+        font-size:36px;
     }
 
-    .featured-character{
-
+    .character{
         width:250px;
-
         height:390px;
-
     }
 
-    .character-circle{
-
+    .circle{
         width:310px;
-
         height:310px;
-
     }
 
+    .float-card{
+        min-width:105px;
+        padding:10px 11px;
+    }
 }
 
 </style>
-
 </head>
 
 
 <body>
 
 
-<!-- =====================================================
-     NAVBAR
-     ===================================================== -->
+<!-- ================= NAVBAR ================= -->
 
 <header class="navbar">
 
+    <a class="logo" href="#">
 
-    <a href="#" class="logo">
-
-        <div class="logo-icon">
+        <div class="logo-box">
             J
         </div>
 
-        JARVIS<span>.</span>
+        JARVIS<em>.</em>
 
     </a>
 
 
     <nav class="nav-links">
 
-        <a href="#characters">
-            CHARACTERS
-        </a>
+        <a href="#characters">CHARACTERS</a>
 
-        <a href="#heroes">
-            HEROES
-        </a>
+        <a href="#heroes">HEROES</a>
 
-        <a href="#villains">
-            VILLAINS
-        </a>
+        <a href="#villains">VILLAINS</a>
 
-        <a href="#universes">
-            UNIVERSES
-        </a>
+        <a href="#universes">UNIVERSES</a>
 
-        <a href="#power">
-            POWER INDEX
-        </a>
+        <a href="#power">POWER INDEX</a>
 
     </nav>
 
 
     <div class="nav-search">
 
-        <span class="search-icon">
-            ⌕
-        </span>
+        <span>⌕</span>
 
         <input
-            type="text"
-            id="searchInput"
+            id="search"
+            type="search"
             placeholder="Search character..."
         >
 
@@ -1744,8 +1013,8 @@ body::before{
 
 
     <button
-        class="menu-button"
-        id="menuButton">
+        class="menu"
+        id="menu">
 
         ☰
 
@@ -1755,353 +1024,387 @@ body::before{
 
 
 
-<!-- =====================================================
-     MOBILE MENU
-     ===================================================== -->
+<!-- ================= HERO ================= -->
 
-<div
-    class="mobile-menu"
-    id="mobileMenu">
-
-    <a href="#characters">
-        CHARACTERS
-    </a>
-
-    <a href="#heroes">
-        HEROES
-    </a>
-
-    <a href="#villains">
-        VILLAINS
-    </a>
-
-    <a href="#universes">
-        UNIVERSES
-    </a>
-
-    <a href="#power">
-        POWER INDEX
-    </a>
-
-</div>
-
-
-
-<!-- =====================================================
-     HERO SECTION
-     ===================================================== -->
-
-<main class="hero-section">
-
-
-    <div class="hero-glow glow-one"></div>
-
-    <div class="hero-glow glow-two"></div>
+<main class="hero">
 
     <div class="hero-grid"></div>
 
-    <div class="energy-ring ring-one"></div>
+    <div class="glow a"></div>
+    <div class="glow b"></div>
 
-    <div class="energy-ring ring-two"></div>
-
-
-
-    <!-- =================================================
-         LEFT
-         ================================================= -->
 
     <section class="hero-copy">
 
 
-        <div class="system-status">
+        <div class="status">
 
-            <span class="status-dot"></span>
+            <span class="dot"></span>
 
             DATABASE ONLINE
 
         </div>
 
 
-        <div class="hero-kicker">
-
-            CHARACTER ENCYCLOPEDIA
-
+        <div class="kicker">
+            THE ULTIMATE CHARACTER ENCYCLOPEDIA
         </div>
 
 
-        <h1 class="hero-title">
+        <h1>
 
             KNOW
-            <span>THEM.</span>
+            <span class="gradient">THEM.</span>
 
             <br>
 
             KNOW
-            <span>THEIR POWER.</span>
+            <span class="gradient">THEIR POWER.</span>
 
         </h1>
 
 
-        <p class="hero-text">
+        <p class="hero-description">
 
-            Explore legendary heroes, terrifying villains
+            Explore legendary heroes, dangerous villains
             and extraordinary characters from Marvel,
             DC, Anime and beyond.
 
-            Discover their origins, powers, abilities,
-            forms, feats, weaknesses and complete history.
+            Discover their origin, history, powers,
+            abilities, forms, feats, weaknesses and more —
+            all in one evolving character database.
 
         </p>
 
 
-        <div class="hero-actions">
-
+        <div class="actions">
 
             <a
                 href="#characters"
-                class="hero-btn primary-btn">
+                class="btn btn-primary">
 
-                <span>
-                    EXPLORE CHARACTERS
-                </span>
+                EXPLORE CHARACTERS
 
-                <b>
-                    →
-                </b>
+                <b>→</b>
 
             </a>
 
 
             <a
                 href="#power"
-                class="hero-btn secondary-btn">
+                class="btn btn-secondary">
 
-                <span>
-                    ⚡ POWER INDEX
-                </span>
+                ⚡ POWER INDEX
 
             </a>
 
-
         </div>
 
 
-        <div class="hero-stats">
+        <div class="stats">
 
+            <div class="stat">
 
-            <div class="hero-stat">
+                <strong>01</strong>
 
-                <strong>
-                    01
-                </strong>
-
-                <span>
-                    CHARACTERS
-                </span>
+                <small>CHARACTERS</small>
 
             </div>
 
 
-            <div class="hero-stat-line"></div>
+            <div class="stat-line"></div>
 
 
-            <div class="hero-stat">
+            <div class="stat">
 
-                <strong>
-                    A–Z
-                </strong>
+                <strong>A–Z</strong>
 
-                <span>
-                    DATABASE
-                </span>
+                <small>DATABASE</small>
 
             </div>
 
 
-            <div class="hero-stat-line"></div>
+            <div class="stat-line"></div>
 
 
-            <div class="hero-stat">
+            <div class="stat">
 
-                <strong>
-                    ∞
-                </strong>
+                <strong>∞</strong>
 
-                <span>
-                    UNIVERSES
-                </span>
+                <small>UNIVERSES</small>
 
             </div>
-
 
         </div>
-
 
     </section>
 
 
 
-    <!-- =================================================
-         RIGHT CHARACTER
-         ================================================= -->
+    <!-- ================= FEATURED CHARACTER ================= -->
 
-    <section class="hero-character">
+    <section class="showcase">
 
+        <div class="aura"></div>
 
-        <div class="character-aura"></div>
-
-        <div class="character-circle"></div>
+        <div class="circle"></div>
 
 
-        <div class="featured-character">
+        <article class="character">
 
 
             <div class="character-art">
 
-
-                <div class="character-placeholder">
-
-
-                    <span class="character-symbol">
-                        THOR
-                    </span>
-
-
-                    <span class="character-energy">
-                        ⚡
-                    </span>
-
-
+                <div class="character-symbol">
+                    THOR
                 </div>
 
+                <div class="character-icon">
+                    ⚡
+                </div>
 
             </div>
 
 
-            <div class="featured-info">
+            <div class="character-info">
 
-
-                <div class="featured-label">
+                <label>
                     FEATURED CHARACTER
-                </div>
-
+                </label>
 
                 <h2>
                     THOR
                 </h2>
 
-
                 <p>
-
                     GOD OF THUNDER
-
-                    <span>
-                        •
-                    </span>
-
+                    <span>•</span>
                     MARVEL
-
                 </p>
 
 
-                <div class="featured-tags">
+                <div class="tags">
 
-                    <span>
-                        HERO
-                    </span>
+                    <span>HERO</span>
 
-                    <span>
-                        GOD TIER
-                    </span>
+                    <span>GOD TIER</span>
 
                 </div>
-
 
             </div>
 
 
-            <div class="character-number">
+            <div class="number">
                 001
             </div>
 
 
-        </div>
+        </article>
 
 
-        <div class="floating-card power-card-one">
-
-            <span>
-                POWER
-            </span>
-
-            <strong>
-                ⚡
-            </strong>
+        <div class="float-card one">
 
             <small>
-                GOD TIER
+                POWER LEVEL
             </small>
+
+            <strong>
+                GOD TIER
+            </strong>
+
+            <span>
+                ⚡ COSMIC
+            </span>
 
         </div>
 
 
-        <div class="floating-card power-card-two">
+        <div class="float-card two">
 
-            <span>
-                STATUS
-            </span>
+            <small>
+                DATABASE STATUS
+            </small>
 
             <strong>
                 ACTIVE
             </strong>
 
-            <small>
+            <span>
                 MARVEL
-            </small>
+            </span>
 
         </div>
 
-
     </section>
-
 
 </main>
 
 
 
-<!-- =====================================================
-     JAVASCRIPT
-     ===================================================== -->
+<!-- ================= DATABASE PREVIEW ================= -->
+
+<section
+    class="database-preview"
+    id="characters">
+
+
+    <div class="section-label">
+        EXPLORE THE DATABASE
+    </div>
+
+
+    <h2>
+        CHOOSE YOUR UNIVERSE
+    </h2>
+
+
+    <p>
+
+        প্রতিটি character profile-এ থাকবে তার পরিচয়,
+        origin, complete history, powers, abilities,
+        forms, feats, weaknesses, relationships এবং
+        প্রয়োজনীয় A–Z information।
+
+    </p>
+
+
+    <div class="category-grid">
+
+
+        <a class="category" href="#heroes">
+
+            <div class="category-icon">
+                🦸
+            </div>
+
+            <h3>
+                HEROES
+            </h3>
+
+            <p>
+                Legendary heroes and protectors.
+            </p>
+
+        </a>
+
+
+        <a class="category" href="#villains">
+
+            <div class="category-icon">
+                😈
+            </div>
+
+            <h3>
+                VILLAINS
+            </h3>
+
+            <p>
+                The most dangerous enemies.
+            </p>
+
+        </a>
+
+
+        <a class="category" href="#universes">
+
+            <div class="category-icon">
+                🌌
+            </div>
+
+            <h3>
+                UNIVERSES
+            </h3>
+
+            <p>
+                Marvel, DC, Anime and more.
+            </p>
+
+        </a>
+
+
+        <a class="category" href="#power">
+
+            <div class="category-icon">
+                ⚡
+            </div>
+
+            <h3>
+                POWER INDEX
+            </h3>
+
+            <p>
+                Compare characters by abilities and feats.
+            </p>
+
+        </a>
+
+
+    </div>
+
+</section>
+
+
+
+<footer>
+
+    JARVIS CHARACTER ENCYCLOPEDIA
+    •
+    BUILDING THE DATABASE
+
+</footer>
+
+
 
 <script>
 
 
-/* =====================================================
-   MOBILE MENU
-   ===================================================== */
+/* ================= MOBILE MENU ================= */
 
-const menuButton =
-    document.getElementById("menuButton");
+const menu =
+    document.getElementById("menu");
 
-const mobileMenu =
-    document.getElementById("mobileMenu");
-
-
-menuButton.addEventListener(
+menu.addEventListener(
     "click",
-    () => {
+    function(){
 
-        mobileMenu.classList.toggle("active");
+        const links =
+            document.querySelector(".nav-links");
 
         if(
-            mobileMenu.classList.contains("active")
+            window.innerWidth <= 700
         ){
 
-            menuButton.textContent = "✕";
+            links.style.display =
+                links.style.display === "flex"
+                ? "none"
+                : "flex";
 
-        }else{
+            links.style.position =
+                "absolute";
 
-            menuButton.textContent = "☰";
+            links.style.top =
+                "68px";
+
+            links.style.left =
+                "0";
+
+            links.style.right =
+                "0";
+
+            links.style.padding =
+                "15px 20px";
+
+            links.style.flexDirection =
+                "column";
+
+            links.style.alignItems =
+                "flex-start";
+
+            links.style.background =
+                "rgba(5,6,9,.96)";
+
+            links.style.borderBottom =
+                "1px solid rgba(255,255,255,.08)";
 
         }
 
@@ -2109,49 +1412,24 @@ menuButton.addEventListener(
 );
 
 
-/* Close menu */
+/* ================= SEARCH FOUNDATION ================= */
 
-document
-    .querySelectorAll(".mobile-menu a")
-    .forEach(link => {
+const search =
+    document.getElementById("search");
 
-        link.addEventListener(
-            "click",
-            () => {
-
-                mobileMenu
-                    .classList
-                    .remove("active");
-
-                menuButton.textContent = "☰";
-
-            }
-        );
-
-    });
-
-
-/* =====================================================
-   SEARCH FOUNDATION
-   ===================================================== */
-
-const searchInput =
-    document.getElementById("searchInput");
-
-
-searchInput.addEventListener(
+search.addEventListener(
     "keydown",
-    function(event){
+    function(e){
 
-        if(event.key === "Enter"){
+        if(e.key === "Enter"){
 
             const value =
                 this.value.trim();
 
             if(value){
 
-                console.log(
-                    "Character search:",
+                alert(
+                    "Character database search will be connected in the next build: " +
                     value
                 );
 
@@ -2163,7 +1441,6 @@ searchInput.addEventListener(
 );
 
 </script>
-
 
 </body>
 </html>
