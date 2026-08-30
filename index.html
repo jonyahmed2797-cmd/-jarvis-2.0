@@ -1192,6 +1192,871 @@ CHARACTER INTELLIGENCE SYSTEM • V1
 </div>
 
 </footer>
+<!-- =========================================================
+     JARVIS V1 — CHARACTER DATABASE ENGINE
+     PART 2
+========================================================= -->
+
+<style>
+
+/* CHARACTER ENGINE */
+
+.character-placeholder{
+    cursor:pointer;
+}
+
+.character-placeholder.hidden{
+    display:none;
+}
+
+.database-count{
+    margin-top:22px;
+    text-align:center;
+    color:#626a79;
+    font-size:8px;
+    font-weight:800;
+    letter-spacing:1.5px;
+}
+
+.character-art img{
+    width:100%;
+    height:205px;
+    object-fit:cover;
+    display:block;
+    opacity:.82;
+    transition:.4s;
+}
+
+.character-placeholder:hover .character-art img{
+    opacity:1;
+    transform:scale(1.04);
+}
+
+
+/* PROFILE MODAL */
+
+.profile-overlay{
+    position:fixed;
+    inset:0;
+    z-index:3000;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:rgba(0,0,0,.78);
+    backdrop-filter:blur(15px);
+}
+
+.profile-overlay.show{
+    display:flex;
+}
+
+.profile-modal{
+    width:min(900px,100%);
+    max-height:90vh;
+    overflow-y:auto;
+    position:relative;
+    border:1px solid rgba(154,124,255,.25);
+    border-radius:24px;
+    background:
+        radial-gradient(
+            circle at 80% 0%,
+            rgba(154,124,255,.14),
+            transparent 35%
+        ),
+        #0b0e15;
+    box-shadow:0 30px 100px rgba(0,0,0,.65);
+}
+
+.profile-close{
+    position:absolute;
+    top:18px;
+    right:18px;
+    width:38px;
+    height:38px;
+    z-index:5;
+    border:1px solid var(--line);
+    border-radius:50%;
+    background:rgba(0,0,0,.35);
+    color:#fff;
+    font-size:18px;
+}
+
+.profile-top{
+    display:grid;
+    grid-template-columns:280px 1fr;
+    gap:30px;
+    padding:30px;
+}
+
+.profile-image{
+    height:350px;
+    overflow:hidden;
+    border-radius:18px;
+    background:#11151e;
+}
+
+.profile-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.profile-category{
+    color:var(--purple);
+    font-size:8px;
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.profile-name{
+    margin-top:10px;
+    font-family:Orbitron,sans-serif;
+    font-size:32px;
+}
+
+.profile-universe{
+    margin-top:8px;
+    color:#747d8d;
+    font-size:10px;
+}
+
+.profile-description{
+    margin-top:22px;
+    color:#a0a7b5;
+    font-size:11px;
+    line-height:1.9;
+}
+
+.profile-stats{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+    margin-top:24px;
+}
+
+.profile-stat{
+    padding:13px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:rgba(255,255,255,.025);
+}
+
+.profile-stat span{
+    display:block;
+    color:#687181;
+    font-size:7px;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+.profile-stat strong{
+    display:block;
+    margin-top:5px;
+    font-family:Orbitron,sans-serif;
+    font-size:13px;
+}
+
+.profile-details{
+    padding:0 30px 30px;
+}
+
+.detail-block{
+    margin-top:15px;
+    padding:20px;
+    border:1px solid var(--line);
+    border-radius:15px;
+    background:rgba(255,255,255,.02);
+}
+
+.detail-block h3{
+    color:var(--purple);
+    font-family:Orbitron,sans-serif;
+    font-size:11px;
+    letter-spacing:1px;
+}
+
+.detail-block p{
+    margin-top:10px;
+    color:#969eac;
+    font-size:10px;
+    line-height:1.9;
+}
+
+@media(max-width:650px){
+
+    .profile-top{
+        grid-template-columns:1fr;
+        padding:20px;
+    }
+
+    .profile-image{
+        height:300px;
+    }
+
+    .profile-name{
+        font-size:25px;
+    }
+
+    .profile-details{
+        padding:0 20px 20px;
+    }
+
+}
+
+</style>
+
+
+<script>
+
+/* =========================================================
+   JARVIS CHARACTER DATABASE
+========================================================= */
+
+const JARVIS_CHARACTERS = [
+
+{
+    id:"thor",
+    name:"Thor",
+    category:"HEROES",
+    type:"Hero • God",
+    universe:"Marvel",
+    image:"https://images.unsplash.com/photo-1534809027769-b00d750a6bac?auto=format&fit=crop&w=800&q=80",
+    power:"GOD TIER",
+    stats:{
+        strength:"98",
+        speed:"82",
+        durability:"99",
+        iq:"80",
+        combat:"96",
+        energy:"97"
+    },
+    description:"Thor হল Asgard-এর রাজপুত্র এবং বজ্রের দেবতা। তার অসাধারণ শারীরিক শক্তি, durability এবং lightning manipulation তাকে Marvel-এর অন্যতম শক্তিশালী hero করে তুলেছে।",
+    origin:"Thor Asgard-এ জন্মগ্রহণ করেন এবং Odin-এর পুত্র হিসেবে রাজকীয় প্রশিক্ষণ লাভ করেন। তার অহংকার ও যুদ্ধপ্রবণতার কারণে Odin তাকে Midgard-এ পাঠিয়ে মানবজীবনের মূল্য বুঝতে শেখান।",
+    powers:"Superhuman strength, extreme durability, flight, lightning manipulation, energy projection এবং অত্যন্ত উন্নত combat ability।",
+    weakness:"তার ক্ষমতার ব্যবহার পরিস্থিতি ও নির্দিষ্ট version-এর ওপর নির্ভর করে। এছাড়া magical বা cosmic-level কিছু শক্তি তার জন্য গুরুতর হুমকি হতে পারে।"
+},
+
+{
+    id:"ironman",
+    name:"Iron Man",
+    category:"HEROES",
+    type:"Hero • Genius",
+    universe:"Marvel",
+    image:"https://images.unsplash.com/photo-1531259683007-016a7b628fc3?auto=format&fit=crop&w=800&q=80",
+    power:"EXTREME",
+    stats:{
+        strength:"85",
+        speed:"80",
+        durability:"82",
+        iq:"99",
+        combat:"88",
+        energy:"94"
+    },
+    description:"Tony Stark একজন billionaire inventor এবং genius engineer, যিনি নিজের তৈরি advanced armor ব্যবহার করে Iron Man হিসেবে লড়াই করেন।",
+    origin:"একটি ভয়াবহ ঘটনার পর Tony Stark নিজের প্রযুক্তিগত জ্ঞান ব্যবহার করে প্রথম Iron Man armor তৈরি করেন। সময়ের সঙ্গে armor আরও উন্নত হতে থাকে।",
+    powers:"Powered armor, flight, energy weapons, artificial intelligence, advanced sensors এবং বিভিন্ন ধরনের specialized technology।",
+    weakness:"তার প্রধান limitation হলো armor ও technology-এর ওপর নির্ভরতা এবং resource বা energy limitation।"
+},
+
+{
+    id:"spiderman",
+    name:"Spider-Man",
+    category:"HEROES",
+    type:"Hero • Web-Slinger",
+    universe:"Marvel",
+    image:"https://images.unsplash.com/photo-1635805737707-575885ab0820?auto=format&fit=crop&w=800&q=80",
+    power:"SUPER",
+    stats:{
+        strength:"75",
+        speed:"82",
+        durability:"70",
+        iq:"91",
+        combat:"90",
+        energy:"45"
+    },
+    description:"Spider-Man হল Peter Parker-এর superhero identity। তার spider-like abilities এবং Spider-Sense তাকে অসাধারণ agility ও combat advantage দেয়।",
+    origin:"Peter Parker একটি radioactive spider-এর কামড়ে বিশেষ ক্ষমতা অর্জন করেন। পরে তার জীবনে দায়িত্ব ও ক্ষমতার সম্পর্ক নিয়ে গুরুত্বপূর্ণ পরিবর্তন আসে।",
+    powers:"Superhuman strength, agility, wall-crawling, Spider-Sense এবং web-shooting technology।",
+    weakness:"অত্যন্ত শক্তিশালী cosmic বা high-tier opponents-এর বিরুদ্ধে তার physical limits সমস্যা তৈরি করতে পারে।"
+},
+
+{
+    id:"hulk",
+    name:"Hulk",
+    category:"HEROES",
+    type:"Hero • Gamma Mutate",
+    universe:"Marvel",
+    image:"https://images.unsplash.com/photo-1608889825103-eb5ed706fc64?auto=format&fit=crop&w=800&q=80",
+    power:"GOD TIER",
+    stats:{
+        strength:"100",
+        speed:"75",
+        durability:"100",
+        iq:"78",
+        combat:"88",
+        energy:"60"
+    },
+    description:"Bruce Banner-এর gamma radiation-এর কারণে Hulk-এর সৃষ্টি। Hulk-এর সবচেয়ে পরিচিত বৈশিষ্ট্য হলো তার ভয়াবহ physical strength এবং durability।",
+    origin:"Gamma radiation-এর সংস্পর্শে Bruce Banner-এর মধ্যে Hulk-এর transformation শুরু হয়। বিভিন্ন storyline-এ Hulk-এর বহু form দেখা গেছে।",
+    powers:"Extreme strength, regeneration, durability, powerful leaps এবং বিভিন্ন ধরনের gamma-based abilities।",
+    weakness:"তার emotional state এবং transformation-এর nature বিভিন্ন version অনুযায়ী পরিবর্তিত হতে পারে।"
+},
+
+{
+    id:"loki",
+    name:"Loki",
+    category:"VILLAINS",
+    type:"Villain • God",
+    universe:"Marvel",
+    image:"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
+    power:"GOD TIER",
+    stats:{
+        strength:"72",
+        speed:"75",
+        durability:"80",
+        iq:"98",
+        combat:"82",
+        energy:"94"
+    },
+    description:"Loki হল Asgardian magic user এবং master of deception। তার intelligence, illusion এবং mystical abilities তাকে অত্যন্ত unpredictable করে তোলে।",
+    origin:"Loki Asgardian royal family-এর সঙ্গে বড় হন এবং Thor-এর সঙ্গে তার সম্পর্ক জটিল হয়ে ওঠে। বিভিন্ন version-এ তার পরিচয় ও destiny ভিন্নভাবে উপস্থাপিত হয়েছে।",
+    powers:"Magic, illusions, shapeshifting, teleportation, energy manipulation এবং extraordinary intelligence।",
+    weakness:"তার পরিকল্পনা প্রায়ই অতিরিক্ত ambition এবং deception-এর ওপর নির্ভর করে।"
+},
+
+{
+    id:"thanos",
+    name:"Thanos",
+    category:"VILLAINS",
+    type:"Villain • Titan",
+    universe:"Marvel",
+    image:"https://images.unsplash.com/photo-1535223289827-42f1e9919769?auto=format&fit=crop&w=800&q=80",
+    power:"COSMIC",
+    stats:{
+        strength:"100",
+        speed:"82",
+        durability:"100",
+        iq:"97",
+        combat:"98",
+        energy:"100"
+    },
+    description:"Thanos একজন অত্যন্ত শক্তিশালী Titan এবং Marvel-এর অন্যতম ভয়ংকর villain। তার physical abilities ও cosmic power তাকে প্রায় অপ্রতিরোধ্য প্রতিপক্ষ বানাতে পারে।",
+    origin:"Titan-এর Eternals-এর একটি branch থেকে Thanos-এর জন্ম। সময়ের সঙ্গে তার cosmic ambition আরও বৃদ্ধি পায়।",
+    powers:"Superhuman strength, durability, cosmic energy, advanced intelligence এবং বিভিন্ন cosmic artifacts-এর ব্যবহার।",
+    weakness:"তার সবচেয়ে বড় দুর্বলতা প্রায়ই তার নিজের obsession, arrogance এবং নির্দিষ্ট লক্ষ্যকে কেন্দ্র করে তৈরি হয়।"
+},
+
+{
+    id:"batman",
+    name:"Batman",
+    category:"HEROES",
+    type:"Hero • Vigilante",
+    universe:"DC",
+    image:"https://images.unsplash.com/photo-1531259683007-016a7b628fc3?auto=format&fit=crop&w=800&q=80",
+    power:"HUMAN+",
+    stats:{
+        strength:"65",
+        speed:"65",
+        durability:"55",
+        iq:"99",
+        combat:"100",
+        energy:"35"
+    },
+    description:"Batman হল Bruce Wayne-এর vigilante identity। তার সবচেয়ে বড় অস্ত্র হলো intelligence, preparation, martial arts এবং advanced technology।",
+    origin:"শৈশবে একটি traumatic ঘটনা Bruce Wayne-এর জীবন বদলে দেয়। পরে তিনি Gotham City-র অপরাধের বিরুদ্ধে লড়াই করার জন্য Batman হয়ে ওঠেন।",
+    powers:"Peak human conditioning, detective skills, martial arts, stealth, tactical intelligence এবং advanced gadgets।",
+    weakness:"তার নিজের শরীর মানবিক সীমার মধ্যে থাকে এবং superhuman opponents-এর বিরুদ্ধে preparation অত্যন্ত গুরুত্বপূর্ণ।"
+},
+
+{
+    id:"superman",
+    name:"Superman",
+    category:"HEROES",
+    type:"Hero • Kryptonian",
+    universe:"DC",
+    image:"https://images.unsplash.com/photo-1531259683007-016a7b628fc3?auto=format&fit=crop&w=800&q=80",
+    power:"COSMIC",
+    stats:{
+        strength:"100",
+        speed:"100",
+        durability:"100",
+        iq:"90",
+        combat:"94",
+        energy:"99"
+    },
+    description:"Superman হল Krypton-এর survivor এবং DC-এর অন্যতম iconic superhero। তার Kryptonian physiology তাকে বিশাল physical ও energy-based abilities দেয়।",
+    origin:"Krypton ধ্বংস হওয়ার আগে Kal-El-কে Earth-এ পাঠানো হয়। Earth-এর yellow sun-এর প্রভাবে তার Kryptonian abilities বিকশিত হয়।",
+    powers:"Super strength, speed, flight, heat vision, freeze breath, enhanced senses এবং extreme durability।",
+    weakness:"Kryptonite এবং কিছু magical বা specialized abilities তার বিরুদ্ধে কার্যকর হতে পারে।"
+},
+
+{
+    id:"goku",
+    name:"Goku",
+    category:"HEROES",
+    type:"Hero • Saiyan",
+    universe:"Anime",
+    image:"https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
+    power:"COSMIC",
+    stats:{
+        strength:"100",
+        speed:"100",
+        durability:"98",
+        iq:"82",
+        combat:"100",
+        energy:"100"
+    },
+    description:"Goku একজন Saiyan warrior, যিনি training ও battles-এর মাধ্যমে ক্রমাগত নিজের power level বৃদ্ধি করেন।",
+    origin:"Goku একজন Saiyan হিসেবে Earth-এ বড় হন। তার martial arts journey তাকে অসংখ্য powerful opponent-এর মুখোমুখি করে।",
+    powers:"Super Saiyan transformations, Ki manipulation, extreme speed, strength, durability এবং advanced martial arts।",
+    weakness:"তার physical body এখনও battle-এর consequences বহন করতে পারে এবং দীর্ঘ fight-এ stamina management গুরুত্বপূর্ণ।"
+},
+
+{
+    id:"naruto",
+    name:"Naruto Uzumaki",
+    category:"HEROES",
+    type:"Hero • Shinobi",
+    universe:"Anime",
+    image:"https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80",
+    power:"GOD TIER",
+    stats:{
+        strength:"92",
+        speed:"94",
+        durability:"90",
+        iq:"85",
+        combat:"96",
+        energy:"98"
+    },
+    description:"Naruto Uzumaki একজন shinobi, যার জীবনের শুরু ছিল একাকীত্ব ও rejection-এর মধ্যে। পরবর্তীতে training, friendship এবং determination-এর মাধ্যমে সে অসাধারণ শক্তিশালী যোদ্ধায় পরিণত হয়।",
+    origin:"Naruto Hidden Leaf Village-এ বড় হয় এবং তার মধ্যে Nine-Tailed Fox-এর chakra seal করা ছিল।",
+    powers:"Chakra manipulation, Shadow Clone, Rasengan, Sage Mode এবং বিভিন্ন advanced transformations।",
+    weakness:"অতিরিক্ত chakra ব্যবহার এবং দীর্ঘ battle তার physical stamina-এর ওপর চাপ ফেলতে পারে।"
+}
+
+];
+
+
+/* =========================================================
+   BUILD CHARACTER CARDS
+========================================================= */
+
+const databaseGrid = document.querySelector(".database-preview");
+const searchInput = document.querySelector(".search-box input");
+const filterButtons = document.querySelectorAll(".filter");
+
+function renderCharacters(list){
+
+    if(!databaseGrid) return;
+
+    databaseGrid.innerHTML = "";
+
+    list.forEach(character => {
+
+        const card = document.createElement("div");
+
+        card.className = "character-placeholder";
+
+        card.dataset.category = character.category;
+        card.dataset.universe = character.universe;
+
+        card.innerHTML = `
+
+            <div class="character-art">
+
+                <img
+                    src="${character.image}"
+                    alt="${character.name}"
+                    loading="lazy"
+                >
+
+            </div>
+
+            <div class="character-info">
+
+                <div class="character-category">
+                    ${character.type.toUpperCase()}
+                </div>
+
+                <div class="character-name">
+                    ${character.name}
+                </div>
+
+                <div class="character-universe">
+                    ${character.universe}
+                </div>
+
+            </div>
+
+        `;
+
+        card.addEventListener("click", () => {
+
+            openProfile(character);
+
+        });
+
+        databaseGrid.appendChild(card);
+
+    });
+
+    updateCount(list.length);
+
+}
+
+
+/* =========================================================
+   DATABASE COUNT
+========================================================= */
+
+function updateCount(number){
+
+    let count = document.querySelector(".database-count");
+
+    if(!count){
+
+        count = document.createElement("div");
+
+        count.className = "database-count";
+
+        document.querySelector(".search-wrap")
+            .appendChild(count);
+
+    }
+
+    count.textContent =
+        `${number} CHARACTER${number !== 1 ? "S" : ""} FOUND`;
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+let activeFilter = "ALL";
+
+function filterCharacters(){
+
+    const query =
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
+    let result = JARVIS_CHARACTERS.filter(character => {
+
+        const matchesSearch =
+            character.name.toLowerCase().includes(query) ||
+            character.universe.toLowerCase().includes(query) ||
+            character.category.toLowerCase().includes(query) ||
+            character.type.toLowerCase().includes(query);
+
+        const matchesFilter =
+            activeFilter === "ALL" ||
+            character.category === activeFilter ||
+            character.universe.toUpperCase() === activeFilter;
+
+        return matchesSearch && matchesFilter;
+
+    });
+
+    renderCharacters(result);
+
+}
+
+
+if(searchInput){
+
+    searchInput.addEventListener(
+        "input",
+        filterCharacters
+    );
+
+}
+
+
+/* =========================================================
+   FILTER BUTTONS
+========================================================= */
+
+filterButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        filterButtons.forEach(btn => {
+
+            btn.classList.remove("active");
+
+        });
+
+        button.classList.add("active");
+
+        activeFilter =
+            button.textContent.trim();
+
+        filterCharacters();
+
+    });
+
+});
+
+
+/* =========================================================
+   PROFILE MODAL
+========================================================= */
+
+function createProfileModal(){
+
+    if(document.querySelector(".profile-overlay"))
+        return;
+
+    const overlay =
+        document.createElement("div");
+
+    overlay.className =
+        "profile-overlay";
+
+    overlay.innerHTML = `
+
+        <div class="profile-modal">
+
+            <button
+                class="profile-close"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+            <div class="profile-top">
+
+                <div class="profile-image">
+
+                    <img id="profileImg" src="" alt="">
+
+                </div>
+
+                <div>
+
+                    <div
+                        id="profileCategory"
+                        class="profile-category"
+                    ></div>
+
+                    <h2
+                        id="profileName"
+                        class="profile-name"
+                    ></h2>
+
+                    <div
+                        id="profileUniverse"
+                        class="profile-universe"
+                    ></div>
+
+                    <p
+                        id="profileDescription"
+                        class="profile-description"
+                    ></p>
+
+                    <div
+                        id="profileStats"
+                        class="profile-stats"
+                    ></div>
+
+                </div>
+
+            </div>
+
+            <div
+                id="profileDetails"
+                class="profile-details"
+            ></div>
+
+        </div>
+
+    `;
+
+    document.body.appendChild(overlay);
+
+
+    overlay
+        .querySelector(".profile-close")
+        .addEventListener(
+            "click",
+            closeProfile
+        );
+
+
+    overlay.addEventListener("click", e => {
+
+        if(e.target === overlay){
+
+            closeProfile();
+
+        }
+
+    });
+
+}
+
+
+/* =========================================================
+   OPEN PROFILE
+========================================================= */
+
+function openProfile(character){
+
+    createProfileModal();
+
+    const overlay =
+        document.querySelector(".profile-overlay");
+
+    document.querySelector("#profileImg").src =
+        character.image;
+
+    document.querySelector("#profileImg").alt =
+        character.name;
+
+    document.querySelector("#profileCategory")
+        .textContent =
+        `${character.type.toUpperCase()} • ${character.power}`;
+
+    document.querySelector("#profileName")
+        .textContent =
+        character.name;
+
+    document.querySelector("#profileUniverse")
+        .textContent =
+        character.universe;
+
+    document.querySelector("#profileDescription")
+        .textContent =
+        character.description;
+
+
+    const stats =
+        document.querySelector("#profileStats");
+
+    stats.innerHTML = "";
+
+    Object.entries(character.stats)
+        .forEach(([key,value]) => {
+
+            const stat =
+                document.createElement("div");
+
+            stat.className =
+                "profile-stat";
+
+            stat.innerHTML = `
+
+                <span>
+                    ${key.toUpperCase()}
+                </span>
+
+                <strong>
+                    ${value}/100
+                </strong>
+
+            `;
+
+            stats.appendChild(stat);
+
+        });
+
+
+    const details =
+        document.querySelector("#profileDetails");
+
+    details.innerHTML = `
+
+        <div class="detail-block">
+
+            <h3>ORIGIN</h3>
+
+            <p>
+                ${character.origin}
+            </p>
+
+        </div>
+
+
+        <div class="detail-block">
+
+            <h3>POWERS & ABILITIES</h3>
+
+            <p>
+                ${character.powers}
+            </p>
+
+        </div>
+
+
+        <div class="detail-block">
+
+            <h3>WEAKNESSES</h3>
+
+            <p>
+                ${character.weakness}
+            </p>
+
+        </div>
+
+    `;
+
+
+    overlay.classList.add("show");
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+/* =========================================================
+   CLOSE PROFILE
+========================================================= */
+
+function closeProfile(){
+
+    const overlay =
+        document.querySelector(".profile-overlay");
+
+    if(!overlay) return;
+
+    overlay.classList.remove("show");
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+/* =========================================================
+   ESC KEY
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event => {
+
+        if(event.key === "Escape"){
+
+            closeProfile();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+renderCharacters(JARVIS_CHARACTERS);
+
+</script>
 
 </body>
 </html>
