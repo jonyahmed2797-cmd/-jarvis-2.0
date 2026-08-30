@@ -1,3145 +1,346 @@
-8<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050505">
-<title>JARVIS V8 — Ultimate Entertainment Hub</title>
+
+<title>JARVIS V10 — Ultimate Entertainment Database</title>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
 
-:root{
- --bg:#030508;
- --panel:#091017;
- --panel2:#0d1820;
- --cyan:#00eaff;
- --red:#ed1d24;
- --gold:#ffd43b;
- --green:#00e676;
- --text:#f2fcff;
- --muted:#829aa3;
- --border:#173943;
+/* =====================================================
+   JARVIS V10 — CORE THEME
+===================================================== */
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
 
-html{scroll-behavior:smooth}
+html{
+  scroll-behavior:smooth;
+}
 
 body{
- background:
- radial-gradient(circle at 50% -10%,#16434d 0,transparent 35%),
- radial-gradient(circle at 100% 100%,#3a080d 0,transparent 28%),
- var(--bg);
- color:var(--text);
- font-family:Arial,Helvetica,sans-serif;
- min-height:100vh;
+  background:
+    radial-gradient(circle at 50% -10%,#12303b 0,#05090d 45%,#020406 100%);
+  color:#eafcff;
+  font-family:Arial,Helvetica,sans-serif;
+  min-height:100vh;
 }
+
+
+/* ---------- SCANLINE EFFECT ---------- */
 
 body:before{
- content:"";
- position:fixed;
- inset:0;
- pointer-events:none;
- opacity:.055;
- background-image:
- linear-gradient(#00eaff 1px,transparent 1px),
- linear-gradient(90deg,#00eaff 1px,transparent 1px);
- background-size:45px 45px;
- z-index:-1;
-}
-
-button,input,textarea{font:inherit}
-button{cursor:pointer}
-
-.nav{
- position:sticky;
- top:0;
- z-index:1000;
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:15px;
- padding:13px 3%;
- background:#02070bed;
- backdrop-filter:blur(18px);
- border-bottom:1px solid var(--border);
-}
-
-.logo{
- color:var(--cyan);
- font-weight:900;
- font-size:23px;
- letter-spacing:5px;
- text-shadow:0 0 20px #00eaff88;
-}
-
-.navlinks{
- display:flex;
- gap:7px;
- overflow-x:auto;
-}
-
-.navlinks button{
- white-space:nowrap;
- color:#bdeef5;
- background:#07141b;
- border:1px solid #17404b;
- border-radius:8px;
- padding:9px 12px;
-}
-
-.navlinks button:hover{
- color:#fff;
- border-color:var(--cyan);
-}
-
-.container{
- width:min(1450px,94%);
- margin:auto;
-}
-
-.page{
- display:none;
- padding:35px 0 80px;
-}
-
-.page.active{display:block}
-
-.hero{
- min-height:calc(100vh - 70px);
- display:flex;
- flex-direction:column;
- align-items:center;
- justify-content:center;
- text-align:center;
-}
-
-.eyebrow{
- color:#8be8f2;
- letter-spacing:5px;
- font-size:11px;
-}
-
-.hero h1{
- font-size:clamp(60px,12vw,125px);
- letter-spacing:12px;
- margin:12px;
- text-shadow:
- 0 0 15px var(--cyan),
- 0 0 60px #00eaff66;
-}
-
-.hero p{color:var(--muted)}
-
-.reactor{
- width:155px;
- height:155px;
- border:2px solid var(--cyan);
- border-radius:50%;
- display:grid;
- place-items:center;
- margin:35px 0 20px;
- box-shadow:
- 0 0 35px #00eaff77,
- inset 0 0 35px #00eaff33;
- animation:pulse 2.4s infinite;
-}
-
-.core{
- width:55px;
- height:55px;
- border-radius:50%;
- background:#fff;
- box-shadow:0 0 20px #fff,0 0 70px var(--cyan);
-}
-
-@keyframes pulse{
- 50%{transform:scale(1.06)}
-}
-
-.actions{
- display:flex;
- flex-wrap:wrap;
- justify-content:center;
- gap:9px;
- margin-top:20px;
-}
-
-.btn{
- border:1px solid var(--border);
- background:#07151c;
- color:#c2f5fc;
- border-radius:9px;
- padding:11px 16px;
-}
-
-.btn:hover{border-color:var(--cyan)}
-
-.redbtn{
- border-color:var(--red);
- background:#30090d;
-}
-
-.goldbtn{
- border-color:var(--gold);
- background:#302707;
- color:#ffe999;
-}
-
-.greenbtn{
- border-color:var(--green);
- background:#06331f;
-}
-
-.stats{
- display:grid;
- grid-template-columns:repeat(5,1fr);
- gap:12px;
- margin:25px 0;
-}
-
-.stat{
- text-align:center;
- padding:20px 8px;
- border:1px solid var(--border);
- border-radius:14px;
- background:linear-gradient(145deg,#0b171f,#04080c);
-}
-
-.stat strong{
- display:block;
- color:var(--cyan);
- font-size:27px;
-}
-
-.stat span{
- color:var(--muted);
- font-size:10px;
- letter-spacing:1px;
-}
-
-.hubs{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:16px;
-}
-
-.hub{
- min-height:210px;
- padding:28px;
- border:1px solid var(--border);
- border-radius:18px;
- background:linear-gradient(145deg,#0b1720,#05090d);
- cursor:pointer;
- transition:.3s;
-}
-
-.hub:hover{
- transform:translateY(-6px);
- border-color:var(--cyan);
-}
-
-.hub.red:hover{border-color:var(--red)}
-.hub.gold:hover{border-color:var(--gold)}
-
-.hub-icon{
- font-size:48px;
- margin-bottom:15px;
-}
-
-.hub p{
- color:var(--muted);
- line-height:1.7;
- margin-top:10px;
-}
-
-.head{
- text-align:center;
- margin-bottom:25px;
-}
-
-.head h1{
- font-size:clamp(32px,5vw,58px);
- margin-bottom:8px;
-}
-
-.head p{color:var(--muted)}
-
-.redtitle{
- color:var(--red);
- text-shadow:0 0 30px #ed1d2455;
-}
-
-.goldtitle{
- color:var(--gold);
- text-shadow:0 0 30px #ffd43b33;
-}
-
-.searchrow{
- display:grid;
- grid-template-columns:1fr auto;
- gap:10px;
- margin-bottom:10px;
-}
-
-.search{
- width:100%;
- padding:14px;
- background:#061118;
- color:#fff;
- border:1px solid #194650;
- border-radius:10px;
- outline:none;
-}
-
-.search:focus{border-color:var(--cyan)}
-
-.filters{
- display:flex;
- flex-wrap:wrap;
- gap:7px;
- margin-bottom:22px;
-}
-
-.filters button{
- padding:8px 12px;
- background:#07141b;
- color:#b6eaf2;
- border:1px solid #17414d;
- border-radius:8px;
-}
-
-.filters button:hover,
-.filters button.active{
- border-color:var(--cyan);
- background:#0b2934;
-}
-
-.grid{
- display:grid;
- grid-template-columns:repeat(6,1fr);
- gap:15px;
-}
-
-.card{
- overflow:hidden;
- background:var(--panel);
- border:1px solid #15343d;
- border-radius:13px;
- transition:.3s;
-}
-
-.card:hover{
- transform:translateY(-5px);
- border-color:#5beaff;
- box-shadow:0 15px 40px #000b;
-}
-
-.poster{
- height:350px;
- position:relative;
- background:#0b151b;
- overflow:hidden;
-}
-
-.poster img{
- width:100%;
- height:100%;
- object-fit:cover;
- display:block;
- transition:.4s;
-}
-
-.card:hover .poster img{transform:scale(1.04)}
-
-.rank{
- position:absolute;
- top:8px;
- left:8px;
- z-index:3;
- padding:5px 8px;
- border-radius:6px;
- background:#000d;
- color:var(--gold);
- font-size:12px;
- font-weight:bold;
-}
-
-.badge{
- position:absolute;
- right:8px;
- top:8px;
- z-index:3;
- padding:5px 7px;
- border-radius:6px;
- background:#000d;
- color:var(--cyan);
- font-size:10px;
-}
-
-.cardbody{padding:12px}
-
-.title{
- min-height:42px;
- font-weight:bold;
- line-height:1.35;
-}
-
-.meta{
- min-height:30px;
- margin:7px 0 10px;
- color:var(--muted);
- font-size:11px;
- line-height:1.5;
-}
-
-.cardbuttons{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:5px;
-}
-
-.cardbuttons button,
-.detailsbtn{
- padding:8px 4px;
- background:#091b23;
- color:#bceff6;
- border:1px solid #17424e;
- border-radius:7px;
-}
-
-.cardbuttons button:hover,
-.detailsbtn:hover{border-color:var(--cyan)}
-
-.detailsbtn{
- width:100%;
- margin-top:6px;
-}
-
-.watched{
- border-color:var(--green)!important;
- color:#73ffb0!important;
-}
-
-.loading{
- grid-column:1/-1;
- text-align:center;
- padding:70px;
- color:var(--cyan);
-}
-
-.spinner{
- width:42px;
- height:42px;
- margin:0 auto 15px;
- border:3px solid #173b46;
- border-top-color:var(--cyan);
- border-radius:50%;
- animation:spin 1s linear infinite;
-}
-
-@keyframes spin{
- to{transform:rotate(360deg)}
-}
-
-.empty{
- grid-column:1/-1;
- padding:50px;
- text-align:center;
- color:var(--muted);
- border:1px dashed #214650;
- border-radius:15px;
-}
-
-.modal{
- display:none;
- position:fixed;
- inset:0;
- z-index:5000;
- align-items:center;
- justify-content:center;
- padding:20px;
- background:#000d;
- backdrop-filter:blur(12px);
-}
-
-.modal.show{display:flex}
-
-.modalbox{
- width:min(950px,100%);
- max-height:90vh;
- overflow:auto;
- background:#071117;
- border:1px solid #236273;
- border-radius:18px;
- padding:25px;
-}
-
-.close{
- float:right;
- background:none;
- border:0;
- color:#fff;
- font-size:30px;
-}
-
-.detail{
- display:grid;
- grid-template-columns:240px 1fr;
- gap:25px;
-}
-
-.detail img{
- width:100%;
- border-radius:12px;
-}
-
-.detail h2{
- color:var(--cyan);
- margin-bottom:12px;
-}
-
-.detail p{
- color:#a9bdc5;
- line-height:1.7;
- margin:15px 0;
-}
-
-.tag{
- display:inline-block;
- padding:5px 8px;
- margin:3px;
- border:1px solid #1b4b58;
- border-radius:6px;
- color:#9debf4;
- font-size:11px;
-}
-
-.timeline{
- max-width:900px;
- margin:auto;
- border-left:2px solid var(--cyan);
- padding-left:20px;
-}
-
-.timelineitem{
- margin-bottom:10px;
- padding:16px;
- border:1px solid var(--border);
- border-radius:10px;
- background:#08131a;
-}
-
-.timelineitem b{color:var(--cyan)}
-
-.quiz{
- max-width:800px;
- margin:auto;
- padding:30px;
- border:1px solid var(--border);
- border-radius:18px;
- background:#08131a;
-}
-
-.question{
- font-size:22px;
- margin:20px 0;
-}
-
-.answers{
- display:grid;
- gap:8px;
-}
-
-.answers button{
- text-align:left;
- padding:13px;
- background:#07141b;
- color:#bceff6;
- border:1px solid #19414e;
- border-radius:9px;
-}
-
-.answers button:hover{border-color:var(--cyan)}
-
-.battle{
- display:grid;
- grid-template-columns:1fr 100px 1fr;
- gap:15px;
- align-items:center;
-}
-
-.fighter{
- text-align:center;
- padding:30px;
- border:1px solid var(--border);
- border-radius:15px;
- background:#08131a;
-}
-
-.fighter h2{color:var(--cyan)}
-
-.vs{
- text-align:center;
- color:var(--red);
- font-size:30px;
- font-weight:bold;
-}
-
-.panel{
- padding:22px;
- border:1px solid var(--border);
- border-radius:15px;
- background:#08131a;
-}
-
-.panel h3{
- color:var(--cyan);
- margin-bottom:12px;
-}
-
-.panel p{
- color:var(--muted);
- line-height:1.7;
-}
-
-textarea{
- width:100%;
- min-height:180px;
- padding:15px;
- background:#050b0f;
- color:#fff;
- border:1px solid #1a4855;
- border-radius:10px;
-}
-
-.api-status{
- padding:12px;
- margin-bottom:20px;
- border:1px solid var(--border);
- border-radius:10px;
- color:var(--muted);
- background:#061017;
-}
-
-footer{
- padding:30px;
- text-align:center;
- color:#617983;
- border-top:1px solid #102b34;
- font-size:11px;
-}
-
-.toast{
- position:fixed;
- right:20px;
- bottom:20px;
- z-index:6000;
- padding:13px 16px;
- background:#061219;
- border:1px solid var(--cyan);
- border-radius:9px;
- transform:translateY(100px);
- opacity:0;
- transition:.3s;
-}
-
-.toast.show{
- transform:translateY(0);
- opacity:1;
-}
-
-@media(max-width:1200px){
- .grid{grid-template-columns:repeat(4,1fr)}
-}
-
-@media(max-width:850px){
- .nav{
-  flex-direction:column;
-  align-items:flex-start;
- }
-
- .navlinks{width:100%}
-
- .stats{
-  grid-template-columns:repeat(2,1fr);
- }
-
- .hubs{grid-template-columns:1fr}
-
- .grid{grid-template-columns:repeat(3,1fr)}
-
- .battle{grid-template-columns:1fr}
-
- .detail{grid-template-columns:1fr}
-
- .detail img{width:220px}
-}
-
-@media(max-width:520px){
- .grid{
-  grid-template-columns:repeat(2,1fr);
-  gap:9px;
- }
-
- .poster{height:285px}
-
- .searchrow{grid-template-columns:1fr}
-
- .hero h1{
-  letter-spacing:6px;
- }
-}
-</style>
-</head>
-
-<body>
-
-<nav class="nav">
-
-<div class="logo">JARVIS V8</div>
-
-<div class="navlinks">
-
-<button onclick="page('home')">🏠 HOME</button>
-<button onclick="page('marvel')">🦸 MARVEL</button>
-<button onclick="page('anime')">🍥 ANIME</button>
-<button onclick="page('tv')">📺 TV</button>
-<button onclick="page('saved')">❤️ MY LIST</button>
-<button onclick="page('order')">🗺️ ORDER</button>
-<button onclick="page('quiz')">🧩 QUIZ</button>
-<button onclick="page('battle')">⚔️ BATTLE</button>
-<button onclick="page('vault')">🔐 VAULT</button>
-
-</div>
-
-</nav>
-
-
-<!-- HOME -->
-
-<section id="home" class="page active">
-
-<div class="container">
-
-<div class="hero">
-
-<div class="eyebrow">
-PERSONAL ENTERTAINMENT INTELLIGENCE
-</div>
-
-<h1>JARVIS</h1>
-
-<p>MARVEL • ANIME • TV • YOUR PERSONAL WORLD</p>
-
-<div class="reactor">
-<div class="core"></div>
-</div>
-
-<div id="clock"></div>
-
-<div class="actions">
-
-<button class="btn redbtn" onclick="page('marvel')">
-🦸 MARVEL
-</button>
-
-<button class="btn goldbtn" onclick="page('anime')">
-🍥 ANIME
-</button>
-
-<button class="btn" onclick="page('tv')">
-📺 TV SERIES
-</button>
-
-<button class="btn" onclick="randomPick()">
-🎲 SURPRISE ME
-</button>
-
-</div>
-
-</div>
-
-
-<div class="stats">
-
-<div class="stat">
-<strong id="total">0</strong>
-<span>TOTAL</span>
-</div>
-
-<div class="stat">
-<strong id="watched">0</strong>
-<span>WATCHED</span>
-</div>
-
-<div class="stat">
-<strong id="favorites">0</strong>
-<span>FAVORITES</span>
-</div>
-
-<div class="stat">
-<strong id="progress">0%</strong>
-<span>PROGRESS</span>
-</div>
-
-<div class="stat">
-<strong>8.0</strong>
-<span>VERSION</span>
-</div>
-
-</div>
-
-
-<div class="hubs">
-
-<div class="hub red" onclick="page('marvel')">
-<div class="hub-icon">🦸</div>
-<h2>MARVEL UNIVERSE</h2>
-<p>Real movie posters • MCU • Spider-Man • X-Men • Deadpool • Venom</p>
-</div>
-
-<div class="hub gold" onclick="page('anime')">
-<div class="hub-icon">🍥</div>
-<h2>TOP 100 ANIME</h2>
-<p>Top 100 Anime Series and Top 100 Anime Movies with real posters.</p>
-</div>
-
-<div class="hub" onclick="page('tv')">
-<div class="hub-icon">📺</div>
-<h2>TOP 100 TV SERIES</h2>
-<p>Popular TV shows with real posters, ratings, genres and information.</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- MARVEL -->
-
-<section id="marvel" class="page">
-
-<div class="container">
-
-<div class="head">
-<h1 class="redtitle">🦸 MARVEL UNIVERSE</h1>
-<p>Real posters • Movie details • Ratings • Search</p>
-</div>
-
-<div class="api-status" id="tmdbStatus">
-🔄 Checking poster system...
-</div>
-
-<div class="searchrow">
-
-<input
-id="marvelSearch"
-class="search"
-placeholder="🔎 Search Marvel movie..."
-oninput="renderMarvel()">
-
-<button class="btn redbtn" onclick="loadMarvel()">
-⚡ LOAD POSTERS
-</button>
-
-</div>
-
-<div class="filters">
-
-<button class="active" onclick="marvelFilter='all';renderMarvel();active(this)">
-ALL
-</button>
-
-<button onclick="marvelFilter='MCU';renderMarvel();active(this)">
-MCU
-</button>
-
-<button onclick="marvelFilter='Spider-Man';renderMarvel();active(this)">
-SPIDER-MAN
-</button>
-
-<button onclick="marvelFilter='X-Men';renderMarvel();active(this)">
-X-MEN
-</button>
-
-<button onclick="marvelFilter='Sony';renderMarvel();active(this)">
-VENOM / SONY
-</button>
-
-</div>
-
-<div id="marvelGrid" class="grid"></div>
-
-</div>
-
-</section>
-
-
-<!-- ANIME -->
-
-<section id="anime" class="page">
-
-<div class="container">
-
-<div class="head">
-<h1 class="goldtitle">🍥 ANIME UNIVERSE</h1>
-<p>Top 100 Series • Top 100 Movies • Real posters</p>
-</div>
-
-<div class="searchrow">
-
-<input
-id="animeSearch"
-class="search"
-placeholder="🔎 Search anime..."
-oninput="renderAnime()">
-
-<button class="btn goldbtn" onclick="loadAnime()">
-⚡ LOAD TOP 100
-</button>
-
-</div>
-
-<div class="filters">
-
-<button class="active" onclick="animeMode='series';renderAnime();active(this)">
-🏆 TOP 100 SERIES
-</button>
-
-<button onclick="animeMode='movies';renderAnime();active(this)">
-🎬 TOP 100 MOVIES
-</button>
-
-<button onclick="animeMode='all';renderAnime();active(this)">
-ALL
-</button>
-
-</div>
-
-<div id="animeGrid" class="grid"></div>
-
-</div>
-
-</section>
-
-
-<!-- TV -->
-
-<section id="tv" class="page">
-
-<div class="container">
-
-<div class="head">
-<h1>📺 TOP 100 TV SERIES</h1>
-<p>Real posters • Ratings • Genres • Synopsis</p>
-</div>
-
-<div class="searchrow">
-
-<input
-id="tvSearch"
-class="search"
-placeholder="🔎 Search TV series..."
-oninput="renderTV()">
-
-<button class="btn" onclick="loadTV()">
-⚡ LOAD TOP 100
-</button>
-
-</div>
-
-<div id="tvGrid" class="grid"></div>
-
-</div>
-
-</section>
-
-
-<!-- SAVED -->
-
-<section id="saved" class="page">
-
-<div class="container">
-
-<div class="head">
-<h1>❤️ MY COLLECTION</h1>
-<p>Your watched and favorite titles</p>
-</div>
-
-<div class="filters">
-
-<button class="active" onclick="savedMode='fav';renderSaved();active(this)">
-❤️ FAVORITES
-</button>
-
-<button onclick="savedMode='watched';renderSaved();active(this)">
-✅ WATCHED
-</button>
-
-</div>
-
-<div id="savedGrid" class="grid"></div>
-
-</div>
-
-</section>
-
-
-<!-- ORDER -->
-
-<section id="order" class="page">
-
-<div class="container">
-
-<div class="head">
-<h1>🗺️ MARVEL WATCH ORDER</h1>
-<p>MCU chronological starter order</p>
-</div>
-
-<div id="timeline" class="timeline"></div>
-
-</div>
-
-</section>
-
-
-<!-- QUIZ -->
-
-<section id="quiz" class="page">
-
-<div class="container">
-
-<div class="head">
-<h1>🧩 JARVIS QUIZ</h1>
-<p>Test your Marvel and Anime knowledge</p>
-</div>
-
-<div class="quiz">
-
-<div id="score">Score: 0</div>
-
-<div id="question" class="question"></div>
-
-<div id="answers" class="answers"></div>
-
-<br>
-
-<button class="btn" onclick="nextQuestion()">NEXT</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- BATTLE -->
-
-<section id="battle" class="page">
-
-<div class="container">
-
-<div class="head">
-<h1>⚔️ CHARACTER BATTLE</h1>
-<p>Choose your champion</p>
-</div>
-
-<div class="battle">
-
-<div id="fighterA" class="fighter"></div>
-
-<div class="vs">VS</div>
-
-<div id="fighterB" class="fighter"></div>
-
-</div>
-
-<br>
-
-<center>
-<button class="btn redbtn" onclick="newBattle()">
-⚔️ NEW BATTLE
-</button>
-</center>
-
-</div>
-
-</section>
-
-
-<!-- VAULT -->
-
-<section id="vault" class="page">
-
-<div class="container">
-
-<div class="head">
-<h1>🔐 PRIVATE VAULT</h1>
-<p>Local notes and file information</p>
-</div>
-
-<div class="panel">
-
-<h3>📁 Personal Files</h3>
-
-<br>
-
-<input id="fileInput" type="file" multiple>
-
-<br><br>
-
-<div id="files"></div>
-
-</div>
-
-<br>
-
-<div class="panel">
-
-<h3>📝 Private Notes</h3>
-
-<br>
-
-<textarea id="notes" placeholder="Write your private notes..."></textarea>
-
-<br><br>
-
-<button class="btn greenbtn" onclick="saveNotes()">
-💾 SAVE NOTES
-</button>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- MODAL -->
-
-<div id="modal" class="modal">
-
-<div class="modalbox">
-
-<button class="close" onclick="closeModal()">×</button>
-
-<div id="modalContent"></div>
-
-</div>
-
-</div>
-
-
-<div id="toast" class="toast"></div>
-
-
-<footer>
-
-<b>JARVIS V8</b>
-<br><br>
-Personal Entertainment Hub
-<br><br>
-Movie & TV poster data powered by TMDB when API key is configured.
-Anime data powered by Jikan / MyAnimeList.
-
-</footer>
-
-
-<script>
-
-/* =====================================================
-   CONFIG
-===================================================== */
-
-/*
- IMPORTANT:
-
- If you have a TMDB API key, put it between the quotes.
-
- Example:
-
- const TMDB_API_KEY="YOUR_KEY_HERE";
-
- Do NOT post your API key publicly.
-*/
-
-const TMDB_API_KEY="";
-
-const TMDB_IMAGE="https://image.tmdb.org/t/p/w500";
-
-const JIKAN="https://api.jikan.moe/v4";
-
-const TVMAZE="https://api.tvmaze.com";
-
-
-/* =====================================================
-   DATA
-===================================================== */
-
-let marvelMovies=[
-
-["Iron Man",2008,"MCU"],
-["The Incredible Hulk",2008,"MCU"],
-["Iron Man 2",2010,"MCU"],
-["Thor",2011,"MCU"],
-["Captain America: The First Avenger",2011,"MCU"],
-["The Avengers",2012,"MCU"],
-["Iron Man 3",2013,"MCU"],
-["Thor: The Dark World",2013,"MCU"],
-["Captain America: The Winter Soldier",2014,"MCU"],
-["Guardians of the Galaxy",2014,"MCU"],
-["Avengers: Age of Ultron",2015,"MCU"],
-["Ant-Man",2015,"MCU"],
-["Captain America: Civil War",2016,"MCU"],
-["Doctor Strange",2016,"MCU"],
-["Guardians of the Galaxy Vol. 2",2017,"MCU"],
-["Spider-Man: Homecoming",2017,"Spider-Man"],
-["Thor: Ragnarok",2017,"MCU"],
-["Black Panther",2018,"MCU"],
-["Avengers: Infinity War",2018,"MCU"],
-["Ant-Man and the Wasp",2018,"MCU"],
-["Captain Marvel",2019,"MCU"],
-["Avengers: Endgame",2019,"MCU"],
-["Spider-Man: Far From Home",2019,"Spider-Man"],
-["Black Widow",2021,"MCU"],
-["Shang-Chi and the Legend of the Ten Rings",2021,"MCU"],
-["Eternals",2021,"MCU"],
-["Spider-Man: No Way Home",2021,"Spider-Man"],
-["Doctor Strange in the Multiverse of Madness",2022,"MCU"],
-["Thor: Love and Thunder",2022,"MCU"],
-["Black Panther: Wakanda Forever",2022,"MCU"],
-["Ant-Man and the Wasp: Quantumania",2023,"MCU"],
-["Guardians of the Galaxy Vol. 3",2023,"MCU"],
-["The Marvels",2023,"MCU"],
-["Deadpool & Wolverine",2024,"Sony"],
-["Spider-Man",2002,"Spider-Man"],
-["Spider-Man 2",2004,"Spider-Man"],
-["Spider-Man 3",2007,"Spider-Man"],
-["The Amazing Spider-Man",2012,"Spider-Man"],
-["The Amazing Spider-Man 2",2014,"Spider-Man"],
-["Venom",2018,"Sony"],
-["Venom: Let There Be Carnage",2021,"Sony"],
-["Venom: The Last Dance",2024,"Sony"],
-["X-Men",2000,"X-Men"],
-["X2",2003,"X-Men"],
-["X-Men: The Last Stand",2006,"X-Men"],
-["X-Men: First Class",2011,"X-Men"],
-["The Wolverine",2013,"X-Men"],
-["X-Men: Days of Future Past",2014,"X-Men"],
-["X-Men: Apocalypse",2016,"X-Men"],
-["Logan",2017,"X-Men"],
-["Dark Phoenix",2019,"X-Men"]
-
-].map((x,i)=>({
-
- title:x[0],
- year:x[1],
- category:x[2],
- rank:i+1,
- type:"Marvel",
- poster:"",
- overview:"",
- rating:"",
- genres:[]
-
-}));
-
-
-let animeSeries=[];
-let animeMovies=[];
-let tvSeries=[];
-
-let marvelFilter="all";
-let animeMode="series";
-let savedMode="fav";
-
-
-/* =====================================================
-   HELPERS
-===================================================== */
-
-async function api(url){
-
- const response=await fetch(url);
-
- if(!response.ok)
-   throw new Error("API request failed");
-
- return await response.json();
-
-}
-
-
-function fallback(title){
-
- return "https://placehold.co/500x750/07131a/00eaff?text="+
- encodeURIComponent(title);
-
-}
-
-
-function escapeHTML(text){
-
- return String(text||"")
- .replace(/&/g,"&amp;")
- .replace(/</g,"&lt;")
- .replace(/>/g,"&gt;")
- .replace(/"/g,"&quot;")
- .replace(/'/g,"&#039;");
-
-}
-
-
-function stripHTML(text){
-
- if(!text)return"";
-
- const div=document.createElement("div");
-
- div.innerHTML=text;
-
- return div.textContent||div.innerText||"";
-
-}
-
-
-/* =====================================================
-   TMDB SEARCH
-===================================================== */
-
-async function tmdbSearch(title,year){
-
- if(!TMDB_API_KEY)
-   return null;
-
-
- const url=
-   `https://api.themoviedb.org/3/search/movie`+
-   `?api_key=${encodeURIComponent(TMDB_API_KEY)}`+
-   `&query=${encodeURIComponent(title)}`+
-   `&include_adult=false`;
-
-
- try{
-
-   const data=await api(url);
-
-   let results=data.results||[];
-
-   if(year){
-
-     const exact=
-       results.find(x=>
-         x.release_date &&
-         x.release_date.startsWith(String(year))
-       );
-
-     if(exact)
-       return exact;
-
-   }
-
-   return results[0]||null;
-
- }catch(e){
-
-   return null;
-
- }
-
-}
-
-
-/* =====================================================
-   LOAD MARVEL POSTERS
-===================================================== */
-
-async function loadMarvel(){
-
- const grid=
-   document.getElementById("marvelGrid");
-
- grid.innerHTML=`
-
- <div class="loading">
-
-   <div class="spinner"></div>
-
-   🦸 Loading real Marvel posters...
-
- </div>
-
- `;
-
-
- if(!TMDB_API_KEY){
-
-   document.getElementById("tmdbStatus")
-   .innerHTML=
-   `⚠️ TMDB API key not configured. Add your key in the JavaScript <b>TMDB_API_KEY</b> variable to enable real movie posters.`;
-
-   grid.innerHTML=`
-
-   <div class="empty">
-
-     🦸 Marvel database ready.
-
-     <br><br>
-
-     <b>Real posters need your TMDB API key.</b>
-
-     <br><br>
-
-     Add the key to <b>TMDB_API_KEY</b> near the top of the code,
-     then press <b>LOAD POSTERS</b>.
-
-   </div>
-
-   `;
-
-   return;
-
- }
-
-
- let completed=0;
-
-
- for(const movie of marvelMovies){
-
-   const result=
-     await tmdbSearch(
-       movie.title,
-       movie.year
-     );
-
-
-   if(result){
-
-     movie.poster=
-       result.poster_path
-       ?TMDB_IMAGE+result.poster_path
-       :"";
-
-     movie.overview=
-       result.overview||"";
-
-     movie.rating=
-       result.vote_average
-       ?result.vote_average.toFixed(1)
-       :"";
-
-     movie.genres=[];
-
-   }
-
-
-   completed++;
-
-   grid.innerHTML=`
-
-   <div class="loading">
-
-     <div class="spinner"></div>
-
-     🦸 Poster ${completed}/${marvelMovies.length}
-
-   </div>
-
-   `;
-
- }
-
-
- document.getElementById("tmdbStatus")
- .innerHTML=
- `✅ TMDB poster system active. Real movie posters loaded.`;
-
-
- renderMarvel();
-
- updateStats();
-
- toast("🦸 Marvel posters loaded!");
-
-}
-
-
-/* =====================================================
-   ANIME
-===================================================== */
-
-async function loadAnime(){
-
- const grid=
-   document.getElementById("animeGrid");
-
- grid.innerHTML=`
-
- <div class="loading">
-
-   <div class="spinner"></div>
-
-   🍥 Loading Top 100 Anime...
-
- </div>
-
- `;
-
-
- try{
-
-   const results=await Promise.all([
-
-     api(`${JIKAN}/top/anime?type=tv&page=1`),
-
-     api(`${JIKAN}/top/anime?type=tv&page=2`),
-
-     api(`${JIKAN}/top/anime?type=movie&page=1`),
-
-     api(`${JIKAN}/top/anime?type=movie&page=2`)
-
-   ]);
-
-
-   animeSeries=[
-
-     ...results[0].data,
-     ...results[1].data
-
-   ].slice(0,100).map((x,i)=>({
-
-     title:x.title,
-
-     rank:x.rank||i+1,
-
-     year:x.aired?.from
-       ?x.aired.from.substring(0,4)
-       :"",
-
-     type:"Anime Series",
-
-     poster:
-       x.images?.jpg?.large_image_url||
-       x.images?.jpg?.image_url||
-       "",
-
-     rating:x.score||"N/A",
-
-     episodes:x.episodes||"N/A",
-
-     overview:
-       x.synopsis||
-       "No synopsis available.",
-
-     genres:
-       x.genres?.map(g=>g.name)||[]
-
-   }));
-
-
-   animeMovies=[
-
-     ...results[2].data,
-     ...results[3].data
-
-   ].slice(0,100).map((x,i)=>({
-
-     title:x.title,
-
-     rank:x.rank||i+1,
-
-     year:x.aired?.from
-       ?x.aired.from.substring(0,4)
-       :"",
-
-     type:"Anime Movie",
-
-     poster:
-       x.images?.jpg?.large_image_url||
-       x.images?.jpg?.image_url||
-       "",
-
-     rating:x.score||"N/A",
-
-     overview:
-       x.synopsis||
-       "No synopsis available.",
-
-     genres:
-       x.genres?.map(g=>g.name)||[]
-
-   }));
-
-
-   renderAnime();
-
-   updateStats();
-
-   toast("🍥 Anime loaded!");
-
- }catch(e){
-
-   grid.innerHTML=`
-
-   <div class="empty">
-
-     ❌ Anime API failed.
-
-     <br><br>
-
-     Try again.
-
-   </div>
-
-   `;
-
- }
-
-}
-
-
-/* =====================================================
-   TV
-===================================================== */
-
-async function loadTV(){
-
- const grid=
-   document.getElementById("tvGrid");
-
- grid.innerHTML=`
-
- <div class="loading">
-
-   <div class="spinner"></div>
-
-   📺 Loading TV posters...
-
- </div>
-
- `;
-
-
- try{
-
-   const pages=await Promise.all([
-
-     api(`${TVMAZE}/shows?page=0`),
-     api(`${TVMAZE}/shows?page=1`),
-     api(`${TVMAZE}/shows?page=2`),
-     api(`${TVMAZE}/shows?page=3`)
-
-   ]);
-
-
-   const all=pages.flat();
-
-
-   tvSeries=
-
-     all
-
-     .filter(x=>x&&x.name)
-
-     .sort((a,b)=>
-       (b.rating?.average||0)-
-       (a.rating?.average||0)
-     )
-
-     .slice(0,100)
-
-     .map((x,i)=>({
-
-       title:x.name,
-
-       rank:i+1,
-
-       year:x.premiered
-         ?x.premiered.substring(0,4)
-         :"",
-
-       type:"TV Series",
-
-       poster:
-         x.image?.original||
-         x.image?.medium||
-         "",
-
-       rating:
-         x.rating?.average||
-         "N/A",
-
-       overview:
-         stripHTML(x.summary)||
-         "No synopsis available.",
-
-       genres:x.genres||[],
-
-       network:
-         x.network?.name||
-         x.webChannel?.name||
-         ""
-
-     }));
-
-
-   renderTV();
-
-   updateStats();
-
-   toast("📺 TV posters loaded!");
-
- }catch(e){
-
-   grid.innerHTML=`
-
-   <div class="empty">
-
-     ❌ TV API failed.
-
-     <br><br>
-
-     Try again.
-
-   </div>
-
-   `;
-
- }
-
-}
-
-
-/* =====================================================
-   STORAGE
-===================================================== */
-
-function isWatched(title){
-
- return localStorage.getItem(
-   "jarvis_watched_"+title
- )==="1";
-
-}
-
-
-function isFavorite(title){
-
- return localStorage.getItem(
-   "jarvis_favorite_"+title
- )==="1";
-
-}
-
-
-function toggleWatched(title){
-
- const key="jarvis_watched_"+title;
-
- if(isWatched(title))
-   localStorage.removeItem(key);
- else
-   localStorage.setItem(key,"1");
-
- updateStats();
-
- renderAll();
-
-}
-
-
-function toggleFavorite(title){
-
- const key="jarvis_favorite_"+title;
-
- if(isFavorite(title))
-   localStorage.removeItem(key);
- else
-   localStorage.setItem(key,"1");
-
- updateStats();
-
- renderAll();
-
-}
-
-
-/* =====================================================
-   CARD
-===================================================== */
-
-function makeCard(item,index){
-
- const poster=
-   item.poster||
-   fallback(item.title);
-
-
- return `
-
- <article class="card">
-
- <div class="poster">
-
-   <div class="rank">
-     #${item.rank||index+1}
-   </div>
-
-   <div class="badge">
-     ${escapeHTML(item.type||"")}
-   </div>
-
-   <img
-     src="${poster}"
-     alt="${escapeHTML(item.title)}"
-     loading="lazy"
-     onerror="
-       this.onerror=null;
-       this.src='${fallback(item.title)}';
-     "
-   >
-
- </div>
-
-
- <div class="cardbody">
-
-   <div class="title">
-     ${escapeHTML(item.title)}
-   </div>
-
-
-   <div class="meta">
-
-     ${
-       item.year
-       ?escapeHTML(item.year)+" • "
-       :""
-     }
-
-     ${
-       item.rating
-       ?`⭐ ${escapeHTML(item.rating)}`
-       :""
-     }
-
-   </div>
-
-
-   <div class="cardbuttons">
-
-     <button
-       class="${isWatched(item.title)?"watched":""}"
-       onclick="toggleWatched('${escapeHTML(item.title)}')">
-
-       ${
-         isWatched(item.title)
-         ?"✓ WATCHED"
-         :"✓ WATCH"
-       }
-
-     </button>
-
-
-     <button
-       onclick="toggleFavorite('${escapeHTML(item.title)}')">
-
-       ${
-         isFavorite(item.title)
-         ?"❤️ SAVED"
-         :"♡ SAVE"
-       }
-
-     </button>
-
-   </div>
-
-
-   <button
-     class="detailsbtn"
-     onclick="showDetails('${escapeHTML(item.title)}')">
-
-     🧠 DETAILS
-
-   </button>
-
- </div>
-
- </article>
-
- `;
-
-}
-
-
-/* =====================================================
-   RENDER
-===================================================== */
-
-function renderMarvel(){
-
- const grid=
-   document.getElementById("marvelGrid");
-
- if(!grid)return;
-
-
- const search=
-   (
-     document.getElementById("marvelSearch")
-     ?.value||""
-   ).toLowerCase();
-
-
- let list=
-   marvelMovies.filter(x=>
-     x.title.toLowerCase().includes(search)
-   );
-
-
- if(marvelFilter!=="all"){
-
-   list=list.filter(x=>
-     x.category===marvelFilter
-   );
-
- }
-
-
- grid.innerHTML=
-   list.map(makeCard).join("");
-
-}
-
-
-function renderAnime(){
-
- const grid=
-   document.getElementById("animeGrid");
-
- if(!grid)return;
-
-
- const search=
-   (
-     document.getElementById("animeSearch")
-     ?.value||""
-   ).toLowerCase();
-
-
- let list=[];
-
-
- if(animeMode==="series")
-   list=animeSeries;
-
- else if(animeMode==="movies")
-   list=animeMovies;
-
- else
-   list=[...animeSeries,...animeMovies];
-
-
- list=list.filter(x=>
-   x.title.toLowerCase().includes(search)
- );
-
-
- if(!list.length){
-
-   grid.innerHTML=`
-
-   <div class="empty">
-
-     🍥 Press "LOAD TOP 100"
-
-   </div>
-
-   `;
-
-   return;
-
- }
-
-
- grid.innerHTML=
-   list.map(makeCard).join("");
-
-}
-
-
-function renderTV(){
-
- const grid=
-   document.getElementById("tvGrid");
-
- if(!grid)return;
-
-
- const search=
-   (
-     document.getElementById("tvSearch")
-     ?.value||""
-   ).toLowerCase();
-
-
- const list=
-   tvSeries.filter(x=>
-     x.title.toLowerCase().includes(search)
-   );
-
-
- if(!list.length){
-
-   grid.innerHTML=`
-
-   <div class="empty">
-
-     📺 Press "LOAD TOP 100"
-
-   </div>
-
-   `;
-
-   return;
-
- }
-
-
- grid.innerHTML=
-   list.map(makeCard).join("");
-
-}
-
-
-/* =====================================================
-   DETAILS
-===================================================== */
-
-function allItems(){
-
- return [
-   ...marvelMovies,
-   ...animeSeries,
-   ...animeMovies,
-   ...tvSeries
- ];
-
-}
-
-
-function showDetails(title){
-
- const item=
-   allItems().find(x=>
-     x.title===title
-   );
-
- if(!item)return;
-
-
- document.getElementById("modalContent")
- .innerHTML=`
-
- <div class="detail">
-
- <div>
-
-   <img
-     src="${item.poster||fallback(item.title)}"
-     alt="${escapeHTML(item.title)}">
-
- </div>
-
-
- <div>
-
-   <h2>
-     ${escapeHTML(item.title)}
-   </h2>
-
-
-   <div>
-
-     <span class="tag">
-       ${escapeHTML(item.type)}
-     </span>
-
-     ${
-       item.year
-       ?`
-       <span class="tag">
-         ${item.year}
-       </span>
-       `
-       :""
-     }
-
-     ${
-       item.rating
-       ?`
-       <span class="tag">
-         ⭐ ${item.rating}
-       </span>
-       `
-       :""
-     }
-
-   </div>
-
-
-   <p>
-
-   <b>📖 SYNOPSIS</b>
-
-   <br><br>
-
-   ${escapeHTML(
-     item.overview||
-     "No synopsis available."
-   )}
-
-   </p>
-
-
-   ${
-     item.genres?.length
-     ?`
-
-     <p>
-
-     <b>🎭 GENRES</b>
-
-     <br>
-
-     ${item.genres.map(g=>
-       `<span class="tag">
-       ${escapeHTML(
-         typeof g==="string"
-         ?g
-         :g.name
-       )}
-       </span>`
-     ).join("")}
-
-     </p>
-
-     `
-     :""
-   }
-
-
-   <button
-     class="btn greenbtn"
-     onclick="
-       toggleWatched('${escapeHTML(item.title)}');
-       closeModal();
-     ">
-
-     ✓ WATCHED
-
-   </button>
-
-
-   <button
-     class="btn"
-     onclick="
-       toggleFavorite('${escapeHTML(item.title)}');
-       closeModal();
-     ">
-
-     ❤️ FAVORITE
-
-   </button>
-
- </div>
-
- </div>
-
- `;
-
-
- document.getElementById("modal")
- .classList.add("show");
-
-}
-
-
-function closeModal(){
-
- document.getElementById("modal")
- .classList.remove("show");
-
-}
-
-
-/* =====================================================
-   SAVED
-===================================================== */
-
-function renderSaved(){
-
- const grid=
-   document.getElementById("savedGrid");
-
- if(!grid)return;
-
-
- const list=
-   allItems().filter(x=>
-
-     savedMode==="fav"
-     ?isFavorite(x.title)
-     :isWatched(x.title)
-
-   );
-
-
- grid.innerHTML=
-
- list.length
-
- ?list.map(makeCard).join("")
-
- :`
-
- <div class="empty">
-
- ${
-   savedMode==="fav"
-   ?"❤️ No favorites yet."
-   :"✅ No watched titles yet."
- }
-
- </div>
-
- `;
-
-}
-
-
-function renderAll(){
-
- renderMarvel();
- renderAnime();
- renderTV();
- renderSaved();
-
-}
-
-
-/* =====================================================
-   NAVIGATION
-===================================================== */
-
-function page(id){
-
- document.querySelectorAll(".page")
- .forEach(x=>
-   x.classList.remove("active")
- );
-
-
- document.getElementById(id)
- .classList.add("active");
-
-
- window.scrollTo({
-   top:0,
-   behavior:"smooth"
- });
-
-
- if(id==="anime" &&
-    animeSeries.length===0)
-   loadAnime();
-
-
- if(id==="tv" &&
-    tvSeries.length===0)
-   loadTV();
-
-
- if(id==="marvel")
-   renderMarvel();
-
-
- if(id==="saved")
-   renderSaved();
-
-}
-
-
-function active(btn){
-
- btn.parentElement
- .querySelectorAll("button")
- .forEach(x=>
-   x.classList.remove("active")
- );
-
- btn.classList.add("active");
-
-}
-
-
-/* =====================================================
-   STATS
-===================================================== */
-
-function updateStats(){
-
- const items=allItems();
-
- const watched=
-   items.filter(x=>
-     isWatched(x.title)
-   ).length;
-
- const fav=
-   items.filter(x=>
-     isFavorite(x.title)
-   ).length;
-
- const total=items.length;
-
-
- document.getElementById("total")
- .textContent=total;
-
- document.getElementById("watched")
- .textContent=watched;
-
- document.getElementById("favorites")
- .textContent=fav;
-
- document.getElementById("progress")
- .textContent=
-   total
-   ?Math.round(watched/total*100)+"%"
-   :"0%";
-
-}
-
-
-/* =====================================================
-   MARVEL ORDER
-===================================================== */
-
-const MCU=[
-
-"Captain America: The First Avenger",
-"Captain Marvel",
-"Iron Man",
-"Iron Man 2",
-"Thor",
-"The Avengers",
-"Iron Man 3",
-"Thor: The Dark World",
-"Captain America: The Winter Soldier",
-"Guardians of the Galaxy",
-"Guardians of the Galaxy Vol. 2",
-"Avengers: Age of Ultron",
-"Ant-Man",
-"Captain America: Civil War",
-"Doctor Strange",
-"Spider-Man: Homecoming",
-"Black Panther",
-"Thor: Ragnarok",
-"Avengers: Infinity War",
-"Ant-Man and the Wasp",
-"Avengers: Endgame",
-"Spider-Man: Far From Home",
-"Spider-Man: No Way Home",
-"Doctor Strange in the Multiverse of Madness",
-"Thor: Love and Thunder",
-"Black Panther: Wakanda Forever",
-"Ant-Man and the Wasp: Quantumania",
-"Guardians of the Galaxy Vol. 3",
-"The Marvels"
-
-];
-
-
-function renderTimeline(){
-
- document.getElementById("timeline")
- .innerHTML=
- MCU.map((x,i)=>`
-
- <div class="timelineitem">
-
- <b>
- ${String(i+1).padStart(2,"0")}
- </b>
-
- ${escapeHTML(x)}
-
- <br>
-
- <small style="color:#718991">
-
- ${
-   isWatched(x)
-   ?"✓ Watched"
-   :"Not watched"
- }
-
- </small>
-
- </div>
-
- `).join("");
-
-}
-
-
-/* =====================================================
-   RANDOM
-===================================================== */
-
-function randomPick(){
-
- const items=allItems();
-
- if(!items.length)return;
-
-
- const item=
-   items[
-     Math.floor(
-       Math.random()*items.length
-     )
-   ];
-
-
- if(item.type==="Marvel")
-   page("marvel");
-
- else if(item.type==="TV Series")
-   page("tv");
-
- else
-   page("anime");
-
-
- setTimeout(()=>
-   showDetails(item.title)
- ,250);
-
-}
-
-
-/* =====================================================
-   QUIZ
-===================================================== */
-
-const questions=[
-
- [
-  "Who is Tony Stark?",
-  ["Thor","Iron Man","Hulk","Loki"],
-  1
- ],
-
- [
-  "Which anime has Titans?",
-  ["Naruto","Bleach","Attack on Titan","One Piece"],
-  2
- ],
-
- [
-  "Who is Luffy?",
-  ["Pirate","Ninja","Soul Reaper","Wizard"],
-  0
- ],
-
- [
-  "Who uses Mjolnir?",
-  ["Loki","Thor","Thanos","Hulk"],
-  1
- ],
-
- [
-  "Tanjiro belongs to?",
-  ["Demon Slayer","Naruto","Bleach","JJK"],
-  0
- ]
-
-];
-
-
-let questionIndex=0;
-let quizScore=0;
-
-
-function nextQuestion(){
-
- const q=
-   questions[
-     questionIndex%questions.length
-   ];
-
-
- document.getElementById("score")
- .textContent=
-   "Score: "+quizScore;
-
-
- document.getElementById("question")
- .textContent=q[0];
-
-
- document.getElementById("answers")
- .innerHTML=
-   q[1].map((answer,i)=>`
-
-   <button
-     onclick="answer(${i},${q[2]})">
-
-     ${String.fromCharCode(65+i)}.
-     ${escapeHTML(answer)}
-
-   </button>
-
-   `).join("");
-
-}
-
-
-function answer(selected,correct){
-
- if(selected===correct){
-
-   quizScore++;
-
-   toast("🔥 Correct!");
-
- }else{
-
-   toast("❌ Wrong!");
-
- }
-
-
- questionIndex++;
-
- nextQuestion();
-
-}
-
-
-/* =====================================================
-   BATTLE
-===================================================== */
-
-const fighters=[
-
-"Spider-Man",
-"Iron Man",
-"Thor",
-"Hulk",
-"Captain America",
-"Doctor Strange",
-"Thanos",
-"Wolverine",
-"Deadpool",
-"Goku",
-"Luffy",
-"Naruto",
-"Saitama",
-"Ichigo",
-"Gojo",
-"Sukuna",
-"Tanjiro",
-"Eren"
-
-];
-
-
-function newBattle(){
-
- let a=
-   fighters[
-     Math.floor(
-       Math.random()*fighters.length
-     )
-   ];
-
-
- let b=
-   fighters[
-     Math.floor(
-       Math.random()*fighters.length
-     )
-   ];
-
-
- while(a===b){
-
-   b=
-     fighters[
-       Math.floor(
-         Math.random()*fighters.length
-       )
-     ];
-
- }
-
-
- document.getElementById("fighterA")
- .innerHTML=`
-
- <h2>${escapeHTML(a)}</h2>
-
- <br>
-
- <button
-   class="btn redbtn"
-   onclick="toast('${escapeHTML(a)} wins! ⚔️')">
-
- CHOOSE
-
- </button>
-
- `;
-
-
- document.getElementById("fighterB")
- .innerHTML=`
-
- <h2>${escapeHTML(b)}</h2>
-
- <br>
-
- <button
-   class="btn goldbtn"
-   onclick="toast('${escapeHTML(b)} wins! ⚔️')">
-
- CHOOSE
-
- </button>
-
- `;
-
-}
-
-
-/* =====================================================
-   VAULT
-===================================================== */
-
-function saveNotes(){
-
- localStorage.setItem(
-   "jarvis_notes",
-   document.getElementById("notes").value
- );
-
- toast("📝 Notes saved!");
-
-}
-
-
-document.getElementById("fileInput")
-.addEventListener("change",function(){
-
- const old=
-   JSON.parse(
-     localStorage.getItem("jarvis_files")||"[]"
-   );
-
-
- [...this.files].forEach(file=>{
-
-   old.push({
-
-     name:file.name,
-
-     size:file.size,
-
-     date:new Date().toLocaleString()
-
-   });
-
- });
-
-
- localStorage.setItem(
-   "jarvis_files",
-   JSON.stringify(old)
- );
-
-
- renderFiles();
-
- toast("📁 File information saved!");
-
-});
-
-
-function renderFiles(){
-
- const files=
-   JSON.parse(
-     localStorage.getItem("jarvis_files")||"[]"
-   );
-
-
- document.getElementById("files")
- .innerHTML=
-
- files.length
-
- ?files.map(x=>`
-
-   <div class="panel" style="margin-top:8px">
-
-     📄 ${escapeHTML(x.name)}
-
-     <small style="color:#718991">
-
-       • ${escapeHTML(x.date)}
-
-     </small>
-
-   </div>
-
- `).join("")
-
- :"<p>No files added.</p>";
-
-}
-
-
-/* =====================================================
-   CLOCK
-===================================================== */
-
-function updateClock(){
-
- const now=new Date();
-
- document.getElementById("clock")
- .textContent=
-   now.toLocaleDateString()+
-   " • "+
-   now.toLocaleTimeString();
-
-}
-
-setInterval(updateClock,1000);
-updateClock();
-
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-let toastTimer;
-
-
-function toast(message){
-
- const el=
-   document.getElementById("toast");
-
- el.textContent=message;
-
- el.classList.add("show");
-
- clearTimeout(toastTimer);
-
- toastTimer=setTimeout(()=>{
-
-   el.classList.remove("show");
-
- },2200);
-
-}
-
-
-/* =====================================================
-   START
-===================================================== */
-
-renderMarvel();
-
-renderTimeline();
-
-nextQuestion();
-
-newBattle();
-
-renderFiles();
-
-updateStats();
-
-
-const savedNotes=
- localStorage.getItem("jarvis_notes");
-
-
-if(savedNotes){
-
- document.getElementById("notes")
- .value=savedNotes;
-
-}
-
-
-console.log("JARVIS V8 ONLINE 🤖");
-
-</script>
-<!-- =========================================================
-     JARVIS ANIME V8 MODULE
-     Paste everything BEFORE your existing </body>
-========================================================= -->
-
-<style>
-
-.jarvisAnime{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:9999;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 3px,
+      rgba(0,234,255,.012) 4px
+    );
+}
+
+
+/* ---------- HEADER ---------- */
+
+.jv10-header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  border-bottom:1px solid #123c47;
+  background:rgba(3,9,13,.92);
+  backdrop-filter:blur(16px);
+}
+
+.jv10-nav{
   width:min(1450px,94%);
-  margin:0 auto;
-  padding:50px 0 80px;
-  color:#f5fdff;
+  margin:auto;
+  min-height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
 }
 
-.jarvisAnime *{
-  box-sizing:border-box;
-}
-
-.animeHero{
-  text-align:center;
-  padding:25px 10px 35px;
-}
-
-.animeHero .small{
+.jv10-logo{
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:3px;
   color:#00eaff;
-  letter-spacing:4px;
-  font-size:11px;
+  text-shadow:0 0 18px #00eaff66;
 }
 
-.animeHero h1{
-  margin:12px 0;
-  font-size:clamp(38px,7vw,75px);
+.jv10-logo span{
   color:#ffd43b;
-  text-shadow:0 0 30px #ffd43b55;
 }
 
-.animeHero p{
-  color:#849ba4;
+.jv10-menu{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
 }
 
-.animeControls{
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:10px;
-  margin-bottom:12px;
-}
-
-.animeSearch{
-  width:100%;
-  padding:14px 16px;
-  background:#061118;
-  border:1px solid #19444f;
-  border-radius:10px;
-  color:white;
-  outline:none;
-}
-
-.animeSearch:focus{
-  border-color:#00eaff;
-  box-shadow:0 0 15px #00eaff22;
-}
-
-.animeBtn{
-  padding:12px 18px;
-  border-radius:9px;
-  border:1px solid #1d4b56;
-  background:#07171e;
-  color:#c9f7fc;
+.jv10-menu button{
+  border:1px solid #173e48;
+  background:#071219;
+  color:#9ec5cc;
+  border-radius:8px;
+  padding:9px 12px;
   cursor:pointer;
   transition:.2s;
 }
 
-.animeBtn:hover{
+.jv10-menu button:hover,
+.jv10-menu button.active{
   border-color:#00eaff;
-  transform:translateY(-1px);
+  color:#00eaff;
+  box-shadow:0 0 14px #00eaff18;
 }
 
-.animeBtn.gold{
-  border-color:#ffd43b;
-  color:#ffe78a;
-  background:#241d07;
+
+/* ---------- HERO ---------- */
+
+.jv10-hero{
+  width:min(1200px,94%);
+  margin:0 auto;
+  padding:100px 10px 70px;
+  text-align:center;
 }
 
-.animeTabs{
-  display:flex;
-  flex-wrap:wrap;
+.jv10-status{
+  display:inline-flex;
+  align-items:center;
   gap:8px;
-  margin:15px 0 25px;
+  padding:8px 13px;
+  border:1px solid #1b5360;
+  border-radius:30px;
+  color:#73e5ef;
+  background:#07151b;
+  font-size:11px;
+  letter-spacing:2px;
 }
 
-.animeTabs button{
-  padding:9px 13px;
-  border-radius:8px;
-  border:1px solid #19434d;
-  background:#07141a;
-  color:#a9dce4;
-  cursor:pointer;
+.jv10-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#00e676;
+  box-shadow:0 0 12px #00e676;
 }
 
-.animeTabs button.active{
-  border-color:#ffd43b;
+.jv10-hero h1{
+  margin:22px 0 8px;
+  font-size:clamp(50px,10vw,110px);
+  line-height:.9;
+  color:#f5fbff;
+  text-shadow:
+    0 0 20px #00eaff44,
+    0 0 60px #00eaff18;
+}
+
+.jv10-hero h1 span{
   color:#ffd43b;
-  background:#211b08;
 }
 
-.animeInfo{
-  margin-bottom:20px;
-  padding:13px 15px;
-  background:#071219;
-  border:1px solid #17353e;
-  border-radius:10px;
-  color:#829aa3;
-  font-size:13px;
+.jv10-hero h2{
+  font-size:clamp(14px,2vw,20px);
+  font-weight:400;
+  color:#78959e;
+  letter-spacing:5px;
 }
 
-.animeGrid{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:15px;
+.jv10-hero p{
+  max-width:720px;
+  margin:25px auto 0;
+  color:#7f969e;
+  line-height:1.8;
 }
 
-.animeCard{
-  overflow:hidden;
-  background:#081218;
-  border:1px solid #15353e;
-  border-radius:13px;
-  transition:.3s;
+
+/* ---------- SEARCH ---------- */
+
+.jv10-search-area{
+  width:min(850px,94%);
+  margin:0 auto 45px;
 }
 
-.animeCard:hover{
-  transform:translateY(-6px);
-  border-color:#ffd43b;
-  box-shadow:0 18px 40px #000b;
-}
-
-.animePoster{
-  height:350px;
-  position:relative;
-  background:#0b151a;
-  overflow:hidden;
-}
-
-.animePoster img{
+.jv10-search{
   width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  transition:.35s;
+  padding:17px 20px;
+  border-radius:12px;
+  border:1px solid #1c4a55;
+  outline:none;
+  background:#07131a;
+  color:white;
+  font-size:15px;
+  box-shadow:0 10px 40px #0008;
 }
 
-.animeCard:hover .animePoster img{
-  transform:scale(1.04);
+.jv10-search:focus{
+  border-color:#00eaff;
+  box-shadow:
+    0 0 20px #00eaff18,
+    0 10px 40px #0008;
 }
 
-.animeRank{
-  position:absolute;
-  z-index:2;
-  left:8px;
-  top:8px;
-  padding:5px 8px;
-  border-radius:6px;
-  background:#000d;
+.jv10-search::placeholder{
+  color:#58717a;
+}
+
+
+/* ---------- MAIN ---------- */
+
+.jv10-main{
+  width:min(1450px,94%);
+  margin:auto;
+  padding-bottom:100px;
+}
+
+.jv10-section{
+  margin-bottom:70px;
+}
+
+.jv10-section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:20px;
+  margin-bottom:20px;
+}
+
+.jv10-section-head h2{
+  font-size:25px;
+}
+
+.jv10-section-head h2 span{
   color:#ffd43b;
-  font-weight:bold;
+}
+
+.jv10-section-head p{
+  color:#647f88;
   font-size:12px;
 }
 
-.animeType{
-  position:absolute;
-  z-index:2;
-  right:8px;
-  top:8px;
-  padding:5px 7px;
-  border-radius:6px;
-  background:#000d;
-  color:#00eaff;
-  font-size:10px;
-}
 
-.animeBody{
-  padding:12px;
-}
+/* ---------- DASHBOARD CARDS ---------- */
 
-.animeTitle{
-  min-height:43px;
-  font-weight:bold;
-  line-height:1.35;
-}
-
-.animeMeta{
-  color:#81979f;
-  font-size:11px;
-  line-height:1.6;
-  margin:7px 0 10px;
-}
-
-.animeStars{
-  color:#ffd43b;
-}
-
-.animeActions{
+.jv10-dashboard{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:5px;
+  grid-template-columns:
+    repeat(4,1fr);
+  gap:15px;
 }
 
-.animeActions button{
-  padding:8px 4px;
-  border-radius:7px;
-  border:1px solid #19424c;
-  background:#091b22;
-  color:#bcecf2;
-  cursor:pointer;
-}
-
-.animeActions button:hover{
-  border-color:#00eaff;
-}
-
-.animeDetails{
-  width:100%;
-  margin-top:6px;
-  padding:8px;
-  border-radius:7px;
-  border:1px solid #19424c;
-  background:#091b22;
-  color:#bcecf2;
-  cursor:pointer;
-}
-
-.animeDetails:hover{
-  border-color:#ffd43b;
-  color:#ffd43b;
-}
-
-.animeWatched{
-  border-color:#00e676 !important;
-  color:#70ffae !important;
-}
-
-.animeEmpty{
-  grid-column:1/-1;
-  text-align:center;
-  padding:70px 20px;
-  border:1px dashed #24505b;
+.jv10-dash{
+  min-height:150px;
+  padding:22px;
   border-radius:14px;
-  color:#78919a;
+  border:1px solid #14343d;
+  background:
+    linear-gradient(
+      145deg,
+      #091920,
+      #050b0f
+    );
+  cursor:pointer;
+  transition:.25s;
 }
 
-.animeLoading{
-  grid-column:1/-1;
+.jv10-dash:hover{
+  transform:translateY(-5px);
+  border-color:#00eaff;
+  box-shadow:0 18px 45px #000b;
+}
+
+.jv10-dash-icon{
+  font-size:30px;
+  margin-bottom:15px;
+}
+
+.jv10-dash h3{
+  margin-bottom:7px;
+}
+
+.jv10-dash p{
+  color:#6e8992;
+  font-size:12px;
+  line-height:1.5;
+}
+
+
+/* ---------- FEATURE GRID ---------- */
+
+.jv10-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(4,1fr);
+  gap:15px;
+}
+
+.jv10-feature{
+  padding:25px;
+  border-radius:14px;
+  border:1px solid #14343d;
+  background:#071219;
+}
+
+.jv10-feature h3{
+  color:#00eaff;
+  margin-bottom:10px;
+}
+
+.jv10-feature p{
+  color:#758d95;
+  font-size:13px;
+  line-height:1.6;
+}
+
+
+/* ---------- FOOTER ---------- */
+
+.jv10-footer{
+  border-top:1px solid #12333c;
+  padding:35px 15px;
   text-align:center;
-  padding:70px 20px;
+  color:#526d75;
+  font-size:12px;
+}
+
+.jv10-footer b{
   color:#00eaff;
 }
 
-.animeSpinner{
-  width:42px;
-  height:42px;
-  margin:0 auto 15px;
-  border:3px solid #173a43;
-  border-top-color:#ffd43b;
-  border-radius:50%;
-  animation:jarvisAnimeSpin 1s linear infinite;
-}
 
-@keyframes jarvisAnimeSpin{
-  to{transform:rotate(360deg)}
-}
+/* ---------- HIDDEN SECTIONS ---------- */
 
-/* Anime popup */
-
-.animeModal{
+.jv10-page{
   display:none;
+}
+
+.jv10-page.active{
+  display:block;
+}
+
+
+/* ---------- TOAST ---------- */
+
+#jv10Toast{
   position:fixed;
-  z-index:99999;
-  inset:0;
-  padding:20px;
-  align-items:center;
-  justify-content:center;
-  background:#000d;
-  backdrop-filter:blur(10px);
-}
-
-.animeModal.show{
-  display:flex;
-}
-
-.animeModalBox{
-  width:min(900px,100%);
-  max-height:90vh;
-  overflow:auto;
-  padding:25px;
-  background:#071117;
-  border:1px solid #285864;
-  border-radius:17px;
-}
-
-.animeClose{
-  float:right;
-  border:0;
-  background:none;
-  color:white;
-  font-size:30px;
-  cursor:pointer;
-}
-
-.animeDetailLayout{
-  display:grid;
-  grid-template-columns:240px 1fr;
-  gap:25px;
-}
-
-.animeDetailLayout img{
-  width:100%;
-  border-radius:12px;
-}
-
-.animeDetailLayout h2{
-  color:#ffd43b;
-  margin-bottom:12px;
-}
-
-.animeDetailLayout p{
-  color:#a7bbc2;
-  line-height:1.7;
-  margin:15px 0;
-}
-
-.animeTag{
-  display:inline-block;
-  margin:3px;
-  padding:5px 8px;
-  border:1px solid #24515c;
-  border-radius:6px;
-  color:#9debf3;
-  font-size:11px;
-}
-
-.animeToast{
-  position:fixed;
-  z-index:100000;
   right:20px;
   bottom:20px;
-  padding:13px 16px;
-  background:#061219;
+  z-index:10000;
+  padding:13px 17px;
+  background:#07151b;
   border:1px solid #00eaff;
   border-radius:9px;
   color:white;
@@ -3148,163 +349,459 @@ console.log("JARVIS V8 ONLINE 🤖");
   transition:.25s;
 }
 
-.animeToast.show{
+#jv10Toast.show{
   transform:translateY(0);
   opacity:1;
 }
 
-@media(max-width:1200px){
-  .animeGrid{
-    grid-template-columns:repeat(4,1fr);
+
+/* ---------- MOBILE ---------- */
+
+@media(max-width:1000px){
+
+  .jv10-dashboard,
+  .jv10-grid{
+    grid-template-columns:
+      repeat(2,1fr);
   }
+
 }
 
-@media(max-width:800px){
-  .animeGrid{
-    grid-template-columns:repeat(3,1fr);
+@media(max-width:650px){
+
+  .jv10-nav{
+    flex-direction:column;
+    padding:14px 0;
   }
 
-  .animePoster{
-    height:320px;
+  .jv10-menu{
+    justify-content:center;
   }
 
-  .animeDetailLayout{
+  .jv10-hero{
+    padding-top:65px;
+  }
+
+  .jv10-dashboard,
+  .jv10-grid{
     grid-template-columns:1fr;
   }
 
-  .animeDetailLayout img{
-    width:210px;
-  }
-}
-
-@media(max-width:550px){
-  .animeControls{
-    grid-template-columns:1fr;
+  .jv10-section-head{
+    align-items:flex-start;
+    flex-direction:column;
   }
 
-  .animeGrid{
-    grid-template-columns:repeat(2,1fr);
-    gap:9px;
-  }
-
-  .animePoster{
-    height:285px;
-  }
-
-  .animeTitle{
-    font-size:13px;
-  }
 }
 
 </style>
 
+</head>
 
-<!-- ===================== ANIME SECTION ===================== -->
 
-<section id="jarvisAnimeSection" class="jarvisAnime">
+<body>
 
-  <div class="animeHero">
 
-    <div class="small">
-      JARVIS ENTERTAINMENT DATABASE
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="jv10-header">
+
+  <nav class="jv10-nav">
+
+    <div class="jv10-logo">
+      JARVIS<span>V10</span>
     </div>
 
-    <h1>🍥 ANIME UNIVERSE</h1>
+    <div class="jv10-menu">
+
+      <button
+        class="active"
+        onclick="jv10Go('home',this)"
+      >
+        🏠 HOME
+      </button>
+
+      <button
+        onclick="jv10Go('movies',this)"
+      >
+        🎬 MOVIES
+      </button>
+
+      <button
+        onclick="jv10Go('anime',this)"
+      >
+        🍥 ANIME
+      </button>
+
+      <button
+        onclick="jv10Go('series',this)"
+      >
+        📺 TV SERIES
+      </button>
+
+      <button
+        onclick="jv10Go('marvel',this)"
+      >
+        🦸 MARVEL
+      </button>
+
+      <button
+        onclick="jv10Go('collection',this)"
+      >
+        ❤️ COLLECTION
+      </button>
+
+    </div>
+
+  </nav>
+
+</header>
+
+
+
+<!-- =====================================================
+     HOME
+===================================================== -->
+
+<main>
+
+<section
+  id="jv10-home"
+  class="jv10-page active"
+>
+
+  <div class="jv10-hero">
+
+    <div class="jv10-status">
+
+      <span class="jv10-dot"></span>
+
+      JARVIS ENTERTAINMENT SYSTEM ONLINE
+
+    </div>
+
+
+    <h1>
+      JAR<span>VIS</span>
+    </h1>
+
+
+    <h2>
+      YOUR PERSONAL ENTERTAINMENT DATABASE
+    </h2>
+
 
     <p>
-      Top 100 Anime Series & Top 100 Anime Movies
-      • Real Posters • Ratings • Details
+
+      Marvel • Movies • Anime • TV Series
+
+      <br>
+
+      Posters • Ratings • Facts • Watchlist
+
     </p>
 
   </div>
 
 
-  <div class="animeControls">
+  <div class="jv10-search-area">
 
     <input
-      id="jarvisAnimeSearch"
-      class="animeSearch"
-      type="text"
-      placeholder="🔎 Search anime..."
-      oninput="jarvisAnimeRender()"
+      id="jv10GlobalSearch"
+      class="jv10-search"
+      type="search"
+      placeholder="🔎 Search movies, anime, TV series..."
+      oninput="jv10Search(this.value)"
     >
-
-    <button
-      class="animeBtn gold"
-      onclick="jarvisAnimeLoad()"
-    >
-      ⚡ LOAD TOP 100
-    </button>
 
   </div>
 
 
-  <div class="animeTabs">
-
-    <button
-      id="animeSeriesTab"
-      class="active"
-      onclick="
-        jarvisAnimeMode='series';
-        jarvisAnimeRender();
-        jarvisAnimeActive(this);
-      "
-    >
-      🏆 TOP 100 SERIES
-    </button>
+  <div class="jv10-main">
 
 
-    <button
-      onclick="
-        jarvisAnimeMode='movies';
-        jarvisAnimeRender();
-        jarvisAnimeActive(this);
-      "
-    >
-      🎬 TOP 100 MOVIES
-    </button>
+    <!-- DASHBOARD -->
+
+    <section class="jv10-section">
+
+      <div class="jv10-section-head">
+
+        <div>
+
+          <h2>
+            ⚡ <span>COMMAND</span> CENTER
+          </h2>
+
+          <p>
+            Select a database to continue
+          </p>
+
+        </div>
+
+      </div>
 
 
-    <button
-      onclick="
-        jarvisAnimeMode='all';
-        jarvisAnimeRender();
-        jarvisAnimeActive(this);
-      "
-    >
-      🍥 ALL ANIME
-    </button>
+      <div class="jv10-dashboard">
 
 
-    <button
-      onclick="jarvisAnimeLoad()"
-    >
-      🔄 REFRESH
-    </button>
+        <div
+          class="jv10-dash"
+          onclick="jv10GoByName('movies')"
+        >
+
+          <div class="jv10-dash-icon">
+            🎬
+          </div>
+
+          <h3>
+            MOVIE UNIVERSE
+          </h3>
+
+          <p>
+            Movies, posters, ratings,
+            trailers and facts.
+          </p>
+
+        </div>
+
+
+        <div
+          class="jv10-dash"
+          onclick="jv10GoByName('anime')"
+        >
+
+          <div class="jv10-dash-icon">
+            🍥
+          </div>
+
+          <h3>
+            ANIME UNIVERSE
+          </h3>
+
+          <p>
+            Top anime movies and
+            series with posters.
+          </p>
+
+        </div>
+
+
+        <div
+          class="jv10-dash"
+          onclick="jv10GoByName('series')"
+        >
+
+          <div class="jv10-dash-icon">
+            📺
+          </div>
+
+          <h3>
+            TV SERIES
+          </h3>
+
+          <p>
+            Top 100 series,
+            ratings and watchlist.
+          </p>
+
+        </div>
+
+
+        <div
+          class="jv10-dash"
+          onclick="jv10GoByName('marvel')"
+        >
+
+          <div class="jv10-dash-icon">
+            🦸
+          </div>
+
+          <h3>
+            MARVEL UNIVERSE
+          </h3>
+
+          <p>
+            MCU watch order,
+            characters and facts.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- FEATURES -->
+
+    <section class="jv10-section">
+
+      <div class="jv10-section-head">
+
+        <div>
+
+          <h2>
+            🧠 <span>JARVIS</span> FEATURES
+          </h2>
+
+          <p>
+            V10 entertainment system
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="jv10-grid">
+
+
+        <div class="jv10-feature">
+
+          <h3>
+            🖼️ Posters
+          </h3>
+
+          <p>
+            High-quality movie, anime
+            and series artwork.
+          </p>
+
+        </div>
+
+
+        <div class="jv10-feature">
+
+          <h3>
+            ⭐ Ratings
+          </h3>
+
+          <p>
+            Ratings and rankings for
+            your favorite titles.
+          </p>
+
+        </div>
+
+
+        <div class="jv10-feature">
+
+          <h3>
+            🧠 Facts
+          </h3>
+
+          <p>
+            Interesting facts and
+            detailed information.
+          </p>
+
+        </div>
+
+
+        <div class="jv10-feature">
+
+          <h3>
+            ❤️ Collection
+          </h3>
+
+          <p>
+            Save favorites and track
+            what you have watched.
+          </p>
+
+        </div>
+
+
+        <div class="jv10-feature">
+
+          <h3>
+            ▶️ Trailer
+          </h3>
+
+          <p>
+            Official trailer search
+            for movies and series.
+          </p>
+
+        </div>
+
+
+        <div class="jv10-feature">
+
+          <h3>
+            🔗 Where To Watch
+          </h3>
+
+          <p>
+            Find legal streaming,
+            rental and purchase options.
+          </p>
+
+        </div>
+
+
+        <div class="jv10-feature">
+
+          <h3>
+            📥 Legal Download
+          </h3>
+
+          <p>
+            Official digital download
+            or purchase options when available.
+          </p>
+
+        </div>
+
+
+        <div class="jv10-feature">
+
+          <h3>
+            📱 Mobile Ready
+          </h3>
+
+          <p>
+            Designed to work smoothly
+            on phones, tablets and desktop.
+          </p>
+
+        </div>
+
+      </div>
+
+    </section>
+
 
   </div>
 
-
-  <div id="jarvisAnimeInfo" class="animeInfo">
-
-    🍥 Press <b>LOAD TOP 100</b> to load anime posters.
-
-  </div>
+</section>
 
 
-  <div id="jarvisAnimeGrid" class="animeGrid">
 
-    <div class="animeEmpty">
+<!-- =====================================================
+     EMPTY MODULES
+     PART 2 WILL FILL THESE
+===================================================== -->
 
-      🍥
+<section
+  id="jv10-movies"
+  class="jv10-page"
+>
 
-      <br><br>
+  <div class="jv10-main">
 
-      <b>ANIME DATABASE READY</b>
+    <div class="jv10-hero">
 
-      <br><br>
+      <h1>
+        🎬 <span>MOVIES</span>
+      </h1>
 
-      Press <b>LOAD TOP 100</b>
+      <p>
+        Movie database loading in Part 2...
+      </p>
 
     </div>
 
@@ -3313,1365 +810,24 @@ console.log("JARVIS V8 ONLINE 🤖");
 </section>
 
 
-<!-- ===================== ANIME MODAL ===================== -->
 
-<div
-  id="jarvisAnimeModal"
-  class="animeModal"
-  onclick="
-    if(event.target===this)
-      jarvisAnimeCloseModal();
-  "
+<section
+  id="jv10-anime"
+  class="jv10-page"
 >
 
-  <div class="animeModalBox">
+  <div class="jv10-main">
 
-    <button
-      class="animeClose"
-      onclick="jarvisAnimeCloseModal()"
-    >
-      ×
-    </button>
+    <div class="jv10-hero">
 
-    <div id="jarvisAnimeModalContent"></div>
+      <h1>
+        🍥 <span>ANIME</span>
+      </h1>
 
-  </div>
+      <p>
+        Anime database loading in Part 2...
+      </p>
 
-</div>
-
-
-<div id="jarvisAnimeToast" class="animeToast"></div>
-
-
-<script>
-
-/* =========================================================
-   JARVIS ANIME ENGINE
-========================================================= */
-
-const JARVIS_JIKAN_API =
-  "https://api.jikan.moe/v4";
-
-let jarvisAnimeSeries = [];
-let jarvisAnimeMovies = [];
-
-let jarvisAnimeMode = "series";
-
-
-/* =========================================================
-   API
-========================================================= */
-
-async function jarvisAnimeAPI(url){
-
-  const response = await fetch(url);
-
-  if(!response.ok){
-    throw new Error("Anime API Error");
-  }
-
-  return await response.json();
-
-}
-
-
-/* =========================================================
-   LOAD TOP 100
-========================================================= */
-
-async function jarvisAnimeLoad(){
-
-  const grid =
-    document.getElementById(
-      "jarvisAnimeGrid"
-    );
-
-  const info =
-    document.getElementById(
-      "jarvisAnimeInfo"
-    );
-
-
-  grid.innerHTML = `
-
-    <div class="animeLoading">
-
-      <div class="animeSpinner"></div>
-
-      🍥 Loading Top Anime...
-
-      <br>
-
-      <small>
-        Connecting to anime database...
-      </small>
-
-    </div>
-
-  `;
-
-
-  try{
-
-    info.innerHTML =
-      "🔄 Downloading Top 100 Anime Series & Movies...";
-
-
-    /*
-      Two pages for series
-      Two pages for movies
-
-      Jikan uses MyAnimeList ranking.
-    */
-
-    const results =
-      await Promise.all([
-
-        jarvisAnimeAPI(
-          `${JARVIS_JIKAN_API}/top/anime?type=tv&page=1`
-        ),
-
-        jarvisAnimeAPI(
-          `${JARVIS_JIKAN_API}/top/anime?type=tv&page=2`
-        ),
-
-        jarvisAnimeAPI(
-          `${JARVIS_JIKAN_API}/top/anime?type=movie&page=1`
-        ),
-
-        jarvisAnimeAPI(
-          `${JARVIS_JIKAN_API}/top/anime?type=movie&page=2`
-        )
-
-      ]);
-
-
-    /* ================= SERIES ================= */
-
-    jarvisAnimeSeries = [
-
-      ...(results[0].data || []),
-
-      ...(results[1].data || [])
-
-    ]
-
-    .slice(0,100)
-
-    .map((anime,index)=>({
-
-      id:
-        anime.mal_id,
-
-      title:
-        anime.title,
-
-      titleEnglish:
-        anime.title_english || "",
-
-      rank:
-        anime.rank || index+1,
-
-      score:
-        anime.score || "N/A",
-
-      year:
-        anime.aired?.from
-        ? anime.aired.from.substring(0,4)
-        : "",
-
-      episodes:
-        anime.episodes || "N/A",
-
-      status:
-        anime.status || "",
-
-      type:
-        "Anime Series",
-
-      poster:
-        anime.images?.jpg?.large_image_url ||
-        anime.images?.jpg?.image_url ||
-        "",
-
-      synopsis:
-        anime.synopsis ||
-        "No synopsis available.",
-
-      genres:
-        anime.genres?.map(x=>x.name) || [],
-
-      studios:
-        anime.studios?.map(x=>x.name) || []
-
-    }));
-
-
-    /* ================= MOVIES ================= */
-
-    jarvisAnimeMovies = [
-
-      ...(results[2].data || []),
-
-      ...(results[3].data || [])
-
-    ]
-
-    .slice(0,100)
-
-    .map((anime,index)=>({
-
-      id:
-        anime.mal_id,
-
-      title:
-        anime.title,
-
-      titleEnglish:
-        anime.title_english || "",
-
-      rank:
-        anime.rank || index+1,
-
-      score:
-        anime.score || "N/A",
-
-      year:
-        anime.aired?.from
-        ? anime.aired.from.substring(0,4)
-        : "",
-
-      episodes:
-        anime.episodes || "",
-
-      status:
-        anime.status || "",
-
-      type:
-        "Anime Movie",
-
-      poster:
-        anime.images?.jpg?.large_image_url ||
-        anime.images?.jpg?.image_url ||
-        "",
-
-      synopsis:
-        anime.synopsis ||
-        "No synopsis available.",
-
-      genres:
-        anime.genres?.map(x=>x.name) || [],
-
-      studios:
-        anime.studios?.map(x=>x.name) || []
-
-    }));
-
-
-    info.innerHTML = `
-
-      ✅ <b>Anime database loaded!</b>
-
-      &nbsp; • &nbsp;
-
-      ${jarvisAnimeSeries.length} Series
-
-      &nbsp; • &nbsp;
-
-      ${jarvisAnimeMovies.length} Movies
-
-      &nbsp; • &nbsp;
-
-      🖼️ Real posters
-
-    `;
-
-
-    jarvisAnimeRender();
-
-    jarvisAnimeToast(
-      "🍥 Anime posters loaded!"
-    );
-
-
-  }catch(error){
-
-    console.error(error);
-
-    grid.innerHTML = `
-
-      <div class="animeEmpty">
-
-        ❌ <b>Could not load anime.</b>
-
-        <br><br>
-
-        Check your internet connection
-        and press <b>REFRESH</b>.
-
-      </div>
-
-    `;
-
-    info.innerHTML =
-      "❌ Anime database connection failed.";
-
-  }
-
-}
-
-
-/* =========================================================
-   STORAGE
-========================================================= */
-
-function jarvisAnimeWatched(title){
-
-  return localStorage.getItem(
-    "jarvis_anime_watched_"+title
-  ) === "1";
-
-}
-
-
-function jarvisAnimeFavorite(title){
-
-  return localStorage.getItem(
-    "jarvis_anime_favorite_"+title
-  ) === "1";
-
-}
-
-
-function jarvisAnimeToggleWatched(title){
-
-  const key =
-    "jarvis_anime_watched_"+title;
-
-
-  if(
-    jarvisAnimeWatched(title)
-  ){
-
-    localStorage.removeItem(key);
-
-    jarvisAnimeToast(
-      "Removed from watched"
-    );
-
-  }else{
-
-    localStorage.setItem(key,"1");
-
-    jarvisAnimeToast(
-      "✅ Added to watched"
-    );
-
-  }
-
-
-  jarvisAnimeRender();
-
-}
-
-
-function jarvisAnimeToggleFavorite(title){
-
-  const key =
-    "jarvis_anime_favorite_"+title;
-
-
-  if(
-    jarvisAnimeFavorite(title)
-  ){
-
-    localStorage.removeItem(key);
-
-    jarvisAnimeToast(
-      "Removed from favorites"
-    );
-
-  }else{
-
-    localStorage.setItem(key,"1");
-
-    jarvisAnimeToast(
-      "❤️ Added to favorites"
-    );
-
-  }
-
-
-  jarvisAnimeRender();
-
-}
-
-
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function jarvisAnimeEscape(value){
-
-  return String(value || "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-/* =========================================================
-   FALLBACK POSTER
-========================================================= */
-
-function jarvisAnimeFallback(title){
-
-  return (
-    "https://placehold.co/500x750/07131a/ffd43b?text="+
-    encodeURIComponent(title)
-  );
-
-}
-
-
-/* =========================================================
-   CARD
-========================================================= */
-
-function jarvisAnimeCard(anime,index){
-
-  const poster =
-    anime.poster ||
-    jarvisAnimeFallback(anime.title);
-
-
-  const watched =
-    jarvisAnimeWatched(anime.title);
-
-
-  const favorite =
-    jarvisAnimeFavorite(anime.title);
-
-
-  return `
-
-  <article class="animeCard">
-
-    <div class="animePoster">
-
-      <div class="animeRank">
-
-        #${anime.rank || index+1}
-
-      </div>
-
-
-      <div class="animeType">
-
-        ${jarvisAnimeEscape(anime.type)}
-
-      </div>
-
-
-      <img
-
-        src="${poster}"
-
-        alt="${jarvisAnimeEscape(anime.title)}"
-
-        loading="lazy"
-
-        onerror="
-          this.onerror=null;
-          this.src='${jarvisAnimeFallback(anime.title)}';
-        "
-
-      >
-
-    </div>
-
-
-    <div class="animeBody">
-
-      <div class="animeTitle">
-
-        ${jarvisAnimeEscape(anime.title)}
-
-      </div>
-
-
-      <div class="animeMeta">
-
-        ${
-          anime.year
-          ? "📅 "+anime.year+" • "
-          : ""
-        }
-
-        <span class="animeStars">
-
-          ⭐ ${anime.score}
-
-        </span>
-
-
-        ${
-          anime.episodes
-          ? " • "+anime.episodes+" eps"
-          : ""
-        }
-
-      </div>
-
-
-      <div class="animeActions">
-
-        <button
-
-          class="${watched ? "animeWatched" : ""}"
-
-          onclick="
-            jarvisAnimeToggleWatched(
-              '${jarvisAnimeEscape(anime.title)}'
-            )
-          "
-
-        >
-
-          ${
-            watched
-            ? "✓ WATCHED"
-            : "✓ WATCH"
-          }
-
-        </button>
-
-
-        <button
-
-          onclick="
-            jarvisAnimeToggleFavorite(
-              '${jarvisAnimeEscape(anime.title)}'
-            )
-          "
-
-        >
-
-          ${
-            favorite
-            ? "❤️ SAVED"
-            : "♡ SAVE"
-          }
-
-        </button>
-
-      </div>
-
-
-      <button
-
-        class="animeDetails"
-
-        onclick="
-          jarvisAnimeDetails(
-            '${jarvisAnimeEscape(anime.title)}'
-          )
-        "
-
-      >
-
-        🧠 DETAILS
-
-      </button>
-
-    </div>
-
-  </article>
-
-  `;
-
-}
-
-
-/* =========================================================
-   RENDER
-========================================================= */
-
-function jarvisAnimeRender(){
-
-  const grid =
-    document.getElementById(
-      "jarvisAnimeGrid"
-    );
-
-
-  if(!grid)return;
-
-
-  const search =
-    (
-      document.getElementById(
-        "jarvisAnimeSearch"
-      )?.value || ""
-    ).toLowerCase();
-
-
-  let list=[];
-
-
-  if(jarvisAnimeMode==="series"){
-
-    list = jarvisAnimeSeries;
-
-  }else if(
-    jarvisAnimeMode==="movies"
-  ){
-
-    list = jarvisAnimeMovies;
-
-  }else{
-
-    list = [
-
-      ...jarvisAnimeSeries,
-
-      ...jarvisAnimeMovies
-
-    ];
-
-  }
-
-
-  list =
-    list.filter(anime=>
-
-      anime.title
-      .toLowerCase()
-      .includes(search)
-
-    );
-
-
-  if(!list.length){
-
-    grid.innerHTML = `
-
-      <div class="animeEmpty">
-
-        ${
-          jarvisAnimeSeries.length===0
-          ? "🍥 Press LOAD TOP 100 first."
-          : "🔎 No anime found."
-        }
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  grid.innerHTML =
-    list.map(
-      (anime,index)=>
-        jarvisAnimeCard(anime,index)
-    ).join("");
-
-}
-
-
-/* =========================================================
-   DETAILS
-========================================================= */
-
-function jarvisAnimeDetails(title){
-
-  const anime = [
-
-    ...jarvisAnimeSeries,
-
-    ...jarvisAnimeMovies
-
-  ].find(x=>x.title===title);
-
-
-  if(!anime)return;
-
-
-  const genres =
-    anime.genres?.length
-
-    ? anime.genres.map(g=>
-
-        `<span class="animeTag">
-          ${jarvisAnimeEscape(g)}
-        </span>`
-
-      ).join("")
-
-    : "N/A";
-
-
-  const studios =
-    anime.studios?.length
-
-    ? anime.studios.map(s=>
-
-        `<span class="animeTag">
-          ${jarvisAnimeEscape(s)}
-        </span>`
-
-      ).join("")
-
-    : "N/A";
-
-
-  document.getElementById(
-    "jarvisAnimeModalContent"
-  ).innerHTML = `
-
-    <div class="animeDetailLayout">
-
-      <div>
-
-        <img
-
-          src="${
-            anime.poster ||
-            jarvisAnimeFallback(anime.title)
-          }"
-
-          alt="${jarvisAnimeEscape(anime.title)}"
-
-        >
-
-      </div>
-
-
-      <div>
-
-        <h2>
-
-          ${jarvisAnimeEscape(anime.title)}
-
-        </h2>
-
-
-        ${
-          anime.titleEnglish
-          ?`
-
-            <div class="animeTag">
-
-              ${jarvisAnimeEscape(
-                anime.titleEnglish
-              )}
-
-            </div>
-
-          `
-          :""
-        }
-
-
-        <p>
-
-          <span class="animeTag">
-
-            🏆 Rank #${anime.rank}
-
-          </span>
-
-
-          <span class="animeTag">
-
-            ⭐ ${anime.score}
-
-          </span>
-
-
-          ${
-            anime.year
-            ?`
-
-              <span class="animeTag">
-
-                📅 ${anime.year}
-
-              </span>
-
-            `
-            :""
-          }
-
-
-          <span class="animeTag">
-
-            ${jarvisAnimeEscape(anime.type)}
-
-          </span>
-
-        </p>
-
-
-        <p>
-
-          <b>📖 SYNOPSIS</b>
-
-          <br><br>
-
-          ${jarvisAnimeEscape(
-            anime.synopsis
-          )}
-
-        </p>
-
-
-        <p>
-
-          <b>🎭 GENRES</b>
-
-          <br><br>
-
-          ${genres}
-
-        </p>
-
-
-        <p>
-
-          <b>🏢 STUDIOS</b>
-
-          <br><br>
-
-          ${studios}
-
-        </p>
-
-
-        ${
-          anime.episodes
-          ?`
-
-            <p>
-
-              🎞️ Episodes:
-              <b>${anime.episodes}</b>
-
-            </p>
-
-          `
-          :""
-        }
-
-
-        <button
-
-          class="animeBtn gold"
-
-          onclick="
-            jarvisAnimeToggleWatched(
-              '${jarvisAnimeEscape(anime.title)}'
-            );
-            jarvisAnimeCloseModal();
-          "
-
-        >
-
-          ${
-            jarvisAnimeWatched(anime.title)
-            ? "✓ WATCHED"
-            : "✓ MARK WATCHED"
-          }
-
-        </button>
-
-
-        <button
-
-          class="animeBtn"
-
-          onclick="
-            jarvisAnimeToggleFavorite(
-              '${jarvisAnimeEscape(anime.title)}'
-            );
-            jarvisAnimeCloseModal();
-          "
-
-        >
-
-          ${
-            jarvisAnimeFavorite(anime.title)
-            ? "❤️ SAVED"
-            : "♡ ADD FAVORITE"
-          }
-
-        </button>
-
-      </div>
-
-    </div>
-
-  `;
-
-
-  document.getElementById(
-    "jarvisAnimeModal"
-  ).classList.add("show");
-
-}
-
-
-/* =========================================================
-   CLOSE MODAL
-========================================================= */
-
-function jarvisAnimeCloseModal(){
-
-  document.getElementById(
-    "jarvisAnimeModal"
-  ).classList.remove("show");
-
-}
-
-
-/* =========================================================
-   TAB
-========================================================= */
-
-function jarvisAnimeActive(button){
-
-  document
-    .querySelectorAll(
-      "#jarvisAnimeSection .animeTabs button"
-    )
-    .forEach(btn=>
-      btn.classList.remove("active")
-    );
-
-
-  button.classList.add("active");
-
-}
-
-
-/* =========================================================
-   TOAST
-========================================================= */
-
-let jarvisAnimeToastTimer;
-
-
-function jarvisAnimeToast(message){
-
-  const toast =
-    document.getElementById(
-      "jarvisAnimeToast"
-    );
-
-
-  toast.textContent = message;
-
-  toast.classList.add("show");
-
-
-  clearTimeout(
-    jarvisAnimeToastTimer
-  );
-
-
-  jarvisAnimeToastTimer =
-    setTimeout(()=>{
-
-      toast.classList.remove("show");
-
-    },2200);
-
-}
-
-
-/* =========================================================
-   AUTO LOAD
-========================================================= */
-
-/*
-  Uncomment the next line if you want
-  Anime to load automatically whenever
-  the page opens.
-
-  jarvisAnimeLoad();
-*/
-
-
-console.log(
-  "🍥 JARVIS Anime V8 Module ONLINE"
-);
-
-</script>
-<!-- ================= JARVIS ANIME V9 ================= -->
-
-<style>
-#jarvisAnimeV9{
-  width:94%;
-  max-width:1450px;
-  margin:50px auto;
-  color:#fff;
-  font-family:Arial,sans-serif;
-}
-
-.jv9-title{
-  text-align:center;
-  margin-bottom:25px;
-}
-
-.jv9-title h1{
-  font-size:clamp(38px,7vw,75px);
-  margin:8px;
-  color:#ffd43b;
-  text-shadow:0 0 30px #ffd43b55;
-}
-
-.jv9-title p{
-  color:#8da3aa;
-}
-
-.jv9-controls{
-  display:flex;
-  gap:10px;
-  margin-bottom:15px;
-}
-
-#jv9Search{
-  flex:1;
-  padding:14px;
-  border-radius:10px;
-  border:1px solid #214b55;
-  background:#07141a;
-  color:white;
-  outline:none;
-}
-
-.jv9-btn{
-  padding:12px 18px;
-  border-radius:9px;
-  border:1px solid #214b55;
-  background:#071820;
-  color:#d5faff;
-  cursor:pointer;
-}
-
-.jv9-btn:hover{
-  border-color:#00eaff;
-}
-
-.jv9-gold{
-  border-color:#ffd43b;
-  color:#ffd43b;
-}
-
-.jv9-tabs{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-bottom:20px;
-}
-
-.jv9-tabs button{
-  padding:9px 14px;
-  border-radius:8px;
-  border:1px solid #214b55;
-  background:#071820;
-  color:#9fc7ce;
-  cursor:pointer;
-}
-
-.jv9-tabs button.active{
-  border-color:#ffd43b;
-  color:#ffd43b;
-}
-
-#jv9Status{
-  padding:13px;
-  border-radius:9px;
-  background:#07141a;
-  border:1px solid #173a43;
-  color:#8da3aa;
-  margin-bottom:20px;
-}
-
-.jv9-grid{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:15px;
-}
-
-.jv9-card{
-  overflow:hidden;
-  background:#081218;
-  border:1px solid #17353e;
-  border-radius:13px;
-  transition:.25s;
-}
-
-.jv9-card:hover{
-  transform:translateY(-6px);
-  border-color:#ffd43b;
-}
-
-.jv9-poster{
-  height:350px;
-  position:relative;
-  background:#10191d;
-}
-
-.jv9-poster img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
-
-.jv9-rank{
-  position:absolute;
-  top:8px;
-  left:8px;
-  z-index:2;
-  padding:5px 8px;
-  background:#000d;
-  border-radius:6px;
-  color:#ffd43b;
-  font-weight:bold;
-}
-
-.jv9-type{
-  position:absolute;
-  top:8px;
-  right:8px;
-  z-index:2;
-  padding:5px 7px;
-  background:#000d;
-  border-radius:6px;
-  color:#00eaff;
-  font-size:10px;
-}
-
-.jv9-body{
-  padding:12px;
-}
-
-.jv9-name{
-  font-weight:bold;
-  min-height:42px;
-  line-height:1.4;
-}
-
-.jv9-meta{
-  margin:8px 0;
-  color:#81979f;
-  font-size:11px;
-}
-
-.jv9-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:5px;
-}
-
-.jv9-actions button{
-  padding:8px 3px;
-  border-radius:7px;
-  border:1px solid #19424c;
-  background:#091b22;
-  color:#c2eef3;
-  cursor:pointer;
-}
-
-.jv9-details{
-  width:100%;
-  margin-top:6px;
-  padding:8px;
-  border-radius:7px;
-  border:1px solid #19424c;
-  background:#091b22;
-  color:#c2eef3;
-  cursor:pointer;
-}
-
-.jv9-loading{
-  grid-column:1/-1;
-  text-align:center;
-  padding:70px;
-  color:#00eaff;
-}
-
-.jv9-error{
-  grid-column:1/-1;
-  text-align:center;
-  padding:60px;
-  border:1px dashed #704848;
-  border-radius:12px;
-  color:#ff9999;
-}
-
-.jv9-modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  z-index:99999;
-  background:#000d;
-  backdrop-filter:blur(10px);
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-}
-
-.jv9-modal.show{
-  display:flex;
-}
-
-.jv9-modal-box{
-  width:min(900px,100%);
-  max-height:90vh;
-  overflow:auto;
-  padding:25px;
-  border-radius:15px;
-  background:#071117;
-  border:1px solid #285864;
-}
-
-.jv9-close{
-  float:right;
-  border:0;
-  background:none;
-  color:white;
-  font-size:30px;
-  cursor:pointer;
-}
-
-.jv9-detail{
-  display:grid;
-  grid-template-columns:230px 1fr;
-  gap:25px;
-}
-
-.jv9-detail img{
-  width:100%;
-  border-radius:12px;
-}
-
-.jv9-detail h2{
-  color:#ffd43b;
-}
-
-.jv9-detail p{
-  color:#a9bcc2;
-  line-height:1.7;
-}
-
-.jv9-tag{
-  display:inline-block;
-  padding:5px 8px;
-  margin:3px;
-  border:1px solid #24515c;
-  border-radius:6px;
-  color:#9debf3;
-  font-size:11px;
-}
-
-@media(max-width:1200px){
-  .jv9-grid{grid-template-columns:repeat(4,1fr);}
-}
-
-@media(max-width:800px){
-  .jv9-grid{grid-template-columns:repeat(3,1fr);}
-  .jv9-poster{height:320px;}
-  .jv9-detail{grid-template-columns:1fr;}
-  .jv9-detail img{width:210px;}
-}
-
-@media(max-width:550px){
-  .jv9-controls{flex-direction:column;}
-  .jv9-grid{
-    grid-template-columns:repeat(2,1fr);
-    gap:9px;
-  }
-  .jv9-poster{height:280px;}
-  .jv9-name{font-size:13px;}
-}
-</style>
-
-
-<section id="jarvisAnimeV9">
-
-  <div class="jv9-title">
-    <div>JARVIS ENTERTAINMENT DATABASE</div>
-    <h1>🍥 ANIME UNIVERSE</h1>
-    <p>Top 100 Anime Series • Top 100 Anime Movies</p>
-  </div>
-
-
-  <div class="jv9-controls">
-
-    <input
-      id="jv9Search"
-      placeholder="🔎 Search anime..."
-      oninput="jv9Render()"
-    >
-
-    <button
-      class="jv9-btn jv9-gold"
-      onclick="jv9Start()"
-    >
-      ⚡ LOAD TOP 100
-    </button>
-
-  </div>
-
-
-  <div class="jv9-tabs">
-
-    <button
-      class="active"
-      onclick="jv9Mode='series';jv9Tab(this);jv9Render()"
-    >
-      🏆 TOP 100 SERIES
-    </button>
-
-    <button
-      onclick="jv9Mode='movies';jv9Tab(this);jv9Render()"
-    >
-      🎬 TOP 100 MOVIES
-    </button>
-
-    <button
-      onclick="jv9Mode='all';jv9Tab(this);jv9Render()"
-    >
-      🍥 ALL
-    </button>
-
-    <button
-      onclick="jv9Start()"
-    >
-      🔄 RELOAD
-    </button>
-
-  </div>
-
-
-  <div id="jv9Status">
-    🍥 Press LOAD TOP 100 to start.
-  </div>
-
-
-  <div id="jv9Grid" class="jv9-grid">
-
-    <div class="jv9-loading">
-      🍥 Anime database ready.
     </div>
 
   </div>
@@ -4679,771 +835,251 @@ console.log(
 </section>
 
 
-<div
-  id="jv9Modal"
-  class="jv9-modal"
-  onclick="if(event.target===this)jv9Close()"
+
+<section
+  id="jv10-series"
+  class="jv10-page"
 >
 
-  <div class="jv9-modal-box">
+  <div class="jv10-main">
 
-    <button
-      class="jv9-close"
-      onclick="jv9Close()"
-    >
-      ×
-    </button>
+    <div class="jv10-hero">
 
-    <div id="jv9ModalContent"></div>
+      <h1>
+        📺 <span>TV SERIES</span>
+      </h1>
+
+      <p>
+        Top 100 TV Series loading in Part 2...
+      </p>
+
+    </div>
 
   </div>
 
-</div>
+</section>
+
+
+
+<section
+  id="jv10-marvel"
+  class="jv10-page"
+>
+
+  <div class="jv10-main">
+
+    <div class="jv10-hero">
+
+      <h1>
+        🦸 <span>MARVEL</span>
+      </h1>
+
+      <p>
+        Marvel Universe loading in Part 2...
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<section
+  id="jv10-collection"
+  class="jv10-page"
+>
+
+  <div class="jv10-main">
+
+    <div class="jv10-hero">
+
+      <h1>
+        ❤️ <span>COLLECTION</span>
+      </h1>
+
+      <p>
+        Your saved movies, anime and
+        series will appear here.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="jv10-footer">
+
+  <b>JARVIS V10</b>
+
+  • Personal Entertainment Database
+
+  <br><br>
+
+  Built for Jony ⚡
+
+</footer>
+
+
+<div id="jv10Toast"></div>
+
 
 
 <script>
 
-const JV9_API="https://api.jikan.moe/v4";
-
-let jv9Series=[];
-let jv9Movies=[];
-let jv9Mode="series";
-
-
-/* ---------- WAIT ---------- */
-
-function jv9Wait(ms){
-  return new Promise(resolve=>setTimeout(resolve,ms));
-}
-
-
-/* ---------- API WITH RETRY ---------- */
-
-async function jv9Fetch(url,tries=4){
-
-  for(let i=0;i<tries;i++){
-
-    try{
-
-      const res=await fetch(url);
-
-      if(res.ok){
-
-        return await res.json();
-
-      }
-
-      /* Rate limit / temporary error */
-
-      if(
-        res.status===429 ||
-        res.status>=500
-      ){
-
-        await jv9Wait(
-          1500*(i+1)
-        );
-
-        continue;
-
-      }
-
-      throw new Error(
-        "HTTP "+res.status
-      );
-
-    }catch(error){
-
-      if(i===tries-1)
-        throw error;
-
-      await jv9Wait(
-        1500*(i+1)
-      );
-
-    }
-
-  }
-
-  throw new Error("API unavailable");
-
-}
-
-
-/* ---------- NORMALIZE ---------- */
-
-function jv9Normalize(a,type){
-
-  return {
-
-    id:a.mal_id,
-
-    title:a.title || "Unknown",
-
-    english:a.title_english || "",
-
-    rank:a.rank || "N/A",
-
-    score:a.score || "N/A",
-
-    year:a.aired?.from
-      ?a.aired.from.substring(0,4)
-      :"",
-
-    episodes:a.episodes || "",
-
-    type:type,
-
-    poster:
-      a.images?.jpg?.large_image_url ||
-      a.images?.jpg?.image_url ||
-      "",
-
-    synopsis:
-      a.synopsis ||
-      "No synopsis available.",
-
-    genres:
-      a.genres?.map(x=>x.name)||[],
-
-    studios:
-      a.studios?.map(x=>x.name)||[]
-
-  };
-
-}
-
-
-/* ---------- LOAD ONE PAGE ---------- */
-
-async function jv9LoadPage(type,page){
-
-  const url=
-    type==="series"
-
-    ?`${JV9_API}/top/anime?type=tv&page=${page}`
-
-    :`${JV9_API}/top/anime?type=movie&page=${page}`;
-
-
-  const data=
-    await jv9Fetch(url);
-
-
-  return data.data || [];
-
-}
-
-
-/* ---------- START ---------- */
-
-async function jv9Start(){
-
-  const grid=
-    document.getElementById("jv9Grid");
-
-  const status=
-    document.getElementById("jv9Status");
-
-
-  grid.innerHTML=`
-
-    <div class="jv9-loading">
-
-      ⏳ Connecting to MyAnimeList database...
-
-      <br><br>
-
-      Please wait...
-
-    </div>
-
-  `;
-
-
-  status.innerHTML=
-    "🔄 Loading Anime Series...";
-
-
-  try{
-
-    jv9Series=[];
-    jv9Movies=[];
-
-
-    /* SERIES PAGE 1 */
-
-    status.innerHTML=
-      "🍥 Loading Series 1–25...";
-
-    let page1=
-      await jv9LoadPage(
-        "series",
-        1
-      );
-
-
-    jv9Series.push(
-      ...page1.map(
-        x=>jv9Normalize(
-          x,
-          "SERIES"
-        )
-      )
-    );
-
-
-    await jv9Wait(1200);
-
-
-    /* SERIES PAGE 2 */
-
-    status.innerHTML=
-      "🍥 Loading Series 26–50...";
-
-    let page2=
-      await jv9LoadPage(
-        "series",
-        2
-      );
-
-
-    jv9Series.push(
-      ...page2.map(
-        x=>jv9Normalize(
-          x,
-          "SERIES"
-        )
-      )
-    );
-
-
-    await jv9Wait(1200);
-
-
-    /* MOVIES PAGE 1 */
-
-    status.innerHTML=
-      "🎬 Loading Movies 1–25...";
-
-    let movie1=
-      await jv9LoadPage(
-        "movies",
-        1
-      );
-
-
-    jv9Movies.push(
-      ...movie1.map(
-        x=>jv9Normalize(
-          x,
-          "MOVIE"
-        )
-      )
-    );
-
-
-    await jv9Wait(1200);
-
-
-    /* MOVIES PAGE 2 */
-
-    status.innerHTML=
-      "🎬 Loading Movies 26–50...";
-
-    let movie2=
-      await jv9LoadPage(
-        "movies",
-        2
-      );
-
-
-    jv9Movies.push(
-      ...movie2.map(
-        x=>jv9Normalize(
-          x,
-          "MOVIE"
-        )
-      )
-    );
-
-
-    /*
-      We take the best 100 available
-      according to MAL rank.
-    */
-
-    jv9Series=
-      jv9Series
-      .filter(x=>x.rank!=="N/A")
-      .sort(
-        (a,b)=>a.rank-b.rank
-      )
-      .slice(0,100);
-
-
-    jv9Movies=
-      jv9Movies
-      .filter(x=>x.rank!=="N/A")
-      .sort(
-        (a,b)=>a.rank-b.rank
-      )
-      .slice(0,100);
-
-
-    status.innerHTML=`
-
-      ✅ <b>DATABASE ONLINE</b>
-
-      &nbsp; • &nbsp;
-
-      🍥 ${jv9Series.length} Series
-
-      &nbsp; • &nbsp;
-
-      🎬 ${jv9Movies.length} Movies
-
-      &nbsp; • &nbsp;
-
-      🖼️ Posters Ready
-
-    `;
-
-
-    jv9Render();
-
-
-  }catch(error){
-
-    console.error(
-      "JARVIS Anime V9:",
-      error
-    );
-
-
-    grid.innerHTML=`
-
-      <div class="jv9-error">
-
-        ❌ <b>Anime API temporarily unavailable.</b>
-
-        <br><br>
-
-        Wait 10–20 seconds and press
-        <b>RELOAD</b>.
-
-        <br><br>
-
-        The website itself is working.
-
-      </div>
-
-    `;
-
-
-    status.innerHTML=
-      "❌ API connection failed — automatic retry was exhausted.";
-
-  }
-
-}
-
-
-/* ---------- ESCAPE ---------- */
-
-function jv9Esc(x){
-
-  return String(x||"")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-/* ---------- FALLBACK ---------- */
-
-function jv9Fallback(title){
-
-  return(
-    "https://placehold.co/500x750/07131a/ffd43b?text="+
-    encodeURIComponent(title)
-  );
-
-}
-
-
-/* ---------- CARD ---------- */
-
-function jv9Card(a){
-
-  const poster=
-    a.poster ||
-    jv9Fallback(a.title);
-
-
-  return`
-
-    <article class="jv9-card">
-
-      <div class="jv9-poster">
-
-        <div class="jv9-rank">
-          #${a.rank}
-        </div>
-
-        <div class="jv9-type">
-          ${a.type}
-        </div>
-
-        <img
-          src="${poster}"
-          alt="${jv9Esc(a.title)}"
-          loading="lazy"
-          onerror="
-            this.onerror=null;
-            this.src='${jv9Fallback(a.title)}';
-          "
-        >
-
-      </div>
-
-
-      <div class="jv9-body">
-
-        <div class="jv9-name">
-
-          ${jv9Esc(a.title)}
-
-        </div>
-
-
-        <div class="jv9-meta">
-
-          ⭐ ${a.score}
-
-          ${a.year?" • 📅 "+a.year:""}
-
-          ${a.episodes?" • 🎞️ "+a.episodes+" eps":""}
-
-        </div>
-
-
-        <div class="jv9-actions">
-
-          <button
-            onclick="jv9Watched('${jv9Esc(a.title)}')"
-          >
-            ✓ WATCH
-          </button>
-
-          <button
-            onclick="jv9Save('${jv9Esc(a.title)}')"
-          >
-            ❤️ SAVE
-          </button>
-
-        </div>
-
-
-        <button
-          class="jv9-details"
-          onclick="jv9Details('${jv9Esc(a.title)}')"
-        >
-          🧠 DETAILS
-        </button>
-
-      </div>
-
-    </article>
-
-  `;
-
-}
-
-
-/* ---------- RENDER ---------- */
-
-function jv9Render(){
-
-  const grid=
-    document.getElementById("jv9Grid");
-
-  if(!grid)return;
-
-
-  const search=
-    (
-      document.getElementById("jv9Search")
-      ?.value||""
-    ).toLowerCase();
-
-
-  let list=[];
-
-
-  if(jv9Mode==="series"){
-
-    list=jv9Series;
-
-  }else if(jv9Mode==="movies"){
-
-    list=jv9Movies;
-
-  }else{
-
-    list=[
-      ...jv9Series,
-      ...jv9Movies
-    ];
-
-  }
-
-
-  list=list.filter(a=>
-    a.title
-    .toLowerCase()
-    .includes(search)
-  );
-
-
-  if(!list.length){
-
-    grid.innerHTML=`
-
-      <div class="jv9-error">
-
-        🍥 Press <b>LOAD TOP 100</b>
-        first.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  grid.innerHTML=
-    list.map(
-      a=>jv9Card(a)
-    ).join("");
-
-}
-
-
-/* ---------- WATCH ---------- */
-
-function jv9Watched(title){
-
-  localStorage.setItem(
-    "jv9_watched_"+title,
-    "1"
-  );
-
-  alert(
-    "✅ Added to watched: "+title
-  );
-
-}
-
-
-/* ---------- SAVE ---------- */
-
-function jv9Save(title){
-
-  localStorage.setItem(
-    "jv9_saved_"+title,
-    "1"
-  );
-
-  alert(
-    "❤️ Saved: "+title
-  );
-
-}
-
-
-/* ---------- DETAILS ---------- */
-
-function jv9Details(title){
-
-  const a=[
-
-    ...jv9Series,
-    ...jv9Movies
-
-  ].find(
-    x=>x.title===title
-  );
-
-
-  if(!a)return;
-
-
-  const genres=
-    a.genres.length
-
-    ?a.genres.map(g=>
-      `<span class="jv9-tag">
-        ${jv9Esc(g)}
-      </span>`
-    ).join("")
-
-    :"N/A";
-
-
-  const studios=
-    a.studios.length
-
-    ?a.studios.map(s=>
-      `<span class="jv9-tag">
-        ${jv9Esc(s)}
-      </span>`
-    ).join("")
-
-    :"N/A";
-
-
-  document.getElementById(
-    "jv9ModalContent"
-  ).innerHTML=`
-
-    <div class="jv9-detail">
-
-      <div>
-
-        <img
-          src="${
-            a.poster ||
-            jv9Fallback(a.title)
-          }"
-        >
-
-      </div>
-
-
-      <div>
-
-        <h2>
-          ${jv9Esc(a.title)}
-        </h2>
-
-
-        ${
-          a.english
-          ?`
-            <span class="jv9-tag">
-              ${jv9Esc(a.english)}
-            </span>
-          `
-          :""
-        }
-
-
-        <p>
-
-          <span class="jv9-tag">
-            🏆 Rank #${a.rank}
-          </span>
-
-          <span class="jv9-tag">
-            ⭐ ${a.score}
-          </span>
-
-          ${
-            a.year
-            ?`
-              <span class="jv9-tag">
-                📅 ${a.year}
-              </span>
-            `
-            :""
-          }
-
-        </p>
-
-
-        <p>
-
-          <b>📖 SYNOPSIS</b>
-
-          <br><br>
-
-          ${jv9Esc(a.synopsis)}
-
-        </p>
-
-
-        <p>
-
-          <b>🎭 GENRES</b>
-
-          <br>
-
-          ${genres}
-
-        </p>
-
-
-        <p>
-
-          <b>🏢 STUDIOS</b>
-
-          <br>
-
-          ${studios}
-
-        </p>
-
-      </div>
-
-    </div>
-
-  `;
-
-
-  document.getElementById(
-    "jv9Modal"
-  ).classList.add("show");
-
-}
-
-
-/* ---------- CLOSE ---------- */
-
-function jv9Close(){
-
-  document.getElementById(
-    "jv9Modal"
-  ).classList.remove("show");
-
-}
-
-
-/* ---------- TAB ---------- */
-
-function jv9Tab(btn){
+/* =====================================================
+   JARVIS V10 — CORE NAVIGATION
+===================================================== */
+
+function jv10Go(page,button){
 
   document
-    .querySelectorAll(
-      "#jarvisAnimeV9 .jv9-tabs button"
-    )
+    .querySelectorAll(".jv10-page")
     .forEach(
       x=>x.classList.remove("active")
     );
 
-  btn.classList.add("active");
+
+  const target =
+    document.getElementById(
+      "jv10-"+page
+    );
+
+
+  if(target){
+
+    target.classList.add("active");
+
+  }
+
+
+  document
+    .querySelectorAll(".jv10-menu button")
+    .forEach(
+      x=>x.classList.remove("active")
+    );
+
+
+  if(button){
+
+    button.classList.add("active");
+
+  }
+
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
 
 }
 
+
+function jv10GoByName(page){
+
+  const buttons =
+    document.querySelectorAll(
+      ".jv10-menu button"
+    );
+
+
+  let targetButton=null;
+
+
+  buttons.forEach(button=>{
+
+    if(
+      button
+      .getAttribute("onclick")
+      ?.includes("'"+page+"'")
+    ){
+
+      targetButton=button;
+
+    }
+
+  });
+
+
+  jv10Go(
+    page,
+    targetButton
+  );
+
+}
+
+
+/* =====================================================
+   GLOBAL SEARCH
+===================================================== */
+
+function jv10Search(value){
+
+  const query =
+    value.trim().toLowerCase();
+
+
+  if(!query){
+
+    return;
+
+  }
+
+
+  /*
+    Part 2 will connect this search
+    to Movies / Anime / TV databases.
+  */
+
+  console.log(
+    "JARVIS SEARCH:",
+    query
+  );
+
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+function jv10Toast(message){
+
+  const toast =
+    document.getElementById(
+      "jv10Toast"
+    );
+
+
+  toast.textContent=message;
+
+  toast.classList.add("show");
+
+
+  setTimeout(()=>{
+
+    toast.classList.remove("show");
+
+  },2200);
+
+}
+
+
+console.log(
+  "⚡ JARVIS V10 CORE ONLINE"
+);
+
 </script>
 
-<!-- =============== END ANIME V9 =============== -->
-
-<!-
 </body>
 </html>
