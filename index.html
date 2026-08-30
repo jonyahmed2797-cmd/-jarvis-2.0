@@ -2057,6 +2057,974 @@ document.addEventListener(
 renderCharacters(JARVIS_CHARACTERS);
 
 </script>
+<!-- =========================================================
+ JARVIS CHARACTER INTELLIGENCE — PART 3
+ FULL PROFILE ENGINE
+========================================================= -->
+
+<style>
+/* ---------- JARVIS PROFILE ENGINE ---------- */
+
+#jvProfileOverlay{
+    position:fixed;
+    inset:0;
+    z-index:999999;
+    display:none;
+    padding:18px;
+    background:rgba(2,3,7,.86);
+    backdrop-filter:blur(18px);
+    overflow-y:auto;
+}
+
+#jvProfileOverlay.jv-open{
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+}
+
+.jv-profile{
+    width:min(1050px,100%);
+    margin:30px auto;
+    position:relative;
+    overflow:hidden;
+    border:1px solid rgba(154,124,255,.28);
+    border-radius:28px;
+    background:
+        radial-gradient(circle at 85% 0%,
+            rgba(154,124,255,.17),
+            transparent 32%),
+        radial-gradient(circle at 0% 40%,
+            rgba(91,223,255,.07),
+            transparent 28%),
+        #090c13;
+    box-shadow:0 35px 120px rgba(0,0,0,.75);
+}
+
+.jv-close{
+    position:absolute;
+    top:18px;
+    right:18px;
+    z-index:20;
+    width:42px;
+    height:42px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:50%;
+    background:rgba(0,0,0,.45);
+    color:#fff;
+    font-size:23px;
+    cursor:pointer;
+}
+
+.jv-close:hover{
+    background:#9a7cff;
+}
+
+.jv-hero{
+    display:grid;
+    grid-template-columns:350px 1fr;
+    gap:34px;
+    padding:34px;
+}
+
+.jv-poster{
+    height:470px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:22px;
+    background:#10131b;
+}
+
+.jv-poster img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.jv-kicker{
+    color:#9a7cff;
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:2.5px;
+}
+
+.jv-name{
+    margin-top:10px;
+    color:#fff;
+    font-family:Orbitron,Inter,sans-serif;
+    font-size:clamp(30px,5vw,54px);
+    line-height:1.05;
+}
+
+.jv-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:14px;
+}
+
+.jv-tag{
+    padding:7px 10px;
+    border:1px solid rgba(255,255,255,.09);
+    border-radius:100px;
+    background:rgba(255,255,255,.035);
+    color:#a6adba;
+    font-size:8px;
+    font-weight:800;
+    letter-spacing:.8px;
+}
+
+.jv-intro{
+    margin-top:24px;
+    color:#9da5b4;
+    font-size:12px;
+    line-height:2;
+}
+
+.jv-power-title{
+    margin-top:28px;
+    color:#fff;
+    font-family:Orbitron,sans-serif;
+    font-size:10px;
+    letter-spacing:1.5px;
+}
+
+.jv-power-bar{
+    margin-top:12px;
+    height:8px;
+    overflow:hidden;
+    border-radius:20px;
+    background:#1b1f29;
+}
+
+.jv-power-bar span{
+    display:block;
+    width:92%;
+    height:100%;
+    border-radius:20px;
+    background:linear-gradient(90deg,#9a7cff,#5bdfff);
+}
+
+.jv-section{
+    padding:0 34px 28px;
+}
+
+.jv-section-title{
+    margin-bottom:13px;
+    padding-bottom:10px;
+    border-bottom:1px solid rgba(255,255,255,.07);
+    color:#fff;
+    font-family:Orbitron,sans-serif;
+    font-size:13px;
+    letter-spacing:1px;
+}
+
+.jv-section-title span{
+    color:#9a7cff;
+}
+
+.jv-text{
+    color:#9aa2b0;
+    font-size:11px;
+    line-height:2;
+}
+
+.jv-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.jv-box{
+    padding:18px;
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:16px;
+    background:rgba(255,255,255,.025);
+}
+
+.jv-box h4{
+    color:#9a7cff;
+    font-family:Orbitron,sans-serif;
+    font-size:9px;
+    letter-spacing:1px;
+}
+
+.jv-box p{
+    margin-top:8px;
+    color:#969eac;
+    font-size:10px;
+    line-height:1.8;
+}
+
+.jv-stat-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+}
+
+.jv-stat{
+    padding:15px;
+    border:1px solid rgba(255,255,255,.07);
+    border-radius:14px;
+    background:rgba(255,255,255,.025);
+}
+
+.jv-stat-name{
+    color:#697282;
+    font-size:7px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.jv-stat-number{
+    margin-top:7px;
+    color:#fff;
+    font-family:Orbitron,sans-serif;
+    font-size:17px;
+}
+
+.jv-stat-line{
+    height:4px;
+    margin-top:9px;
+    overflow:hidden;
+    border-radius:20px;
+    background:#1a1e27;
+}
+
+.jv-stat-line span{
+    display:block;
+    height:100%;
+    background:linear-gradient(90deg,#9a7cff,#5bdfff);
+}
+
+.jv-list{
+    display:grid;
+    gap:9px;
+}
+
+.jv-list-item{
+    padding:13px 15px;
+    border-left:2px solid #9a7cff;
+    border-radius:0 10px 10px 0;
+    background:rgba(154,124,255,.045);
+    color:#9ca4b2;
+    font-size:10px;
+    line-height:1.7;
+}
+
+.jv-footer{
+    padding:25px 34px;
+    border-top:1px solid rgba(255,255,255,.07);
+    color:#555e6e;
+    text-align:center;
+    font-size:7px;
+    font-weight:800;
+    letter-spacing:1.5px;
+}
+
+@media(max-width:760px){
+
+    #jvProfileOverlay{
+        padding:8px;
+    }
+
+    .jv-profile{
+        margin:10px auto;
+        border-radius:20px;
+    }
+
+    .jv-hero{
+        grid-template-columns:1fr;
+        padding:20px;
+    }
+
+    .jv-poster{
+        height:360px;
+    }
+
+    .jv-section{
+        padding:0 20px 22px;
+    }
+
+    .jv-grid{
+        grid-template-columns:1fr;
+    }
+
+    .jv-stat-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .jv-footer{
+        padding:20px;
+    }
+}
+</style>
+
+
+<!-- =========================================================
+ PROFILE MODAL
+========================================================= -->
+
+<div id="jvProfileOverlay">
+
+<div class="jv-profile">
+
+<button class="jv-close" id="jvCloseProfile">×</button>
+
+<div class="jv-hero">
+
+<div class="jv-poster">
+<img id="jvProfileImage" src="" alt="">
+</div>
+
+<div>
+
+<div class="jv-kicker" id="jvProfileType">
+CHARACTER INTELLIGENCE
+</div>
+
+<h1 class="jv-name" id="jvProfileName">
+CHARACTER
+</h1>
+
+<div class="jv-meta">
+
+<span class="jv-tag" id="jvProfileUniverse">
+UNIVERSE
+</span>
+
+<span class="jv-tag" id="jvProfileCategory">
+CATEGORY
+</span>
+
+<span class="jv-tag" id="jvProfileTier">
+POWER TIER
+</span>
+
+</div>
+
+<p class="jv-intro" id="jvProfileIntro"></p>
+
+<div class="jv-power-title">
+OVERALL POWER INDEX
+</div>
+
+<div class="jv-power-bar">
+<span id="jvOverallPower"></span>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- BASIC INFORMATION -->
+
+<div class="jv-section">
+
+<div class="jv-section-title">
+<span>01</span> BASIC INFORMATION
+</div>
+
+<div class="jv-grid">
+
+<div class="jv-box">
+<h4>IDENTITY</h4>
+<p id="jvIdentity"></p>
+</div>
+
+<div class="jv-box">
+<h4>ORIGIN</h4>
+<p id="jvOrigin"></p>
+</div>
+
+<div class="jv-box">
+<h4>ROLE</h4>
+<p id="jvRole"></p>
+</div>
+
+<div class="jv-box">
+<h4>ALIGNMENT</h4>
+<p id="jvAlignment"></p>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- POWER STATS -->
+
+<div class="jv-section">
+
+<div class="jv-section-title">
+<span>02</span> POWER ATTRIBUTES
+</div>
+
+<div class="jv-stat-grid" id="jvStats"></div>
+
+</div>
+
+
+<!-- HISTORY -->
+
+<div class="jv-section">
+
+<div class="jv-section-title">
+<span>03</span> HISTORY & ORIGIN
+</div>
+
+<p class="jv-text" id="jvHistory"></p>
+
+</div>
+
+
+<!-- POWERS -->
+
+<div class="jv-section">
+
+<div class="jv-section-title">
+<span>04</span> POWERS & ABILITIES
+</div>
+
+<div class="jv-list" id="jvPowers"></div>
+
+</div>
+
+
+<!-- FORMS -->
+
+<div class="jv-section">
+
+<div class="jv-section-title">
+<span>05</span> FORMS & TRANSFORMATIONS
+</div>
+
+<div class="jv-list" id="jvForms"></div>
+
+</div>
+
+
+<!-- WEAPONS -->
+
+<div class="jv-section">
+
+<div class="jv-section-title">
+<span>06</span> WEAPONS & EQUIPMENT
+</div>
+
+<div class="jv-list" id="jvWeapons"></div>
+
+</div>
+
+
+<!-- FEATS -->
+
+<div class="jv-section">
+
+<div class="jv-section-title">
+<span>07</span> MAJOR FEATS
+</div>
+
+<div class="jv-list" id="jvFeats"></div>
+
+</div>
+
+
+<!-- WEAKNESSES -->
+
+<div class="jv-section">
+
+<div class="jv-section-title">
+<span>08</span> WEAKNESSES & LIMITATIONS
+</div>
+
+<p class="jv-text" id="jvWeakness"></p>
+
+</div>
+
+
+<!-- RELATIONSHIPS -->
+
+<div class="jv-section">
+
+<div class="jv-section-title">
+<span>09</span> ALLIES & ENEMIES
+</div>
+
+<div class="jv-grid">
+
+<div class="jv-box">
+<h4>ALLIES</h4>
+<p id="jvAllies"></p>
+</div>
+
+<div class="jv-box">
+<h4>ENEMIES</h4>
+<p id="jvEnemies"></p>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="jv-footer">
+JARVIS CHARACTER INTELLIGENCE SYSTEM • PROFILE DATABASE V1
+</div>
+
+</div>
+</div>
+
+
+<script>
+/* =========================================================
+ CHARACTER PROFILE DATA
+========================================================= */
+
+const JARVIS_PROFILES = {
+
+Thor:{
+type:"HERO • GOD",
+universe:"Marvel",
+category:"HERO",
+tier:"GOD TIER",
+power:96,
+
+image:"https://upload.wikimedia.org/wikipedia/en/1/17/Thor_by_Olivier_Coipel.png",
+
+intro:"Thor হল Asgard-এর রাজপুত্র, Odin-এর পুত্র এবং বজ্রের দেবতা। তার অসাধারণ শক্তি, durability, combat skill এবং mystical abilities তাকে Marvel-এর অন্যতম শক্তিশালী hero করে তুলেছে।",
+
+identity:"Thor Odinson — Asgardian God of Thunder।",
+
+origin:"Thor Asgard-এ জন্মগ্রহণ করেন এবং রাজপরিবারের উত্তরাধিকারী হিসেবে বড় হন। তার জীবনের একটি গুরুত্বপূর্ণ পর্যায়ে Odin তাকে নিজের ক্ষমতার প্রকৃত অর্থ বুঝতে Earth-এ পাঠান। সেখান থেকে Thor-এর চরিত্রে দায়িত্ববোধ, আত্মত্যাগ এবং leadership আরও গভীর হয়।",
+
+role:"Hero, Warrior, King এবং protector of the Nine Realms।",
+
+alignment:"Heroic / Protector",
+
+history:"Thor-এর ইতিহাস Asgard, Earth এবং Nine Realms-এর বহু সংঘাতের সঙ্গে যুক্ত। বিভিন্ন যুদ্ধে সে Frost Giants, Dark Elves, cosmic threats এবং অন্যান্য শক্তিশালী শত্রুর বিরুদ্ধে লড়েছে। সময়ের সঙ্গে Thor শুধু একজন শক্তিশালী warrior নয়, বরং একজন leader হিসেবেও নিজেকে প্রমাণ করেছে। তার সবচেয়ে বড় বৈশিষ্ট্য হলো নিজের ভুল থেকে শেখা এবং অন্যদের জন্য আত্মত্যাগ করার ক্ষমতা।",
+
+stats:{
+Strength:98,
+Speed:82,
+Durability:99,
+Intelligence:80,
+Combat:96,
+Energy:97
+},
+
+powers:[
+"অসাধারণ Asgardian physical strength ও durability।",
+"Lightning এবং thunder manipulation।",
+"বিশাল দূরত্ব অতিক্রম করার ক্ষমতা এবং aerial mobility।",
+"অত্যন্ত উন্নত hand-to-hand ও weapon combat skill।",
+"Cosmic ও mystical energy-এর বিরুদ্ধে লড়াই করার সক্ষমতা।",
+"অত্যন্ত উচ্চ regeneration এবং resistance।"
+],
+
+forms:[
+"Base Thor",
+"Warrior Thor",
+"King Thor",
+"Rune King Thor",
+"Old King Thor",
+"Herald of Galactus Thor"
+],
+
+weapons:[
+"Mjolnir — enchanted hammer।",
+"Stormbreaker — অত্যন্ত শক্তিশালী mystical weapon।",
+"Various Asgardian weapons ও armor।"
+],
+
+feats:[
+"অসংখ্য Asgardian ও cosmic-level threat-এর বিরুদ্ধে যুদ্ধ।",
+"অত্যন্ত শক্তিশালী beings-এর সঙ্গে সরাসরি physical combat।",
+"Massive lightning এবং energy attacks ব্যবহার।",
+"Nine Realms রক্ষায় গুরুত্বপূর্ণ ভূমিকা।",
+"বিভিন্ন cosmic-scale যুদ্ধ থেকে বেঁচে ফিরে আসা।"
+],
+
+weakness:"Thor অত্যন্ত শক্তিশালী হলেও সব version একই level-এর নয়। কিছু magical, cosmic বা reality-altering ক্ষমতা তার জন্য বড় হুমকি হতে পারে। এছাড়া তার নিজের emotional decisions এবং অতিরিক্ত confidence কখনও কখনও সমস্যা তৈরি করে।",
+
+allies:"Avengers, Odin, Loki-এর বিভিন্ন version, Valkyrie, Sif এবং অন্যান্য Asgardians।",
+
+enemies:"Loki, Thanos, Hela, Gorr, Frost Giants এবং বিভিন্ন cosmic threats।"
+},
+
+
+Batman:{
+type:"HERO • VIGILANTE",
+universe:"DC",
+category:"HERO",
+tier:"HUMAN+",
+power:82,
+
+image:"https://upload.wikimedia.org/wikipedia/en/8/87/Batman_DC_Comics.png",
+
+intro:"Batman হল Bruce Wayne-এর vigilante identity। তার কোনো traditional superpower নেই; intelligence, preparation, martial arts, detective skill এবং technology-ই তার প্রধান অস্ত্র।",
+
+identity:"Bruce Wayne — Gotham City-এর billionaire এবং master detective।",
+
+origin:"শৈশবে Bruce Wayne তার বাবা-মাকে হারানোর পর crime-এর বিরুদ্ধে লড়াই করার সিদ্ধান্ত নেন। দীর্ঘ training-এর পর তিনি Batman identity গ্রহণ করেন এবং Gotham City-কে নিজের battlefield হিসেবে বেছে নেন।",
+
+role:"Vigilante, Detective, Strategist এবং Gotham protector।",
+
+alignment:"Heroic / Vigilante",
+
+history:"Bruce Wayne বহু বছর ধরে physical এবং mental training করেন। তিনি বিভিন্ন martial arts, science, investigation এবং tactical strategy শেখেন। Batman-এর সবচেয়ে বড় শক্তি হলো preparation—তার কাছে এমন পরিকল্পনা থাকে যার মাধ্যমে অনেক বেশি শক্তিশালী opponent-কেও মোকাবিলা করা সম্ভব।",
+
+stats:{
+Strength:70,
+Speed:68,
+Durability:60,
+Intelligence:99,
+Combat:100,
+Energy:35
+},
+
+powers:[
+"Peak human physical conditioning।",
+"Master-level martial arts।",
+"Exceptional detective এবং forensic skills।",
+"Advanced tactical planning।",
+"Stealth ও infiltration।",
+"Advanced technology এবং specialized gadgets।"
+],
+
+forms:[
+"Batman",
+"Armored Batman",
+"Hellbat Armor",
+"Justice Buster",
+"Various alternate Batman versions"
+],
+
+weapons:[
+"Batarang",
+"Grapnel Gun",
+"Utility Belt",
+"Advanced Batsuits",
+"Specialized vehicles"
+],
+
+feats:[
+"অসংখ্য superhuman criminal ও metahuman-এর বিরুদ্ধে যুদ্ধ।",
+"বিশাল criminal organizations ভেঙে দেওয়া।",
+"অত্যন্ত শক্তিশালী opponent-এর বিরুদ্ধে preparation ব্যবহার।",
+"Justice League-এর সঙ্গে cosmic threats মোকাবিলা।"
+],
+
+weakness:"Batman মূলত একজন human। তার body অসীম durability বা regeneration রাখে না। Superhuman opponent-এর বিরুদ্ধে তাকে strategy, equipment এবং preparation-এর ওপর বেশি নির্ভর করতে হয়।",
+
+allies:"Superman, Wonder Woman, Nightwing, Robin, Batgirl এবং Justice League।",
+
+enemies:"Joker, Bane, Ra's al Ghul, Riddler, Two-Face এবং অন্যান্য Gotham villains।"
+},
+
+
+Goku:{
+type:"HERO • SAIYAN",
+universe:"Anime",
+category:"HERO",
+tier:"COSMIC",
+power:99,
+
+image:"https://upload.wikimedia.org/wikipedia/en/7/74/Dragon_Ball_Super_Goku.png",
+
+intro:"Goku একজন Saiyan warrior, যিনি training, battle এবং transformation-এর মাধ্যমে ক্রমাগত নিজের শক্তি বৃদ্ধি করেন। তার martial arts skill এবং Ki manipulation তাকে অত্যন্ত শক্তিশালী যোদ্ধায় পরিণত করেছে।",
+
+identity:"Son Goku — Saiyan martial artist এবং Earth-এর protector।",
+
+origin:"Goku একজন Saiyan হিসেবে জন্মগ্রহণ করেন এবং ছোটবেলায় Earth-এ এসে বড় হন। তার martial arts journey তাকে Dragon Ball universe-এর সবচেয়ে শক্তিশালী যোদ্ধাদের একজন করে তোলে।",
+
+role:"Martial Artist, Warrior এবং Earth/Universe protector।",
+
+alignment:"Heroic",
+
+history:"Goku-এর জীবনের সবচেয়ে গুরুত্বপূর্ণ বৈশিষ্ট্য হলো training এবং self-improvement। প্রতিটি বড় battle-এর পর সে আরও শক্তিশালী হওয়ার চেষ্টা করে। বিভিন্ন tournament, planetary threat এবং universal conflict-এর মধ্য দিয়ে তার power ক্রমাগত বৃদ্ধি পেয়েছে।",
+
+stats:{
+Strength:100,
+Speed:100,
+Durability:98,
+Intelligence:82,
+Combat:100,
+Energy:100
+},
+
+powers:[
+"Ki manipulation ও energy projection।",
+"Superhuman strength এবং speed।",
+"Extreme martial arts mastery।",
+"Teleportation techniques।",
+"Rapid power growth through training।",
+"Multiple Saiyan transformations।"
+],
+
+forms:[
+"Base Goku",
+"Super Saiyan",
+"Super Saiyan 2",
+"Super Saiyan 3",
+"Super Saiyan God",
+"Super Saiyan Blue",
+"Ultra Instinct"
+],
+
+weapons:[
+"Power Pole",
+"Various martial arts techniques",
+"Ki-based attacks"
+],
+
+feats:[
+"অসংখ্য planetary এবং universal-level threat মোকাবিলা।",
+"অত্যন্ত শক্তিশালী martial artists-এর বিরুদ্ধে জয়।",
+"Multiple transformations-এর মাধ্যমে নিজের power বৃদ্ধি।",
+"Universe-level battles-এ অংশগ্রহণ।"
+],
+
+weakness:"Goku সাধারণত অত্যন্ত durable হলেও তার body battle-এর damage নিতে পারে। এছাড়া সে প্রায়ই opponent-কে সুযোগ দেওয়ার কারণে unnecessary risk নেয়।",
+
+allies:"Vegeta, Gohan, Piccolo, Krillin, Bulma এবং অন্যান্য Z Fighters।",
+
+enemies:"Frieza, Cell, Majin Buu, বিভিন্ন Gods ও powerful warriors।"
+}
+
+};
+
+
+/* =========================================================
+ PROFILE ENGINE
+========================================================= */
+
+(function(){
+
+const overlay=document.getElementById("jvProfileOverlay");
+
+if(!overlay) return;
+
+function $(id){
+    return document.getElementById(id);
+}
+
+function listHTML(items){
+
+    return items.map(item => `
+        <div class="jv-list-item">
+            ${item}
+        </div>
+    `).join("");
+
+}
+
+function openProfile(name){
+
+    const data=JARVIS_PROFILES[name];
+
+    if(!data){
+        console.warn("JARVIS profile not found:",name);
+        return;
+    }
+
+    $("jvProfileImage").src=data.image;
+    $("jvProfileImage").alt=name;
+
+    $("jvProfileType").textContent=data.type;
+    $("jvProfileName").textContent=name;
+    $("jvProfileUniverse").textContent=data.universe;
+    $("jvProfileCategory").textContent=data.category;
+    $("jvProfileTier").textContent=data.tier;
+    $("jvProfileIntro").textContent=data.intro;
+
+    $("jvOverallPower").style.width=data.power+"%";
+
+    $("jvIdentity").textContent=data.identity;
+    $("jvOrigin").textContent=data.origin;
+    $("jvRole").textContent=data.role;
+    $("jvAlignment").textContent=data.alignment;
+    $("jvHistory").textContent=data.history;
+    $("jvWeakness").textContent=data.weakness;
+    $("jvAllies").textContent=data.allies;
+    $("jvEnemies").textContent=data.enemies;
+
+    const stats=$("jvStats");
+
+    stats.innerHTML="";
+
+    Object.entries(data.stats).forEach(([key,value])=>{
+
+        stats.innerHTML+=`
+
+            <div class="jv-stat">
+
+                <div class="jv-stat-name">
+                    ${key}
+                </div>
+
+                <div class="jv-stat-number">
+                    ${value}/100
+                </div>
+
+                <div class="jv-stat-line">
+                    <span style="width:${value}%"></span>
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+    $("jvPowers").innerHTML=listHTML(data.powers);
+    $("jvForms").innerHTML=listHTML(data.forms);
+    $("jvWeapons").innerHTML=listHTML(data.weapons);
+    $("jvFeats").innerHTML=listHTML(data.feats);
+
+    overlay.classList.add("jv-open");
+
+    document.body.style.overflow="hidden";
+
+}
+
+
+function closeProfile(){
+
+    overlay.classList.remove("jv-open");
+
+    document.body.style.overflow="";
+
+}
+
+
+/* ---------- CLOSE ---------- */
+
+$("jvCloseProfile").addEventListener(
+    "click",
+    closeProfile
+);
+
+overlay.addEventListener("click",function(e){
+
+    if(e.target===overlay){
+        closeProfile();
+    }
+
+});
+
+document.addEventListener("keydown",function(e){
+
+    if(e.key==="Escape"){
+        closeProfile();
+    }
+
+});
+
+
+/* =========================================================
+ CONNECT EXISTING CHARACTER CARDS
+========================================================= */
+
+function connectCards(){
+
+    const cards=document.querySelectorAll(
+        ".character-placeholder"
+    );
+
+    cards.forEach(card=>{
+
+        if(card.dataset.jvConnected==="true")
+            return;
+
+        card.dataset.jvConnected="true";
+
+        const nameElement=
+            card.querySelector(".character-name");
+
+        if(!nameElement)
+            return;
+
+        const name=
+            nameElement.textContent.trim();
+
+        /* Exact profile */
+
+        let profileName=
+            Object.keys(JARVIS_PROFILES).find(
+                key =>
+                    key.toLowerCase() ===
+                    name.toLowerCase()
+            );
+
+        /* Common aliases */
+
+        if(name.toLowerCase()==="iron man"){
+            profileName=null;
+        }
+
+        if(profileName){
+
+            card.style.cursor="pointer";
+
+            card.addEventListener(
+                "click",
+                function(e){
+
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    openProfile(profileName);
+
+                },
+                true
+            );
+
+        }
+
+    });
+
+}
+
+
+/* Initial connection */
+
+connectCards();
+
+
+/* Re-check dynamically generated cards */
+
+const observer=
+    new MutationObserver(function(){
+
+        connectCards();
+
+    });
+
+
+const database=
+    document.querySelector(".database-preview");
+
+if(database){
+
+    observer.observe(
+        database,
+        {
+            childList:true,
+            subtree:true
+        }
+    );
+
+}
+
+
+/* Make available for future cards */
+
+window.JARVIS_OPEN_PROFILE=openProfile;
+
+})();
+
+</script>
 
 </body>
 </html>
