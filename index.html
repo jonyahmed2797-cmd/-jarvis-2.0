@@ -3,196 +3,750 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#06070b">
-<title>JARVIS — Character Intelligence System V1</title>
+<meta name="theme-color" content="#080b12">
+
+<title>JARVIS Social V1.1</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap');
 
 :root{
---bg:#06070b;--bg2:#0a0c12;--card:#0d1018;--line:rgba(255,255,255,.09);
---text:#f5f7fb;--muted:#7d8595;--purple:#9a7cff;--cyan:#5bdfff;
---green:#62e6a5;--red:#ff657d;
+ --bg:#080b12;
+ --card:#10151f;
+ --card2:#151b27;
+ --line:rgba(255,255,255,.08);
+ --text:#f5f7fb;
+ --muted:#8992a3;
+ --accent:#7c6cff;
+ --accent2:#55dfff;
+ --green:#55e39b;
+ --red:#ff6078;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+
+.light{
+ --bg:#f0f2f5;
+ --card:#fff;
+ --card2:#f5f6f8;
+ --line:rgba(0,0,0,.1);
+ --text:#15171a;
+ --muted:#657080;
+}
+
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+}
+
+html{
+ scroll-behavior:smooth;
+}
+
 body{
-background:
-radial-gradient(circle at 10% 10%,rgba(154,124,255,.13),transparent 28%),
-radial-gradient(circle at 90% 15%,rgba(91,223,255,.07),transparent 25%),var(--bg);
-color:var(--text);font-family:Inter,Arial,sans-serif;overflow-x:hidden
+ background:var(--bg);
+ color:var(--text);
+ font-family:Inter,Arial,sans-serif;
+ transition:.25s;
 }
-body:before{
-content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.18;
-background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
-linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-background-size:70px 70px
-}
-a{text-decoration:none;color:inherit}button,input{font:inherit}button{cursor:pointer}
-.container{width:min(1200px,calc(100% - 30px));margin:auto}
 
-/* NAV */
+button,input,textarea{
+ font:inherit;
+}
+
+button{
+ cursor:pointer;
+}
+
+button,input,textarea{
+ outline:none;
+}
+
 .navbar{
-position:fixed;top:0;left:0;right:0;height:70px;z-index:1000;
-background:rgba(6,7,11,.75);backdrop-filter:blur(20px);
-border-bottom:1px solid var(--line)
-}
-.nav-inner{height:100%;display:flex;align-items:center;justify-content:space-between}
-.logo{font-family:Orbitron;font-size:20px;font-weight:900;letter-spacing:4px}
-.logo span,.section-title span{color:var(--purple)}
-.nav-links{display:flex;gap:25px}
-.nav-links a{font-size:9px;font-weight:800;letter-spacing:1.5px;color:#858d9c}
-.nav-links a:hover{color:white}
-.status{font-size:8px;color:#777f8e;font-weight:800;letter-spacing:1px}
-.dot{
-display:inline-block;width:7px;height:7px;border-radius:50%;
-background:var(--green);box-shadow:0 0 12px var(--green);margin-right:7px
+ position:fixed;
+ top:0;
+ left:0;
+ right:0;
+ height:64px;
+ z-index:1000;
+ background:rgba(8,11,18,.88);
+ backdrop-filter:blur(18px);
+ border-bottom:1px solid var(--line);
 }
 
-/* HERO */
-.hero{min-height:760px;padding-top:70px;display:flex;align-items:center}
-.hero-content{padding:90px 0;max-width:850px}
-.kicker,.section-kicker{color:var(--purple);font-size:9px;font-weight:800;letter-spacing:3px}
-.hero h1{
-font-family:Orbitron;font-size:clamp(42px,7vw,82px);line-height:1.02;
-letter-spacing:-4px;margin-top:20px
+.light .navbar{
+ background:rgba(255,255,255,.9);
 }
-.gradient{
-background:linear-gradient(90deg,#fff,#b8a8ff,#64e5ff);
--webkit-background-clip:text;background-clip:text;color:transparent
-}
-.hero p{max-width:680px;color:#858d9c;font-size:13px;line-height:1.9;margin-top:25px}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:32px}
-.btn{
-border:1px solid var(--line);background:#11141c;color:white;border-radius:10px;
-padding:14px 19px;font-size:9px;font-weight:800;letter-spacing:1px;transition:.25s
-}
-.btn:hover{transform:translateY(-3px);border-color:rgba(154,124,255,.5)}
-.primary{background:linear-gradient(135deg,var(--purple),#6e54d7);border:0}
-.stats{display:flex;gap:55px;margin-top:60px}
-.stat strong{font-family:Orbitron;font-size:23px}
-.stat span{display:block;color:#626a79;font-size:7px;font-weight:800;letter-spacing:1.5px;margin-top:6px}
 
-/* SECTION */
-.section{padding:100px 0}
-.head{text-align:center;max-width:760px;margin:auto}
-.section-title{font-family:Orbitron;font-size:clamp(29px,5vw,48px);letter-spacing:-2px;margin-top:12px}
-.description{color:#767e8c;font-size:11px;line-height:1.8;margin-top:14px}
+.nav-inner{
+ height:100%;
+ max-width:1400px;
+ margin:auto;
+ padding:0 18px;
+ display:flex;
+ align-items:center;
+ gap:18px;
+}
 
-/* SEARCH */
-.search-area{max-width:800px;margin:38px auto 0}
+.logo{
+ color:var(--text);
+ font-family:Orbitron;
+ font-weight:900;
+ letter-spacing:3px;
+ font-size:20px;
+ text-decoration:none;
+}
+
+.logo span{
+ color:var(--accent);
+}
+
 .search{
-height:58px;border:1px solid var(--line);border-radius:15px;
-display:flex;align-items:center;padding:0 18px;background:rgba(255,255,255,.025)
+ width:270px;
+ height:40px;
+ border:1px solid var(--line);
+ border-radius:22px;
+ background:var(--card);
+ display:flex;
+ align-items:center;
+ padding:0 14px;
 }
-.search:focus-within{border-color:rgba(154,124,255,.55);box-shadow:0 0 30px rgba(154,124,255,.08)}
-.search span{font-size:20px;color:#777}
-.search input{width:100%;border:0;outline:0;background:transparent;color:white;padding-left:12px;font-size:12px}
-.search input::placeholder{color:#5e6674}
-.filters{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;margin-top:16px}
-.filter{
-border:1px solid var(--line);background:rgba(255,255,255,.025);color:#7c8492;
-border-radius:50px;padding:9px 14px;font-size:8px;font-weight:800;letter-spacing:1px
-}
-.filter.active,.filter:hover{color:white;border-color:rgba(154,124,255,.5);background:rgba(154,124,255,.12)}
 
-/* CHARACTERS */
-.grid{
-display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-top:48px
+.search span{
+ color:var(--muted);
+ margin-right:8px;
 }
-.card{
-position:relative;min-height:300px;overflow:hidden;border:1px solid var(--line);
-border-radius:20px;background:linear-gradient(145deg,#11151e,#080a0f);
-transition:.3s;cursor:pointer
+
+.search input{
+ width:100%;
+ border:0;
+ background:transparent;
+ color:var(--text);
+ font-size:11px;
 }
-.card:hover{transform:translateY(-7px);border-color:rgba(154,124,255,.4);box-shadow:0 25px 60px #0008}
-.card-top{
-height:185px;display:flex;align-items:center;justify-content:center;
-background:radial-gradient(circle,rgba(154,124,255,.14),transparent 60%)
+
+.nav-center{
+ margin:auto;
+ display:flex;
+ gap:5px;
 }
+
+.nav-item{
+ width:55px;
+ height:43px;
+ border:0;
+ background:transparent;
+ color:var(--muted);
+ border-radius:10px;
+ font-size:19px;
+}
+
+.nav-item:hover,
+.nav-item.active{
+ background:var(--card2);
+ color:var(--text);
+}
+
+.nav-right{
+ display:flex;
+ align-items:center;
+ gap:8px;
+}
+
+.circle-btn{
+ width:39px;
+ height:39px;
+ border-radius:50%;
+ border:1px solid var(--line);
+ background:var(--card);
+ color:var(--text);
+}
+
 .avatar{
-width:105px;height:105px;border-radius:50%;display:flex;align-items:center;
-justify-content:center;border:1px solid rgba(154,124,255,.3);
-font-family:Orbitron;font-size:14px;color:#b9adff;
-box-shadow:0 0 40px rgba(154,124,255,.12)
+ width:39px;
+ height:39px;
+ border-radius:50%;
+ background:linear-gradient(135deg,var(--accent),var(--accent2));
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ color:white;
+ font-weight:800;
+ flex-shrink:0;
 }
-.card-info{padding:18px}
-.tag{font-size:7px;font-weight:800;letter-spacing:1.5px;color:var(--purple)}
-.card h3{font-family:Orbitron;font-size:16px;margin-top:6px}
-.card small{display:block;color:#707887;font-size:8px;margin-top:5px}
-.power{
-height:4px;background:#1a1d25;border-radius:10px;margin-top:13px;overflow:hidden
-}
-.power i{display:block;height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan))}
 
-/* MODAL */
-.modal{
-position:fixed;inset:0;background:rgba(0,0,0,.78);backdrop-filter:blur(12px);
-z-index:2000;display:none;align-items:center;justify-content:center;padding:18px
+.page{
+ max-width:1400px;
+ margin:auto;
+ padding:86px 18px 50px;
+ display:grid;
+ grid-template-columns:250px minmax(400px,650px) 280px;
+ gap:22px;
 }
-.modal.show{display:flex}
-.modal-box{
-width:min(850px,100%);max-height:90vh;overflow:auto;background:#0c0f16;
-border:1px solid rgba(154,124,255,.3);border-radius:22px;
-box-shadow:0 30px 100px #000;padding:30px;position:relative
-}
-.close{
-position:absolute;right:18px;top:15px;background:#171b24;border:1px solid var(--line);
-color:white;width:35px;height:35px;border-radius:50%;font-size:18px
-}
-.profile-title{padding-right:45px}
-.profile-title .tag{font-size:8px}
-.profile-title h2{font-family:Orbitron;font-size:30px;margin-top:8px}
-.profile-sub{color:#737b89;font-size:10px;margin-top:6px}
-.profile-power{margin-top:22px}
-.bar{height:7px;background:#191c24;border-radius:20px;overflow:hidden}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan))}
-.profile-grid{
-display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:25px
-}
-.info{
-border:1px solid var(--line);border-radius:14px;padding:17px;background:rgba(255,255,255,.025)
-}
-.info h4{font-family:Orbitron;font-size:9px;color:var(--purple);letter-spacing:1px}
-.info p{font-size:10px;line-height:1.8;color:#858d9c;margin-top:9px}
 
-/* POWER */
-.power-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:45px}
-.power-card{
-border:1px solid var(--line);border-radius:18px;padding:23px;background:rgba(255,255,255,.025)
+.sidebar,.rightbar{
+ position:sticky;
+ top:84px;
+ height:max-content;
 }
-.power-card b{font-family:Orbitron;color:#505866;font-size:9px}
-.power-card h3{font-family:Orbitron;font-size:14px;margin-top:20px}
-.power-card p{font-size:10px;line-height:1.7;color:#737b89;margin-top:8px}
 
-/* UNIVERSE */
-.universe-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:45px}
-.universe{
-padding:28px;min-height:190px;border:1px solid var(--line);border-radius:20px;
-background:linear-gradient(145deg,#11151e,#080a0f)
+.side-profile,
+.side-menu,
+.widget,
+.composer,
+.post{
+ border:1px solid var(--line);
+ background:var(--card);
+ border-radius:16px;
 }
-.universe h3{font-family:Orbitron;margin-top:20px}
-.universe p{font-size:10px;line-height:1.7;color:#737b89;margin-top:8px}
 
-/* FOOTER */
-footer{text-align:center;padding:50px 0;border-top:1px solid var(--line)}
-.footer-logo{font-family:Orbitron;font-weight:800;letter-spacing:3px}
-footer p{font-size:8px;color:#5f6674;margin-top:8px}
-
-@media(max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:800px){
-.nav-links,.status{display:none}
-.grid{grid-template-columns:repeat(2,1fr)}
-.power-grid,.universe-grid{grid-template-columns:1fr 1fr}
-.profile-grid{grid-template-columns:1fr}
+.side-profile{
+ padding:15px;
+ margin-bottom:12px;
 }
-@media(max-width:520px){
-.container{width:calc(100% - 26px)}
-.hero{min-height:700px}
-.hero h1{letter-spacing:-2px}
-.stats{gap:25px;flex-wrap:wrap}
-.grid,.power-grid,.universe-grid{grid-template-columns:1fr}
-.section{padding:75px 0}
+
+.side-profile-top{
+ display:flex;
+ align-items:center;
+ gap:10px;
+}
+
+.side-profile strong{
+ font-size:11px;
+}
+
+.side-profile small{
+ display:block;
+ color:var(--muted);
+ font-size:8px;
+ margin-top:3px;
+}
+
+.side-menu{
+ overflow:hidden;
+}
+
+.side-menu button{
+ width:100%;
+ height:48px;
+ border:0;
+ background:transparent;
+ color:var(--muted);
+ text-align:left;
+ padding:0 18px;
+ font-size:10px;
+ font-weight:700;
+}
+
+.side-menu button:hover{
+ background:var(--card2);
+ color:var(--text);
+}
+
+.stories{
+ display:flex;
+ gap:10px;
+ overflow-x:auto;
+ padding-bottom:3px;
+}
+
+.story{
+ min-width:105px;
+ height:155px;
+ border:1px solid var(--line);
+ border-radius:15px;
+ position:relative;
+ overflow:hidden;
+ background:
+ radial-gradient(circle at 50% 20%,rgba(124,108,255,.5),transparent 45%),
+ var(--card);
+}
+
+.story-user{
+ position:absolute;
+ top:10px;
+ left:10px;
+ width:33px;
+ height:33px;
+ border-radius:50%;
+ border:2px solid var(--accent);
+ background:#20283a;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:10px;
+ font-weight:800;
+}
+
+.story-name{
+ position:absolute;
+ bottom:10px;
+ left:10px;
+ font-size:9px;
+ font-weight:700;
+}
+
+.composer{
+ margin-top:15px;
+ padding:15px;
+}
+
+.composer-top{
+ display:flex;
+ gap:10px;
+}
+
+.composer textarea{
+ flex:1;
+ height:48px;
+ resize:none;
+ border:0;
+ border-radius:24px;
+ background:var(--card2);
+ color:var(--text);
+ padding:14px 16px;
+ font-size:10px;
+}
+
+.composer-bottom{
+ display:flex;
+ align-items:center;
+ margin-top:12px;
+ padding-top:11px;
+ border-top:1px solid var(--line);
+}
+
+.composer-action{
+ border:0;
+ background:none;
+ color:var(--muted);
+ font-size:9px;
+ font-weight:700;
+ margin-right:20px;
+}
+
+.composer-action:hover{
+ color:var(--text);
+}
+
+.post-btn{
+ margin-left:auto;
+ border:0;
+ border-radius:20px;
+ background:linear-gradient(135deg,var(--accent),#6251d0);
+ color:white;
+ padding:8px 18px;
+ font-size:9px;
+ font-weight:800;
+}
+
+.post{
+ margin-top:15px;
+ overflow:hidden;
+}
+
+.post-head{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ padding:15px;
+}
+
+.post-author{
+ font-size:11px;
+ font-weight:800;
+}
+
+.post-time{
+ color:var(--muted);
+ font-size:8px;
+ margin-top:3px;
+}
+
+.more{
+ margin-left:auto;
+ border:0;
+ background:none;
+ color:var(--muted);
+ font-size:16px;
+}
+
+.post-content{
+ padding:0 15px 15px;
+ font-size:11px;
+ line-height:1.7;
+}
+
+.post-image{
+ width:100%;
+ min-height:300px;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ background:
+ radial-gradient(circle,rgba(124,108,255,.3),transparent 45%),
+ linear-gradient(135deg,#161d2c,#080b12);
+ font-family:Orbitron;
+ font-size:32px;
+ letter-spacing:4px;
+ color:#aaa0ff;
+ overflow:hidden;
+}
+
+.post-image img{
+ width:100%;
+ max-height:500px;
+ object-fit:cover;
+ display:block;
+}
+
+.post-stats{
+ display:flex;
+ justify-content:space-between;
+ padding:10px 15px;
+ color:var(--muted);
+ font-size:8px;
+}
+
+.post-actions{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ border-top:1px solid var(--line);
+}
+
+.post-actions button{
+ height:42px;
+ border:0;
+ background:transparent;
+ color:var(--muted);
+ font-size:9px;
+ font-weight:700;
+}
+
+.post-actions button:hover{
+ background:var(--card2);
+ color:var(--text);
+}
+
+.post-actions button.liked{
+ color:var(--red);
+}
+
+.comments{
+ display:none;
+ border-top:1px solid var(--line);
+ padding:12px 15px;
+}
+
+.comments.show{
+ display:block;
+}
+
+.comment{
+ display:flex;
+ gap:8px;
+ margin-bottom:9px;
+}
+
+.comment-bubble{
+ background:var(--card2);
+ border-radius:12px;
+ padding:8px 11px;
+ font-size:9px;
+ color:var(--text);
+}
+
+.comment-form{
+ display:flex;
+ gap:7px;
+}
+
+.comment-form input{
+ flex:1;
+ border:1px solid var(--line);
+ background:var(--card2);
+ color:var(--text);
+ border-radius:20px;
+ padding:9px 12px;
+ font-size:9px;
+}
+
+.comment-form button{
+ border:0;
+ border-radius:20px;
+ background:var(--accent);
+ color:white;
+ padding:0 13px;
+ font-size:9px;
+}
+
+.widget{
+ padding:16px;
+ margin-bottom:14px;
+}
+
+.widget h3{
+ font-family:Orbitron;
+ font-size:9px;
+ letter-spacing:1px;
+ margin-bottom:14px;
+}
+
+.friend{
+ display:flex;
+ align-items:center;
+ gap:9px;
+ padding:7px 0;
+}
+
+.friend-info{
+ flex:1;
+}
+
+.friend-info strong{
+ display:block;
+ font-size:9px;
+}
+
+.friend-info small{
+ color:var(--muted);
+ font-size:7px;
+}
+
+.add{
+ border:0;
+ border-radius:15px;
+ background:var(--card2);
+ color:#aeb4ff;
+ padding:6px 10px;
+ font-size:8px;
+ font-weight:700;
+}
+
+.profile-panel{
+ display:none;
+}
+
+.profile-panel.show{
+ display:block;
+}
+
+.profile-cover{
+ height:170px;
+ border-radius:18px;
+ background:
+ radial-gradient(circle at 50% 40%,rgba(124,108,255,.5),transparent 40%),
+ linear-gradient(135deg,#171d2c,#090c12);
+ position:relative;
+}
+
+.profile-avatar{
+ position:absolute;
+ bottom:-42px;
+ left:25px;
+ width:85px;
+ height:85px;
+ border-radius:50%;
+ border:5px solid var(--card);
+ background:linear-gradient(135deg,var(--accent),var(--accent2));
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:28px;
+ font-weight:900;
+}
+
+.profile-info{
+ padding:55px 25px 20px;
+ border:1px solid var(--line);
+ border-top:0;
+ border-radius:0 0 18px 18px;
+ background:var(--card);
+}
+
+.profile-info h2{
+ font-family:Orbitron;
+ font-size:18px;
+}
+
+.profile-info p{
+ color:var(--muted);
+ font-size:9px;
+ margin-top:7px;
+ line-height:1.7;
+}
+
+.profile-stats{
+ display:flex;
+ gap:30px;
+ margin-top:18px;
+}
+
+.profile-stats strong{
+ display:block;
+ font-size:14px;
+}
+
+.profile-stats span{
+ color:var(--muted);
+ font-size:7px;
+}
+
+.settings{
+ display:none;
+}
+
+.settings.show{
+ display:block;
+}
+
+.setting-row{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ padding:15px 0;
+ border-bottom:1px solid var(--line);
+}
+
+.setting-row:last-child{
+ border:0;
+}
+
+.setting-row strong{
+ font-size:10px;
+}
+
+.setting-row span{
+ color:var(--muted);
+ font-size:8px;
+}
+
+.toggle{
+ width:44px;
+ height:24px;
+ border:0;
+ border-radius:20px;
+ background:#303744;
+ position:relative;
+}
+
+.toggle::after{
+ content:"";
+ width:18px;
+ height:18px;
+ position:absolute;
+ top:3px;
+ left:3px;
+ border-radius:50%;
+ background:white;
+ transition:.2s;
+}
+
+.toggle.on{
+ background:var(--accent);
+}
+
+.toggle.on::after{
+ left:23px;
+}
+
+.toast{
+ position:fixed;
+ bottom:25px;
+ left:50%;
+ transform:translateX(-50%) translateY(80px);
+ background:#171d29;
+ color:white;
+ border:1px solid var(--line);
+ padding:12px 18px;
+ border-radius:12px;
+ font-size:10px;
+ opacity:0;
+ transition:.3s;
+ z-index:5000;
+}
+
+.toast.show{
+ transform:translateX(-50%) translateY(0);
+ opacity:1;
+}
+
+.file-input{
+ display:none;
+}
+
+@media(max-width:1100px){
+
+ .page{
+  grid-template-columns:210px minmax(400px,650px);
+  justify-content:center;
+ }
+
+ .rightbar{
+  display:none;
+ }
+
+}
+
+@media(max-width:760px){
+
+ .navbar{
+  height:58px;
+ }
+
+ .nav-inner{
+  padding:0 10px;
+ }
+
+ .logo{
+  font-size:16px;
+ }
+
+ .search{
+  width:42px;
+  padding:0 12px;
+ }
+
+ .search input{
+  display:none;
+ }
+
+ .nav-center{
+  display:none;
+ }
+
+ .page{
+  display:block;
+  padding:72px 10px 80px;
+ }
+
+ .sidebar{
+  display:none;
+ }
+
+ .post-image{
+  min-height:250px;
+ }
+
+ .nav-right .circle-btn:nth-child(2),
+ .nav-right .circle-btn:nth-child(3){
+  display:none;
+ }
+
+}
+
+@media(max-width:420px){
+
+ .logo{
+  letter-spacing:2px;
+ }
+
+ .post-content{
+  font-size:10px;
+ }
+
+ .stories .story{
+  min-width:92px;
+ }
 }
 </style>
 </head>
@@ -200,515 +754,1214 @@ footer p{font-size:8px;color:#5f6674;margin-top:8px}
 <body>
 
 <nav class="navbar">
-<div class="container nav-inner">
-<a class="logo" href="#">JARVIS<span>.</span></a>
-<div class="nav-links">
-<a href="#characters">CHARACTERS</a>
-<a href="#power">POWER INDEX</a>
-<a href="#universes">UNIVERSES</a>
-</div>
-<div class="status"><span class="dot"></span>SYSTEM ONLINE</div>
-</div>
-</nav>
 
-<header class="hero">
-<div class="container">
-<div class="hero-content">
-<div class="kicker">JARVIS // CHARACTER INTELLIGENCE SYSTEM</div>
-<h1>THE ULTIMATE<br><span class="gradient">CHARACTER</span><br>ENCYCLOPEDIA</h1>
-<p>
-Explore detailed profiles of heroes, villains and legendary beings.
-Discover their origins, history, abilities, transformations, weapons,
-feats and weaknesses through the JARVIS intelligence database.
-</p>
-<div class="actions">
-<a href="#characters" class="btn primary">EXPLORE DATABASE</a>
-<a href="#power" class="btn">POWER INDEX</a>
-</div>
-<div class="stats">
-<div class="stat"><strong id="count">0</strong><span>CHARACTERS</span></div>
-<div class="stat"><strong>03</strong><span>UNIVERSES</span></div>
-<div class="stat"><strong>A–Z</strong><span>DATABASE</span></div>
-</div>
-</div>
-</div>
-</header>
+<div class="nav-inner">
 
-<section class="section" id="characters">
-<div class="container">
-<div class="head">
-<div class="section-kicker">CHARACTER DATABASE</div>
-<h2 class="section-title">EXPLORE THE <span>CHARACTERS</span></h2>
-<p class="description">
-Search any character and open a complete intelligence profile.
-</p>
-</div>
+<a href="#" class="logo">
+JARVIS<span>.</span>
+</a>
 
-<div class="search-area">
 <div class="search">
 <span>⌕</span>
-<input id="search" type="search" placeholder="Search Thor, Batman, Goku...">
-</div>
-<div class="filters">
-<button class="filter active" data-filter="all">ALL</button>
-<button class="filter" data-filter="hero">HEROES</button>
-<button class="filter" data-filter="villain">VILLAINS</button>
-<button class="filter" data-filter="Marvel">MARVEL</button>
-<button class="filter" data-filter="DC">DC</button>
-<button class="filter" data-filter="Anime">ANIME</button>
-</div>
+<input id="searchInput" placeholder="Search JARVIS...">
 </div>
 
-<div class="grid" id="characterGrid"></div>
-</div>
-</section>
+<div class="nav-center">
 
-<section class="section" id="power">
-<div class="container">
-<div class="head">
-<div class="section-kicker">POWER CLASSIFICATION</div>
-<h2 class="section-title">POWER <span>INDEX</span></h2>
-<p class="description">JARVIS classification of general power scale.</p>
-</div>
+<button class="nav-item active" onclick="showHome()">⌂</button>
 
-<div class="power-grid">
-<div class="power-card"><b>01</b><h3>HUMAN+</h3><p>Exceptional human abilities, training, intelligence or technology.</p></div>
-<div class="power-card"><b>02</b><h3>SUPER</h3><p>Capabilities significantly beyond normal human limits.</p></div>
-<div class="power-card"><b>03</b><h3>EXTREME</h3><p>Extraordinary abilities capable of defeating powerful opponents.</p></div>
-<div class="power-card"><b>04</b><h3>GOD TIER</h3><p>Divine, planetary, dimensional or similarly extreme power.</p></div>
-<div class="power-card"><b>05</b><h3>COSMIC</h3><p>Universal, cosmic or reality-altering levels of ability.</p></div>
-<div class="power-card"><b>06</b><h3>UNKNOWN</h3><p>Capabilities cannot yet be accurately classified.</p></div>
-</div>
-</div>
-</section>
+<button class="nav-item" onclick="showProfile()">♙</button>
 
-<section class="section" id="universes">
-<div class="container">
-<div class="head">
-<div class="section-kicker">EXPLORE WORLDS</div>
-<h2 class="section-title">THE <span>UNIVERSES</span></h2>
-<p class="description">Different worlds. Different rules. Infinite characters.</p>
+<button class="nav-item" onclick="showHome()">▶</button>
+
+<button class="nav-item" onclick="showSettings()">⚙</button>
+
 </div>
 
-<div class="universe-grid">
-<div class="universe"><div>✦</div><h3>MARVEL</h3><p>Heroes, mutants, gods, cosmic entities and extraordinary beings.</p></div>
-<div class="universe"><div>◈</div><h3>DC</h3><p>Heroes, villains, metahumans, gods and cosmic entities.</p></div>
-<div class="universe"><div>☀</div><h3>ANIME</h3><p>Warriors, pirates, Saiyans, sorcerers and legendary characters.</p></div>
-</div>
-</div>
-</section>
+<div class="nav-right">
 
-<footer>
-<div class="container">
-<div class="footer-logo">JARVIS<span>.</span></div>
-<p>CHARACTER INTELLIGENCE SYSTEM • V1 • DATABASE ONLINE</p>
-</div>
-</footer>
+<button class="circle-btn" onclick="toggleTheme()">☼</button>
 
-<div class="modal" id="modal">
-<div class="modal-box">
-<button class="close" id="close">×</button>
-<div class="profile-title">
-<div class="tag" id="mTag"></div>
-<h2 id="mName"></h2>
-<div class="profile-sub" id="mSub"></div>
+<button class="circle-btn" onclick="showToast('Messages coming in V1.2')">✉</button>
+
+<button class="circle-btn" onclick="showToast('Notifications coming in V1.2')">♧</button>
+
+<div class="avatar">J</div>
+
 </div>
 
-<div class="profile-power">
-<div style="display:flex;justify-content:space-between;font-size:8px;color:#777">
-<span>POWER INDEX</span><span id="mPower"></span>
-</div>
-<div class="bar"><i id="mBar"></i></div>
 </div>
 
-<div class="profile-grid">
-<div class="info"><h4>IDENTITY</h4><p id="identity"></p></div>
-<div class="info"><h4>ORIGIN</h4><p id="origin"></p></div>
-<div class="info"><h4>FIRST APPEARANCE</h4><p id="first"></p></div>
-<div class="info"><h4>BIOGRAPHY</h4><p id="bio"></p></div>
-<div class="info"><h4>HISTORY</h4><p id="history"></p></div>
-<div class="info"><h4>POWERS & ABILITIES</h4><p id="powers"></p></div>
-<div class="info"><h4>WEAPONS</h4><p id="weapons"></p></div>
-<div class="info"><h4>FORMS / TRANSFORMATIONS</h4><p id="forms"></p></div>
-<div class="info"><h4>MAJOR FEATS</h4><p id="feats"></p></div>
-<div class="info"><h4>WEAKNESSES</h4><p id="weak"></p></div>
-<div class="info"><h4>APPEARANCES</h4><p id="appear"></p></div>
+</nav>
+
+
+<div class="page">
+
+<aside class="sidebar">
+
+<div class="side-profile">
+
+<div class="side-profile-top">
+
+<div class="avatar">J</div>
+
+<div>
+<strong>Jony Ahmed</strong>
+<small>@jony • JARVIS user</small>
 </div>
+
 </div>
+
 </div>
+
+<div class="side-menu">
+
+<button onclick="showHome()">🏠 &nbsp; Home</button>
+
+<button onclick="showProfile()">👤 &nbsp; My Profile</button>
+
+<button onclick="showToast('Friends module coming soon')">
+👥 &nbsp; Friends
+</button>
+
+<button onclick="showToast('Messenger coming in V1.2')">
+💬 &nbsp; Messages
+</button>
+
+<button onclick="showToast('Notifications coming in V1.2')">
+🔔 &nbsp; Notifications
+</button>
+
+<button onclick="showToast('Saved posts coming soon')">
+🔖 &nbsp; Saved
+</button>
+
+<button onclick="showSettings()">⚙️ &nbsp; Settings</button>
+
+</div>
+
+</aside>
+
+
+<main>
+
+<!-- HOME -->
+
+<div id="home">
+
+<div class="stories">
+
+<div class="story">
+
+<div class="story-user">J</div>
+
+<div class="story-name">Your Story</div>
+
+</div>
+
+<div class="story">
+
+<div class="story-user">P</div>
+
+<div class="story-name">Peter</div>
+
+</div>
+
+<div class="story">
+
+<div class="story-user">M</div>
+
+<div class="story-name">Marvel</div>
+
+</div>
+
+<div class="story">
+
+<div class="story-user">A</div>
+
+<div class="story-name">Anime</div>
+
+</div>
+
+<div class="story">
+
+<div class="story-user">F</div>
+
+<div class="story-name">Football</div>
+
+</div>
+
+</div>
+
+
+<!-- COMPOSER -->
+
+<div class="composer">
+
+<div class="composer-top">
+
+<div class="avatar">J</div>
+
+<textarea id="postText"
+placeholder="What's on your mind, Jony?"></textarea>
+
+</div>
+
+<div class="composer-bottom">
+
+<button class="composer-action"
+onclick="document.getElementById('photoInput').click()">
+🖼️ Photo
+</button>
+
+<button class="composer-action"
+onclick="addEmoji()">
+😊 Feeling
+</button>
+
+<button class="composer-action"
+onclick="showToast('Location feature coming soon')">
+📍 Location
+</button>
+
+<button class="post-btn"
+onclick="createPost()">
+POST
+</button>
+
+</div>
+
+<input
+type="file"
+id="photoInput"
+class="file-input"
+accept="image/*"
+onchange="previewPhoto(event)"
+>
+
+</div>
+
+
+<div id="feed">
+
+<!-- DEFAULT POST -->
+
+<article class="post">
+
+<div class="post-head">
+
+<div class="avatar">J</div>
+
+<div>
+
+<div class="post-author">Jony Ahmed</div>
+
+<div class="post-time">Just now • 🌐</div>
+
+</div>
+
+<button class="more"
+onclick="showToast('Post menu')">
+•••
+</button>
+
+</div>
+
+<div class="post-content">
+
+Welcome to <b>JARVIS Social V1.1</b> 🚀<br>
+
+Your personal social network interface is now upgraded.
+
+</div>
+
+<div class="post-image">
+JARVIS
+</div>
+
+<div class="post-stats">
+
+<span class="likes-count">12 Likes</span>
+
+<span>3 Comments • 1 Share</span>
+
+</div>
+
+<div class="post-actions">
+
+<button onclick="likePost(this)">
+♡ Like
+</button>
+
+<button onclick="toggleComments(this)">
+💬 Comment
+</button>
+
+<button onclick="sharePost(this)">
+↗ Share
+</button>
+
+</div>
+
+<div class="comments">
+
+<div class="comment">
+
+<div class="avatar"
+style="width:28px;height:28px;font-size:8px">
+P
+</div>
+
+<div class="comment-bubble">
+
+<b>Peter</b><br>
+
+This looks awesome 🔥
+
+</div>
+
+</div>
+
+<div class="comment-form">
+
+<input placeholder="Write a comment...">
+
+<button onclick="addComment(this)">
+Send
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+<!-- POST 2 -->
+
+<article class="post">
+
+<div class="post-head">
+
+<div class="avatar">P</div>
+
+<div>
+
+<div class="post-author">
+Peter Parker
+</div>
+
+<div class="post-time">
+2h • 🌐
+</div>
+
+</div>
+
+<button class="more">•••</button>
+
+</div>
+
+<div class="post-content">
+
+Sometimes the best way to start a new chapter
+is simply to begin. 🕷️
+
+</div>
+
+<div class="post-stats">
+
+<span class="likes-count">
+27 Likes
+</span>
+
+<span>
+6 Comments • 2 Shares
+</span>
+
+</div>
+
+<div class="post-actions">
+
+<button onclick="likePost(this)">
+♡ Like
+</button>
+
+<button onclick="toggleComments(this)">
+💬 Comment
+</button>
+
+<button onclick="sharePost(this)">
+↗ Share
+</button>
+
+</div>
+
+<div class="comments">
+
+<div class="comment-form">
+
+<input placeholder="Write a comment...">
+
+<button onclick="addComment(this)">
+Send
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+
+<!-- POST 3 -->
+
+<article class="post">
+
+<div class="post-head">
+
+<div class="avatar">M</div>
+
+<div>
+
+<div class="post-author">
+Marvel Universe
+</div>
+
+<div class="post-time">
+5h • 🌐
+</div>
+
+</div>
+
+<button class="more">•••</button>
+
+</div>
+
+<div class="post-content">
+
+Which character would you choose as your ultimate
+team leader? ⚡
+
+</div>
+
+<div class="post-image">
+MARVEL
+</div>
+
+<div class="post-stats">
+
+<span class="likes-count">
+84 Likes
+</span>
+
+<span>
+18 Comments • 7 Shares
+</span>
+
+</div>
+
+<div class="post-actions">
+
+<button onclick="likePost(this)">
+♡ Like
+</button>
+
+<button onclick="toggleComments(this)">
+💬 Comment
+</button>
+
+<button onclick="sharePost(this)">
+↗ Share
+</button>
+
+</div>
+
+<div class="comments">
+
+<div class="comment-form">
+
+<input placeholder="Write a comment...">
+
+<button onclick="addComment(this)">
+Send
+</button>
+
+</div>
+
+</div>
+
+</article>
+
+</div>
+
+</div>
+
+
+<!-- PROFILE -->
+
+<div id="profile" class="profile-panel">
+
+<div class="profile-cover">
+
+<div class="profile-avatar">
+J
+</div>
+
+</div>
+
+<div class="profile-info">
+
+<h2>Jony Ahmed</h2>
+
+<p>
+@jony<br>
+Welcome to my personal JARVIS Social profile.
+This is your private experimental social network.
+</p>
+
+<div class="profile-stats">
+
+<div>
+<strong id="postCount">3</strong>
+<span>POSTS</span>
+</div>
+
+<div>
+<strong>128</strong>
+<span>FRIENDS</span>
+</div>
+
+<div>
+<strong>24</strong>
+<span>FOLLOWING</span>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SETTINGS -->
+
+<div id="settings" class="settings">
+
+<div class="widget">
+
+<h3>JARVIS SETTINGS</h3>
+
+<div class="setting-row">
+
+<div>
+<strong>Dark Mode</strong>
+<span>Change website appearance</span>
+</div>
+
+<button
+id="themeToggle"
+class="toggle on"
+onclick="toggleTheme()">
+</button>
+
+</div>
+
+<div class="setting-row">
+
+<div>
+<strong>Notifications</strong>
+<span>Browser notification system</span>
+</div>
+
+<button
+class="toggle"
+onclick="toggleSetting(this)">
+</button>
+
+</div>
+
+<div class="setting-row">
+
+<div>
+<strong>Auto Save</strong>
+<span>Save posts in this browser</span>
+</div>
+
+<button
+class="toggle on"
+onclick="toggleSetting(this)">
+</button>
+
+</div>
+
+<div class="setting-row">
+
+<div>
+<strong>Version</strong>
+<span>JARVIS Social V1.1</span>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+
+<!-- RIGHT -->
+
+<aside class="rightbar">
+
+<div class="widget">
+
+<h3>FRIEND REQUESTS</h3>
+
+<div class="friend">
+
+<div class="avatar">A</div>
+
+<div class="friend-info">
+
+<strong>Arif Hasan</strong>
+
+<small>5 mutual friends</small>
+
+</div>
+
+<button
+class="add"
+onclick="confirmFriend(this)">
+Confirm
+</button>
+
+</div>
+
+
+<div class="friend">
+
+<div class="avatar">R</div>
+
+<div class="friend-info">
+
+<strong>Rakib</strong>
+
+<small>2 mutual friends</small>
+
+</div>
+
+<button
+class="add"
+onclick="confirmFriend(this)">
+Confirm
+</button>
+
+</div>
+
+</div>
+
+
+<div class="widget">
+
+<h3>CONTACTS</h3>
+
+<div class="friend">
+
+<div class="avatar">P</div>
+
+<div class="friend-info">
+
+<strong>Peter</strong>
+
+<small>🟢 Active now</small>
+
+</div>
+
+</div>
+
+
+<div class="friend">
+
+<div class="avatar">M</div>
+
+<div class="friend-info">
+
+<strong>MJ</strong>
+
+<small>🟢 Active now</small>
+
+</div>
+
+</div>
+
+
+<div class="friend">
+
+<div class="avatar">T</div>
+
+<div class="friend-info">
+
+<strong>Tony</strong>
+
+<small>🟢 Active now</small>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="widget">
+
+<h3>JARVIS INFO</h3>
+
+<p style="color:var(--muted);font-size:9px;line-height:1.8">
+
+JARVIS Social V1.1<br><br>
+
+Personal social-network interface.<br>
+
+Browser-side data storage enabled.
+
+</p>
+
+</div>
+
+</aside>
+
+</div>
+
+
+<div id="toast" class="toast">
+Done
+</div>
+
 
 <script>
-const characters=[
 
-/* MARVEL */
-{
-name:"Spider-Man",universe:"Marvel",category:"hero",type:"Peter Parker",power:88,
-identity:"Peter Benjamin Parker",
-origin:"Queens, New York",
-first:"Amazing Fantasy #15 (1962)",
-bio:"Peter Parker is a New York teenager who gained spider-like abilities after being bitten by a radioactive spider. After the death of Uncle Ben, Peter committed himself to using his abilities responsibly.",
-history:"Peter initially used his powers for personal benefit. After realizing the consequences of ignoring crime, he became Spider-Man. He has balanced superhero responsibilities with education, work, relationships and protecting New York.",
-powers:"Superhuman strength, agility, reflexes, enhanced senses, wall-crawling, accelerated recovery and Spider-Sense.",
-weapons:"Mechanical web-shooters and specialized web formulas.",
-forms:"Multiple alternate Spider-Man identities and temporary power variations exist across Marvel stories.",
-feats:"Has defeated and survived battles against many stronger superhuman opponents through a combination of ability, intelligence and improvisation.",
-weak:"He is not completely invulnerable and can be injured by sufficiently powerful attacks. His loved ones can also become targets.",
-appear:"Marvel Comics, animated series, films, games and alternate universes."
-},
+/* ================= STATE ================= */
 
-{
-name:"Iron Man",universe:"Marvel",category:"hero",type:"Tony Stark",power:91,
-identity:"Anthony Edward Stark",
-origin:"United States",
-first:"Tales of Suspense #39 (1963)",
-bio:"Tony Stark is a billionaire inventor and engineering genius who developed the Iron Man armor.",
-history:"After being critically injured and captured during a weapons demonstration, Stark built technology that helped keep him alive and enabled his escape. He subsequently developed increasingly advanced armored systems.",
-powers:"His standard human body has no conventional superpowers. His capabilities primarily come from advanced armor, engineering, AI and energy technology.",
-weapons:"Repulsors, uni-beam, flight systems, missiles, sensors and specialized armor systems.",
-forms:"Numerous armor generations have been designed for different environments and threats.",
-feats:"Has engineered technology capable of confronting superhuman and cosmic-level threats.",
-weak:"Tony is biologically human outside protective equipment. Armor damage, power limitations and system failures can reduce his effectiveness.",
-appear:"Marvel Comics, films, animation, television and games."
-},
+let selectedImage=null;
 
-{
-name:"Thor",universe:"Marvel",category:"hero",type:"God of Thunder",power:96,
-identity:"Thor Odinson",
-origin:"Asgard",
-first:"Journey into Mystery #83 (1962)",
-bio:"Thor Odinson is an Asgardian god and one of Marvel's most powerful heroic characters.",
-history:"Thor's stories span Asgard, Earth and the wider cosmos. His character repeatedly develops through battles involving gods, monsters, heroes and cosmic entities.",
-powers:"Superhuman strength, durability, longevity, enhanced senses, combat skill and powerful lightning and storm manipulation.",
-weapons:"Mjolnir is his iconic enchanted weapon. He has also used other powerful weapons in different stories.",
-forms:"Thor has experienced several enhanced states and power variations throughout Marvel continuity.",
-feats:"Has fought extremely powerful divine and cosmic opponents and survived massive physical punishment.",
-weak:"His exact abilities vary by continuity. Magic and reality-altering powers can bypass conventional durability.",
-appear:"Marvel Comics, films, animation, television and games."
-},
 
-{
-name:"Hulk",universe:"Marvel",category:"hero",type:"Bruce Banner",power:94,
-identity:"Dr. Bruce Banner",
-origin:"United States",
-first:"The Incredible Hulk #1 (1962)",
-bio:"Bruce Banner is a brilliant scientist whose exposure to gamma radiation transformed him into the Hulk.",
-history:"The transformation began following a gamma-radiation accident. Different stories portray different Hulk personalities, levels of intelligence and degrees of Banner's control.",
-powers:"Extreme strength, durability, regeneration, powerful jumping ability and resistance to conventional physical damage.",
-weapons:"His body and physical strength.",
-forms:"Numerous Hulk forms and Banner-Hulk configurations exist across Marvel continuity.",
-feats:"Has endured extraordinary punishment and fought some of Marvel's strongest heroes and villains.",
-weak:"His emotional state and level of control can vary depending on the version being portrayed.",
-appear:"Marvel Comics, films, animation, television and games."
-},
+/* ================= HOME / PROFILE / SETTINGS ================= */
 
-{
-name:"Doctor Strange",universe:"Marvel",category:"hero",type:"Sorcerer Supreme",power:95,
-identity:"Dr. Stephen Strange",
-origin:"New York",
-first:"Strange Tales #110 (1963)",
-bio:"Stephen Strange was a brilliant surgeon whose career was destroyed by a serious accident. His search for healing eventually introduced him to the mystic arts.",
-history:"Strange trained under the Ancient One and became a major defender of Earth against mystical and dimensional threats.",
-powers:"Spellcasting, mystical energy manipulation, teleportation, dimensional travel, astral projection and magical protection.",
-weapons:"Mystical artifacts including the Cloak of Levitation and Eye of Agamotto in different stories.",
-forms:"His capabilities vary depending on mystical artifacts, knowledge and preparation.",
-feats:"Has confronted powerful mystical and dimensional entities.",
-weak:"Many spells require knowledge, concentration, preparation or specific artifacts.",
-appear:"Marvel Comics, films, animation and games."
-},
+function hideAll(){
 
-{
-name:"Thanos",universe:"Marvel",category:"villain",type:"Titan",power:99,
-identity:"Thanos",
-origin:"Titan",
-first:"Iron Man #55 (1973)",
-bio:"Thanos is an immensely powerful cosmic being obsessed with death and universal-scale objectives.",
-history:"He has repeatedly sought artifacts and power capable of transforming the balance of the universe.",
-powers:"Extreme strength, durability, energy manipulation, intelligence, longevity and cosmic abilities.",
-weapons:"Infinity-related artifacts in certain stories and various cosmic weapons.",
-forms:"His power varies dramatically depending on artifacts and storyline.",
-feats:"Has defeated or challenged some of Marvel's most powerful heroes and cosmic entities.",
-weak:"His own obsession, arrogance and dependence on particular artifacts can create vulnerabilities.",
-appear:"Marvel Comics, films, animation and games."
-},
+document.getElementById("home").style.display="none";
 
-/* DC */
-{
-name:"Superman",universe:"DC",category:"hero",type:"Man of Steel",power:99,
-identity:"Clark Kent / Kal-El",
-origin:"Krypton",
-first:"Action Comics #1 (1938)",
-bio:"Kal-El was sent from Krypton to Earth as an infant and raised as Clark Kent. He became Superman, a symbol of hope, truth and justice.",
-history:"Raised in Smallville, Clark discovered his Kryptonian heritage and eventually became Metropolis's Superman while working as a reporter.",
-powers:"Super strength, flight, super speed, invulnerability, heat vision, freeze breath, enhanced hearing and other Kryptonian abilities.",
-weapons:"Generally none. Specialized technology or objects may appear in particular stories.",
-forms:"Multiple alternate versions and temporary power enhancements exist.",
-feats:"Has repeatedly protected Earth and Metropolis against extraterrestrial, superhuman and cosmic threats.",
-weak:"Kryptonite, certain magical attacks and sufficiently powerful forces can threaten him depending on continuity.",
-appear:"DC Comics, films, animation, television and games."
-},
+document.getElementById("profile").classList.remove("show");
 
-{
-name:"Batman",universe:"DC",category:"hero",type:"Dark Knight",power:82,
-identity:"Bruce Wayne",
-origin:"Gotham City",
-first:"Detective Comics #27 (1939)",
-bio:"Bruce Wayne became Batman after witnessing his parents' murder. He has no conventional metahuman powers and instead relies on training, intelligence and technology.",
-history:"Bruce trained extensively in martial arts, investigation and strategy before beginning his campaign against crime in Gotham.",
-powers:"Peak human conditioning, martial arts mastery, detective ability, tactical intelligence and forensic expertise.",
-weapons:"Batarangs, grapnel equipment, armor, Batmobile, Batcomputer and specialized non-lethal tools.",
-forms:"Numerous specialized suits and armor systems exist for different threats.",
-feats:"Has solved complex crimes and defeated stronger opponents through preparation and strategy.",
-weak:"Bruce remains fundamentally human and can be injured without adequate protection.",
-appear:"DC Comics, films, animation, television and games."
-},
+document.getElementById("settings").classList.remove("show");
 
-{
-name:"Wonder Woman",universe:"DC",category:"hero",type:"Amazon Warrior",power:94,
-identity:"Diana of Themyscira / Diana Prince",
-origin:"Themyscira",
-first:"All-Star Comics #8 (1941)",
-bio:"Diana is an Amazon warrior and ambassador who leaves Themyscira to help humanity.",
-history:"Trained from childhood as an Amazon warrior, Diana eventually entered the human world and became one of Earth's leading heroes.",
-powers:"Super strength, durability, agility, combat mastery, healing and flight in many versions.",
-weapons:"Lasso of Truth, bracelets and Amazon or magical weapons.",
-forms:"Her exact divine heritage and abilities vary between comic continuities.",
-feats:"Has fought gods, monsters, superhumans and major Justice League threats.",
-weak:"Her exact vulnerabilities vary by continuity and sufficiently powerful or magical attacks can harm her.",
-appear:"DC Comics, films, animation, television and games."
-},
-
-{
-name:"The Flash",universe:"DC",category:"hero",type:"Barry Allen",power:98,
-identity:"Barry Allen",
-origin:"Central City",
-first:"Showcase #4 (1956)",
-bio:"Barry Allen is a forensic scientist who became the Flash after a lightning-and-chemicals accident connected him to the Speed Force.",
-history:"Barry used his speed to protect Central City. His stories frequently involve time travel, alternate realities and Speed Force phenomena.",
-powers:"Extreme speed, accelerated perception, phasing, rapid healing and Speed Force manipulation.",
-weapons:"Primarily speed, scientific knowledge and specialized technology.",
-forms:"Different Speed Force states and alternate Flashes exist.",
-feats:"Has achieved extraordinary speed feats and interacted with time and dimensional phenomena.",
-weak:"Speed control, stamina and certain specialized attacks can interfere with his effectiveness.",
-appear:"DC Comics, films, animation, television and games."
-},
-
-{
-name:"Darkseid",universe:"DC",category:"villain",type:"New God",power:100,
-identity:"Darkseid",
-origin:"Apokolips",
-first:"Superman's Pal, Jimmy Olsen #134 (1970)",
-bio:"Darkseid is a cosmic ruler and one of DC's most powerful antagonists.",
-history:"Ruler of Apokolips, Darkseid seeks domination and the destruction of free will through the Anti-Life Equation.",
-powers:"Immense strength, durability, longevity, energy projection and the Omega Effect.",
-weapons:"Omega Beams and the technological and military resources of Apokolips.",
-forms:"Different incarnations and manifestations exist throughout DC continuity.",
-feats:"Has battled Superman, the Justice League and other cosmic-level forces.",
-weak:"His exact limits depend heavily on the version and continuity.",
-appear:"DC Comics, animation, television and games."
-},
-
-/* ANIME */
-{
-name:"Monkey D. Luffy",universe:"Anime",category:"hero",type:"Straw Hat Captain",power:96,
-identity:"Monkey D. Luffy",
-origin:"Foosha Village, East Blue",
-first:"One Piece manga Chapter 1",
-bio:"Luffy is the captain of the Straw Hat Pirates and dreams of becoming the Pirate King.",
-history:"Inspired by Shanks, Luffy eventually set out to sea and formed the Straw Hat Pirates. His journey brought him into conflict with powerful pirates and the World Government.",
-powers:"Devil Fruit abilities, extreme physical ability and advanced forms of Haki.",
-weapons:"Primarily his body, Devil Fruit abilities and Haki.",
-forms:"Gear Second, Gear Third, Gear Fourth and Gear Fifth.",
-feats:"Has defeated numerous powerful opponents and become one of the major powers of the pirate world.",
-weak:"As a Devil Fruit user, Luffy cannot normally swim and water can greatly reduce his effectiveness.",
-appear:"One Piece manga, anime, films and games."
-},
-
-{
-name:"Roronoa Zoro",universe:"Anime",category:"hero",type:"Swordsman",power:91,
-identity:"Roronoa Zoro",
-origin:"Shimotsuki Village",
-first:"One Piece manga Chapter 3",
-bio:"Zoro is the Straw Hat Pirates' swordsman whose dream is to become the world's greatest swordsman.",
-history:"After the death of his childhood rival Kuina, Zoro committed himself to fulfilling their shared dream and became a swordsman who eventually joined Luffy.",
-powers:"Extreme physical strength, swordsmanship, endurance and Haki.",
-weapons:"Three-sword style, including Wado Ichimonji and other blades acquired during his journey.",
-forms:"His swordsmanship and Haki have progressively developed through training and battles.",
-feats:"Has defeated powerful swordsmen and continued fighting despite severe injuries.",
-weak:"His performance depends heavily on his physical condition and access to his swords.",
-appear:"One Piece manga, anime, films and games."
-},
-
-{
-name:"Shanks",universe:"Anime",category:"hero",type:"Yonko",power:96,
-identity:"Shanks",
-origin:"West Blue",
-first:"One Piece manga Chapter 1",
-bio:"Shanks is the captain of the Red Hair Pirates and one of the most influential pirates in the New World.",
-history:"He was associated with the Roger Pirates before forming his own crew. Shanks later became one of the Four Emperors and inspired Luffy's dream.",
-powers:"Exceptional Haki mastery, swordsmanship and physical ability.",
-weapons:"His sword, commonly known as Gryphon.",
-forms:"No conventional transformation is central to his fighting style.",
-feats:"His reputation and Haki place him among the strongest figures in the pirate world.",
-weak:"His fighting ability depends heavily on Haki and combat skill rather than transformation or regeneration.",
-appear:"One Piece manga, anime, films and games."
-},
-
-{
-name:"Goku",universe:"Anime",category:"hero",type:"Saiyan Warrior",power:100,
-identity:"Son Goku / Kakarot",
-origin:"Planet Vegeta",
-first:"Dragon Ball manga Chapter 1",
-bio:"Goku is a Saiyan warrior raised on Earth who dedicates his life to martial arts, training and protecting his friends and world.",
-history:"Sent to Earth as an infant, Goku grew up under human influence. His adventures expanded from martial-arts tournaments to battles involving Saiyans, gods and universal threats.",
-powers:"Saiyan physiology, ki manipulation, energy attacks, extreme strength and advanced martial arts.",
-weapons:"Primarily his body and ki techniques. The Power Pole is associated with his early adventures.",
-forms:"Super Saiyan, Super Saiyan 2, Super Saiyan 3, Super Saiyan God, Super Saiyan Blue and Ultra Instinct.",
-feats:"Has repeatedly surpassed previous limits and fought increasingly powerful opponents.",
-weak:"High-level transformations consume stamina and concentration. His desire for challenging fights can cause strategic risks.",
-appear:"Dragon Ball manga, anime, films and games."
-},
-
-{
-name:"Vegeta",universe:"Anime",category:"hero",type:"Saiyan Prince",power:98,
-identity:"Vegeta IV",
-origin:"Planet Vegeta",
-first:"Dragon Ball manga",
-bio:"Vegeta is the Saiyan prince whose rivalry with Goku is one of Dragon Ball's central relationships.",
-history:"He initially arrived on Earth as an antagonist. Over time he changed into a defender of Earth while maintaining his pride and desire to surpass Goku.",
-powers:"Saiyan physiology, ki manipulation, energy projection, extreme strength and multiple transformations.",
-weapons:"Hand-to-hand combat and ki techniques.",
-forms:"Super Saiyan, Super Saiyan 2, Super Saiyan God, Super Saiyan Blue and later advanced states.",
-feats:"Has fought extremely powerful opponents and repeatedly pushed beyond his previous limits.",
-weak:"Pride and competitive instincts can influence his decisions. Transformations can consume stamina.",
-appear:"Dragon Ball manga, anime, films and games."
-},
-
-{
-name:"Frieza",universe:"Anime",category:"villain",type:"Galactic Emperor",power:98,
-identity:"Frieza",
-origin:"Unknown",
-first:"Dragon Ball manga",
-bio:"Frieza is a galactic tyrant who controls a vast empire and has repeatedly opposed Goku and the Saiyans.",
-history:"His forces conquered planets for strategic and commercial purposes. His conflict with the Saiyans eventually brought him into direct conflict with Goku.",
-powers:"Extreme strength, durability, flight, ki manipulation and energy projection.",
-weapons:"Primarily his own energy and physical attacks.",
-forms:"Multiple transformation stages allow him to control and amplify his power.",
-feats:"Has survived battles against extremely powerful Saiyan warriors and repeatedly returned as a major threat.",
-weak:"Arrogance and underestimating opponents can become strategic weaknesses.",
-appear:"Dragon Ball manga, anime, films and games."
-},
-
-{
-name:"Gojo Satoru",universe:"Anime",category:"hero",type:"Jujutsu Sorcerer",power:97,
-identity:"Satoru Gojo",
-origin:"Jujutsu Kaisen",
-first:"Jujutsu Kaisen manga",
-bio:"Satoru Gojo is a special-grade jujutsu sorcerer and teacher known for possessing the Six Eyes and Limitless technique.",
-history:"Gojo belongs to one of the major jujutsu families and became one of the strongest modern sorcerers. He seeks to change the jujutsu world by educating a new generation.",
-powers:"Limitless, Six Eyes, Infinity, Blue, Red, Hollow Purple and Domain Expansion: Unlimited Void.",
-weapons:"Primarily cursed techniques and hand-to-hand combat.",
-forms:"His strongest abilities are advanced applications of Limitless and Six Eyes rather than conventional transformations.",
-feats:"Recognized within the series as an exceptionally powerful modern sorcerer.",
-weak:"His abilities require exceptional control and cursed-energy management, and specific techniques or circumstances can bypass or interfere with defenses.",
-appear:"Jujutsu Kaisen manga, anime and games."
 }
 
-];
 
-const grid=document.getElementById("characterGrid");
-const search=document.getElementById("search");
-let active="all";
+function showHome(){
 
-document.getElementById("count").textContent=characters.length;
+hideAll();
 
-function render(){
-let q=search.value.toLowerCase().trim();
+document.getElementById("home").style.display="block";
 
-let list=characters.filter(c=>{
-let filterOK=active==="all"||c.category===active||c.universe===active;
-let searchOK=!q||
-c.name.toLowerCase().includes(q)||
-c.universe.toLowerCase().includes(q)||
-c.type.toLowerCase().includes(q);
-return filterOK&&searchOK;
-});
+}
 
-grid.innerHTML=list.map((c,i)=>`
-<div class="card" onclick="openProfile(${characters.indexOf(c)})">
-<div class="card-top">
-<div class="avatar">${c.name.split(" ").map(x=>x[0]).slice(0,2).join("")}</div>
+
+function showProfile(){
+
+hideAll();
+
+document.getElementById("profile").classList.add("show");
+
+}
+
+
+function showSettings(){
+
+hideAll();
+
+document.getElementById("settings").classList.add("show");
+
+}
+
+
+/* ================= CREATE POST ================= */
+
+function createPost(){
+
+const text=document
+.getElementById("postText")
+.value.trim();
+
+if(!text && !selectedImage){
+
+showToast("Write something or select a photo.");
+
+return;
+
+}
+
+const post=document.createElement("article");
+
+post.className="post";
+
+let imageHTML="";
+
+if(selectedImage){
+
+imageHTML=`
+<div class="post-image">
+<img src="${selectedImage}">
 </div>
-<div class="card-info">
-<div class="tag">${c.category.toUpperCase()} • ${c.universe.toUpperCase()}</div>
-<h3>${c.name}</h3>
-<small>${c.type}</small>
-<div class="power"><i style="width:${c.power}%"></i></div>
+`;
+
+}
+
+post.innerHTML=`
+
+<div class="post-head">
+
+<div class="avatar">J</div>
+
+<div>
+
+<div class="post-author">
+Jony Ahmed
 </div>
+
+<div class="post-time">
+Just now • 🌐
 </div>
-`).join("");
 
-if(!list.length){
-grid.innerHTML=`
-<div style="grid-column:1/-1;text-align:center;padding:60px;color:#707887">
-NO CHARACTER FOUND
-</div>`;
+</div>
+
+<button class="more"
+onclick="showToast('Post menu')">
+•••
+</button>
+
+</div>
+
+<div class="post-content">
+${escapeHTML(text)}
+</div>
+
+${imageHTML}
+
+<div class="post-stats">
+
+<span class="likes-count">
+0 Likes
+</span>
+
+<span>
+0 Comments • 0 Shares
+</span>
+
+</div>
+
+<div class="post-actions">
+
+<button onclick="likePost(this)">
+♡ Like
+</button>
+
+<button onclick="toggleComments(this)">
+💬 Comment
+</button>
+
+<button onclick="sharePost(this)">
+↗ Share
+</button>
+
+</div>
+
+<div class="comments">
+
+<div class="comment-form">
+
+<input placeholder="Write a comment...">
+
+<button onclick="addComment(this)">
+Send
+</button>
+
+</div>
+
+</div>
+
+`;
+
+document
+.getElementById("feed")
+.prepend(post);
+
+document.getElementById("postText").value="";
+
+selectedImage=null;
+
+document.getElementById("photoInput").value="";
+
+updatePostCount();
+
+savePosts();
+
+showToast("Post published ✓");
+
 }
+
+
+/* ================= PHOTO ================= */
+
+function previewPhoto(event){
+
+const file=event.target.files[0];
+
+if(!file)return;
+
+if(file.size>5*1024*1024){
+
+showToast("Photo must be under 5MB.");
+
+event.target.value="";
+
+return;
+
 }
 
-function openProfile(index){
-const c=characters[index];
+const reader=new FileReader();
 
-document.getElementById("mTag").textContent=
-`${c.category.toUpperCase()} • ${c.universe.toUpperCase()}`;
+reader.onload=function(e){
 
-document.getElementById("mName").textContent=c.name;
-document.getElementById("mSub").textContent=c.type;
-document.getElementById("mPower").textContent=c.power+"/100";
-document.getElementById("mBar").style.width=c.power+"%";
+selectedImage=e.target.result;
 
-document.getElementById("identity").textContent=c.identity;
-document.getElementById("origin").textContent=c.origin;
-document.getElementById("first").textContent=c.first;
-document.getElementById("bio").textContent=c.bio;
-document.getElementById("history").textContent=c.history;
-document.getElementById("powers").textContent=c.powers;
-document.getElementById("weapons").textContent=c.weapons;
-document.getElementById("forms").textContent=c.forms;
-document.getElementById("feats").textContent=c.feats;
-document.getElementById("weak").textContent=c.weak;
-document.getElementById("appear").textContent=c.appear;
+showToast("Photo selected ✓");
 
-document.getElementById("modal").classList.add("show");
-document.body.style.overflow="hidden";
-}
-
-function closeProfile(){
-document.getElementById("modal").classList.remove("show");
-document.body.style.overflow="";
-}
-
-document.getElementById("close").onclick=closeProfile;
-
-document.getElementById("modal").onclick=e=>{
-if(e.target.id==="modal")closeProfile();
 };
 
-document.addEventListener("keydown",e=>{
-if(e.key==="Escape")closeProfile();
+reader.readAsDataURL(file);
+
+}
+
+
+/* ================= LIKE ================= */
+
+function likePost(button){
+
+const post=button.closest(".post");
+
+const count=post.querySelector(".likes-count");
+
+let number=parseInt(count.textContent)||0;
+
+if(button.classList.contains("liked")){
+
+number--;
+
+button.classList.remove("liked");
+
+button.innerHTML="♡ Like";
+
+}else{
+
+number++;
+
+button.classList.add("liked");
+
+button.innerHTML="♥ Liked";
+
+}
+
+count.textContent=number+" Likes";
+
+savePosts();
+
+}
+
+
+/* ================= COMMENTS ================= */
+
+function toggleComments(button){
+
+const comments=button
+.closest(".post")
+.querySelector(".comments");
+
+comments.classList.toggle("show");
+
+}
+
+
+function addComment(button){
+
+const input=button.previousElementSibling;
+
+const text=input.value.trim();
+
+if(!text)return;
+
+const comments=button.closest(".comments");
+
+const form=button.closest(".comment-form");
+
+const comment=document.createElement("div");
+
+comment.className="comment";
+
+comment.innerHTML=`
+
+<div class="avatar"
+style="width:28px;height:28px;font-size:8px">
+J
+</div>
+
+<div class="comment-bubble">
+
+<b>Jony</b><br>
+
+${escapeHTML(text)}
+
+</div>
+
+`;
+
+comments.insertBefore(comment,form);
+
+input.value="";
+
+savePosts();
+
+}
+
+
+/* ================= SHARE ================= */
+
+function sharePost(button){
+
+const post=button.closest(".post");
+
+const text=post
+.querySelector(".post-content")
+?.innerText || "JARVIS Social post";
+
+if(navigator.share){
+
+navigator.share({
+
+title:"JARVIS Social",
+
+text:text
+
+}).catch(()=>{});
+
+}else{
+
+if(navigator.clipboard){
+
+navigator.clipboard.writeText(text);
+
+}
+
+showToast("Post text copied ✓");
+
+}
+
+}
+
+
+/* ================= SEARCH ================= */
+
+document
+.getElementById("searchInput")
+.addEventListener("input",function(){
+
+const query=this.value
+.toLowerCase()
+.trim();
+
+document
+.querySelectorAll(".post")
+.forEach(post=>{
+
+const match=post
+.innerText
+.toLowerCase()
+.includes(query);
+
+post.style.display=match?"":"none";
+
 });
 
-search.addEventListener("input",render);
-
-document.querySelectorAll(".filter").forEach(btn=>{
-btn.onclick=()=>{
-document.querySelectorAll(".filter").forEach(x=>x.classList.remove("active"));
-btn.classList.add("active");
-active=btn.dataset.filter;
-render();
-};
 });
 
-render();
+
+/* ================= THEME ================= */
+
+function toggleTheme(){
+
+document.body.classList.toggle("light");
+
+const light=document.body.classList.contains("light");
+
+localStorage.setItem("jarvisTheme",light?"light":"dark");
+
+const toggle=document.getElementById("themeToggle");
+
+if(toggle){
+
+toggle.classList.toggle("on",!light);
+
+}
+
+}
+
+
+/* ================= SETTING TOGGLE ================= */
+
+function toggleSetting(button){
+
+button.classList.toggle("on");
+
+}
+
+
+/* ================= FRIEND ================= */
+
+function confirmFriend(button){
+
+button.innerText="Added ✓";
+
+button.disabled=true;
+
+showToast("Friend request accepted.");
+
+}
+
+
+/* ================= EMOJI ================= */
+
+function addEmoji(){
+
+const textarea=document.getElementById("postText");
+
+textarea.value+=" 😊";
+
+textarea.focus();
+
+}
+
+
+/* ================= POST COUNT ================= */
+
+function updatePostCount(){
+
+const count=document
+.querySelectorAll("#feed .post")
+.length;
+
+const element=document.getElementById("postCount");
+
+if(element){
+
+element.textContent=count;
+
+}
+
+}
+
+
+/* ================= LOCAL STORAGE ================= */
+
+/*
+   This V1.1 stores the basic post information
+   in this browser only.
+*/
+
+function savePosts(){
+
+try{
+
+const posts=[...document.querySelectorAll("#feed .post")]
+.map(post=>({
+
+author:post.querySelector(".post-author")?.innerText||"",
+
+content:post.querySelector(".post-content")?.innerText||"",
+
+likes:post.querySelector(".likes-count")?.innerText||""
+
+}));
+
+localStorage.setItem(
+"jarvisSocialPosts",
+JSON.stringify(posts)
+);
+
+}catch(error){
+
+console.log("Storage unavailable");
+
+}
+
+}
+
+
+/* ================= TOAST ================= */
+
+function showToast(message){
+
+const toast=document.getElementById("toast");
+
+toast.textContent=message;
+
+toast.classList.add("show");
+
+clearTimeout(window.toastTimer);
+
+window.toastTimer=setTimeout(()=>{
+
+toast.classList.remove("show");
+
+},2200);
+
+}
+
+
+/* ================= ESCAPE ================= */
+
+function escapeHTML(text){
+
+const div=document.createElement("div");
+
+div.textContent=text;
+
+return div.innerHTML;
+
+}
+
+
+/* ================= LOAD THEME ================= */
+
+if(localStorage.getItem("jarvisTheme")==="light"){
+
+document.body.classList.add("light");
+
+const toggle=document.getElementById("themeToggle");
+
+if(toggle){
+
+toggle.classList.remove("on");
+
+}
+
+}
+
+
+/* ================= INIT ================= */
+
+updatePostCount();
+
 </script>
 
 </body>
