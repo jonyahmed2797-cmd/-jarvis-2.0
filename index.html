@@ -1,396 +1,740 @@
-81<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>JARVIS V10 — Ultimate Entertainment Database</title>
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>JARVIS — Character Encyclopedia</title>
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap"
+      rel="stylesheet">
+
 
 <style>
 
 /* =====================================================
-   JARVIS V10 — CORE THEME
-===================================================== */
+   JARVIS — PART 1
+   FOUNDATION + NAVBAR
+   ===================================================== */
+
+:root{
+
+    --bg:#050507;
+    --bg-soft:#090a0f;
+
+    --text:#f5f7ff;
+    --muted:#8d94a5;
+
+    --purple:#8b5cf6;
+    --cyan:#22d3ee;
+
+    --border:rgba(255,255,255,.09);
+
+    --glass:rgba(10,11,16,.72);
+
+}
+
+
+/* =====================================================
+   RESET
+   ===================================================== */
 
 *{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 html{
-  scroll-behavior:smooth;
+    scroll-behavior:smooth;
 }
 
 body{
-  background:
-    radial-gradient(circle at 50% -10%,#12303b 0,#05090d 45%,#020406 100%);
-  color:#eafcff;
-  font-family:Arial,Helvetica,sans-serif;
-  min-height:100vh;
+
+    min-height:100vh;
+
+    background:
+
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(139,92,246,.09),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(34,211,238,.06),
+            transparent 25%
+        ),
+
+        var(--bg);
+
+    color:var(--text);
+
+    font-family:
+        Inter,
+        Arial,
+        sans-serif;
+
+    overflow-x:hidden;
+
 }
 
 
-/* ---------- SCANLINE EFFECT ---------- */
+/* =====================================================
+   SUBTLE BACKGROUND GRID
+   ===================================================== */
 
-body:before{
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:9999;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      transparent,
-      transparent 3px,
-      rgba(0,234,255,.012) 4px
-    );
-}
+body::before{
 
+    content:"";
 
-/* ---------- HEADER ---------- */
+    position:fixed;
 
-.jv10-header{
-  position:sticky;
-  top:0;
-  z-index:1000;
-  border-bottom:1px solid #123c47;
-  background:rgba(3,9,13,.92);
-  backdrop-filter:blur(16px);
-}
+    inset:0;
 
-.jv10-nav{
-  width:min(1450px,94%);
-  margin:auto;
-  min-height:70px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-}
+    pointer-events:none;
 
-.jv10-logo{
-  font-size:22px;
-  font-weight:900;
-  letter-spacing:3px;
-  color:#00eaff;
-  text-shadow:0 0 18px #00eaff66;
-}
+    z-index:-1;
 
-.jv10-logo span{
-  color:#ffd43b;
-}
+    background-image:
 
-.jv10-menu{
-  display:flex;
-  gap:7px;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-}
+        linear-gradient(
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        ),
 
-.jv10-menu button{
-  border:1px solid #173e48;
-  background:#071219;
-  color:#9ec5cc;
-  border-radius:8px;
-  padding:9px 12px;
-  cursor:pointer;
-  transition:.2s;
-}
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        );
 
-.jv10-menu button:hover,
-.jv10-menu button.active{
-  border-color:#00eaff;
-  color:#00eaff;
-  box-shadow:0 0 14px #00eaff18;
-}
+    background-size:60px 60px;
 
-
-/* ---------- HERO ---------- */
-
-.jv10-hero{
-  width:min(1200px,94%);
-  margin:0 auto;
-  padding:100px 10px 70px;
-  text-align:center;
-}
-
-.jv10-status{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:8px 13px;
-  border:1px solid #1b5360;
-  border-radius:30px;
-  color:#73e5ef;
-  background:#07151b;
-  font-size:11px;
-  letter-spacing:2px;
-}
-
-.jv10-dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#00e676;
-  box-shadow:0 0 12px #00e676;
-}
-
-.jv10-hero h1{
-  margin:22px 0 8px;
-  font-size:clamp(50px,10vw,110px);
-  line-height:.9;
-  color:#f5fbff;
-  text-shadow:
-    0 0 20px #00eaff44,
-    0 0 60px #00eaff18;
-}
-
-.jv10-hero h1 span{
-  color:#ffd43b;
-}
-
-.jv10-hero h2{
-  font-size:clamp(14px,2vw,20px);
-  font-weight:400;
-  color:#78959e;
-  letter-spacing:5px;
-}
-
-.jv10-hero p{
-  max-width:720px;
-  margin:25px auto 0;
-  color:#7f969e;
-  line-height:1.8;
-}
-
-
-/* ---------- SEARCH ---------- */
-
-.jv10-search-area{
-  width:min(850px,94%);
-  margin:0 auto 45px;
-}
-
-.jv10-search{
-  width:100%;
-  padding:17px 20px;
-  border-radius:12px;
-  border:1px solid #1c4a55;
-  outline:none;
-  background:#07131a;
-  color:white;
-  font-size:15px;
-  box-shadow:0 10px 40px #0008;
-}
-
-.jv10-search:focus{
-  border-color:#00eaff;
-  box-shadow:
-    0 0 20px #00eaff18,
-    0 10px 40px #0008;
-}
-
-.jv10-search::placeholder{
-  color:#58717a;
-}
-
-
-/* ---------- MAIN ---------- */
-
-.jv10-main{
-  width:min(1450px,94%);
-  margin:auto;
-  padding-bottom:100px;
-}
-
-.jv10-section{
-  margin-bottom:70px;
-}
-
-.jv10-section-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  gap:20px;
-  margin-bottom:20px;
-}
-
-.jv10-section-head h2{
-  font-size:25px;
-}
-
-.jv10-section-head h2 span{
-  color:#ffd43b;
-}
-
-.jv10-section-head p{
-  color:#647f88;
-  font-size:12px;
-}
-
-
-/* ---------- DASHBOARD CARDS ---------- */
-
-.jv10-dashboard{
-  display:grid;
-  grid-template-columns:
-    repeat(4,1fr);
-  gap:15px;
-}
-
-.jv10-dash{
-  min-height:150px;
-  padding:22px;
-  border-radius:14px;
-  border:1px solid #14343d;
-  background:
-    linear-gradient(
-      145deg,
-      #091920,
-      #050b0f
-    );
-  cursor:pointer;
-  transition:.25s;
-}
-
-.jv10-dash:hover{
-  transform:translateY(-5px);
-  border-color:#00eaff;
-  box-shadow:0 18px 45px #000b;
-}
-
-.jv10-dash-icon{
-  font-size:30px;
-  margin-bottom:15px;
-}
-
-.jv10-dash h3{
-  margin-bottom:7px;
-}
-
-.jv10-dash p{
-  color:#6e8992;
-  font-size:12px;
-  line-height:1.5;
-}
-
-
-/* ---------- FEATURE GRID ---------- */
-
-.jv10-grid{
-  display:grid;
-  grid-template-columns:
-    repeat(4,1fr);
-  gap:15px;
-}
-
-.jv10-feature{
-  padding:25px;
-  border-radius:14px;
-  border:1px solid #14343d;
-  background:#071219;
-}
-
-.jv10-feature h3{
-  color:#00eaff;
-  margin-bottom:10px;
-}
-
-.jv10-feature p{
-  color:#758d95;
-  font-size:13px;
-  line-height:1.6;
-}
-
-
-/* ---------- FOOTER ---------- */
-
-.jv10-footer{
-  border-top:1px solid #12333c;
-  padding:35px 15px;
-  text-align:center;
-  color:#526d75;
-  font-size:12px;
-}
-
-.jv10-footer b{
-  color:#00eaff;
-}
-
-
-/* ---------- HIDDEN SECTIONS ---------- */
-
-.jv10-page{
-  display:none;
-}
-
-.jv10-page.active{
-  display:block;
-}
-
-
-/* ---------- TOAST ---------- */
-
-#jv10Toast{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  z-index:10000;
-  padding:13px 17px;
-  background:#07151b;
-  border:1px solid #00eaff;
-  border-radius:9px;
-  color:white;
-  transform:translateY(100px);
-  opacity:0;
-  transition:.25s;
-}
-
-#jv10Toast.show{
-  transform:translateY(0);
-  opacity:1;
-}
-
-
-/* ---------- MOBILE ---------- */
-
-@media(max-width:1000px){
-
-  .jv10-dashboard,
-  .jv10-grid{
-    grid-template-columns:
-      repeat(2,1fr);
-  }
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent 85%
+        );
 
 }
 
-@media(max-width:650px){
 
-  .jv10-nav{
-    flex-direction:column;
-    padding:14px 0;
-  }
+/* =====================================================
+   NAVBAR
+   ===================================================== */
 
-  .jv10-menu{
+.navbar{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+    right:0;
+
+    height:76px;
+
+    z-index:1000;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:
+        0 clamp(18px,5vw,70px);
+
+    background:
+        rgba(5,5,7,.68);
+
+    backdrop-filter:
+        blur(22px);
+
+    -webkit-backdrop-filter:
+        blur(22px);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.065);
+
+}
+
+
+/* =====================================================
+   LOGO
+   ===================================================== */
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    text-decoration:none;
+
+    color:white;
+
+    font-family:Orbitron,sans-serif;
+
+    font-size:19px;
+
+    font-weight:800;
+
+    letter-spacing:2px;
+
+    white-space:nowrap;
+
+}
+
+
+.logo-icon{
+
+    width:34px;
+    height:34px;
+
+    display:grid;
+
+    place-items:center;
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--purple),
+            var(--cyan)
+        );
+
+    box-shadow:
+
+        0 0 22px
+        rgba(139,92,246,.30);
+
+    font-size:14px;
+
+    color:white;
+
+}
+
+
+.logo span{
+
+    color:#a78bfa;
+
+}
+
+
+/* =====================================================
+   DESKTOP NAVIGATION
+   ===================================================== */
+
+.nav-links{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:28px;
+
+    margin-left:auto;
+
+    margin-right:28px;
+
+}
+
+
+.nav-links a{
+
+    position:relative;
+
+    color:#9da5b5;
+
+    text-decoration:none;
+
+    font-size:12px;
+
+    font-weight:600;
+
+    letter-spacing:.5px;
+
+    transition:
+        color .25s ease;
+
+}
+
+
+.nav-links a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:-9px;
+
+    width:0;
+
+    height:2px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius:20px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--purple),
+            var(--cyan)
+        );
+
+    transition:
+        width .25s ease;
+
+}
+
+
+.nav-links a:hover{
+
+    color:white;
+
+}
+
+
+.nav-links a:hover::after{
+
+    width:70%;
+
+}
+
+
+/* =====================================================
+   SEARCH
+   ===================================================== */
+
+.nav-search{
+
+    width:190px;
+
+    height:40px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:9px;
+
+    padding:0 12px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.035);
+
+    transition:
+        border-color .25s,
+        background .25s,
+        box-shadow .25s;
+
+}
+
+
+.nav-search:focus-within{
+
+    border-color:
+        rgba(139,92,246,.55);
+
+    background:
+        rgba(139,92,246,.055);
+
+    box-shadow:
+        0 0 25px
+        rgba(139,92,246,.08);
+
+}
+
+
+.search-icon{
+
+    color:#747d8e;
+
+    font-size:14px;
+
+}
+
+
+.nav-search input{
+
+    width:100%;
+
+    border:0;
+
+    outline:0;
+
+    background:none;
+
+    color:white;
+
+    font-size:11px;
+
+}
+
+
+.nav-search input::placeholder{
+
+    color:#687080;
+
+}
+
+
+/* =====================================================
+   MOBILE MENU BUTTON
+   ===================================================== */
+
+.menu-button{
+
+    display:none;
+
+    width:40px;
+    height:40px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius:11px;
+
+    background:
+        rgba(255,255,255,.04);
+
+    color:white;
+
+    cursor:pointer;
+
+    font-size:20px;
+
+}
+
+
+/* =====================================================
+   MOBILE MENU
+   ===================================================== */
+
+.mobile-menu{
+
+    position:fixed;
+
+    top:76px;
+
+    left:0;
+    right:0;
+
+    z-index:999;
+
+    padding:15px 18px 22px;
+
+    background:
+        rgba(5,5,7,.94);
+
+    backdrop-filter:
+        blur(25px);
+
+    -webkit-backdrop-filter:
+        blur(25px);
+
+    border-bottom:
+        1px solid
+        var(--border);
+
+    transform:
+        translateY(-120%);
+
+    opacity:0;
+
+    pointer-events:none;
+
+    transition:
+        transform .35s ease,
+        opacity .35s ease;
+
+}
+
+
+.mobile-menu.active{
+
+    transform:
+        translateY(0);
+
+    opacity:1;
+
+    pointer-events:auto;
+
+}
+
+
+.mobile-menu a{
+
+    display:block;
+
+    padding:14px 5px;
+
+    color:#aeb5c4;
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    font-weight:600;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.045);
+
+}
+
+
+.mobile-menu a:last-child{
+
+    border-bottom:0;
+
+}
+
+
+.mobile-menu a:hover{
+
+    color:white;
+
+}
+
+
+/* =====================================================
+   EMPTY FOUNDATION AREA
+   ===================================================== */
+
+.foundation{
+
+    min-height:100vh;
+
+    padding-top:76px;
+
+    display:flex;
+
+    align-items:center;
+
     justify-content:center;
-  }
 
-  .jv10-hero{
-    padding-top:65px;
-  }
+    text-align:center;
 
-  .jv10-dashboard,
-  .jv10-grid{
-    grid-template-columns:1fr;
-  }
+}
 
-  .jv10-section-head{
-    align-items:flex-start;
-    flex-direction:column;
-  }
+
+.foundation-content{
+
+    padding:30px;
+
+}
+
+
+.foundation-label{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:7px 12px;
+
+    border:
+        1px solid
+        rgba(139,92,246,.22);
+
+    border-radius:100px;
+
+    background:
+        rgba(139,92,246,.06);
+
+    color:#a78bfa;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    letter-spacing:1.5px;
+
+}
+
+
+.status-dot{
+
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:#8b5cf6;
+
+    box-shadow:
+        0 0 12px #8b5cf6;
+
+}
+
+
+.foundation h1{
+
+    margin-top:20px;
+
+    font-family:Orbitron,sans-serif;
+
+    font-size:
+        clamp(35px,6vw,65px);
+
+    letter-spacing:-2px;
+
+}
+
+
+.foundation h1 span{
+
+    background:
+        linear-gradient(
+            90deg,
+            #ffffff,
+            #a78bfa,
+            #67e8f9
+        );
+
+    -webkit-background-clip:text;
+
+    background-clip:text;
+
+    color:transparent;
+
+}
+
+
+.foundation p{
+
+    max-width:540px;
+
+    margin:
+        18px auto 0;
+
+    color:var(--muted);
+
+    font-size:14px;
+
+    line-height:1.8;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media(max-width:1050px){
+
+    .nav-links{
+
+        gap:18px;
+
+        margin-right:18px;
+
+    }
+
+    .nav-search{
+
+        width:160px;
+
+    }
+
+}
+
+
+@media(max-width:800px){
+
+    .nav-links{
+
+        display:none;
+
+    }
+
+    .nav-search{
+
+        display:none;
+
+    }
+
+    .menu-button{
+
+        display:block;
+
+    }
+
+}
+
+
+@media(max-width:480px){
+
+    .navbar{
+
+        height:68px;
+
+        padding:
+            0 16px;
+
+    }
+
+    .logo{
+
+        font-size:16px;
+
+    }
+
+    .logo-icon{
+
+        width:32px;
+        height:32px;
+
+    }
+
+    .mobile-menu{
+
+        top:68px;
+
+    }
+
+    .foundation{
+
+        padding-top:68px;
+
+    }
+
+    .foundation h1{
+
+        font-size:35px;
+
+    }
 
 }
 
@@ -403,3928 +747,257 @@ body:before{
 
 
 <!-- =====================================================
-     HEADER
-===================================================== -->
+     NAVBAR
+     ===================================================== -->
 
-<header class="jv10-header">
+<header class="navbar">
 
-  <nav class="jv10-nav">
 
-    <div class="jv10-logo">
-      JARVIS<span>V10</span>
+    <!-- LOGO -->
+
+    <a href="#" class="logo">
+
+        <div class="logo-icon">
+            J
+        </div>
+
+        JARVIS<span>.</span>
+
+    </a>
+
+
+
+    <!-- DESKTOP LINKS -->
+
+    <nav class="nav-links">
+
+        <a href="#characters">
+            CHARACTERS
+        </a>
+
+        <a href="#heroes">
+            HEROES
+        </a>
+
+        <a href="#villains">
+            VILLAINS
+        </a>
+
+        <a href="#universes">
+            UNIVERSES
+        </a>
+
+        <a href="#power">
+            POWER INDEX
+        </a>
+
+    </nav>
+
+
+
+    <!-- SEARCH -->
+
+    <div class="nav-search">
+
+        <span class="search-icon">
+            ⌕
+        </span>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search character..."
+        >
+
     </div>
 
-    <div class="jv10-menu">
 
-      <button
-        class="active"
-        onclick="jv10Go('home',this)"
-      >
-        🏠 HOME
-      </button>
 
-      <button
-        onclick="jv10Go('movies',this)"
-      >
-        🎬 MOVIES
-      </button>
+    <!-- MOBILE BUTTON -->
 
-      <button
-        onclick="jv10Go('anime',this)"
-      >
-        🍥 ANIME
-      </button>
+    <button
+        class="menu-button"
+        id="menuButton"
+        aria-label="Open menu">
 
-      <button
-        onclick="jv10Go('series',this)"
-      >
-        📺 TV SERIES
-      </button>
+        ☰
 
-      <button
-        onclick="jv10Go('marvel',this)"
-      >
-        🦸 MARVEL
-      </button>
-
-      <button
-        onclick="jv10Go('collection',this)"
-      >
-        ❤️ COLLECTION
-      </button>
-
-    </div>
-
-  </nav>
+    </button>
 
 </header>
 
 
 
 <!-- =====================================================
-     HOME
-===================================================== -->
+     MOBILE NAV
+     ===================================================== -->
 
-<main>
+<div
+    class="mobile-menu"
+    id="mobileMenu">
 
-<section
-  id="jv10-home"
-  class="jv10-page active"
->
+    <a href="#characters">
+        CHARACTERS
+    </a>
 
-  <div class="jv10-hero">
+    <a href="#heroes">
+        HEROES
+    </a>
 
-    <div class="jv10-status">
+    <a href="#villains">
+        VILLAINS
+    </a>
 
-      <span class="jv10-dot"></span>
+    <a href="#universes">
+        UNIVERSES
+    </a>
 
-      JARVIS ENTERTAINMENT SYSTEM ONLINE
+    <a href="#power">
+        POWER INDEX
+    </a>
 
-    </div>
-
-
-    <h1>
-      JAR<span>VIS</span>
-    </h1>
-
-
-    <h2>
-      YOUR PERSONAL ENTERTAINMENT DATABASE
-    </h2>
-
-
-    <p>
-
-      Marvel • Movies • Anime • TV Series
-
-      <br>
-
-      Posters • Ratings • Facts • Watchlist
-
-    </p>
-
-  </div>
-
-
-  <div class="jv10-search-area">
-
-    <input
-      id="jv10GlobalSearch"
-      class="jv10-search"
-      type="search"
-      placeholder="🔎 Search movies, anime, TV series..."
-      oninput="jv10Search(this.value)"
-    >
-
-  </div>
-
-
-  <div class="jv10-main">
-
-
-    <!-- DASHBOARD -->
-
-    <section class="jv10-section">
-
-      <div class="jv10-section-head">
-
-        <div>
-
-          <h2>
-            ⚡ <span>COMMAND</span> CENTER
-          </h2>
-
-          <p>
-            Select a database to continue
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="jv10-dashboard">
-
-
-        <div
-          class="jv10-dash"
-          onclick="jv10GoByName('movies')"
-        >
-
-          <div class="jv10-dash-icon">
-            🎬
-          </div>
-
-          <h3>
-            MOVIE UNIVERSE
-          </h3>
-
-          <p>
-            Movies, posters, ratings,
-            trailers and facts.
-          </p>
-
-        </div>
-
-
-        <div
-          class="jv10-dash"
-          onclick="jv10GoByName('anime')"
-        >
-
-          <div class="jv10-dash-icon">
-            🍥
-          </div>
-
-          <h3>
-            ANIME UNIVERSE
-          </h3>
-
-          <p>
-            Top anime movies and
-            series with posters.
-          </p>
-
-        </div>
-
-
-        <div
-          class="jv10-dash"
-          onclick="jv10GoByName('series')"
-        >
-
-          <div class="jv10-dash-icon">
-            📺
-          </div>
-
-          <h3>
-            TV SERIES
-          </h3>
-
-          <p>
-            Top 100 series,
-            ratings and watchlist.
-          </p>
-
-        </div>
-
-
-        <div
-          class="jv10-dash"
-          onclick="jv10GoByName('marvel')"
-        >
-
-          <div class="jv10-dash-icon">
-            🦸
-          </div>
-
-          <h3>
-            MARVEL UNIVERSE
-          </h3>
-
-          <p>
-            MCU watch order,
-            characters and facts.
-          </p>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- FEATURES -->
-
-    <section class="jv10-section">
-
-      <div class="jv10-section-head">
-
-        <div>
-
-          <h2>
-            🧠 <span>JARVIS</span> FEATURES
-          </h2>
-
-          <p>
-            V10 entertainment system
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="jv10-grid">
-
-
-        <div class="jv10-feature">
-
-          <h3>
-            🖼️ Posters
-          </h3>
-
-          <p>
-            High-quality movie, anime
-            and series artwork.
-          </p>
-
-        </div>
-
-
-        <div class="jv10-feature">
-
-          <h3>
-            ⭐ Ratings
-          </h3>
-
-          <p>
-            Ratings and rankings for
-            your favorite titles.
-          </p>
-
-        </div>
-
-
-        <div class="jv10-feature">
-
-          <h3>
-            🧠 Facts
-          </h3>
-
-          <p>
-            Interesting facts and
-            detailed information.
-          </p>
-
-        </div>
-
-
-        <div class="jv10-feature">
-
-          <h3>
-            ❤️ Collection
-          </h3>
-
-          <p>
-            Save favorites and track
-            what you have watched.
-          </p>
-
-        </div>
-
-
-        <div class="jv10-feature">
-
-          <h3>
-            ▶️ Trailer
-          </h3>
-
-          <p>
-            Official trailer search
-            for movies and series.
-          </p>
-
-        </div>
-
-
-        <div class="jv10-feature">
-
-          <h3>
-            🔗 Where To Watch
-          </h3>
-
-          <p>
-            Find legal streaming,
-            rental and purchase options.
-          </p>
-
-        </div>
-
-
-        <div class="jv10-feature">
-
-          <h3>
-            📥 Legal Download
-          </h3>
-
-          <p>
-            Official digital download
-            or purchase options when available.
-          </p>
-
-        </div>
-
-
-        <div class="jv10-feature">
-
-          <h3>
-            📱 Mobile Ready
-          </h3>
-
-          <p>
-            Designed to work smoothly
-            on phones, tablets and desktop.
-          </p>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-  </div>
-
-</section>
+</div>
 
 
 
 <!-- =====================================================
-     EMPTY MODULES
-     PART 2 WILL FILL THESE
-===================================================== -->
+     TEMPORARY FOUNDATION
+     ===================================================== -->
 
-<section
-  id="jv10-movies"
-  class="jv10-page"
->
+<main class="foundation">
 
-  <div class="jv10-main">
+    <div class="foundation-content">
 
-    <div class="jv10-hero">
+        <div class="foundation-label">
 
-      <h1>
-        🎬 <span>MOVIES</span>
-      </h1>
+            <span class="status-dot"></span>
 
-      <p>
-        Movie database loading in Part 2...
-      </p>
+            SYSTEM ONLINE
 
-    </div>
-
-  </div>
-
-</section>
+        </div>
 
 
+        <h1>
 
-<section
-  id="jv10-anime"
-  class="jv10-page"
->
+            THE ULTIMATE
+            <span>
+                CHARACTER
+            </span>
+            DATABASE
 
-  <div class="jv10-main">
+        </h1>
 
-    <div class="jv10-hero">
 
-      <h1>
-        🍥 <span>ANIME</span>
-      </h1>
+        <p>
 
-      <p>
-        Anime database loading in Part 2...
-      </p>
+            A premium encyclopedia for legendary heroes,
+            villains and powerful characters from across
+            different universes.
+
+        </p>
 
     </div>
-
-  </div>
-
-</section>
-
-
-
-<section
-  id="jv10-series"
-  class="jv10-page"
->
-
-  <div class="jv10-main">
-
-    <div class="jv10-hero">
-
-      <h1>
-        📺 <span>TV SERIES</span>
-      </h1>
-
-      <p>
-        Top 100 TV Series loading in Part 2...
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-
-<section
-  id="jv10-marvel"
-  class="jv10-page"
->
-
-  <div class="jv10-main">
-
-    <div class="jv10-hero">
-
-      <h1>
-        🦸 <span>MARVEL</span>
-      </h1>
-
-      <p>
-        Marvel Universe loading in Part 2...
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-
-<section
-  id="jv10-collection"
-  class="jv10-page"
->
-
-  <div class="jv10-main">
-
-    <div class="jv10-hero">
-
-      <h1>
-        ❤️ <span>COLLECTION</span>
-      </h1>
-
-      <p>
-        Your saved movies, anime and
-        series will appear here.
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
 
 </main>
 
 
 
 <!-- =====================================================
-     FOOTER
-===================================================== -->
-
-<footer class="jv10-footer">
-
-  <b>JARVIS V10</b>
-
-  • Personal Entertainment Database
-
-  <br><br>
-
-  Built for Jony ⚡
-
-</footer>
-
-
-<div id="jv10Toast"></div>
-
-
+     JAVASCRIPT
+     ===================================================== -->
 
 <script>
 
-/* =====================================================
-   JARVIS V10 — CORE NAVIGATION
-===================================================== */
-
-function jv10Go(page,button){
-
-  document
-    .querySelectorAll(".jv10-page")
-    .forEach(
-      x=>x.classList.remove("active")
-    );
-
-
-  const target =
-    document.getElementById(
-      "jv10-"+page
-    );
-
-
-  if(target){
-
-    target.classList.add("active");
-
-  }
-
-
-  document
-    .querySelectorAll(".jv10-menu button")
-    .forEach(
-      x=>x.classList.remove("active")
-    );
-
-
-  if(button){
-
-    button.classList.add("active");
-
-  }
-
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-}
-
-
-function jv10GoByName(page){
-
-  const buttons =
-    document.querySelectorAll(
-      ".jv10-menu button"
-    );
-
-
-  let targetButton=null;
-
-
-  buttons.forEach(button=>{
-
-    if(
-      button
-      .getAttribute("onclick")
-      ?.includes("'"+page+"'")
-    ){
-
-      targetButton=button;
-
-    }
-
-  });
-
-
-  jv10Go(
-    page,
-    targetButton
-  );
-
-}
-
 
 /* =====================================================
-   GLOBAL SEARCH
-===================================================== */
+   MOBILE MENU
+   ===================================================== */
 
-function jv10Search(value){
+const menuButton =
+    document.getElementById("menuButton");
 
-  const query =
-    value.trim().toLowerCase();
+const mobileMenu =
+    document.getElementById("mobileMenu");
 
 
-  if(!query){
+menuButton.addEventListener(
+    "click",
+    () => {
 
-    return;
-
-  }
-
-
-  /*
-    Part 2 will connect this search
-    to Movies / Anime / TV databases.
-  */
-
-  console.log(
-    "JARVIS SEARCH:",
-    query
-  );
-
-}
-
-
-/* =====================================================
-   TOAST
-===================================================== */
-
-function jv10Toast(message){
-
-  const toast =
-    document.getElementById(
-      "jv10Toast"
-    );
-
-
-  toast.textContent=message;
-
-  toast.classList.add("show");
-
-
-  setTimeout(()=>{
-
-    toast.classList.remove("show");
-
-  },2200);
-
-}
-
-
-console.log(
-  "⚡ JARVIS V10 CORE ONLINE"
-);
-
-</script>
-<!-- =====================================================
-     JARVIS V10 — PART 2
-     MOVIES + ANIME + TV SERIES + MARVEL
-===================================================== -->
-
-<style>
-
-.jv10-library{
-  width:min(1450px,94%);
-  margin:auto;
-  padding:35px 0 90px;
-}
-
-.jv10-library-title{
-  margin-bottom:25px;
-}
-
-.jv10-library-title h1{
-  font-size:clamp(35px,6vw,65px);
-  margin-bottom:8px;
-}
-
-.jv10-library-title h1 span{
-  color:#ffd43b;
-}
-
-.jv10-library-title p{
-  color:#718991;
-}
-
-.jv10-tabs{
-  display:flex;
-  gap:8px;
-  overflow-x:auto;
-  padding-bottom:10px;
-  margin-bottom:25px;
-}
-
-.jv10-tab{
-  flex:0 0 auto;
-  padding:10px 15px;
-  border-radius:8px;
-  border:1px solid #173d47;
-  background:#071219;
-  color:#8ba7ae;
-  cursor:pointer;
-}
-
-.jv10-tab.active,
-.jv10-tab:hover{
-  color:#00eaff;
-  border-color:#00eaff;
-}
-
-.jv10-library-grid{
-  display:grid;
-  grid-template-columns:
-    repeat(6,1fr);
-  gap:16px;
-}
-
-.jv10-card{
-  position:relative;
-  overflow:hidden;
-  border-radius:13px;
-  background:#071117;
-  border:1px solid #14343d;
-  transition:.25s;
-}
-
-.jv10-card:hover{
-  transform:translateY(-5px);
-  border-color:#00eaff;
-  box-shadow:0 15px 35px #000b;
-}
-
-.jv10-poster{
-  width:100%;
-  aspect-ratio:2/3;
-  object-fit:cover;
-  display:block;
-  background:#0b171c;
-}
-
-.jv10-card-body{
-  padding:12px;
-}
-
-.jv10-card-title{
-  font-size:14px;
-  font-weight:700;
-  line-height:1.35;
-  min-height:38px;
-}
-
-.jv10-card-meta{
-  display:flex;
-  justify-content:space-between;
-  gap:5px;
-  margin-top:8px;
-  font-size:11px;
-  color:#7f9ba3;
-}
-
-.jv10-rating{
-  color:#ffd43b;
-}
-
-.jv10-card-buttons{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:6px;
-  margin-top:10px;
-}
-
-.jv10-card-btn{
-  border:1px solid #214a55;
-  background:#09181e;
-  color:#a8d9df;
-  border-radius:7px;
-  padding:7px 3px;
-  font-size:10px;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-.jv10-card-btn:hover{
-  border-color:#00eaff;
-  color:#00eaff;
-}
-
-.jv10-fav{
-  position:absolute;
-  top:8px;
-  right:8px;
-  width:34px;
-  height:34px;
-  border-radius:50%;
-  border:1px solid #ffffff35;
-  background:#000a;
-  color:white;
-  cursor:pointer;
-  backdrop-filter:blur(5px);
-}
-
-.jv10-fav.saved{
-  color:#ff4960;
-  border-color:#ff4960;
-}
-
-.jv10-badge{
-  position:absolute;
-  top:8px;
-  left:8px;
-  padding:5px 8px;
-  border-radius:6px;
-  background:#000b;
-  border:1px solid #ffffff25;
-  color:#ffd43b;
-  font-size:9px;
-  font-weight:bold;
-}
-
-.jv10-empty{
-  padding:50px;
-  text-align:center;
-  color:#627b83;
-  border:1px dashed #21434b;
-  border-radius:12px;
-}
-
-@media(max-width:1200px){
-
-  .jv10-library-grid{
-    grid-template-columns:
-      repeat(5,1fr);
-  }
-
-}
-
-@media(max-width:900px){
-
-  .jv10-library-grid{
-    grid-template-columns:
-      repeat(4,1fr);
-  }
-
-}
-
-@media(max-width:650px){
-
-  .jv10-library-grid{
-    grid-template-columns:
-      repeat(2,1fr);
-  }
-
-}
-
-</style>
-
-
-<script>
-
-/* =====================================================
-   DATABASE
-===================================================== */
-
-
-/* ---------- MOVIES ---------- */
-
-const JARVIS_MOVIES = [
-
-  ["Iron Man","2008",7.9,"https://image.tmdb.org/t/p/w500/78lPtwv72eTNqFW9COBYI0dWDJa.jpg"],
-
-  ["The Incredible Hulk","2008",6.6,"https://image.tmdb.org/t/p/w500/gKzYx79y0AQTL4UAkJ3QnB9Fj4F.jpg"],
-
-  ["Iron Man 2","2010",6.8,"https://image.tmdb.org/t/p/w500/6WBeq4fCfn7ANtbhD6X5F8Wm2mV.jpg"],
-
-  ["Thor","2011",7.0,"https://image.tmdb.org/t/p/w500/prSfAi1xGrhLQNxVSUFh61xQ4Qy.jpg"],
-
-  ["Captain America: The First Avenger","2011",7.0,"https://image.tmdb.org/t/p/w500/vSNxAJTlD0r02V9sPYpOjqDZXGe.jpg"],
-
-  ["The Avengers","2012",8.0,"https://image.tmdb.org/t/p/w500/RYMX2wcKCBAr24UyPD7xwmjaTn.jpg"],
-
-  ["Iron Man 3","2013",7.1,"https://image.tmdb.org/t/p/w500/qhTqZ6L1vX9TzT9Vj5T2b7k6W6.jpg"],
-
-  ["Thor: The Dark World","2013",6.8,"https://image.tmdb.org/t/p/w500/wp6OxE4poJ4G7c0U2Z8Qf1K8.jpg"],
-
-  ["Captain America: The Winter Soldier","2014",7.7,"https://image.tmdb.org/t/p/w500/tVFRpFw3xTedgPGqxW0AOI8Qhh0.jpg"],
-
-  ["Guardians of the Galaxy","2014",8.0,"https://image.tmdb.org/t/p/w500/r7vmZjiyZw9rpJMQJdXpjgiCOk9.jpg"],
-
-  ["Avengers: Age of Ultron","2015",7.3,"https://image.tmdb.org/t/p/w500/4ssDuvEDkSArWEdyBl2X5EHv6Gv.jpg"],
-
-  ["Ant-Man","2015",7.0,"https://image.tmdb.org/t/p/w500/rQRnQfUl3k5Rh5y9LOV3Zd7F8.jpg"],
-
-  ["Captain America: Civil War","2016",7.8,"https://image.tmdb.org/t/p/w500/rAGiXaUfPzY7CDEyNKUofk3G.jpg"],
-
-  ["Doctor Strange","2016",7.5,"https://image.tmdb.org/t/p/w500/uGBVj3bEbCoqSiN1H3M1c7r8M.jpg"],
-
-  ["Guardians of the Galaxy Vol. 2","2017",7.6,"https://image.tmdb.org/t/p/w500/y4MBh0EjBlMuOzv9axM4qJf3.jpg"],
-
-  ["Spider-Man: Homecoming","2017",7.4,"https://image.tmdb.org/t/p/w500/c24sv2weTHPsmDa7jEMN0m2.jpg"],
-
-  ["Thor: Ragnarok","2017",7.9,"https://image.tmdb.org/t/p/w500/rzRwTcFvttcN1ZpX2xv0V.jpg"],
-
-  ["Black Panther","2018",7.4,"https://image.tmdb.org/t/p/w500/uxzzxijgPIY7slzFvMotPv8wjKA.jpg"],
-
-  ["Avengers: Infinity War","2018",8.2,"https://image.tmdb.org/t/p/w500/7WsyChQLEftFiDOVTGkv3hFQ.jpg"],
-
-  ["Ant-Man and the Wasp","2018",7.0,"https://image.tmdb.org/t/p/w500/cFQH0L5T7F4Qx7Z.jpg"],
-
-  ["Captain Marvel","2019",6.8,"https://image.tmdb.org/t/p/w500/AtsgWhDnHTq68L0lLsUr.jpg"],
-
-  ["Avengers: Endgame","2019",8.3,"https://image.tmdb.org/t/p/w500/or06FN3Dka5tukK1e9sl16pB3iy.jpg"],
-
-  ["Spider-Man: Far From Home","2019",7.4,"https://image.tmdb.org/t/p/w500/4q2NNj4S5d7k3.jpg"],
-
-  ["Black Widow","2021",6.7,"https://image.tmdb.org/t/p/w500/qAZ0pzat24kLdO3o4.jpg"],
-
-  ["Shang-Chi and the Legend of the Ten Rings","2021",7.4,"https://image.tmdb.org/t/p/w500/1BIoJGKbXjdFDAqUEiA6uk.jpg"],
-
-  ["Eternals","2021",6.3,"https://image.tmdb.org/t/p/w500/lFByFSLV5WDJEv3KabBdQ.jpg"],
-
-  ["Spider-Man: No Way Home","2021",8.2,"https://image.tmdb.org/t/p/w500/1g0dhYtq4irTY1GPXvft6k4.jpg"],
-
-  ["Doctor Strange in the Multiverse of Madness","2022",6.9,"https://image.tmdb.org/t/p/w500/9Gtg2DzBhmYamXBS1hKaW.jpg"],
-
-  ["Thor: Love and Thunder","2022",6.2,"https://image.tmdb.org/t/p/w500/pIkRyD18kl4FhoCNQuWxWu5c.jpg"],
-
-  ["Black Panther: Wakanda Forever","2022",7.0,"https://image.tmdb.org/t/p/w500/sv1xJUazXeYqALzczSZ3O6nkH.jpg"],
-
-  ["Ant-Man and the Wasp: Quantumania","2023",6.0,"https://image.tmdb.org/t/p/w500/qnqGbB22YJ7.jpg"],
-
-  ["Guardians of the Galaxy Vol. 3","2023",7.9,"https://image.tmdb.org/t/p/w500/r2J02Z2OpNTctfOSN1Ydgii51I.jpg"],
-
-  ["The Marvels","2023",5.5,"https://image.tmdb.org/t/p/w500/9GBhzXMFjgcZ3FdR9wJYqY3.jpg"]
-
-];
-
-
-/* ---------- ANIME ---------- */
-
-const JARVIS_ANIME = [
-
-  ["One Piece","Series",9.0,"https://cdn.myanimelist.net/images/anime/1244/138851.jpg"],
-
-  ["Attack on Titan","Series",9.1,"https://cdn.myanimelist.net/images/anime/10/47347.jpg"],
-
-  ["Demon Slayer","Series",8.6,"https://cdn.myanimelist.net/images/anime/1286/99889.jpg"],
-
-  ["Death Note","Series",8.6,"https://cdn.myanimelist.net/images/anime/9/9453.jpg"],
-
-  ["Naruto: Shippuden","Series",8.6,"https://cdn.myanimelist.net/images/anime/1565/111305.jpg"],
-
-  ["Jujutsu Kaisen","Series",8.6,"https://cdn.myanimelist.net/images/anime/1171/109222.jpg"],
-
-  ["My Hero Academia","Series",8.0,"https://cdn.myanimelist.net/images/anime/10/78745.jpg"],
-
-  ["Hunter x Hunter","Series",9.0,"https://cdn.myanimelist.net/images/anime/1337/99013.jpg"],
-
-  ["Fullmetal Alchemist: Brotherhood","Series",9.1,"https://cdn.myanimelist.net/images/anime/1223/96541.jpg"],
-
-  ["Tokyo Ghoul","Series",7.7,"https://cdn.myanimelist.net/images/anime/1498/134443.jpg"],
-
-  ["Your Name","Movie",8.8,"https://cdn.myanimelist.net/images/anime/5/87048.jpg"],
-
-  ["A Silent Voice","Movie",8.9,"https://cdn.myanimelist.net/images/anime/1122/96435.jpg"],
-
-  ["Weathering With You","Movie",8.3,"https://cdn.myanimelist.net/images/anime/1341/101362.jpg"],
-
-  ["I Want to Eat Your Pancreas","Movie",8.5,"https://cdn.myanimelist.net/images/anime/1176/92110.jpg"],
-
-  ["Suzume","Movie",8.2,"https://cdn.myanimelist.net/images/anime/1598/132696.jpg"],
-
-  ["Spirited Away","Movie",8.8,"https://cdn.myanimelist.net/images/anime/6/79597.jpg"],
-
-  ["Howl's Moving Castle","Movie",8.7,"https://cdn.myanimelist.net/images/anime/5/75810.jpg"],
-
-  ["Your Lie in April","Series",8.6,"https://cdn.myanimelist.net/images/anime/3/67177.jpg"],
-
-  ["Haikyuu!!","Series",8.7,"https://cdn.myanimelist.net/images/anime/7/76014.jpg"],
-
-  ["Vinland Saga","Series",8.8,"https://cdn.myanimelist.net/images/anime/1500/103005.jpg"]
-
-];
-
-
-/* ---------- TV SERIES ---------- */
-
-const JARVIS_SERIES = [
-
-  ["Breaking Bad",9.5,"https://image.tmdb.org/t/p/w500/ztkUQFLlC1T1.jpg"],
-
-  ["Game of Thrones",9.2,"https://image.tmdb.org/t/p/w500/1XS1oqL89opfnbLl8WnZY1O1.jpg"],
-
-  ["The Sopranos",9.2,"https://image.tmdb.org/t/p/w500/rTc7ZXdroqjkKIVFjCwW0.jpg"],
-
-  ["The Wire",9.3,"https://image.tmdb.org/t/p/w500/4lbclFySvugI51fwsyxBTo2h.jpg"],
-
-  ["Stranger Things",8.6,"https://image.tmdb.org/t/p/w500/x2LSRK2Cnvv9.jpg"],
-
-  ["Dark",8.7,"https://image.tmdb.org/t/p/w500/apbrbWs8M9lyOpJYU5WXrpFbk.jpg"],
-
-  ["Peaky Blinders",8.8,"https://image.tmdb.org/t/p/w500/vUUqzWa2LnHIVqkaKVlVGk.jpg"],
-
-  ["The Boys",8.7,"https://image.tmdb.org/t/p/w500/stTEycfG9928HYGEISBFaG.jpg"],
-
-  ["The Last of Us",8.7,"https://image.tmdb.org/t/p/w500/uKvVjHNqB5VmOrdxqAt2F7J.jpg"],
-
-  ["Sherlock",9.1,"https://image.tmdb.org/t/p/w500/7WTsnHkbA0FaG6.jpg"],
-
-  ["Friends",8.9,"https://image.tmdb.org/t/p/w500/f496cm9enuEsZkSP0.jpg"],
-
-  ["The Office",8.9,"https://image.tmdb.org/t/p/w500/qWnJzyZhyy74gjpSjIXWmuk.jpg"],
-
-  ["Better Call Saul",9.0,"https://image.tmdb.org/t/p/w500/fC2HDm5t0kHl7mTm7jxMR31b7.jpg"],
-
-  ["Narcos",8.7,"https://image.tmdb.org/t/p/w500/rTmal9fDbwh5F0waol2.jpg"],
-
-  ["Money Heist",8.2,"https://image.tmdb.org/t/p/w500/reEMJA1uzscCbkpeRJeTT2.jpg"],
-
-  ["The Walking Dead",8.1,"https://image.tmdb.org/t/p/w500/ng3c0m7.jpg"],
-
-  ["House of the Dragon",8.4,"https://image.tmdb.org/t/p/w500/z2yahl2uefxDCl0nogcRBstw.jpg"],
-
-  ["Succession",8.9,"https://image.tmdb.org/t/p/w500/7A0.jpg"],
-
-  ["Black Mirror",8.7,"https://image.tmdb.org/t/p/w500/7PRddO7z7mcPi21nZTCMGShAyy.jpg"],
-
-  ["The Mandalorian",8.5,"https://image.tmdb.org/t/p/w500/eWZsZ9.jpg"]
-
-];
-
-
-/* ---------- MARVEL WATCH ORDER ---------- */
-
-const JARVIS_MARVEL = [
-
-  ["Iron Man","2008",7.9],
-
-  ["The Incredible Hulk","2008",6.6],
-
-  ["Iron Man 2","2010",6.8],
-
-  ["Thor","2011",7.0],
-
-  ["Captain America: The First Avenger","2011",7.0],
-
-  ["The Avengers","2012",8.0],
-
-  ["Iron Man 3","2013",7.1],
-
-  ["Thor: The Dark World","2013",6.8],
-
-  ["Captain America: The Winter Soldier","2014",7.7],
-
-  ["Guardians of the Galaxy","2014",8.0],
-
-  ["Avengers: Age of Ultron","2015",7.3],
-
-  ["Ant-Man","2015",7.0],
-
-  ["Captain America: Civil War","2016",7.8],
-
-  ["Doctor Strange","2016",7.5],
-
-  ["Guardians of the Galaxy Vol. 2","2017",7.6],
-
-  ["Spider-Man: Homecoming","2017",7.4],
-
-  ["Thor: Ragnarok","2017",7.9],
-
-  ["Black Panther","2018",7.4],
-
-  ["Avengers: Infinity War","2018",8.2],
-
-  ["Avengers: Endgame","2019",8.3],
-
-  ["Spider-Man: Far From Home","2019",7.4],
-
-  ["Black Widow","2021",6.7],
-
-  ["Shang-Chi","2021",7.4],
-
-  ["Eternals","2021",6.3],
-
-  ["Spider-Man: No Way Home","2021",8.2],
-
-  ["Doctor Strange 2","2022",6.9],
-
-  ["Thor: Love and Thunder","2022",6.2],
-
-  ["Black Panther: Wakanda Forever","2022",7.0],
-
-  ["Ant-Man: Quantumania","2023",6.0],
-
-  ["Guardians of the Galaxy Vol. 3","2023",7.9],
-
-  ["The Marvels","2023",5.5]
-
-];
-
-
-/* =====================================================
-   BUILD LIBRARY
-===================================================== */
-
-function jv10CreateCard(
-  item,
-  type,
-  index
-){
-
-  let title,
-      year="",
-      rating,
-      poster;
-
-
-  if(type==="movie"){
-
-    title=item[0];
-    year=item[1];
-    rating=item[2];
-    poster=item[3];
-
-  }
-
-
-  if(type==="anime"){
-
-    title=item[0];
-    year=item[1];
-    rating=item[2];
-    poster=item[3];
-
-  }
-
-
-  if(type==="series"){
-
-    title=item[0];
-    year="";
-    rating=item[1];
-    poster=item[2];
-
-  }
-
-
-  const key =
-    type+"-"+index;
-
-
-  const saved =
-    JSON.parse(
-      localStorage.getItem(
-        "jv10Favorites"
-      ) || "[]"
-    );
-
-
-  const isSaved =
-    saved.includes(key);
-
-
-  return `
-
-    <article
-      class="jv10-card"
-      data-title="${title.toLowerCase()}"
-    >
-
-      <button
-        class="jv10-fav ${isSaved ? "saved":""}"
-        onclick="
-          jv10Favorite(
-            '${key}',
-            this
-          )
-        "
-      >
-        ${isSaved ? "♥":"♡"}
-      </button>
-
-
-      <div class="jv10-badge">
-
-        #${index+1}
-
-      </div>
-
-
-      <img
-        class="jv10-poster"
-        src="${poster}"
-        alt="${title}"
-        loading="lazy"
-        onerror="
-          this.src='https://via.placeholder.com/500x750/071117/00eaff?text=JARVIS'
-        "
-      >
-
-
-      <div class="jv10-card-body">
-
-        <div class="jv10-card-title">
-
-          ${title}
-
-        </div>
-
-
-        <div class="jv10-card-meta">
-
-          <span>
-            ${year}
-          </span>
-
-          <span class="jv10-rating">
-            ⭐ ${rating}
-          </span>
-
-        </div>
-
-
-        <div class="jv10-card-buttons">
-
-          <button
-            class="jv10-card-btn"
-            onclick="
-              jv10Trailer('${title.replace(/'/g,"\\'")}')
-            "
-          >
-            ▶ TRAILER
-          </button>
-
-
-          <button
-            class="jv10-card-btn"
-            onclick="
-              jv10Watch('${title.replace(/'/g,"\\'")}')
-            "
-          >
-            🔗 WATCH
-          </button>
-
-
-          <button
-            class="jv10-card-btn"
-            onclick="
-              jv10Fact('${title.replace(/'/g,"\\'")}')
-            "
-          >
-            🧠 FACT
-          </button>
-
-
-          <button
-            class="jv10-card-btn"
-            onclick="
-              jv10Watched(
-                '${key}',
-                this
-              )
-            "
-          >
-            ✓ WATCHED
-          </button>
-
-        </div>
-
-      </div>
-
-    </article>
-
-  `;
-
-}
-
-
-/* =====================================================
-   RENDER SECTION
-===================================================== */
-
-function jv10RenderLibrary(
-  elementId,
-  data,
-  type
-){
-
-  const box =
-    document.getElementById(
-      elementId
-    );
-
-
-  if(!box) return;
-
-
-  box.innerHTML =
-    data.map(
-      (item,index)=>
-        jv10CreateCard(
-          item,
-          type,
-          index
-        )
-    ).join("");
-
-}
-
-
-/* =====================================================
-   FAVORITES
-===================================================== */
-
-function jv10Favorite(
-  key,
-  button
-){
-
-  let saved =
-    JSON.parse(
-      localStorage.getItem(
-        "jv10Favorites"
-      ) || "[]"
-    );
-
-
-  if(saved.includes(key)){
-
-    saved =
-      saved.filter(
-        x=>x!==key
-      );
-
-    button.textContent="♡";
-    button.classList.remove("saved");
-
-  }else{
-
-    saved.push(key);
-
-    button.textContent="♥";
-    button.classList.add("saved");
-
-  }
-
-
-  localStorage.setItem(
-    "jv10Favorites",
-    JSON.stringify(saved)
-  );
-
-}
-
-
-/* =====================================================
-   WATCHED
-===================================================== */
-
-function jv10Watched(
-  key,
-  button
-){
-
-  let watched =
-    JSON.parse(
-      localStorage.getItem(
-        "jv10Watched"
-      ) || "[]"
-    );
-
-
-  if(watched.includes(key)){
-
-    watched =
-      watched.filter(
-        x=>x!==key
-      );
-
-    button.textContent="✓ WATCHED";
-
-  }else{
-
-    watched.push(key);
-
-    button.textContent="✓ DONE";
-
-  }
-
-
-  localStorage.setItem(
-    "jv10Watched",
-    JSON.stringify(watched)
-  );
-
-}
-
-
-/* =====================================================
-   CREATE LIBRARY HTML
-===================================================== */
-
-function jv10PreparePages(){
-
-  const pages = {
-
-    movies:`
-      <div class="jv10-library">
-
-        <div class="jv10-library-title">
-
-          <h1>
-            🎬 <span>MOVIES</span>
-          </h1>
-
-          <p>
-            JARVIS Movie Database
-          </p>
-
-        </div>
-
-
-        <div class="jv10-tabs">
-
-          <button
-            class="jv10-tab active"
-          >
-            🔥 Popular Movies
-          </button>
-
-          <button
-            class="jv10-tab"
-          >
-            ⭐ Top Rated
-          </button>
-
-        </div>
-
-
-        <div
-          id="jv10MovieGrid"
-          class="jv10-library-grid"
-        ></div>
-
-      </div>
-    `,
-
-
-    anime:`
-      <div class="jv10-library">
-
-        <div class="jv10-library-title">
-
-          <h1>
-            🍥 <span>ANIME</span>
-          </h1>
-
-          <p>
-            Top Anime Movies & Series
-          </p>
-
-        </div>
-
-
-        <div class="jv10-tabs">
-
-          <button
-            class="jv10-tab active"
-            onclick="jv10AnimeMode('all',this)"
-          >
-            🔥 Top Anime
-          </button>
-
-          <button
-            class="jv10-tab"
-            onclick="jv10AnimeMode('series',this)"
-          >
-            📺 Series
-          </button>
-
-          <button
-            class="jv10-tab"
-            onclick="jv10AnimeMode('movie',this)"
-          >
-            🎬 Movies
-          </button>
-
-        </div>
-
-
-        <div
-          id="jv10AnimeGrid"
-          class="jv10-library-grid"
-        ></div>
-
-      </div>
-    `,
-
-
-    series:`
-      <div class="jv10-library">
-
-        <div class="jv10-library-title">
-
-          <h1>
-            📺 <span>TV SERIES</span>
-          </h1>
-
-          <p>
-            Top TV Series Database
-          </p>
-
-        </div>
-
-
-        <div
-          id="jv10SeriesGrid"
-          class="jv10-library-grid"
-        ></div>
-
-      </div>
-    `,
-
-
-    marvel:`
-      <div class="jv10-library">
-
-        <div class="jv10-library-title">
-
-          <h1>
-            🦸 <span>MARVEL</span>
-          </h1>
-
-          <p>
-            MCU Release Watch Order
-          </p>
-
-        </div>
-
-
-        <div
-          id="jv10MarvelGrid"
-          class="jv10-library-grid"
-        ></div>
-
-      </div>
-    `
-
-  };
-
-
-  Object.keys(pages)
-    .forEach(page=>{
-
-      const section =
-        document.getElementById(
-          "jv10-"+page
-        );
-
-
-      if(section){
-
-        section.innerHTML =
-          pages[page];
-
-      }
-
-    });
-
-
-  jv10RenderLibrary(
-    "jv10MovieGrid",
-    JARVIS_MOVIES,
-    "movie"
-  );
-
-
-  jv10RenderLibrary(
-    "jv10AnimeGrid",
-    JARVIS_ANIME,
-    "anime"
-  );
-
-
-  jv10RenderLibrary(
-    "jv10SeriesGrid",
-    JARVIS_SERIES,
-    "series"
-  );
-
-
-  jv10RenderMarvel();
-
-}
-
-
-/* =====================================================
-   MARVEL RENDER
-===================================================== */
-
-function jv10RenderMarvel(){
-
-  const box =
-    document.getElementById(
-      "jv10MarvelGrid"
-    );
-
-
-  if(!box) return;
-
-
-  box.innerHTML =
-    JARVIS_MARVEL
-      .map((item,index)=>{
-
-        const title=item[0];
-        const year=item[1];
-        const rating=item[2];
-
-
-        const movie =
-          JARVIS_MOVIES.find(
-            x=>x[0]===title
-          );
-
-
-        const poster =
-          movie
-          ? movie[3]
-          : "https://via.placeholder.com/500x750/071117/00eaff?text=MARVEL";
-
-
-        return `
-
-          <article class="jv10-card">
-
-            <div class="jv10-badge">
-              MCU #${index+1}
-            </div>
-
-
-            <img
-              class="jv10-poster"
-              src="${poster}"
-              alt="${title}"
-              loading="lazy"
-            >
-
-
-            <div class="jv10-card-body">
-
-              <div class="jv10-card-title">
-                ${title}
-              </div>
-
-
-              <div class="jv10-card-meta">
-
-                <span>
-                  ${year}
-                </span>
-
-                <span class="jv10-rating">
-                  ⭐ ${rating}
-                </span>
-
-              </div>
-
-
-              <div class="jv10-card-buttons">
-
-                <button
-                  class="jv10-card-btn"
-                  onclick="
-                    jv10Trailer('${title.replace(/'/g,"\\'")}')
-                  "
-                >
-                  ▶ TRAILER
-                </button>
-
-
-                <button
-                  class="jv10-card-btn"
-                  onclick="
-                    jv10Watch('${title.replace(/'/g,"\\'")}')
-                  "
-                >
-                  🔗 WATCH
-                </button>
-
-              </div>
-
-            </div>
-
-          </article>
-
-        `;
-
-      })
-      .join("");
-
-}
-
-
-/* =====================================================
-   ANIME FILTER
-===================================================== */
-
-function jv10AnimeMode(
-  mode,
-  button
-){
-
-  document
-    .querySelectorAll(
-      "#jv10-anime .jv10-tab"
-    )
-    .forEach(
-      x=>x.classList.remove("active")
-    );
-
-
-  if(button)
-    button.classList.add("active");
-
-
-  let data =
-    JARVIS_ANIME;
-
-
-  if(mode==="series"){
-
-    data =
-      JARVIS_ANIME.filter(
-        x=>x[1]==="Series"
-      );
-
-  }
-
-
-  if(mode==="movie"){
-
-    data =
-      JARVIS_ANIME.filter(
-        x=>x[1]==="Movie"
-      );
-
-  }
-
-
-  jv10RenderLibrary(
-    "jv10AnimeGrid",
-    data,
-    "anime"
-  );
-
-}
-
-
-/* =====================================================
-   GLOBAL SEARCH
-===================================================== */
-
-function jv10SearchAll(
-  query
-){
-
-  query =
-    query.trim().toLowerCase();
-
-
-  document
-    .querySelectorAll(
-      ".jv10-card"
-    )
-    .forEach(card=>{
-
-      const title =
-        card.dataset.title || "";
-
-
-      card.style.display =
-        !query ||
-        title.includes(query)
-        ? ""
-        : "none";
-
-    });
-
-}
-
-
-/* Connect search */
-
-const jv10OriginalSearch =
-  window.jv10Search;
-
-
-window.jv10Search =
-  function(value){
-
-    jv10SearchAll(value);
-
-  };
-
-
-/* =====================================================
-   INITIALIZE
-===================================================== */
-
-jv10PreparePages();
-
-
-console.log(
-  "🎬 MOVIE DATABASE ONLINE"
-);
-
-console.log(
-  "🍥 ANIME DATABASE ONLINE"
-);
-
-console.log(
-  "📺 TV SERIES DATABASE ONLINE"
-);
-
-console.log(
-  "🦸 MARVEL DATABASE ONLINE"
-);
-
-</script> 
-<!-- =====================================================
-     JARVIS V10 — PART 3
-     FINAL ENGINE
-===================================================== -->
-
-<style>
-
-/* ---------- DETAILS MODAL ---------- */
-
-.jv10-modal{
-  position:fixed;
-  inset:0;
-  z-index:20000;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-  background:rgba(0,0,0,.82);
-  backdrop-filter:blur(10px);
-}
-
-.jv10-modal.open{
-  display:flex;
-}
-
-.jv10-modal-box{
-  width:min(700px,100%);
-  max-height:90vh;
-  overflow:auto;
-  border:1px solid #1d5662;
-  border-radius:18px;
-  background:
-    linear-gradient(145deg,#0a1c23,#03080c);
-  box-shadow:0 25px 100px #000;
-  padding:25px;
-  position:relative;
-}
-
-.jv10-modal-close{
-  position:absolute;
-  top:12px;
-  right:12px;
-  width:35px;
-  height:35px;
-  border-radius:50%;
-  border:1px solid #34535a;
-  background:#071219;
-  color:white;
-  cursor:pointer;
-  font-size:18px;
-}
-
-.jv10-modal-close:hover{
-  border-color:#00eaff;
-  color:#00eaff;
-}
-
-.jv10-modal h2{
-  color:#00eaff;
-  margin-bottom:12px;
-  padding-right:40px;
-}
-
-.jv10-modal p{
-  color:#8ba3aa;
-  line-height:1.75;
-  margin-bottom:15px;
-}
-
-.jv10-modal-actions{
-  display:grid;
-  grid-template-columns:
-    repeat(2,1fr);
-  gap:9px;
-}
-
-.jv10-modal-btn{
-  display:block;
-  text-align:center;
-  text-decoration:none;
-  padding:12px;
-  border-radius:9px;
-  border:1px solid #214852;
-  background:#07151b;
-  color:#c9f7fc;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-.jv10-modal-btn:hover{
-  border-color:#00eaff;
-  color:#00eaff;
-}
-
-.jv10-download{
-  color:#ffd43b;
-  border-color:#66551e;
-}
-
-
-/* ---------- COLLECTION ---------- */
-
-.jv10-collection-wrap{
-  width:min(1450px,94%);
-  margin:auto;
-  padding:45px 0 90px;
-}
-
-.jv10-collection-grid{
-  display:grid;
-  grid-template-columns:
-    repeat(6,1fr);
-  gap:15px;
-}
-
-.jv10-collection-info{
-  margin-bottom:25px;
-  color:#718991;
-}
-
-@media(max-width:1100px){
-
-  .jv10-collection-grid{
-    grid-template-columns:
-      repeat(4,1fr);
-  }
-
-}
-
-@media(max-width:700px){
-
-  .jv10-collection-grid{
-    grid-template-columns:
-      repeat(2,1fr);
-  }
-
-  .jv10-modal-actions{
-    grid-template-columns:1fr;
-  }
-
-}
-
-</style>
-
-
-<!-- =====================================================
-     DETAILS MODAL
-===================================================== -->
-
-<div
-  id="jv10Modal"
-  class="jv10-modal"
-  onclick="jv10CloseModal(event)"
->
-
-  <div
-    class="jv10-modal-box"
-    onclick="event.stopPropagation()"
-  >
-
-    <button
-      class="jv10-modal-close"
-      onclick="jv10CloseModal()"
-    >
-      ×
-    </button>
-
-
-    <h2 id="jv10ModalTitle">
-      JARVIS
-    </h2>
-
-
-    <p id="jv10ModalText">
-      Loading...
-    </p>
-
-
-    <div
-      id="jv10ModalActions"
-      class="jv10-modal-actions"
-    ></div>
-
-  </div>
-
-</div>
-
-
-
-<script>
-
-/* =====================================================
-   JARVIS V10 — FINAL ENGINE
-===================================================== */
-
-
-/* ---------- MOVIE FACT DATABASE ---------- */
-
-const JARVIS_FACTS = {
-
-  "Iron Man":
-    "Iron Man introduced Tony Stark and started the Marvel Cinematic Universe in 2008.",
-
-  "The Avengers":
-    "The Avengers was the first MCU film to unite the original major Avengers team.",
-
-  "Captain America: The Winter Soldier":
-    "The Winter Soldier is widely known for combining superhero storytelling with a political thriller style.",
-
-  "Guardians of the Galaxy":
-    "Guardians of the Galaxy expanded the MCU into a much larger cosmic setting.",
-
-  "Avengers: Infinity War":
-    "Infinity War brought together heroes from across the MCU to confront Thanos.",
-
-  "Avengers: Endgame":
-    "Endgame concluded the central Infinity Saga storyline.",
-
-  "Spider-Man: No Way Home":
-    "No Way Home uses the multiverse to connect multiple cinematic Spider-Man worlds.",
-
-  "Black Panther":
-    "Black Panther introduced Wakanda as one of the MCU's most important fictional nations.",
-
-  "Doctor Strange":
-    "Doctor Strange introduced major mystical concepts and alternate realities to the MCU.",
-
-  "Your Name":
-    "Your Name is a Japanese animated romantic fantasy film directed by Makoto Shinkai.",
-
-  "A Silent Voice":
-    "A Silent Voice explores bullying, guilt, friendship and redemption.",
-
-  "Attack on Titan":
-    "Attack on Titan is known for its large-scale world-building and mystery-driven story.",
-
-  "One Piece":
-    "One Piece follows Monkey D. Luffy and his crew on their journey to find the legendary One Piece.",
-
-  "Death Note":
-    "Death Note centers on Light Yagami and a supernatural notebook capable of killing people.",
-
-  "Breaking Bad":
-    "Breaking Bad follows Walter White as his life changes after entering the illegal drug trade.",
-
-  "Game of Thrones":
-    "Game of Thrones is based on George R. R. Martin's A Song of Ice and Fire novels.",
-
-  "Stranger Things":
-    "Stranger Things combines science fiction, horror and 1980s-inspired adventure."
-};
-
-
-/* ---------- FACT ---------- */
-
-function jv10Fact(movie){
-
-  const fact =
-    JARVIS_FACTS[movie] ||
-
-    movie+
-    " is included in the JARVIS entertainment database. More detailed information can be added later.";
-
-
-  jv10OpenModal(
-    "🧠 "+movie,
-    fact,
-    [
-      {
-        text:"▶ OFFICIAL TRAILER",
-        action:()=>jv10Trailer(movie)
-      },
-
-      {
-        text:"🔗 WHERE TO WATCH",
-        action:()=>jv10Watch(movie)
-      }
-    ]
-  );
-
-}
-
-
-/* ---------- TRAILER ---------- */
-
-function jv10Trailer(movie){
-
-  const url =
-    "https://www.youtube.com/results?search_query="+
-    encodeURIComponent(
-      movie+" official trailer"
-    );
-
-
-  window.open(
-    url,
-    "_blank",
-    "noopener,noreferrer"
-  );
-
-}
-
-
-/* ---------- LEGAL WATCH ---------- */
-
-function jv10Watch(movie){
-
-  const url =
-    "https://www.justwatch.com/us/search?q="+
-    encodeURIComponent(movie);
-
-
-  window.open(
-    url,
-    "_blank",
-    "noopener,noreferrer"
-  );
-
-}
-
-
-/* ---------- LEGAL DOWNLOAD / BUY ---------- */
-
-function jv10Download(movie){
-
-  const url =
-    "https://www.google.com/search?q="+
-    encodeURIComponent(
-      movie+
-      " official digital download buy"
-    );
-
-
-  window.open(
-    url,
-    "_blank",
-    "noopener,noreferrer"
-  );
-
-}
-
-
-/* ---------- DETAILS ---------- */
-
-function jv10Details(movie){
-
-  const fact =
-    JARVIS_FACTS[movie] ||
-
-    "No detailed fact has been added yet.";
-
-
-  jv10OpenModal(
-
-    "🎬 "+movie,
-
-    fact,
-
-    [
-
-      {
-        text:"▶ TRAILER",
-        action:()=>jv10Trailer(movie)
-      },
-
-      {
-        text:"🔗 WATCH",
-        action:()=>jv10Watch(movie)
-      },
-
-      {
-        text:"📥 DOWNLOAD / BUY",
-        action:()=>jv10Download(movie)
-      }
-
-    ]
-
-  );
-
-}
-
-
-/* ---------- MODAL ---------- */
-
-function jv10OpenModal(
-  title,
-  text,
-  actions=[]
-){
-
-  const modal =
-    document.getElementById(
-      "jv10Modal"
-    );
-
-
-  document.getElementById(
-    "jv10ModalTitle"
-  ).textContent=title;
-
-
-  document.getElementById(
-    "jv10ModalText"
-  ).textContent=text;
-
-
-  const box =
-    document.getElementById(
-      "jv10ModalActions"
-    );
-
-
-  box.innerHTML="";
-
-
-  actions.forEach(item=>{
-
-    const button =
-      document.createElement(
-        "button"
-      );
-
-
-    button.className=
-      "jv10-modal-btn";
-
-
-    if(
-      item.text.includes("DOWNLOAD")
-    ){
-
-      button.classList.add(
-        "jv10-download"
-      );
-
-    }
-
-
-    button.textContent=
-      item.text;
-
-
-    button.onclick=()=>{
-
-      item.action();
-
-      modal.classList.remove(
-        "open"
-      );
-
-    };
-
-
-    box.appendChild(button);
-
-  });
-
-
-  modal.classList.add(
-    "open"
-  );
-
-}
-
-
-function jv10CloseModal(event){
-
-  if(
-    !event ||
-    event.target.id==="jv10Modal"
-  ){
-
-    document
-      .getElementById(
-        "jv10Modal"
-      )
-      .classList.remove(
-        "open"
-      );
-
-  }
-
-}
-
-
-/* ---------- ESCAPE KEY ---------- */
-
-document.addEventListener(
-  "keydown",
-  function(event){
-
-    if(event.key==="Escape"){
-
-      jv10CloseModal();
-
-    }
-
-  }
-);
-
-
-/* =====================================================
-   REPLACE CARD ACTIONS
-===================================================== */
-
-function jv10UpgradeCards(){
-
-  document
-    .querySelectorAll(
-      ".jv10-card"
-    )
-    .forEach(card=>{
-
-      const title =
-        card.dataset.title;
-
-
-      if(!title) return;
-
-
-      const buttons =
-        card.querySelectorAll(
-          ".jv10-card-btn"
-        );
-
-
-      if(buttons.length>=3){
-
-        /*
-          Keep existing buttons.
-          Add a details button.
-        */
-
-        const body =
-          card.querySelector(
-            ".jv10-card-buttons"
-          );
-
+        mobileMenu.classList.toggle("active");
 
         if(
-          body &&
-          !body.querySelector(
-            ".jv10-details-btn"
-          )
+            mobileMenu.classList.contains("active")
         ){
 
-          const button =
-            document.createElement(
-              "button"
-            );
+            menuButton.textContent = "✕";
 
+        }else{
 
-          button.className=
-            "jv10-card-btn jv10-details-btn";
-
-
-          button.textContent=
-            "ℹ DETAILS";
-
-
-          button.onclick=()=>{
-
-            jv10Details(
-              title
-            );
-
-          };
-
-
-          body.appendChild(
-            button
-          );
+            menuButton.textContent = "☰";
 
         }
 
-      }
+    }
+);
+
+
+/* Close mobile menu
+   when a link is clicked */
+
+document
+    .querySelectorAll(".mobile-menu a")
+    .forEach(link => {
+
+        link.addEventListener(
+            "click",
+            () => {
+
+                mobileMenu
+                    .classList
+                    .remove("active");
+
+                menuButton.textContent = "☰";
+
+            }
+        );
 
     });
 
-}
-
 
 /* =====================================================
-   FAVORITES DATABASE
-===================================================== */
+   SEARCH — FOUNDATION ONLY
+   ===================================================== */
 
-function jv10GetFavorites(){
-
-  return JSON.parse(
-
-    localStorage.getItem(
-      "jv10Favorites"
-    ) || "[]"
-
-  );
-
-}
+const searchInput =
+    document.getElementById("searchInput");
 
 
-function jv10GetWatched(){
+searchInput.addEventListener(
+    "keydown",
+    function(event){
 
-  return JSON.parse(
+        if(event.key === "Enter"){
 
-    localStorage.getItem(
-      "jv10Watched"
-    ) || "[]"
+            const value =
+                this.value.trim();
 
-  );
+            if(value){
 
-}
+                console.log(
+                    "Search:",
+                    value
+                );
 
+            }
 
-/* =====================================================
-   COLLECTION PAGE
-===================================================== */
-
-function jv10RenderCollection(){
-
-  const section =
-    document.getElementById(
-      "jv10-collection"
-    );
-
-
-  if(!section) return;
-
-
-  const favorites =
-    jv10GetFavorites();
-
-
-  const watched =
-    jv10GetWatched();
-
-
-  section.innerHTML=`
-
-    <div class="jv10-collection-wrap">
-
-      <div class="jv10-library-title">
-
-        <h1>
-          ❤️ <span>MY COLLECTION</span>
-        </h1>
-
-        <p>
-          Your personal JARVIS watch database
-        </p>
-
-      </div>
-
-
-      <div class="jv10-collection-info">
-
-        ❤️ Favorites:
-        ${favorites.length}
-
-        &nbsp;&nbsp;|&nbsp;&nbsp;
-
-        ✓ Watched:
-        ${watched.length}
-
-      </div>
-
-
-      <div
-        id="jv10CollectionGrid"
-        class="jv10-collection-grid"
-      ></div>
-
-    </div>
-
-  `;
-
-
-  const grid =
-    document.getElementById(
-      "jv10CollectionGrid"
-    );
-
-
-  if(!favorites.length){
-
-    grid.innerHTML=`
-
-      <div class="jv10-empty">
-
-        ❤️ No favorites yet.
-
-        <br><br>
-
-        Press the ♡ button on any title
-        to add it here.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  const allData=[];
-
-
-  JARVIS_MOVIES.forEach(
-    (item,index)=>{
-
-      allData.push({
-        key:"movie-"+index,
-        item:item,
-        type:"movie"
-      });
+        }
 
     }
-  );
-
-
-  JARVIS_ANIME.forEach(
-    (item,index)=>{
-
-      allData.push({
-        key:"anime-"+index,
-        item:item,
-        type:"anime"
-      });
-
-    }
-  );
-
-
-  JARVIS_SERIES.forEach(
-    (item,index)=>{
-
-      allData.push({
-        key:"series-"+index,
-        item:item,
-        type:"series"
-      });
-
-    }
-  );
-
-
-  const selected =
-    allData.filter(
-      x=>favorites.includes(x.key)
-    );
-
-
-  if(!selected.length){
-
-    grid.innerHTML=`
-
-      <div class="jv10-empty">
-
-        Your saved items are from an
-        older database version.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  selected.forEach(
-    x=>{
-
-      grid.insertAdjacentHTML(
-        "beforeend",
-
-        jv10CreateCard(
-          x.item,
-          x.type,
-          0
-        )
-
-      );
-
-    }
-  );
-
-
-  jv10UpgradeCards();
-
-}
-
-
-/* =====================================================
-   PATCH NAVIGATION
-===================================================== */
-
-const jv10OldGo =
-  window.jv10Go;
-
-
-window.jv10Go =
-  function(page,button){
-
-    jv10OldGo(
-      page,
-      button
-    );
-
-
-    if(page==="collection"){
-
-      setTimeout(
-        jv10RenderCollection,
-        50
-      );
-
-    }
-
-  };
-
-
-/* =====================================================
-   PATCH SEARCH
-===================================================== */
-
-const jv10OldSearch =
-  window.jv10Search;
-
-
-window.jv10Search =
-  function(value){
-
-    const query =
-      value.trim().toLowerCase();
-
-
-    document
-      .querySelectorAll(
-        ".jv10-card"
-      )
-      .forEach(card=>{
-
-        const title =
-          card.dataset.title || "";
-
-
-        card.style.display =
-          !query ||
-          title.includes(query)
-          ? ""
-          : "none";
-
-      });
-
-};
-
-
-/* =====================================================
-   ADD DOWNLOAD + DETAILS BUTTONS
-===================================================== */
-
-function jv10AddFinalButtons(){
-
-  document
-    .querySelectorAll(
-      ".jv10-card"
-    )
-    .forEach(card=>{
-
-      const title =
-        card.dataset.title;
-
-
-      if(!title) return;
-
-
-      const body =
-        card.querySelector(
-          ".jv10-card-buttons"
-        );
-
-
-      if(!body) return;
-
-
-      if(
-        !body.querySelector(
-          ".jv10-download-card"
-        )
-      ){
-
-        const download =
-          document.createElement(
-            "button"
-          );
-
-
-        download.className=
-          "jv10-card-btn jv10-download-card";
-
-
-        download.textContent=
-          "📥 BUY/DL";
-
-
-        download.onclick=()=>{
-
-          jv10Download(
-            title
-          );
-
-        };
-
-
-        body.appendChild(
-          download
-        );
-
-      }
-
-
-      if(
-        !body.querySelector(
-          ".jv10-details-final"
-        )
-      ){
-
-        const details =
-          document.createElement(
-            "button"
-          );
-
-
-        details.className=
-          "jv10-card-btn jv10-details-final";
-
-
-        details.textContent=
-          "ℹ DETAILS";
-
-
-        details.onclick=()=>{
-
-          jv10Details(
-            title
-          );
-
-        };
-
-
-        body.appendChild(
-          details
-        );
-
-      }
-
-    });
-
-}
-
-
-/* =====================================================
-   AUTO REFRESH
-===================================================== */
-
-setTimeout(
-  jv10AddFinalButtons,
-  500
-);
-
-
-/* =====================================================
-   OBSERVER
-   Detects newly rendered cards
-===================================================== */
-
-const jv10Observer =
-  new MutationObserver(
-    function(){
-
-      jv10AddFinalButtons();
-
-    }
-  );
-
-
-jv10Observer.observe(
-  document.body,
-  {
-    childList:true,
-    subtree:true
-  }
-);
-
-
-/* =====================================================
-   JARVIS READY
-===================================================== */
-
-console.log(
-  "⚡ JARVIS V10 FINAL ENGINE ONLINE"
-);
-
-console.log(
-  "▶ TRAILER SYSTEM READY"
-);
-
-console.log(
-  "🔗 LEGAL WATCH SYSTEM READY"
-);
-
-console.log(
-  "📥 LEGAL DOWNLOAD/BUY SYSTEM READY"
-);
-
-console.log(
-  "❤️ FAVORITES SYSTEM READY"
-);
-
-console.log(
-  "✓ WATCHED SYSTEM READY"
 );
 
 </script>
 
 
-<!-- =====================================================
-     FINAL FOOTER
-===================================================== -->
-
-<footer class="jv10-footer">
-
-  <b>JARVIS V10</b>
-
-  • Ultimate Entertainment Database
-
-  <br><br>
-
-  🎬 Movies
-  • 🍥 Anime
-  • 📺 TV Series
-  • 🦸 Marvel
-
-  <br><br>
-
-  ▶ Official Trailers
-  • 🔗 Legal Watch
-  • 📥 Legal Download / Buy
-
-  <br><br>
-
-  <span>
-    Personal project • JARVIS SYSTEM ONLINE ⚡
-  </span>
-
-</footer>
-    <!-- তোর আগের Part 1 + Part 2 + Part 3 code -->
-
-
-    <!-- এখানে আমার FREE WITH ADS code -->
-    <style>
-      ...
-    </style>
-
-    <section id="jv-free-with-ads">
-      ...
-    </section>
-
-    <script>
-      ...
-    </script>
-
-
-</body>
-</html>
-<section style="
-  width:92%;
-  margin:50px auto;
-  padding:25px;
-  border:1px solid #00eaff;
-  border-radius:15px;
-  background:#071219;
-  color:white;
-">
-
-  <h2 style="color:#00eaff;">
-    🎬 FREE WITH ADS
-  </h2>
-
-  <p style="color:#9aa;">
-    Watch selected movies legally with ads.
-  </p>
-
-  <div style="
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-    gap:15px;
-  ">
-
-    <div style="background:#0d1b21;padding:10px;border-radius:10px;">
-      <img
-        src="https://image.tmdb.org/t/p/w500/q6y0Go1tsGEsmtFryDOJo3dEmqu.jpg"
-        style="width:100%;border-radius:8px;"
-      >
-
-      <h3>The Shawshank Redemption</h3>
-
-      <p>⭐ 9.3</p>
-
-      <a
-        href="https://tubitv.com/"
-        target="_blank"
-        rel="noopener noreferrer"
-        style="
-          display:block;
-          padding:10px;
-          text-align:center;
-          background:#00eaff;
-          color:#001015;
-          text-decoration:none;
-          border-radius:7px;
-          font-weight:bold;
-        "
-      >
-        ▶ WATCH FREE
-      </a>
-
-    </div>
-
-  </div>
-
-</section>
-
-<!-- =====================================================
-     JARVIS PRIVATE VAULT
-===================================================== -->
-
-<style>
-
-.jv-vault{
-  width:min(1400px,94%);
-  margin:55px auto;
-  padding:30px;
-  border:1px solid #173f49;
-  border-radius:20px;
-  background:#050d12;
-  box-shadow:0 20px 60px #0008;
-}
-
-.jv-vault-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  flex-wrap:wrap;
-  margin-bottom:25px;
-}
-
-.jv-vault-title h2{
-  margin:0;
-  font-size:clamp(28px,5vw,48px);
-  color:#fff;
-}
-
-.jv-vault-title h2 span{
-  color:#00eaff;
-}
-
-.jv-vault-title p{
-  color:#718991;
-  margin:7px 0 0;
-}
-
-.jv-vault-add{
-  padding:12px 18px;
-  border:1px solid #00eaff;
-  border-radius:9px;
-  background:#071a20;
-  color:#00eaff;
-  cursor:pointer;
-  font-weight:bold;
-}
-
-.jv-vault-add:hover{
-  background:#00eaff;
-  color:#001015;
-}
-
-.jv-vault-tools{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-bottom:20px;
-}
-
-.jv-vault-search{
-  flex:1;
-  min-width:200px;
-  padding:12px 14px;
-  border-radius:9px;
-  border:1px solid #214650;
-  background:#071319;
-  color:white;
-  outline:none;
-}
-
-.jv-vault-search:focus{
-  border-color:#00eaff;
-}
-
-.jv-vault-grid{
-  display:grid;
-  grid-template-columns:
-    repeat(auto-fill,minmax(180px,1fr));
-  gap:16px;
-}
-
-.jv-file{
-  overflow:hidden;
-  border:1px solid #163640;
-  border-radius:13px;
-  background:#08141a;
-  transition:.2s;
-}
-
-.jv-file:hover{
-  transform:translateY(-4px);
-  border-color:#00eaff;
-}
-
-.jv-file-preview{
-  width:100%;
-  height:210px;
-  object-fit:cover;
-  display:block;
-  background:#02080b;
-}
-
-.jv-file-icon{
-  height:210px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:60px;
-  background:#061016;
-}
-
-.jv-file-body{
-  padding:12px;
-}
-
-.jv-file-name{
-  color:#fff;
-  font-weight:bold;
-  font-size:13px;
-  word-break:break-word;
-}
-
-.jv-file-size{
-  color:#6f858c;
-  font-size:10px;
-  margin-top:5px;
-}
-
-.jv-file-actions{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:6px;
-  margin-top:10px;
-}
-
-.jv-file-btn{
-  padding:8px 4px;
-  border-radius:7px;
-  border:1px solid #234650;
-  background:#07171d;
-  color:#b8e9ee;
-  cursor:pointer;
-  font-size:10px;
-  font-weight:bold;
-}
-
-.jv-file-btn:hover{
-  border-color:#00eaff;
-  color:#00eaff;
-}
-
-.jv-file-delete{
-  color:#ff7180;
-}
-
-.jv-vault-empty{
-  grid-column:1/-1;
-  text-align:center;
-  padding:55px 20px;
-  border:1px dashed #234650;
-  border-radius:12px;
-  color:#718991;
-}
-
-.jv-vault-note{
-  margin-top:20px;
-  padding:12px;
-  border-left:3px solid #ffd43b;
-  background:#0a1114;
-  color:#788c92;
-  font-size:11px;
-  line-height:1.6;
-}
-
-@media(max-width:600px){
-
-  .jv-vault{
-    padding:20px 14px;
-  }
-
-  .jv-vault-grid{
-    grid-template-columns:
-      repeat(2,1fr);
-  }
-
-  .jv-file-preview,
-  .jv-file-icon{
-    height:170px;
-  }
-
-}
-
-</style>
-
-
-<section class="jv-vault" id="jvPrivateVault">
-
-  <div class="jv-vault-head">
-
-    <div class="jv-vault-title">
-
-      <h2>
-        🔐 <span>PRIVATE VAULT</span>
-      </h2>
-
-      <p>
-        Your personal files — stored locally in this browser
-      </p>
-
-    </div>
-
-
-    <button
-      class="jv-vault-add"
-      onclick="jvVaultChooseFile()"
-    >
-      ＋ ADD FILE
-    </button>
-
-  </div>
-
-
-  <div class="jv-vault-tools">
-
-    <input
-      id="jvVaultSearch"
-      class="jv-vault-search"
-      type="search"
-      placeholder="🔎 Search your files..."
-      oninput="jvVaultRender()"
-    >
-
-  </div>
-
-
-  <input
-    id="jvVaultInput"
-    type="file"
-    multiple
-    hidden
-    onchange="jvVaultAddFiles(this.files)"
-  >
-
-
-  <div
-    id="jvVaultGrid"
-    class="jv-vault-grid"
-  ></div>
-
-
-  <div class="jv-vault-note">
-
-    🔒 <b>Privacy:</b>
-    Files added here stay inside this browser's
-    local storage system. They are NOT uploaded to
-    GitHub. Clearing browser data can remove them.
-    For true cloud/private access from multiple devices,
-    a secure backend will be needed.
-
-  </div>
-
-</section>
-
-
-<script>
-
-/* =====================================================
-   JARVIS PRIVATE VAULT ENGINE
-===================================================== */
-
-const JV_VAULT_DB =
-  "JARVIS_PRIVATE_VAULT";
-
-const JV_VAULT_STORE =
-  "files";
-
-let jvVaultDatabase;
-
-
-/* ---------- OPEN DATABASE ---------- */
-
-function jvVaultOpen(){
-
-  return new Promise(
-    (resolve,reject)=>{
-
-      const request =
-        indexedDB.open(
-          JV_VAULT_DB,
-          1
-        );
-
-
-      request.onupgradeneeded =
-        function(event){
-
-          const db =
-            event.target.result;
-
-
-          if(
-            !db.objectStoreNames
-              .contains(JV_VAULT_STORE)
-          ){
-
-            db.createObjectStore(
-              JV_VAULT_STORE,
-              {
-                keyPath:"id",
-                autoIncrement:true
-              }
-            );
-
-          }
-
-        };
-
-
-      request.onsuccess =
-        function(event){
-
-          jvVaultDatabase =
-            event.target.result;
-
-          resolve(
-            jvVaultDatabase
-          );
-
-        };
-
-
-      request.onerror =
-        function(){
-
-          reject(
-            request.error
-          );
-
-        };
-
-    }
-  );
-
-}
-
-
-/* ---------- SELECT FILE ---------- */
-
-function jvVaultChooseFile(){
-
-  document
-    .getElementById(
-      "jvVaultInput"
-    )
-    .click();
-
-}
-
-
-/* ---------- ADD FILES ---------- */
-
-async function jvVaultAddFiles(
-  files
-){
-
-  if(!files || !files.length)
-    return;
-
-
-  if(!jvVaultDatabase)
-    await jvVaultOpen();
-
-
-  for(
-    const file of files
-  ){
-
-    await new Promise(
-      (resolve,reject)=>{
-
-        const tx =
-          jvVaultDatabase.transaction(
-            JV_VAULT_STORE,
-            "readwrite"
-          );
-
-
-        const store =
-          tx.objectStore(
-            JV_VAULT_STORE
-          );
-
-
-        store.add({
-
-          name:file.name,
-
-          type:file.type,
-
-          size:file.size,
-
-          date:new Date()
-            .toISOString(),
-
-          blob:file
-
-        });
-
-
-        tx.oncomplete =
-          ()=>resolve();
-
-
-        tx.onerror =
-          ()=>reject(tx.error);
-
-      }
-    );
-
-  }
-
-
-  document
-    .getElementById(
-      "jvVaultInput"
-    )
-    .value="";
-
-
-  jvVaultRender();
-
-}
-
-
-/* ---------- GET FILES ---------- */
-
-function jvVaultGetFiles(){
-
-  return new Promise(
-    (resolve,reject)=>{
-
-      const tx =
-        jvVaultDatabase.transaction(
-          JV_VAULT_STORE,
-          "readonly"
-        );
-
-
-      const store =
-        tx.objectStore(
-          JV_VAULT_STORE
-        );
-
-
-      const request =
-        store.getAll();
-
-
-      request.onsuccess =
-        ()=>resolve(
-          request.result
-        );
-
-
-      request.onerror =
-        ()=>reject(
-          request.error
-        );
-
-    }
-  );
-
-}
-
-
-/* ---------- FORMAT SIZE ---------- */
-
-function jvVaultFormatSize(
-  bytes
-){
-
-  if(bytes < 1024)
-    return bytes+" B";
-
-
-  if(bytes < 1024*1024)
-    return (
-      bytes/1024
-    ).toFixed(1)+" KB";
-
-
-  if(bytes < 1024*1024*1024)
-    return (
-      bytes/(1024*1024)
-    ).toFixed(1)+" MB";
-
-
-  return (
-    bytes/(1024*1024*1024)
-  ).toFixed(2)+" GB";
-
-}
-
-
-/* ---------- FILE ICON ---------- */
-
-function jvVaultIcon(
-  type
-){
-
-  if(type.startsWith("video"))
-    return "🎥";
-
-  if(type.startsWith("audio"))
-    return "🎵";
-
-  if(type.includes("pdf"))
-    return "📕";
-
-  if(type.includes("word"))
-    return "📘";
-
-  if(type.includes("sheet") ||
-     type.includes("excel"))
-    return "📗";
-
-  if(type.startsWith("image"))
-    return "🖼️";
-
-  return "📄";
-
-}
-
-
-/* ---------- ESCAPE HTML ---------- */
-
-function jvVaultEscape(
-  text
-){
-
-  return text
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-/* ---------- RENDER ---------- */
-
-async function jvVaultRender(){
-
-  const grid =
-    document.getElementById(
-      "jvVaultGrid"
-    );
-
-
-  if(!grid)
-    return;
-
-
-  if(!jvVaultDatabase)
-    await jvVaultOpen();
-
-
-  const files =
-    await jvVaultGetFiles();
-
-
-  const search =
-    document
-      .getElementById(
-        "jvVaultSearch"
-      )
-      .value
-      .toLowerCase()
-      .trim();
-
-
-  const filtered =
-    files.filter(
-      file=>
-        file.name
-          .toLowerCase()
-          .includes(search)
-    );
-
-
-  if(!filtered.length){
-
-    grid.innerHTML=`
-
-      <div class="jv-vault-empty">
-
-        🔐
-
-        <br><br>
-
-        ${
-          search
-          ? "No matching files found."
-          : "Your Private Vault is empty."
-        }
-
-        <br><br>
-
-        Click <b>＋ ADD FILE</b> to begin.
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  grid.innerHTML="";
-
-
-  filtered.forEach(
-    file=>{
-
-      const card =
-        document.createElement(
-          "article"
-        );
-
-
-      card.className=
-        "jv-file";
-
-
-      const body =
-        document.createElement(
-          "div"
-        );
-
-
-      body.className=
-        "jv-file-body";
-
-
-      const name =
-        document.createElement(
-          "div"
-        );
-
-
-      name.className=
-        "jv-file-name";
-
-
-      name.textContent=
-        file.name;
-
-
-      const size =
-        document.createElement(
-          "div"
-        );
-
-
-      size.className=
-        "jv-file-size";
-
-
-      size.textContent=
-        jvVaultFormatSize(
-          file.size
-        );
-
-
-      const actions =
-        document.createElement(
-          "div"
-        );
-
-
-      actions.className=
-        "jv-file-actions";
-
-
-      const open =
-        document.createElement(
-          "button"
-        );
-
-
-      open.className=
-        "jv-file-btn";
-
-
-      open.textContent=
-        "👁 OPEN";
-
-
-      open.onclick=
-        ()=>jvVaultOpenFile(
-          file
-        );
-
-
-      const download =
-        document.createElement(
-          "button"
-        );
-
-
-      download.className=
-        "jv-file-btn";
-
-
-      download.textContent=
-        "📥 SAVE";
-
-
-      download.onclick=
-        ()=>jvVaultDownload(
-          file
-        );
-
-
-      const remove =
-        document.createElement(
-          "button"
-        );
-
-
-      remove.className=
-        "jv-file-btn jv-file-delete";
-
-
-      remove.textContent=
-        "🗑 DELETE";
-
-
-      remove.onclick=
-        ()=>jvVaultDelete(
-          file.id
-        );
-
-
-      actions.appendChild(open);
-      actions.appendChild(download);
-      actions.appendChild(remove);
-
-
-      body.appendChild(name);
-      body.appendChild(size);
-      body.appendChild(actions);
-
-
-      if(
-        file.type &&
-        file.type.startsWith("image/")
-      ){
-
-        const img =
-          document.createElement(
-            "img"
-          );
-
-
-        img.className=
-          "jv-file-preview";
-
-
-        img.src=
-          URL.createObjectURL(
-            file.blob
-          );
-
-
-        card.appendChild(img);
-
-      }else{
-
-        const icon =
-          document.createElement(
-            "div"
-          );
-
-
-        icon.className=
-          "jv-file-icon";
-
-
-        icon.textContent=
-          jvVaultIcon(
-            file.type || ""
-          );
-
-
-        card.appendChild(icon);
-
-      }
-
-
-      card.appendChild(body);
-
-
-      grid.appendChild(card);
-
-    }
-  );
-
-}
-
-
-/* ---------- OPEN FILE ---------- */
-
-function jvVaultOpenFile(
-  file
-){
-
-  const url =
-    URL.createObjectURL(
-      file.blob
-    );
-
-
-  window.open(
-    url,
-    "_blank",
-    "noopener,noreferrer"
-  );
-
-}
-
-
-/* ---------- DOWNLOAD ---------- */
-
-function jvVaultDownload(
-  file
-){
-
-  const url =
-    URL.createObjectURL(
-      file.blob
-    );
-
-
-  const link =
-    document.createElement(
-      "a"
-    );
-
-
-  link.href=url;
-
-  link.download=
-    file.name;
-
-
-  document
-    .body
-    .appendChild(link);
-
-
-  link.click();
-
-
-  link.remove();
-
-
-  setTimeout(
-    ()=>URL.revokeObjectURL(url),
-    1000
-  );
-
-}
-
-
-/* ---------- DELETE ---------- */
-
-async function jvVaultDelete(
-  id
-){
-
-  const confirmDelete =
-    confirm(
-      "Delete this file from your Private Vault?"
-    );
-
-
-  if(!confirmDelete)
-    return;
-
-
-  const tx =
-    jvVaultDatabase.transaction(
-      JV_VAULT_STORE,
-      "readwrite"
-    );
-
-
-  tx.objectStore(
-    JV_VAULT_STORE
-  ).delete(id);
-
-
-  tx.oncomplete =
-    ()=>jvVaultRender();
-
-}
-
-
-/* ---------- START ---------- */
-
-(async function(){
-
-  try{
-
-    await jvVaultOpen();
-
-    await jvVaultRender();
-
-    console.log(
-      "🔐 JARVIS PRIVATE VAULT ONLINE"
-    );
-
-  }catch(error){
-
-    console.error(
-      "Private Vault error:",
-      error
-    );
-
-  }
-
-})();
-
-</script>
 </body>
 </html>
