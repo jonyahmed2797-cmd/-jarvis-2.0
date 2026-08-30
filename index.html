@@ -2,25 +2,22 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-
-<title>JARVIS — Character Encyclopedia</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#05060a">
+<title>JARVIS — Character Intelligence</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800;900&display=swap');
 
 :root{
-    --bg:#050609;
-    --panel:#0b0d13;
-    --panel2:#10131b;
-    --text:#f5f7ff;
-    --muted:#858d9e;
-    --purple:#8b5cf6;
-    --cyan:#22d3ee;
-    --border:rgba(255,255,255,.09);
+    --bg:#05060a;
+    --bg2:#090b11;
+    --card:#0d1017;
+    --line:rgba(255,255,255,.09);
+    --text:#f5f7fb;
+    --muted:#858d9d;
+    --purple:#9a7cff;
+    --cyan:#5bdfff;
 }
 
 *{
@@ -35,8 +32,8 @@ html{
 
 body{
     background:
-        radial-gradient(circle at 10% 10%,rgba(139,92,246,.10),transparent 30%),
-        radial-gradient(circle at 90% 20%,rgba(34,211,238,.07),transparent 28%),
+        radial-gradient(circle at 15% 15%,rgba(154,124,255,.12),transparent 30%),
+        radial-gradient(circle at 85% 25%,rgba(91,223,255,.07),transparent 28%),
         var(--bg);
     color:var(--text);
     font-family:Inter,Arial,sans-serif;
@@ -48,11 +45,12 @@ body:before{
     position:fixed;
     inset:0;
     pointer-events:none;
-    z-index:-1;
+    opacity:.25;
     background-image:
-        linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
-    background-size:60px 60px;
+        linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:70px 70px;
+    mask-image:linear-gradient(to bottom,black,transparent);
 }
 
 a{
@@ -60,77 +58,53 @@ a{
     text-decoration:none;
 }
 
-button,input{
-    font:inherit;
+.container{
+    width:min(1180px,calc(100% - 36px));
+    margin:auto;
 }
 
-
-/* ================= NAVBAR ================= */
+/* NAVBAR */
 
 .navbar{
     position:fixed;
     top:0;
     left:0;
     right:0;
-    height:74px;
     z-index:1000;
+    height:72px;
+    background:rgba(5,6,10,.72);
+    backdrop-filter:blur(20px);
+    border-bottom:1px solid var(--line);
+}
 
+.nav-inner{
+    height:100%;
     display:flex;
     align-items:center;
-    gap:28px;
-
-    padding:0 clamp(18px,5vw,70px);
-
-    background:rgba(5,6,9,.72);
-    backdrop-filter:blur(22px);
-    -webkit-backdrop-filter:blur(22px);
-
-    border-bottom:1px solid var(--border);
+    justify-content:space-between;
 }
 
 .logo{
-    display:flex;
-    align-items:center;
-    gap:10px;
-
     font-family:Orbitron,sans-serif;
-    font-size:18px;
-    font-weight:800;
-    letter-spacing:2px;
-    white-space:nowrap;
+    font-weight:900;
+    font-size:19px;
+    letter-spacing:4px;
 }
 
-.logo-box{
-    width:34px;
-    height:34px;
-    display:grid;
-    place-items:center;
-
-    border-radius:10px;
-
-    background:linear-gradient(135deg,var(--purple),var(--cyan));
-    box-shadow:0 0 25px rgba(139,92,246,.3);
-
-    font-size:13px;
-}
-
-.logo em{
-    color:#a78bfa;
-    font-style:normal;
+.logo span{
+    color:var(--purple);
 }
 
 .nav-links{
     display:flex;
-    align-items:center;
-    gap:26px;
-    margin-left:auto;
+    gap:30px;
 }
 
 .nav-links a{
-    color:#949cac;
-    font-size:11px;
-    font-weight:700;
-    letter-spacing:.6px;
+    color:#858d9b;
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:1.5px;
     transition:.25s;
 }
 
@@ -138,3478 +112,480 @@ button,input{
     color:white;
 }
 
-.nav-search{
-    width:190px;
-    height:38px;
-
+.system{
     display:flex;
     align-items:center;
     gap:8px;
-
-    padding:0 12px;
-
-    border:1px solid var(--border);
-    border-radius:11px;
-
-    background:rgba(255,255,255,.035);
-}
-
-.nav-search span{
-    color:#737b8a;
-}
-
-.nav-search input{
-    width:100%;
-    border:0;
-    outline:0;
-    background:none;
-    color:white;
-    font-size:10px;
-}
-
-.nav-search input::placeholder{
-    color:#626a79;
-}
-
-.menu{
-    display:none;
-
-    width:40px;
-    height:40px;
-
-    border:1px solid var(--border);
-    border-radius:10px;
-
-    background:rgba(255,255,255,.04);
-    color:white;
-}
-
-
-/* ================= HERO ================= */
-
-.hero{
-    position:relative;
-
-    min-height:100vh;
-
-    padding:
-        130px
-        clamp(22px,7vw,100px)
-        70px;
-
-    display:grid;
-    grid-template-columns:1.05fr .95fr;
-    align-items:center;
-
-    overflow:hidden;
-}
-
-.hero-grid{
-    position:absolute;
-    inset:0;
-
-    background-image:
-        linear-gradient(rgba(139,92,246,.035) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(34,211,238,.035) 1px,transparent 1px);
-
-    background-size:70px 70px;
-
-    mask-image:radial-gradient(circle at center,black,transparent 75%);
-}
-
-.glow{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(100px);
-    pointer-events:none;
-}
-
-.glow.a{
-    width:500px;
-    height:500px;
-    left:-250px;
-    top:100px;
-    background:rgba(139,92,246,.12);
-}
-
-.glow.b{
-    width:500px;
-    height:500px;
-    right:-180px;
-    bottom:-150px;
-    background:rgba(34,211,238,.07);
-}
-
-.hero-copy{
-    position:relative;
-    z-index:3;
-    max-width:700px;
-}
-
-.status{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-
-    padding:8px 13px;
-
-    border:1px solid rgba(139,92,246,.25);
-    border-radius:100px;
-
-    color:#a9a0ca;
-    background:rgba(139,92,246,.05);
-
+    color:#717987;
     font-size:8px;
     font-weight:800;
-    letter-spacing:1.8px;
+    letter-spacing:1px;
 }
 
 .dot{
-    width:6px;
-    height:6px;
+    width:7px;
+    height:7px;
     border-radius:50%;
-    background:#8b5cf6;
-    box-shadow:0 0 12px #8b5cf6;
+    background:#5ee7a3;
+    box-shadow:0 0 13px #5ee7a3;
+}
+
+/* HERO */
+
+.hero{
+    min-height:780px;
+    padding-top:72px;
+    display:flex;
+    align-items:center;
+    position:relative;
+}
+
+.hero-glow{
+    position:absolute;
+    width:650px;
+    height:650px;
+    right:-220px;
+    top:80px;
+    border-radius:50%;
+    background:radial-gradient(circle,rgba(154,124,255,.13),transparent 65%);
+    filter:blur(10px);
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    max-width:820px;
+    padding:90px 0;
 }
 
 .kicker{
-    margin-top:28px;
-
-    color:#9b82e7;
-
-    font-size:10px;
+    color:var(--purple);
+    font-size:9px;
     font-weight:800;
-    letter-spacing:3px;
+    letter-spacing:4px;
 }
 
 .hero h1{
-    margin-top:13px;
-
+    margin-top:20px;
     font-family:Orbitron,sans-serif;
-
-    font-size:clamp(45px,6.5vw,88px);
-    line-height:1;
+    font-size:clamp(42px,7vw,82px);
+    line-height:1.03;
     letter-spacing:-4px;
 }
 
-.gradient{
-    background:linear-gradient(90deg,#fff,#b9a4ff,#67e8f9);
+.hero h1 .gradient{
+    background:linear-gradient(90deg,#fff,#ad9aff,#5bdfff);
     -webkit-background-clip:text;
     background-clip:text;
     color:transparent;
 }
 
 .hero-description{
-    max-width:590px;
-
-    margin-top:24px;
-
-    color:#8d95a5;
-
-    font-size:14px;
+    max-width:680px;
+    margin-top:25px;
+    color:#858d9d;
+    font-size:13px;
     line-height:1.9;
 }
 
-.actions{
+.hero-actions{
     display:flex;
     gap:12px;
-    margin-top:31px;
+    margin-top:34px;
+    flex-wrap:wrap;
 }
 
 .btn{
-    min-height:48px;
-
-    display:flex;
+    display:inline-flex;
     align-items:center;
     justify-content:center;
-    gap:14px;
-
-    padding:0 19px;
-
-    border-radius:13px;
-
-    font-size:10px;
+    min-height:46px;
+    padding:0 18px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:#10131b;
+    color:white;
+    font-size:9px;
     font-weight:800;
-    letter-spacing:.5px;
-
+    letter-spacing:1.2px;
     transition:.3s;
 }
 
-.btn-primary{
-    background:linear-gradient(135deg,#8b5cf6,#06b6d4);
-    box-shadow:0 15px 35px rgba(139,92,246,.18);
+.btn.primary{
+    border-color:transparent;
+    background:linear-gradient(135deg,#8669ed,#5f48bd);
 }
 
-.btn-primary:hover{
+.btn:hover{
     transform:translateY(-3px);
-    box-shadow:0 20px 45px rgba(139,92,246,.3);
+    box-shadow:0 15px 35px rgba(0,0,0,.3);
 }
 
-.btn-secondary{
-    border:1px solid var(--border);
-    background:rgba(255,255,255,.035);
-    color:#c4c9d4;
-}
-
-.btn-secondary:hover{
-    transform:translateY(-3px);
-    background:rgba(255,255,255,.07);
-}
-
-
-/* ================= STATS ================= */
-
-.stats{
+.hero-metrics{
     display:flex;
-    align-items:center;
-    gap:23px;
-    margin-top:52px;
+    gap:55px;
+    margin-top:65px;
 }
 
-.stat{
-    display:flex;
-    flex-direction:column;
-    gap:5px;
-}
-
-.stat strong{
+.metric strong{
+    display:block;
     font-family:Orbitron,sans-serif;
-    font-size:17px;
+    font-size:22px;
 }
 
-.stat small{
-    color:#626a78;
+.metric span{
+    display:block;
+    margin-top:7px;
+    color:#626a79;
     font-size:7px;
     font-weight:800;
     letter-spacing:1.4px;
 }
 
-.stat-line{
-    width:1px;
-    height:30px;
-    background:rgba(255,255,255,.1);
-}
+/* PREVIEW */
 
-
-/* ================= FEATURED CHARACTER ================= */
-
-.showcase{
-    position:relative;
-
-    min-height:620px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-}
-
-.aura{
-    position:absolute;
-
-    width:400px;
-    height:400px;
-
-    border-radius:50%;
-
-    background:radial-gradient(
-        circle,
-        rgba(139,92,246,.3),
-        rgba(34,211,238,.08),
-        transparent 70%
-    );
-
-    filter:blur(8px);
-
-    animation:pulse 5s ease-in-out infinite;
-}
-
-@keyframes pulse{
-    0%,100%{transform:scale(1)}
-    50%{transform:scale(1.1)}
-}
-
-.circle{
-    position:absolute;
-
-    width:520px;
-    height:520px;
-
-    border:1px solid rgba(139,92,246,.09);
-    border-radius:50%;
-}
-
-.character{
-    position:relative;
-    z-index:4;
-
-    width:min(390px,72vw);
-    height:560px;
-
-    overflow:hidden;
-
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:30px;
-
-    background:
-        linear-gradient(145deg,#171321,#07080c);
-
-    box-shadow:
-        0 40px 100px rgba(0,0,0,.6),
-        0 0 70px rgba(139,92,246,.1);
-
-    transform:perspective(1000px) rotateY(-5deg);
-
-    transition:.5s;
-}
-
-.character:hover{
-    transform:perspective(1000px) rotateY(0deg) translateY(-7px);
-}
-
-.character-art{
-    position:absolute;
-    inset:0;
-
-    display:grid;
-    place-items:center;
-
-    background:
-        radial-gradient(circle at 50% 35%,rgba(139,92,246,.3),transparent 30%),
-        radial-gradient(circle at 65% 65%,rgba(34,211,238,.1),transparent 30%);
-}
-
-.character-art::before{
-    content:"";
-    width:230px;
-    height:320px;
-
-    border-radius:50% 50% 45% 45%;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(139,92,246,.17),
-            rgba(34,211,238,.04)
-        );
-
-    filter:blur(2px);
-
-    box-shadow:
-        0 0 90px rgba(139,92,246,.18);
-}
-
-.character-symbol{
-    position:absolute;
-
-    font-family:Orbitron,sans-serif;
-    font-size:64px;
-    font-weight:900;
-    letter-spacing:-4px;
-
-    color:rgba(255,255,255,.07);
-
-    text-shadow:0 0 60px rgba(139,92,246,.5);
-}
-
-.character-icon{
-    position:absolute;
-
-    font-size:80px;
-
-    color:rgba(255,255,255,.08);
-
-    animation:float 4s ease-in-out infinite;
-}
-
-@keyframes float{
-    0%,100%{transform:translateY(-8px)}
-    50%{transform:translateY(8px)}
-}
-
-.character-info{
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:0;
-
-    padding:30px;
-
-    background:
-        linear-gradient(
-            to top,
-            #050609 8%,
-            rgba(5,6,9,.92) 50%,
-            transparent
-        );
-}
-
-.character-info label{
-    color:#a78bfa;
-
-    font-size:8px;
-    font-weight:800;
-    letter-spacing:2px;
-}
-
-.character-info h2{
-    margin-top:6px;
-
-    font-family:Orbitron,sans-serif;
-    font-size:38px;
-}
-
-.character-info p{
-    margin-top:6px;
-
-    color:#777f8e;
-
-    font-size:10px;
-    font-weight:600;
-    letter-spacing:.7px;
-}
-
-.tags{
-    display:flex;
-    gap:7px;
-    margin-top:15px;
-}
-
-.tags span{
-    padding:5px 8px;
-
-    border:1px solid rgba(255,255,255,.07);
-    border-radius:6px;
-
-    background:rgba(255,255,255,.06);
-
-    color:#a0a7b5;
-
-    font-size:7px;
-    font-weight:800;
-    letter-spacing:1px;
-}
-
-.number{
-    position:absolute;
-    top:22px;
-    right:22px;
-
-    color:rgba(255,255,255,.25);
-
-    font-family:Orbitron,sans-serif;
-    font-size:9px;
-    letter-spacing:2px;
-}
-
-
-/* ================= FLOATING CARDS ================= */
-
-.float-card{
-    position:absolute;
-    z-index:6;
-
-    padding:13px 15px;
-
-    min-width:125px;
-
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:13px;
-
-    background:rgba(8,9,13,.72);
-
-    backdrop-filter:blur(18px);
-
-    box-shadow:0 15px 40px rgba(0,0,0,.35);
-
-    animation:cardFloat 5s ease-in-out infinite;
-}
-
-.float-card.one{
-    top:105px;
-    left:-20px;
-}
-
-.float-card.two{
-    right:-25px;
-    bottom:120px;
-    animation-delay:-2.5s;
-}
-
-.float-card small{
-    display:block;
-
-    color:#697181;
-
-    font-size:7px;
-    font-weight:800;
-    letter-spacing:1.4px;
-}
-
-.float-card strong{
-    display:block;
-
-    margin-top:5px;
-
-    font-family:Orbitron,sans-serif;
-    font-size:14px;
-}
-
-.float-card span{
-    display:block;
-
-    margin-top:3px;
-
-    color:#8071b2;
-
-    font-size:7px;
-}
-
-@keyframes cardFloat{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-10px)}
-}
-
-
-/* ================= NEXT SECTION PREVIEW ================= */
-
-.database-preview{
-    position:relative;
-
-    padding:90px clamp(20px,7vw,100px) 110px;
-
-    border-top:1px solid rgba(255,255,255,.05);
-
-    background:
-        linear-gradient(
-            to bottom,
-            rgba(139,92,246,.025),
-            transparent
-        );
+.preview{
+    padding:80px 0 120px;
 }
 
 .section-label{
-    color:#8b72ce;
-
-    font-size:9px;
-    font-weight:800;
-    letter-spacing:2.5px;
-}
-
-.database-preview h2{
-    margin-top:12px;
-
-    font-family:Orbitron,sans-serif;
-
-    font-size:clamp(28px,4vw,48px);
-}
-
-.database-preview>p{
-    max-width:650px;
-
-    margin-top:15px;
-
-    color:#7f8796;
-
-    font-size:13px;
-    line-height:1.8;
-}
-
-.category-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:14px;
-
-    margin-top:35px;
-}
-
-.category{
-    min-height:150px;
-
-    padding:23px;
-
-    border:1px solid var(--border);
-    border-radius:20px;
-
-    background:rgba(255,255,255,.025);
-
-    transition:.3s;
-}
-
-.category:hover{
-    transform:translateY(-5px);
-
-    border-color:rgba(139,92,246,.35);
-
-    background:rgba(139,92,246,.055);
-}
-
-.category-icon{
-    font-size:26px;
-}
-
-.category h3{
-    margin-top:18px;
-
-    font-family:Orbitron,sans-serif;
-    font-size:14px;
-}
-
-.category p{
-    margin-top:7px;
-
-    color:#707887;
-
-    font-size:10px;
-    line-height:1.6;
-}
-
-
-/* ================= FOOTER ================= */
-
-footer{
-    padding:35px 20px;
-
     text-align:center;
-
-    color:#505766;
-
-    border-top:1px solid rgba(255,255,255,.05);
-
-    font-size:9px;
-    letter-spacing:1px;
-}
-
-
-/* ================= TABLET ================= */
-
-@media(max-width:1000px){
-
-    .nav-links{
-        gap:15px;
-    }
-
-    .nav-links a{
-        font-size:9px;
-    }
-
-    .nav-search{
-        width:145px;
-    }
-
-    .hero{
-        grid-template-columns:1fr .8fr;
-        padding-left:35px;
-        padding-right:35px;
-    }
-
-    .hero h1{
-        font-size:clamp(40px,6vw,64px);
-    }
-
-    .character{
-        width:300px;
-        height:480px;
-    }
-
-    .circle{
-        width:410px;
-        height:410px;
-    }
-
-    .category-grid{
-        grid-template-columns:repeat(2,1fr);
-    }
-}
-
-
-/* ================= MOBILE ================= */
-
-@media(max-width:700px){
-
-    .navbar{
-        height:68px;
-        padding:0 16px;
-    }
-
-    .nav-links,
-    .nav-search{
-        display:none;
-    }
-
-    .menu{
-        display:block;
-        margin-left:auto;
-        cursor:pointer;
-    }
-
-    .hero{
-        display:block;
-
-        min-height:auto;
-
-        padding:
-            110px 18px 55px;
-    }
-
-    .hero h1{
-        font-size:clamp(38px,11vw,55px);
-        letter-spacing:-2px;
-    }
-
-    .hero-description{
-        font-size:13px;
-        line-height:1.8;
-    }
-
-    .actions{
-        flex-direction:column;
-    }
-
-    .btn{
-        width:100%;
-    }
-
-    .stats{
-        justify-content:space-between;
-        gap:10px;
-        margin-top:40px;
-    }
-
-    .stat strong{
-        font-size:14px;
-    }
-
-    .stat small{
-        font-size:6px;
-    }
-
-    .showcase{
-        min-height:510px;
-        margin-top:20px;
-    }
-
-    .character{
-        width:280px;
-        height:420px;
-        transform:none;
-    }
-
-    .character:hover{
-        transform:translateY(-5px);
-    }
-
-    .circle{
-        width:350px;
-        height:350px;
-    }
-
-    .aura{
-        width:300px;
-        height:300px;
-    }
-
-    .character-info{
-        padding:22px;
-    }
-
-    .character-info h2{
-        font-size:28px;
-    }
-
-    .float-card.one{
-        left:0;
-        top:65px;
-        transform:scale(.85);
-    }
-
-    .float-card.two{
-        right:0;
-        bottom:65px;
-        transform:scale(.85);
-    }
-
-    .database-preview{
-        padding:65px 18px 80px;
-    }
-
-    .category-grid{
-        grid-template-columns:1fr;
-    }
-}
-
-
-/* ================= SMALL PHONE ================= */
-
-@media(max-width:390px){
-
-    .hero h1{
-        font-size:36px;
-    }
-
-    .character{
-        width:250px;
-        height:390px;
-    }
-
-    .circle{
-        width:310px;
-        height:310px;
-    }
-
-    .float-card{
-        min-width:105px;
-        padding:10px 11px;
-    }
-}
-
-</style>
-</head>
-
-
-<body>
-
-
-<!-- ================= NAVBAR ================= -->
-
-<header class="navbar">
-
-    <a class="logo" href="#">
-
-        <div class="logo-box">
-            J
-        </div>
-
-        JARVIS<em>.</em>
-
-    </a>
-
-
-    <nav class="nav-links">
-
-        <a href="#characters">CHARACTERS</a>
-
-        <a href="#heroes">HEROES</a>
-
-        <a href="#villains">VILLAINS</a>
-
-        <a href="#universes">UNIVERSES</a>
-
-        <a href="#power">POWER INDEX</a>
-
-    </nav>
-
-
-    <div class="nav-search">
-
-        <span>⌕</span>
-
-        <input
-            id="search"
-            type="search"
-            placeholder="Search character..."
-        >
-
-    </div>
-
-
-    <button
-        class="menu"
-        id="menu">
-
-        ☰
-
-    </button>
-
-</header>
-
-
-
-<!-- ================= HERO ================= -->
-
-<main class="hero">
-
-    <div class="hero-grid"></div>
-
-    <div class="glow a"></div>
-    <div class="glow b"></div>
-
-
-    <section class="hero-copy">
-
-
-        <div class="status">
-
-            <span class="dot"></span>
-
-            DATABASE ONLINE
-
-        </div>
-
-
-        <div class="kicker">
-            THE ULTIMATE CHARACTER ENCYCLOPEDIA
-        </div>
-
-
-        <h1>
-
-            KNOW
-            <span class="gradient">THEM.</span>
-
-            <br>
-
-            KNOW
-            <span class="gradient">THEIR POWER.</span>
-
-        </h1>
-
-
-        <p class="hero-description">
-
-            Explore legendary heroes, dangerous villains
-            and extraordinary characters from Marvel,
-            DC, Anime and beyond.
-
-            Discover their origin, history, powers,
-            abilities, forms, feats, weaknesses and more —
-            all in one evolving character database.
-
-        </p>
-
-
-        <div class="actions">
-
-            <a
-                href="#characters"
-                class="btn btn-primary">
-
-                EXPLORE CHARACTERS
-
-                <b>→</b>
-
-            </a>
-
-
-            <a
-                href="#power"
-                class="btn btn-secondary">
-
-                ⚡ POWER INDEX
-
-            </a>
-
-        </div>
-
-
-        <div class="stats">
-
-            <div class="stat">
-
-                <strong>01</strong>
-
-                <small>CHARACTERS</small>
-
-            </div>
-
-
-            <div class="stat-line"></div>
-
-
-            <div class="stat">
-
-                <strong>A–Z</strong>
-
-                <small>DATABASE</small>
-
-            </div>
-
-
-            <div class="stat-line"></div>
-
-
-            <div class="stat">
-
-                <strong>∞</strong>
-
-                <small>UNIVERSES</small>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-
-    <!-- ================= FEATURED CHARACTER ================= -->
-
-    <section class="showcase">
-
-        <div class="aura"></div>
-
-        <div class="circle"></div>
-
-
-        <article class="character">
-
-
-            <div class="character-art">
-
-                <div class="character-symbol">
-                    THOR
-                </div>
-
-                <div class="character-icon">
-                    ⚡
-                </div>
-
-            </div>
-
-
-            <div class="character-info">
-
-                <label>
-                    FEATURED CHARACTER
-                </label>
-
-                <h2>
-                    THOR
-                </h2>
-
-                <p>
-                    GOD OF THUNDER
-                    <span>•</span>
-                    MARVEL
-                </p>
-
-
-                <div class="tags">
-
-                    <span>HERO</span>
-
-                    <span>GOD TIER</span>
-
-                </div>
-
-            </div>
-
-
-            <div class="number">
-                001
-            </div>
-
-
-        </article>
-
-
-        <div class="float-card one">
-
-            <small>
-                POWER LEVEL
-            </small>
-
-            <strong>
-                GOD TIER
-            </strong>
-
-            <span>
-                ⚡ COSMIC
-            </span>
-
-        </div>
-
-
-        <div class="float-card two">
-
-            <small>
-                DATABASE STATUS
-            </small>
-
-            <strong>
-                ACTIVE
-            </strong>
-
-            <span>
-                MARVEL
-            </span>
-
-        </div>
-
-    </section>
-
-</main>
-
-
-
-<!-- ================= DATABASE PREVIEW ================= -->
-
-<section
-    class="database-preview"
-    id="characters">
-
-
-    <div class="section-label">
-        EXPLORE THE DATABASE
-    </div>
-
-
-    <h2>
-        CHOOSE YOUR UNIVERSE
-    </h2>
-
-
-    <p>
-
-        প্রতিটি character profile-এ থাকবে তার পরিচয়,
-        origin, complete history, powers, abilities,
-        forms, feats, weaknesses, relationships এবং
-        প্রয়োজনীয় A–Z information।
-
-    </p>
-
-
-    <div class="category-grid">
-
-
-        <a class="category" href="#heroes">
-
-            <div class="category-icon">
-                🦸
-            </div>
-
-            <h3>
-                HEROES
-            </h3>
-
-            <p>
-                Legendary heroes and protectors.
-            </p>
-
-        </a>
-
-
-        <a class="category" href="#villains">
-
-            <div class="category-icon">
-                😈
-            </div>
-
-            <h3>
-                VILLAINS
-            </h3>
-
-            <p>
-                The most dangerous enemies.
-            </p>
-
-        </a>
-
-
-        <a class="category" href="#universes">
-
-            <div class="category-icon">
-                🌌
-            </div>
-
-            <h3>
-                UNIVERSES
-            </h3>
-
-            <p>
-                Marvel, DC, Anime and more.
-            </p>
-
-        </a>
-
-
-        <a class="category" href="#power">
-
-            <div class="category-icon">
-                ⚡
-            </div>
-
-            <h3>
-                POWER INDEX
-            </h3>
-
-            <p>
-                Compare characters by abilities and feats.
-            </p>
-
-        </a>
-
-
-    </div>
-
-</section>
-
-
-
-<footer>
-
-    JARVIS CHARACTER ENCYCLOPEDIA
-    •
-    BUILDING THE DATABASE
-
-</footer>
-
-
-
-<script>
-
-
-/* ================= MOBILE MENU ================= */
-
-const menu =
-    document.getElementById("menu");
-
-menu.addEventListener(
-    "click",
-    function(){
-
-        const links =
-            document.querySelector(".nav-links");
-
-        if(
-            window.innerWidth <= 700
-        ){
-
-            links.style.display =
-                links.style.display === "flex"
-                ? "none"
-                : "flex";
-
-            links.style.position =
-                "absolute";
-
-            links.style.top =
-                "68px";
-
-            links.style.left =
-                "0";
-
-            links.style.right =
-                "0";
-
-            links.style.padding =
-                "15px 20px";
-
-            links.style.flexDirection =
-                "column";
-
-            links.style.alignItems =
-                "flex-start";
-
-            links.style.background =
-                "rgba(5,6,9,.96)";
-
-            links.style.borderBottom =
-                "1px solid rgba(255,255,255,.08)";
-
-        }
-
-    }
-);
-
-
-/* ================= SEARCH FOUNDATION ================= */
-
-const search =
-    document.getElementById("search");
-
-search.addEventListener(
-    "keydown",
-    function(e){
-
-        if(e.key === "Enter"){
-
-            const value =
-                this.value.trim();
-
-            if(value){
-
-                alert(
-                    "Character database search will be connected in the next build: " +
-                    value
-                );
-
-            }
-
-        }
-
-    }
-);
-
-</script>
-<!-- =========================================================
-     JARVIS — PART 3
-     CHARACTER DATABASE
-     ========================================================= -->
-
-<style>
-
-/* ================= PART 3 DATABASE ================= */
-
-.jarvis-db{
-    position:relative;
-    padding:100px clamp(18px,6vw,90px);
-    background:
-        radial-gradient(
-            circle at 10% 20%,
-            rgba(139,92,246,.06),
-            transparent 30%
-        ),
-        #06070b;
-    border-top:1px solid rgba(255,255,255,.06);
-}
-
-
-/* HEADER */
-
-.jarvis-db-head{
-    max-width:800px;
-    margin:auto;
-    text-align:center;
-}
-
-.jarvis-db-kicker{
-    color:#9b82e7;
-    font-size:9px;
+    color:var(--purple);
+    font-size:8px;
     font-weight:800;
     letter-spacing:3px;
 }
 
-.jarvis-db-title{
+.section-title{
     margin-top:12px;
+    text-align:center;
     font-family:Orbitron,sans-serif;
-    font-size:clamp(30px,5vw,55px);
+    font-size:clamp(27px,4vw,43px);
     letter-spacing:-2px;
 }
 
-.jarvis-db-title span{
-    background:
-        linear-gradient(
-            90deg,
-            #fff,
-            #b9a4ff,
-            #67e8f9
-        );
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
+.section-title span{
+    color:var(--purple);
 }
 
-.jarvis-db-description{
-    max-width:650px;
-    margin:17px auto 0;
-    color:#808897;
-    font-size:13px;
+.section-description{
+    max-width:620px;
+    margin:14px auto 0;
+    text-align:center;
+    color:#737b8a;
+    font-size:11px;
     line-height:1.8;
 }
 
-
-/* SEARCH */
-
-.jarvis-db-search{
-    max-width:700px;
-    height:52px;
-
-    margin:35px auto 0;
-
-    display:flex;
-    align-items:center;
-    gap:12px;
-
-    padding:0 17px;
-
-    border:1px solid rgba(255,255,255,.10);
-    border-radius:15px;
-
-    background:
-        rgba(255,255,255,.035);
-
-    transition:.25s;
-}
-
-.jarvis-db-search:focus-within{
-    border-color:rgba(139,92,246,.55);
-    box-shadow:
-        0 0 30px
-        rgba(139,92,246,.08);
-}
-
-.jarvis-db-search-icon{
-    color:#737b8b;
-    font-size:20px;
-}
-
-.jarvis-db-search input{
-    width:100%;
-    border:0;
-    outline:0;
-    background:none;
-    color:white;
-    font-size:12px;
-}
-
-.jarvis-db-search input::placeholder{
-    color:#606878;
-}
-
-
-/* FILTERS */
-
-.jarvis-db-filters{
-    margin-top:25px;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-wrap:wrap;
-    gap:8px;
-}
-
-.jarvis-filter{
-    cursor:pointer;
-
-    padding:9px 14px;
-
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:100px;
-
-    background:rgba(255,255,255,.025);
-
-    color:#858d9d;
-
-    font-size:8px;
-    font-weight:800;
-    letter-spacing:1px;
-
-    transition:.25s;
-}
-
-.jarvis-filter:hover{
-    color:white;
-    border-color:rgba(139,92,246,.35);
-}
-
-.jarvis-filter.active{
-    color:white;
-
-    border-color:rgba(139,92,246,.5);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(139,92,246,.22),
-            rgba(34,211,238,.10)
-        );
-
-    box-shadow:
-        0 0 20px
-        rgba(139,92,246,.08);
-}
-
-
-/* RESULT COUNT */
-
-.jarvis-db-status{
-    max-width:1200px;
-    margin:50px auto 18px;
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.jarvis-db-status-title{
-    color:#d6d9e2;
-
-    font-family:Orbitron,sans-serif;
-
-    font-size:12px;
-    letter-spacing:1px;
-}
-
-.jarvis-db-count{
-    color:#686f7e;
-
-    font-size:9px;
-    font-weight:800;
-    letter-spacing:1px;
-}
-
-
-/* CARDS GRID */
-
-.jarvis-character-grid{
-    max-width:1200px;
-    margin:auto;
-
+.preview-grid{
     display:grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
+    grid-template-columns:repeat(3,1fr);
     gap:16px;
+    margin-top:45px;
 }
 
-
-/* CHARACTER CARD */
-
-.jarvis-character-card{
+.preview-card{
+    min-height:260px;
+    padding:25px;
     position:relative;
-
-    min-height:390px;
-
     overflow:hidden;
-
-    border:1px solid rgba(255,255,255,.08);
+    border:1px solid var(--line);
     border-radius:20px;
-
     background:
-        linear-gradient(
-            145deg,
-            #11131b,
-            #08090d
-        );
-
-    cursor:pointer;
-
-    transition:
-        transform .35s ease,
-        border-color .35s ease,
-        box-shadow .35s ease;
+        radial-gradient(circle at 80% 15%,rgba(154,124,255,.12),transparent 30%),
+        linear-gradient(145deg,#11141c,#080a0f);
+    transition:.3s;
 }
 
-.jarvis-character-card:hover{
-    transform:translateY(-7px);
-
-    border-color:
-        rgba(139,92,246,.35);
-
-    box-shadow:
-        0 25px 60px
-        rgba(0,0,0,.40),
-
-        0 0 35px
-        rgba(139,92,246,.08);
+.preview-card:hover{
+    transform:translateY(-6px);
+    border-color:rgba(154,124,255,.35);
 }
 
-
-/* ART */
-
-.jarvis-card-art{
-    position:absolute;
-
-    inset:0 0 auto 0;
-
-    height:270px;
-
-    display:flex;
-    align-items:center;
-    justify-content:center;
-
-    overflow:hidden;
-}
-
-.jarvis-card-art:after{
-    content:"";
-
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:0;
-
-    height:120px;
-
-    background:
-        linear-gradient(
-            to bottom,
-            transparent,
-            #0a0b10
-        );
-}
-
-
-/* DIFFERENT CHARACTER COLORS */
-
-.jarvis-character-card[data-universe="Marvel"]
-.jarvis-card-art{
-    background:
-        radial-gradient(
-            circle at 50% 40%,
-            rgba(139,92,246,.30),
-            transparent 55%
-        ),
-        linear-gradient(
-            145deg,
-            #171321,
-            #08090d
-        );
-}
-
-.jarvis-character-card[data-universe="DC"]
-.jarvis-card-art{
-    background:
-        radial-gradient(
-            circle at 50% 40%,
-            rgba(34,211,238,.22),
-            transparent 55%
-        ),
-        linear-gradient(
-            145deg,
-            #101722,
-            #07090d
-        );
-}
-
-.jarvis-character-card[data-universe="Anime"]
-.jarvis-card-art{
-    background:
-        radial-gradient(
-            circle at 50% 40%,
-            rgba(244,114,182,.20),
-            transparent 55%
-        ),
-        linear-gradient(
-            145deg,
-            #18111a,
-            #08090d
-        );
-}
-
-
-/* CHARACTER SYMBOL */
-
-.jarvis-card-symbol{
-    position:relative;
-    z-index:2;
-
+.preview-number{
+    color:#555d6c;
     font-family:Orbitron,sans-serif;
-
-    font-size:clamp(35px,4vw,55px);
-
-    font-weight:900;
-
-    letter-spacing:-3px;
-
-    color:rgba(255,255,255,.075);
-
-    text-shadow:
-        0 0 60px
-        rgba(139,92,246,.45);
+    font-size:10px;
 }
 
-
-/* ENERGY */
-
-.jarvis-card-energy{
-    position:absolute;
-
-    z-index:2;
-
-    font-size:55px;
-
-    color:rgba(255,255,255,.08);
-
-    filter:
-        drop-shadow(
-            0 0 25px
-            rgba(139,92,246,.5)
-        );
-
-    animation:
-        jarvisEnergyFloat 4s
-        ease-in-out infinite;
+.preview-icon{
+    margin-top:45px;
+    font-size:34px;
+    opacity:.8;
 }
 
-@keyframes jarvisEnergyFloat{
-
-    0%,100%{
-        transform:translateY(-6px);
-    }
-
-    50%{
-        transform:translateY(7px);
-    }
-}
-
-
-/* CARD INFO */
-
-.jarvis-card-info{
-    position:absolute;
-
-    left:0;
-    right:0;
-    bottom:0;
-
-    z-index:5;
-
-    padding:20px;
-}
-
-.jarvis-card-role{
-    color:#9b82e7;
-
-    font-size:7px;
-    font-weight:800;
-
-    letter-spacing:1.8px;
-}
-
-.jarvis-card-name{
-    margin-top:6px;
-
+.preview-card h3{
+    margin-top:20px;
     font-family:Orbitron,sans-serif;
-
-    font-size:22px;
+    font-size:15px;
 }
 
-.jarvis-card-universe{
-    margin-top:4px;
-
-    color:#737b8a;
-
-    font-size:9px;
-    font-weight:600;
+.preview-card p{
+    margin-top:9px;
+    color:#747c8b;
+    font-size:10px;
+    line-height:1.7;
 }
 
-.jarvis-card-meta{
-    margin-top:13px;
+/* FOOTER */
 
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.jarvis-power{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-}
-
-.jarvis-power small{
-    color:#626a79;
-
-    font-size:6px;
-    font-weight:800;
-
-    letter-spacing:1px;
-}
-
-.jarvis-power strong{
-    color:#d5d8e0;
-
-    font-family:Orbitron,sans-serif;
-
-    font-size:9px;
-}
-
-.jarvis-profile-btn{
-    padding:7px 10px;
-
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:7px;
-
-    background:rgba(255,255,255,.045);
-
-    color:#aeb5c3;
-
-    font-size:7px;
-    font-weight:800;
-
-    letter-spacing:.8px;
-
-    transition:.25s;
-}
-
-.jarvis-profile-btn:hover{
-    color:white;
-
-    border-color:
-        rgba(139,92,246,.4);
-
-    background:
-        rgba(139,92,246,.10);
-}
-
-
-/* EMPTY */
-
-.jarvis-no-results{
-    display:none;
-
-    max-width:600px;
-
-    margin:50px auto;
-
-    padding:40px 20px;
-
+footer{
+    padding:45px 0;
+    border-top:1px solid var(--line);
     text-align:center;
-
-    border:1px dashed rgba(255,255,255,.10);
-    border-radius:18px;
-
-    color:#697181;
-
-    font-size:11px;
 }
 
-.jarvis-no-results strong{
-    display:block;
-
-    margin-bottom:8px;
-
-    color:#c5cad4;
-
+.footer-logo{
     font-family:Orbitron,sans-serif;
+    font-size:16px;
+    font-weight:800;
+    letter-spacing:3px;
 }
 
+.footer-logo span{
+    color:var(--purple);
+}
+
+footer p{
+    margin-top:9px;
+    color:#5f6674;
+    font-size:8px;
+}
 
 /* MOBILE */
 
-@media(max-width:1050px){
-
-    .jarvis-character-grid{
-        grid-template-columns:
-            repeat(3,1fr);
-    }
-
-}
-
 @media(max-width:800px){
 
-    .jarvis-character-grid{
-        grid-template-columns:
-            repeat(2,1fr);
+    .nav-links,
+    .system{
+        display:none;
     }
 
+    .hero{
+        min-height:700px;
+    }
+
+    .hero h1{
+        letter-spacing:-2px;
+    }
+
+    .hero-metrics{
+        gap:30px;
+        flex-wrap:wrap;
+    }
+
+    .preview-grid{
+        grid-template-columns:1fr;
+    }
 }
 
-@media(max-width:550px){
+@media(max-width:500px){
 
-    .jarvis-db{
-        padding:
-            75px 16px
-            80px;
+    .container{
+        width:calc(100% - 28px);
     }
 
-    .jarvis-db-title{
-        font-size:31px;
+    .hero-content{
+        padding:70px 0;
     }
 
-    .jarvis-db-description{
+    .hero-description{
         font-size:12px;
     }
 
-    .jarvis-character-grid{
-        grid-template-columns:1fr;
-        gap:13px;
+    .hero-metrics{
+        gap:23px;
     }
-
-    .jarvis-character-card{
-        min-height:360px;
-    }
-
-    .jarvis-card-art{
-        height:250px;
-    }
-
-    .jarvis-db-status{
-        margin-top:38px;
-    }
-
 }
-
 </style>
+</head>
 
+<body>
 
-<!-- =========================================================
-     DATABASE HTML
-     ========================================================= -->
+<!-- NAVBAR -->
 
-<section
-    class="jarvis-db"
-    id="jarvis-character-database">
+<nav class="navbar">
+    <div class="container nav-inner">
 
+        <a href="#" class="logo">
+            JARVIS<span>.</span>
+        </a>
 
-    <div class="jarvis-db-head">
-
-
-        <div class="jarvis-db-kicker">
-            CHARACTER DATABASE
+        <div class="nav-links">
+            <a href="#characters">CHARACTERS</a>
+            <a href="#power">POWER INDEX</a>
+            <a href="#universes">UNIVERSES</a>
         </div>
 
+        <div class="system">
+            <span class="dot"></span>
+            SYSTEM ONLINE
+        </div>
 
-        <h2 class="jarvis-db-title">
+    </div>
+</nav>
 
-            EXPLORE THE
-            <span>CHARACTERS</span>
 
+<!-- HERO -->
+
+<header class="hero">
+
+    <div class="hero-glow"></div>
+
+    <div class="container">
+
+        <div class="hero-content">
+
+            <div class="kicker">
+                JARVIS // CHARACTER INTELLIGENCE SYSTEM
+            </div>
+
+            <h1>
+                THE ULTIMATE<br>
+                <span class="gradient">CHARACTER</span><br>
+                ENCYCLOPEDIA
+            </h1>
+
+            <p class="hero-description">
+                Discover the world's most powerful heroes, dangerous
+                villains and legendary characters. Explore their origins,
+                abilities, transformations, weapons, weaknesses and
+                complete histories — all inside one evolving intelligence
+                database.
+            </p>
+
+            <div class="hero-actions">
+
+                <a href="#characters" class="btn primary">
+                    EXPLORE CHARACTERS
+                </a>
+
+                <a href="#power" class="btn">
+                    POWER INDEX
+                </a>
+
+            </div>
+
+            <div class="hero-metrics">
+
+                <div class="metric">
+                    <strong>∞</strong>
+                    <span>CHARACTERS</span>
+                </div>
+
+                <div class="metric">
+                    <strong>03</strong>
+                    <span>UNIVERSES</span>
+                </div>
+
+                <div class="metric">
+                    <strong>A–Z</strong>
+                    <span>INTELLIGENCE</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</header>
+
+
+<!-- PREVIEW -->
+
+<section class="preview" id="characters">
+
+    <div class="container">
+
+        <div class="section-label">
+            DATABASE INITIALIZATION
+        </div>
+
+        <h2 class="section-title">
+            CHARACTER <span>INTELLIGENCE</span>
         </h2>
 
-
-        <p class="jarvis-db-description">
-
-            Heroes, villains and extraordinary beings
-            from different universes — organized into
-            one evolving character encyclopedia.
-
+        <p class="section-description">
+            The JARVIS database is being prepared to store complete
+            character information from multiple fictional universes.
         </p>
 
+        <div class="preview-grid">
 
-        <!-- SEARCH -->
+            <div class="preview-card">
 
-        <div class="jarvis-db-search">
+                <div class="preview-number">01</div>
 
-            <span class="jarvis-db-search-icon">
-                ⌕
-            </span>
+                <div class="preview-icon">⚡</div>
 
-            <input
-                id="jarvisCharacterSearch"
-                type="search"
-                placeholder="Search Thor, Batman, Goku..."
-                autocomplete="off"
-            >
+                <h3>HEROES</h3>
 
-        </div>
+                <p>
+                    Discover legendary heroes, their origins,
+                    powers, abilities, achievements and most
+                    important transformations.
+                </p>
 
-
-        <!-- FILTERS -->
-
-        <div class="jarvis-db-filters">
+            </div>
 
 
-            <button
-                class="jarvis-filter active"
-                data-filter="all">
+            <div class="preview-card">
 
-                ALL
+                <div class="preview-number">02</div>
 
-            </button>
+                <div class="preview-icon">☠</div>
 
+                <h3>VILLAINS</h3>
 
-            <button
-                class="jarvis-filter"
-                data-filter="Hero">
+                <p>
+                    Explore the most dangerous villains,
+                    their motivations, abilities, weaknesses
+                    and greatest accomplishments.
+                </p>
 
-                HEROES
-
-            </button>
-
-
-            <button
-                class="jarvis-filter"
-                data-filter="Villain">
-
-                VILLAINS
-
-            </button>
+            </div>
 
 
-            <button
-                class="jarvis-filter"
-                data-filter="Anti-Hero">
+            <div class="preview-card">
 
-                ANTI-HEROES
+                <div class="preview-number">03</div>
 
-            </button>
+                <div class="preview-icon">✦</div>
 
+                <h3>FULL PROFILES</h3>
 
-            <button
-                class="jarvis-filter"
-                data-universe="Marvel">
+                <p>
+                    Every character will receive an extensive
+                    A–Z profile with detailed information
+                    written in Bangla.
+                </p>
 
-                MARVEL
-
-            </button>
-
-
-            <button
-                class="jarvis-filter"
-                data-universe="DC">
-
-                DC
-
-            </button>
-
-
-            <button
-                class="jarvis-filter"
-                data-universe="Anime">
-
-                ANIME
-
-            </button>
-
+            </div>
 
         </div>
 
     </div>
-
-
-
-    <!-- STATUS -->
-
-    <div class="jarvis-db-status">
-
-        <div class="jarvis-db-status-title">
-            FEATURED CHARACTERS
-        </div>
-
-        <div
-            class="jarvis-db-count"
-            id="jarvisCharacterCount">
-
-            18 CHARACTERS
-
-        </div>
-
-    </div>
-
-
-
-    <!-- CHARACTER GRID -->
-
-    <div
-        class="jarvis-character-grid"
-        id="jarvisCharacterGrid">
-
-
-        <!-- THOR -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Hero"
-            data-universe="Marvel"
-            data-name="Thor">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    THOR
-                </div>
-
-                <div class="jarvis-card-energy">
-                    ⚡
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    HERO • GOD
-                </div>
-
-                <div class="jarvis-card-name">
-                    Thor
-                </div>
-
-                <div class="jarvis-card-universe">
-                    Marvel
-                </div>
-
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            GOD TIER
-                        </strong>
-
-                    </div>
-
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Thor')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- IRON MAN -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Hero"
-            data-universe="Marvel"
-            data-name="Iron Man">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    IRON
-                </div>
-
-                <div class="jarvis-card-energy">
-                    ◉
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    HERO • GENIUS
-                </div>
-
-                <div class="jarvis-card-name">
-                    Iron Man
-                </div>
-
-                <div class="jarvis-card-universe">
-                    Marvel
-                </div>
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            HIGH
-                        </strong>
-
-                    </div>
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Iron Man')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- SPIDER-MAN -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Hero"
-            data-universe="Marvel"
-            data-name="Spider-Man">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    SPIDEY
-                </div>
-
-                <div class="jarvis-card-energy">
-                    🕷
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    HERO • WEB-SLINGER
-                </div>
-
-                <div class="jarvis-card-name">
-                    Spider-Man
-                </div>
-
-                <div class="jarvis-card-universe">
-                    Marvel
-                </div>
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            SUPER
-                        </strong>
-
-                    </div>
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Spider-Man')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- HULK -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Hero"
-            data-universe="Marvel"
-            data-name="Hulk">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    HULK
-                </div>
-
-                <div class="jarvis-card-energy">
-                    💥
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    HERO • GAMMA
-                </div>
-
-                <div class="jarvis-card-name">
-                    Hulk
-                </div>
-
-                <div class="jarvis-card-universe">
-                    Marvel
-                </div>
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            EXTREME
-                        </strong>
-
-                    </div>
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Hulk')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- CAPTAIN AMERICA -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Hero"
-            data-universe="Marvel"
-            data-name="Captain America">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    CAP
-                </div>
-
-                <div class="jarvis-card-energy">
-                    🛡
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    HERO • SOLDIER
-                </div>
-
-                <div class="jarvis-card-name">
-                    Captain America
-                </div>
-
-                <div class="jarvis-card-universe">
-                    Marvel
-                </div>
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            SUPER
-                        </strong>
-
-                    </div>
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Captain America')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- DOCTOR STRANGE -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Hero"
-            data-universe="Marvel"
-            data-name="Doctor Strange">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    STRANGE
-                </div>
-
-                <div class="jarvis-card-energy">
-                    ✦
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    HERO • MYSTIC
-                </div>
-
-                <div class="jarvis-card-name">
-                    Doctor Strange
-                </div>
-
-                <div class="jarvis-card-universe">
-                    Marvel
-                </div>
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            COSMIC
-                        </strong>
-
-                    </div>
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Doctor Strange')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- LOKI -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Anti-Hero"
-            data-universe="Marvel"
-            data-name="Loki">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    LOKI
-                </div>
-
-                <div class="jarvis-card-energy">
-                    ♠
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    ANTI-HERO • GOD
-                </div>
-
-                <div class="jarvis-card-name">
-                    Loki
-                </div>
-
-                <div class="jarvis-card-universe">
-                    Marvel
-                </div>
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            COSMIC
-                        </strong>
-
-                    </div>
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Loki')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- THANOS -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Villain"
-            data-universe="Marvel"
-            data-name="Thanos">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    THANOS
-                </div>
-
-                <div class="jarvis-card-energy">
-                    ◆
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    VILLAIN • TITAN
-                </div>
-
-                <div class="jarvis-card-name">
-                    Thanos
-                </div>
-
-                <div class="jarvis-card-universe">
-                    Marvel
-                </div>
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            COSMIC
-                        </strong>
-
-                    </div>
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Thanos')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- SUPERMAN -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Hero"
-            data-universe="DC"
-            data-name="Superman">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    SUPERMAN
-                </div>
-
-                <div class="jarvis-card-energy">
-                    S
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    HERO • KRYPTONIAN
-                </div>
-
-                <div class="jarvis-card-name">
-                    Superman
-                </div>
-
-                <div class="jarvis-card-universe">
-                    DC
-                </div>
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            GOD TIER
-                        </strong>
-
-                    </div>
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Superman')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- BATMAN -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Hero"
-            data-universe="DC"
-            data-name="Batman">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    BATMAN
-                </div>
-
-                <div class="jarvis-card-energy">
-                    🦇
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    HERO • VIGILANTE
-                </div>
-
-                <div class="jarvis-card-name">
-                    Batman
-                </div>
-
-                <div class="jarvis-card-universe">
-                    DC
-                </div>
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            HUMAN+
-                        </strong>
-
-                    </div>
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Batman')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- WONDER WOMAN -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Hero"
-            data-universe="DC"
-            data-name="Wonder Woman">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    AMAZON
-                </div>
-
-                <div class="jarvis-card-energy">
-                    ⚔
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    HERO • AMAZON
-                </div>
-
-                <div class="jarvis-card-name">
-                    Wonder Woman
-                </div>
-
-                <div class="jarvis-card-universe">
-                    DC
-                </div>
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            GOD TIER
-                        </strong>
-
-                    </div>
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Wonder Woman')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- FLASH -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Hero"
-            data-universe="DC"
-            data-name="Flash">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    FLASH
-                </div>
-
-                <div class="jarvis-card-energy">
-                    ⚡
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    HERO • SPEEDSTER
-                </div>
-
-                <div class="jarvis-card-name">
-                    Flash
-                </div>
-
-                <div class="jarvis-card-universe">
-                    DC
-                </div>
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            EXTREME
-                        </strong>
-
-                    </div>
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Flash')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- DARKSEID -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Villain"
-            data-universe="DC"
-            data-name="Darkseid">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    DARKSEID
-                </div>
-
-                <div class="jarvis-card-energy">
-                    ◈
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    VILLAIN • NEW GOD
-                </div>
-
-                <div class="jarvis-card-name">
-                    Darkseid
-                </div>
-
-                <div class="jarvis-card-universe">
-                    DC
-                </div>
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            COSMIC
-                        </strong>
-
-                    </div>
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Darkseid')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- GOKU -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Hero"
-            data-universe="Anime"
-            data-name="Goku">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    GOKU
-                </div>
-
-                <div class="jarvis-card-energy">
-                    ✦
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    HERO • SAIYAN
-                </div>
-
-                <div class="jarvis-card-name">
-                    Goku
-                </div>
-
-                <div class="jarvis-card-universe">
-                    Anime
-                </div>
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            GOD TIER
-                        </strong>
-
-                    </div>
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Goku')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- SAITAMA -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Hero"
-            data-universe="Anime"
-            data-name="Saitama">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    SAITAMA
-                </div>
-
-                <div class="jarvis-card-energy">
-                    👊
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    HERO • HUMAN
-                </div>
-
-                <div class="jarvis-card-name">
-                    Saitama
-                </div>
-
-                <div class="jarvis-card-universe">
-                    Anime
-                </div>
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            EXTREME
-                        </strong>
-
-                    </div>
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Saitama')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- NARUTO -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Hero"
-            data-universe="Anime"
-            data-name="Naruto">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    NARUTO
-                </div>
-
-                <div class="jarvis-card-energy">
-                    🔥
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    HERO • SHINOBI
-                </div>
-
-                <div class="jarvis-card-name">
-                    Naruto
-                </div>
-
-                <div class="jarvis-card-universe">
-                    Anime
-                </div>
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            GOD TIER
-                        </strong>
-
-                    </div>
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Naruto')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- LUFFY -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Hero"
-            data-universe="Anime"
-            data-name="Luffy">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    LUFFY
-                </div>
-
-                <div class="jarvis-card-energy">
-                    ☀
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    HERO • PIRATE
-                </div>
-
-                <div class="jarvis-card-name">
-                    Luffy
-                </div>
-
-                <div class="jarvis-card-universe">
-                    Anime
-                </div>
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            EXTREME
-                        </strong>
-
-                    </div>
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Luffy')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-
-        <!-- GOJO -->
-
-        <article
-            class="jarvis-character-card"
-            data-role="Hero"
-            data-universe="Anime"
-            data-name="Gojo">
-
-            <div class="jarvis-card-art">
-
-                <div class="jarvis-card-symbol">
-                    GOJO
-                </div>
-
-                <div class="jarvis-card-energy">
-                    ✦
-                </div>
-
-            </div>
-
-
-            <div class="jarvis-card-info">
-
-                <div class="jarvis-card-role">
-                    HERO • SORCERER
-                </div>
-
-                <div class="jarvis-card-name">
-                    Gojo
-                </div>
-
-                <div class="jarvis-card-universe">
-                    Anime
-                </div>
-
-                <div class="jarvis-card-meta">
-
-                    <div class="jarvis-power">
-
-                        <small>
-                            POWER CLASS
-                        </small>
-
-                        <strong>
-                            EXTREME
-                        </strong>
-
-                    </div>
-
-                    <button
-                        class="jarvis-profile-btn"
-                        onclick="jarvisProfile('Gojo')">
-
-                        VIEW PROFILE
-
-                    </button>
-
-                </div>
-
-            </div>
-
-        </article>
-
-
-    </div>
-
-
-    <div
-        class="jarvis-no-results"
-        id="jarvisNoResults">
-
-        <strong>
-            CHARACTER NOT FOUND
-        </strong>
-
-        অন্য কোনো character name অথবা universe
-        দিয়ে search করে দেখো।
-
-    </div>
-
 
 </section>
 
 
+<!-- FOOTER -->
 
-<!-- =========================================================
-     PART 3 JAVASCRIPT
-     ========================================================= -->
+<footer>
 
-<script>
+    <div class="container">
 
-(function(){
+        <div class="footer-logo">
+            JARVIS<span>.</span>
+        </div>
 
-    const cards =
-        Array.from(
-            document.querySelectorAll(
-                ".jarvis-character-card"
-            )
-        );
+        <p>
+            CHARACTER INTELLIGENCE SYSTEM • V1
+        </p>
 
-    const search =
-        document.getElementById(
-            "jarvisCharacterSearch"
-        );
+    </div>
 
-    const count =
-        document.getElementById(
-            "jarvisCharacterCount"
-        );
+</footer>
 
-    const noResults =
-        document.getElementById(
-            "jarvisNoResults"
-        );
-
-    const filters =
-        document.querySelectorAll(
-            ".jarvis-filter"
-        );
-
-
-    let activeRole = "all";
-    let activeUniverse = "all";
-
-
-    function updateDatabase(){
-
-        const query =
-            search.value
-                .trim()
-                .toLowerCase();
-
-
-        let visible = 0;
-
-
-        cards.forEach(card => {
-
-            const name =
-                card.dataset.name
-                    .toLowerCase();
-
-            const role =
-                card.dataset.role;
-
-            const universe =
-                card.dataset.universe;
-
-
-            const matchesSearch =
-                !query ||
-                name.includes(query) ||
-                universe
-                    .toLowerCase()
-                    .includes(query) ||
-                role
-                    .toLowerCase()
-                    .includes(query);
-
-
-            const matchesRole =
-                activeRole === "all" ||
-                role === activeRole;
-
-
-            const matchesUniverse =
-                activeUniverse === "all" ||
-                universe === activeUniverse;
-
-
-            const show =
-                matchesSearch &&
-                matchesRole &&
-                matchesUniverse;
-
-
-            card.style.display =
-                show ? "" : "none";
-
-
-            if(show){
-                visible++;
-            }
-
-        });
-
-
-        count.textContent =
-            visible +
-            (visible === 1
-                ? " CHARACTER"
-                : " CHARACTERS");
-
-
-        noResults.style.display =
-            visible === 0
-                ? "block"
-                : "none";
-
-    }
-
-
-    /* SEARCH */
-
-    search.addEventListener(
-        "input",
-        updateDatabase
-    );
-
-
-    /* FILTERS */
-
-    filters.forEach(button => {
-
-        button.addEventListener(
-            "click",
-            function(){
-
-                const role =
-                    this.dataset.filter;
-
-                const universe =
-                    this.dataset.universe;
-
-
-                if(role){
-
-                    activeRole =
-                        role;
-
-                }
-
-                if(universe){
-
-                    activeUniverse =
-                        universe;
-
-                }
-
-
-                /*
-                    Update active visual state.
-                    For ALL / HERO / VILLAIN /
-                    ANTI-HERO only one role
-                    remains active.
-                */
-
-                if(role){
-
-                    filters
-                        .forEach(btn => {
-
-                            if(
-                                btn.dataset.filter
-                            ){
-
-                                btn.classList
-                                    .remove(
-                                        "active"
-                                    );
-
-                            }
-
-                        });
-
-                    this.classList
-                        .add("active");
-
-                }
-
-
-                if(universe){
-
-                    filters
-                        .forEach(btn => {
-
-                            if(
-                                btn.dataset.universe
-                            ){
-
-                                btn.classList
-                                    .remove(
-                                        "active"
-                                    );
-
-                            }
-
-                        });
-
-                    this.classList
-                        .add("active");
-
-                }
-
-
-                updateDatabase();
-
-            }
-        );
-
-    });
-
-
-})();
-
-
-/* =========================================================
-   PROFILE FOUNDATION
-
-   Part 4-এ এখানে full modal profile
-   system connect করা হবে.
-   ========================================================= */
-
-function jarvisProfile(name){
-
-    alert(
-        name +
-        " profile is coming in PART 4.\n\n" +
-        "The full Bangla A–Z character profile " +
-        "will open here."
-    );
-
-}
-
-</script>
 </body>
 </html>
