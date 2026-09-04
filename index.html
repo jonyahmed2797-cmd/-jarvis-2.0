@@ -1,1968 +1,405 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#080b12">
-
-<title>JARVIS Social V1.1</title>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Circle — sign up & profile demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;600;700;800&display=swap');
-
-:root{
- --bg:#080b12;
- --card:#10151f;
- --card2:#151b27;
- --line:rgba(255,255,255,.08);
- --text:#f5f7fb;
- --muted:#8992a3;
- --accent:#7c6cff;
- --accent2:#55dfff;
- --green:#55e39b;
- --red:#ff6078;
-}
-
-.light{
- --bg:#f0f2f5;
- --card:#fff;
- --card2:#f5f6f8;
- --line:rgba(0,0,0,.1);
- --text:#15171a;
- --muted:#657080;
-}
-
-*{
- margin:0;
- padding:0;
- box-sizing:border-box;
-}
-
-html{
- scroll-behavior:smooth;
-}
-
-body{
- background:var(--bg);
- color:var(--text);
- font-family:Inter,Arial,sans-serif;
- transition:.25s;
-}
-
-button,input,textarea{
- font:inherit;
-}
-
-button{
- cursor:pointer;
-}
-
-button,input,textarea{
- outline:none;
-}
-
-.navbar{
- position:fixed;
- top:0;
- left:0;
- right:0;
- height:64px;
- z-index:1000;
- background:rgba(8,11,18,.88);
- backdrop-filter:blur(18px);
- border-bottom:1px solid var(--line);
-}
-
-.light .navbar{
- background:rgba(255,255,255,.9);
-}
-
-.nav-inner{
- height:100%;
- max-width:1400px;
- margin:auto;
- padding:0 18px;
- display:flex;
- align-items:center;
- gap:18px;
-}
-
-.logo{
- color:var(--text);
- font-family:Orbitron;
- font-weight:900;
- letter-spacing:3px;
- font-size:20px;
- text-decoration:none;
-}
-
-.logo span{
- color:var(--accent);
-}
-
-.search{
- width:270px;
- height:40px;
- border:1px solid var(--line);
- border-radius:22px;
- background:var(--card);
- display:flex;
- align-items:center;
- padding:0 14px;
-}
-
-.search span{
- color:var(--muted);
- margin-right:8px;
-}
-
-.search input{
- width:100%;
- border:0;
- background:transparent;
- color:var(--text);
- font-size:11px;
-}
-
-.nav-center{
- margin:auto;
- display:flex;
- gap:5px;
-}
-
-.nav-item{
- width:55px;
- height:43px;
- border:0;
- background:transparent;
- color:var(--muted);
- border-radius:10px;
- font-size:19px;
-}
-
-.nav-item:hover,
-.nav-item.active{
- background:var(--card2);
- color:var(--text);
-}
-
-.nav-right{
- display:flex;
- align-items:center;
- gap:8px;
-}
-
-.circle-btn{
- width:39px;
- height:39px;
- border-radius:50%;
- border:1px solid var(--line);
- background:var(--card);
- color:var(--text);
-}
-
-.avatar{
- width:39px;
- height:39px;
- border-radius:50%;
- background:linear-gradient(135deg,var(--accent),var(--accent2));
- display:flex;
- align-items:center;
- justify-content:center;
- color:white;
- font-weight:800;
- flex-shrink:0;
-}
-
-.page{
- max-width:1400px;
- margin:auto;
- padding:86px 18px 50px;
- display:grid;
- grid-template-columns:250px minmax(400px,650px) 280px;
- gap:22px;
-}
-
-.sidebar,.rightbar{
- position:sticky;
- top:84px;
- height:max-content;
-}
-
-.side-profile,
-.side-menu,
-.widget,
-.composer,
-.post{
- border:1px solid var(--line);
- background:var(--card);
- border-radius:16px;
-}
-
-.side-profile{
- padding:15px;
- margin-bottom:12px;
-}
-
-.side-profile-top{
- display:flex;
- align-items:center;
- gap:10px;
-}
-
-.side-profile strong{
- font-size:11px;
-}
-
-.side-profile small{
- display:block;
- color:var(--muted);
- font-size:8px;
- margin-top:3px;
-}
-
-.side-menu{
- overflow:hidden;
-}
-
-.side-menu button{
- width:100%;
- height:48px;
- border:0;
- background:transparent;
- color:var(--muted);
- text-align:left;
- padding:0 18px;
- font-size:10px;
- font-weight:700;
-}
-
-.side-menu button:hover{
- background:var(--card2);
- color:var(--text);
-}
-
-.stories{
- display:flex;
- gap:10px;
- overflow-x:auto;
- padding-bottom:3px;
-}
-
-.story{
- min-width:105px;
- height:155px;
- border:1px solid var(--line);
- border-radius:15px;
- position:relative;
- overflow:hidden;
- background:
- radial-gradient(circle at 50% 20%,rgba(124,108,255,.5),transparent 45%),
- var(--card);
-}
-
-.story-user{
- position:absolute;
- top:10px;
- left:10px;
- width:33px;
- height:33px;
- border-radius:50%;
- border:2px solid var(--accent);
- background:#20283a;
- display:flex;
- align-items:center;
- justify-content:center;
- font-size:10px;
- font-weight:800;
-}
-
-.story-name{
- position:absolute;
- bottom:10px;
- left:10px;
- font-size:9px;
- font-weight:700;
-}
-
-.composer{
- margin-top:15px;
- padding:15px;
-}
-
-.composer-top{
- display:flex;
- gap:10px;
-}
-
-.composer textarea{
- flex:1;
- height:48px;
- resize:none;
- border:0;
- border-radius:24px;
- background:var(--card2);
- color:var(--text);
- padding:14px 16px;
- font-size:10px;
-}
-
-.composer-bottom{
- display:flex;
- align-items:center;
- margin-top:12px;
- padding-top:11px;
- border-top:1px solid var(--line);
-}
-
-.composer-action{
- border:0;
- background:none;
- color:var(--muted);
- font-size:9px;
- font-weight:700;
- margin-right:20px;
-}
-
-.composer-action:hover{
- color:var(--text);
-}
-
-.post-btn{
- margin-left:auto;
- border:0;
- border-radius:20px;
- background:linear-gradient(135deg,var(--accent),#6251d0);
- color:white;
- padding:8px 18px;
- font-size:9px;
- font-weight:800;
-}
-
-.post{
- margin-top:15px;
- overflow:hidden;
-}
-
-.post-head{
- display:flex;
- align-items:center;
- gap:10px;
- padding:15px;
-}
-
-.post-author{
- font-size:11px;
- font-weight:800;
-}
-
-.post-time{
- color:var(--muted);
- font-size:8px;
- margin-top:3px;
-}
-
-.more{
- margin-left:auto;
- border:0;
- background:none;
- color:var(--muted);
- font-size:16px;
-}
-
-.post-content{
- padding:0 15px 15px;
- font-size:11px;
- line-height:1.7;
-}
-
-.post-image{
- width:100%;
- min-height:300px;
- display:flex;
- align-items:center;
- justify-content:center;
- background:
- radial-gradient(circle,rgba(124,108,255,.3),transparent 45%),
- linear-gradient(135deg,#161d2c,#080b12);
- font-family:Orbitron;
- font-size:32px;
- letter-spacing:4px;
- color:#aaa0ff;
- overflow:hidden;
-}
-
-.post-image img{
- width:100%;
- max-height:500px;
- object-fit:cover;
- display:block;
-}
-
-.post-stats{
- display:flex;
- justify-content:space-between;
- padding:10px 15px;
- color:var(--muted);
- font-size:8px;
-}
-
-.post-actions{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- border-top:1px solid var(--line);
-}
-
-.post-actions button{
- height:42px;
- border:0;
- background:transparent;
- color:var(--muted);
- font-size:9px;
- font-weight:700;
-}
-
-.post-actions button:hover{
- background:var(--card2);
- color:var(--text);
-}
-
-.post-actions button.liked{
- color:var(--red);
-}
-
-.comments{
- display:none;
- border-top:1px solid var(--line);
- padding:12px 15px;
-}
-
-.comments.show{
- display:block;
-}
-
-.comment{
- display:flex;
- gap:8px;
- margin-bottom:9px;
-}
-
-.comment-bubble{
- background:var(--card2);
- border-radius:12px;
- padding:8px 11px;
- font-size:9px;
- color:var(--text);
-}
-
-.comment-form{
- display:flex;
- gap:7px;
-}
-
-.comment-form input{
- flex:1;
- border:1px solid var(--line);
- background:var(--card2);
- color:var(--text);
- border-radius:20px;
- padding:9px 12px;
- font-size:9px;
-}
-
-.comment-form button{
- border:0;
- border-radius:20px;
- background:var(--accent);
- color:white;
- padding:0 13px;
- font-size:9px;
-}
-
-.widget{
- padding:16px;
- margin-bottom:14px;
-}
-
-.widget h3{
- font-family:Orbitron;
- font-size:9px;
- letter-spacing:1px;
- margin-bottom:14px;
-}
-
-.friend{
- display:flex;
- align-items:center;
- gap:9px;
- padding:7px 0;
-}
-
-.friend-info{
- flex:1;
-}
-
-.friend-info strong{
- display:block;
- font-size:9px;
-}
-
-.friend-info small{
- color:var(--muted);
- font-size:7px;
-}
-
-.add{
- border:0;
- border-radius:15px;
- background:var(--card2);
- color:#aeb4ff;
- padding:6px 10px;
- font-size:8px;
- font-weight:700;
-}
-
-.profile-panel{
- display:none;
-}
-
-.profile-panel.show{
- display:block;
-}
-
-.profile-cover{
- height:170px;
- border-radius:18px;
- background:
- radial-gradient(circle at 50% 40%,rgba(124,108,255,.5),transparent 40%),
- linear-gradient(135deg,#171d2c,#090c12);
- position:relative;
-}
-
-.profile-avatar{
- position:absolute;
- bottom:-42px;
- left:25px;
- width:85px;
- height:85px;
- border-radius:50%;
- border:5px solid var(--card);
- background:linear-gradient(135deg,var(--accent),var(--accent2));
- display:flex;
- align-items:center;
- justify-content:center;
- font-size:28px;
- font-weight:900;
-}
-
-.profile-info{
- padding:55px 25px 20px;
- border:1px solid var(--line);
- border-top:0;
- border-radius:0 0 18px 18px;
- background:var(--card);
-}
-
-.profile-info h2{
- font-family:Orbitron;
- font-size:18px;
-}
-
-.profile-info p{
- color:var(--muted);
- font-size:9px;
- margin-top:7px;
- line-height:1.7;
-}
-
-.profile-stats{
- display:flex;
- gap:30px;
- margin-top:18px;
-}
-
-.profile-stats strong{
- display:block;
- font-size:14px;
-}
-
-.profile-stats span{
- color:var(--muted);
- font-size:7px;
-}
-
-.settings{
- display:none;
-}
-
-.settings.show{
- display:block;
-}
-
-.setting-row{
- display:flex;
- align-items:center;
- justify-content:space-between;
- padding:15px 0;
- border-bottom:1px solid var(--line);
-}
-
-.setting-row:last-child{
- border:0;
-}
-
-.setting-row strong{
- font-size:10px;
-}
-
-.setting-row span{
- color:var(--muted);
- font-size:8px;
-}
-
-.toggle{
- width:44px;
- height:24px;
- border:0;
- border-radius:20px;
- background:#303744;
- position:relative;
-}
-
-.toggle::after{
- content:"";
- width:18px;
- height:18px;
- position:absolute;
- top:3px;
- left:3px;
- border-radius:50%;
- background:white;
- transition:.2s;
-}
-
-.toggle.on{
- background:var(--accent);
-}
-
-.toggle.on::after{
- left:23px;
-}
-
-.toast{
- position:fixed;
- bottom:25px;
- left:50%;
- transform:translateX(-50%) translateY(80px);
- background:#171d29;
- color:white;
- border:1px solid var(--line);
- padding:12px 18px;
- border-radius:12px;
- font-size:10px;
- opacity:0;
- transition:.3s;
- z-index:5000;
-}
-
-.toast.show{
- transform:translateX(-50%) translateY(0);
- opacity:1;
-}
-
-.file-input{
- display:none;
-}
-
-@media(max-width:1100px){
-
- .page{
-  grid-template-columns:210px minmax(400px,650px);
-  justify-content:center;
- }
-
- .rightbar{
-  display:none;
- }
-
-}
-
-@media(max-width:760px){
-
- .navbar{
-  height:58px;
- }
-
- .nav-inner{
-  padding:0 10px;
- }
-
- .logo{
-  font-size:16px;
- }
-
- .search{
-  width:42px;
-  padding:0 12px;
- }
-
- .search input{
-  display:none;
- }
-
- .nav-center{
-  display:none;
- }
-
- .page{
-  display:block;
-  padding:72px 10px 80px;
- }
-
- .sidebar{
-  display:none;
- }
-
- .post-image{
-  min-height:250px;
- }
-
- .nav-right .circle-btn:nth-child(2),
- .nav-right .circle-btn:nth-child(3){
-  display:none;
- }
-
-}
-
-@media(max-width:420px){
-
- .logo{
-  letter-spacing:2px;
- }
-
- .post-content{
-  font-size:10px;
- }
-
- .stories .story{
-  min-width:92px;
- }
-}
+  :root {
+    --bg: #EEF1ED;
+    --panel: #FFFFFF;
+    --ink: #1B2B22;
+    --ink-soft: #55635A;
+    --line: #D8DED7;
+    --accent: #2F5233;
+    --accent-soft: #E4EBE1;
+    --gold: #C98A2B;
+    --error: #B23A3A;
+    --radius: 10px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .wrap { width: 100%; max-width: 420px; }
+
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+    color: var(--accent);
+    text-align: left;
+    margin: 0 0 6px 4px;
+  }
+
+  .tagline {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin: 0 0 24px 4px;
+  }
+
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 28px;
+  }
+
+  h1.title {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 22px;
+    margin: 0 0 20px;
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink-soft);
+    margin: 16px 0 6px;
+  }
+  label:first-of-type { margin-top: 0; }
+
+  input, textarea {
+    width: 100%;
+    font-family: inherit;
+    font-size: 15px;
+    padding: 11px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #FBFBFA;
+    color: var(--ink);
+  }
+  input:focus, textarea:focus, button:focus-visible, a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  textarea { resize: vertical; min-height: 72px; }
+
+  button {
+    width: 100%;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #274629; }
+  .btn-secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .btn-secondary:hover { background: var(--accent-soft); }
+  .btn-danger { background: transparent; color: var(--error); border: 1px solid var(--error); }
+  .btn-danger:hover { background: #F7EAEA; }
+
+  .switch-line {
+    text-align: center;
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 18px;
+  }
+  .switch-line a { color: var(--accent); font-weight: 600; text-decoration: none; cursor: pointer; }
+  .switch-line a:hover { text-decoration: underline; }
+
+  .error-msg {
+    background: #F7EAEA;
+    color: var(--error);
+    font-size: 13px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-top: 16px;
+  }
+
+  .hidden { display: none !important; }
+
+  /* Profile / feed view */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  .avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 4px auto 14px;
+  }
+
+  .name { font-family: 'Fraunces', serif; font-size: 20px; text-align: center; margin: 0; }
+  .email { font-size: 13px; color: var(--ink-soft); text-align: center; margin: 4px 0 20px; }
+
+  .field-block { margin-bottom: 18px; }
+  .field-label { font-size: 12px; font-weight: 600; color: var(--ink-soft); text-transform: none; margin-bottom: 5px; }
+  .field-value { font-size: 15px; line-height: 1.5; }
+  .field-value.empty { color: var(--ink-soft); font-style: italic; }
+
+  .divider { border: none; border-top: 1px solid var(--line); margin: 22px 0; }
+
+  .greeting { font-family: 'Fraunces', serif; font-size: 20px; margin: 0 0 8px; }
+  .subtext { font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin: 0; }
+
+  .tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+  .tab-btn {
+    flex: 1; margin: 0; padding: 9px; font-size: 13px; font-weight: 600;
+    border: 1px solid var(--line); border-radius: 8px; background: #FBFBFA; color: var(--ink-soft);
+  }
+  .tab-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
 </style>
 </head>
-
 <body>
 
-<nav class="navbar">
-
-<div class="nav-inner">
-
-<a href="#" class="logo">
-JARVIS<span>.</span>
-</a>
-
-<div class="search">
-<span>⌕</span>
-<input id="searchInput" placeholder="Search JARVIS...">
-</div>
-
-<div class="nav-center">
-
-<button class="nav-item active" onclick="showHome()">⌂</button>
-
-<button class="nav-item" onclick="showProfile()">♙</button>
-
-<button class="nav-item" onclick="showHome()">▶</button>
-
-<button class="nav-item" onclick="showSettings()">⚙</button>
-
-</div>
-
-<div class="nav-right">
-
-<button class="circle-btn" onclick="toggleTheme()">☼</button>
-
-<button class="circle-btn" onclick="showToast('Messages coming in V1.2')">✉</button>
-
-<button class="circle-btn" onclick="showToast('Notifications coming in V1.2')">♧</button>
-
-<div class="avatar">J</div>
-
-</div>
-
-</div>
-
-</nav>
-
-
-<div class="page">
-
-<aside class="sidebar">
-
-<div class="side-profile">
-
-<div class="side-profile-top">
-
-<div class="avatar">J</div>
-
-<div>
-<strong>Jony Ahmed</strong>
-<small>@jony • JARVIS user</small>
-</div>
-
-</div>
-
-</div>
-
-<div class="side-menu">
-
-<button onclick="showHome()">🏠 &nbsp; Home</button>
-
-<button onclick="showProfile()">👤 &nbsp; My Profile</button>
-
-<button onclick="showToast('Friends module coming soon')">
-👥 &nbsp; Friends
-</button>
-
-<button onclick="showToast('Messenger coming in V1.2')">
-💬 &nbsp; Messages
-</button>
-
-<button onclick="showToast('Notifications coming in V1.2')">
-🔔 &nbsp; Notifications
-</button>
-
-<button onclick="showToast('Saved posts coming soon')">
-🔖 &nbsp; Saved
-</button>
-
-<button onclick="showSettings()">⚙️ &nbsp; Settings</button>
-
-</div>
-
-</aside>
-
-
-<main>
-
-<!-- HOME -->
-
-<div id="home">
-
-<div class="stories">
-
-<div class="story">
-
-<div class="story-user">J</div>
-
-<div class="story-name">Your Story</div>
-
-</div>
-
-<div class="story">
-
-<div class="story-user">P</div>
-
-<div class="story-name">Peter</div>
-
-</div>
-
-<div class="story">
-
-<div class="story-user">M</div>
-
-<div class="story-name">Marvel</div>
-
-</div>
-
-<div class="story">
-
-<div class="story-user">A</div>
-
-<div class="story-name">Anime</div>
-
-</div>
-
-<div class="story">
-
-<div class="story-user">F</div>
-
-<div class="story-name">Football</div>
-
-</div>
-
-</div>
-
-
-<!-- COMPOSER -->
-
-<div class="composer">
-
-<div class="composer-top">
-
-<div class="avatar">J</div>
-
-<textarea id="postText"
-placeholder="What's on your mind, Jony?"></textarea>
-
-</div>
-
-<div class="composer-bottom">
-
-<button class="composer-action"
-onclick="document.getElementById('photoInput').click()">
-🖼️ Photo
-</button>
-
-<button class="composer-action"
-onclick="addEmoji()">
-😊 Feeling
-</button>
-
-<button class="composer-action"
-onclick="showToast('Location feature coming soon')">
-📍 Location
-</button>
-
-<button class="post-btn"
-onclick="createPost()">
-POST
-</button>
-
-</div>
-
-<input
-type="file"
-id="photoInput"
-class="file-input"
-accept="image/*"
-onchange="previewPhoto(event)"
->
-
-</div>
-
-
-<div id="feed">
-
-<!-- DEFAULT POST -->
-
-<article class="post">
-
-<div class="post-head">
-
-<div class="avatar">J</div>
-
-<div>
-
-<div class="post-author">Jony Ahmed</div>
-
-<div class="post-time">Just now • 🌐</div>
-
-</div>
-
-<button class="more"
-onclick="showToast('Post menu')">
-•••
-</button>
-
-</div>
-
-<div class="post-content">
-
-Welcome to <b>JARVIS Social V1.1</b> 🚀<br>
-
-Your personal social network interface is now upgraded.
-
-</div>
-
-<div class="post-image">
-JARVIS
-</div>
-
-<div class="post-stats">
-
-<span class="likes-count">12 Likes</span>
-
-<span>3 Comments • 1 Share</span>
-
-</div>
-
-<div class="post-actions">
-
-<button onclick="likePost(this)">
-♡ Like
-</button>
-
-<button onclick="toggleComments(this)">
-💬 Comment
-</button>
-
-<button onclick="sharePost(this)">
-↗ Share
-</button>
-
-</div>
-
-<div class="comments">
-
-<div class="comment">
-
-<div class="avatar"
-style="width:28px;height:28px;font-size:8px">
-P
-</div>
-
-<div class="comment-bubble">
-
-<b>Peter</b><br>
-
-This looks awesome 🔥
-
-</div>
-
-</div>
-
-<div class="comment-form">
-
-<input placeholder="Write a comment...">
-
-<button onclick="addComment(this)">
-Send
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-
-<!-- POST 2 -->
-
-<article class="post">
-
-<div class="post-head">
-
-<div class="avatar">P</div>
-
-<div>
-
-<div class="post-author">
-Peter Parker
-</div>
-
-<div class="post-time">
-2h • 🌐
-</div>
-
-</div>
-
-<button class="more">•••</button>
-
-</div>
-
-<div class="post-content">
-
-Sometimes the best way to start a new chapter
-is simply to begin. 🕷️
-
-</div>
-
-<div class="post-stats">
-
-<span class="likes-count">
-27 Likes
-</span>
-
-<span>
-6 Comments • 2 Shares
-</span>
-
-</div>
-
-<div class="post-actions">
-
-<button onclick="likePost(this)">
-♡ Like
-</button>
-
-<button onclick="toggleComments(this)">
-💬 Comment
-</button>
-
-<button onclick="sharePost(this)">
-↗ Share
-</button>
-
-</div>
-
-<div class="comments">
-
-<div class="comment-form">
-
-<input placeholder="Write a comment...">
-
-<button onclick="addComment(this)">
-Send
-</button>
-
-</div>
-
+<div class="wrap">
+  <div class="logo">circle</div>
+  <p class="tagline">A tiny social-app demo — profiles &amp; auth, no server required.</p>
+
+  <!-- LOGIN -->
+  <div id="view-login" class="panel">
+    <h1 class="title">Log in</h1>
+    <label for="login-email">Email</label>
+    <input id="login-email" type="email" autocomplete="email" />
+    <label for="login-password">Password</label>
+    <input id="login-password" type="password" autocomplete="current-password" />
+    <div id="login-error" class="error-msg hidden"></div>
+    <button class="btn-primary" onclick="handleLogin()">Log in</button>
+    <p class="switch-line">New here? <a onclick="showView('signup')">Create an account</a></p>
+  </div>
+
+  <!-- SIGNUP -->
+  <div id="view-signup" class="panel hidden">
+    <h1 class="title">Create your account</h1>
+    <label for="signup-name">Full name</label>
+    <input id="signup-name" type="text" autocomplete="name" />
+    <label for="signup-email">Email</label>
+    <input id="signup-email" type="email" autocomplete="email" />
+    <label for="signup-password">Password</label>
+    <input id="signup-password" type="password" autocomplete="new-password" placeholder="At least 6 characters" />
+    <div id="signup-error" class="error-msg hidden"></div>
+    <button class="btn-primary" onclick="handleSignup()">Sign up</button>
+    <p class="switch-line">Already have an account? <a onclick="showView('login')">Log in</a></p>
+  </div>
+
+  <!-- MAIN (feed / profile) -->
+  <div id="view-main" class="panel hidden">
+    <div class="tabs">
+      <button class="tab-btn active" id="tab-feed" onclick="showTab('feed')">Home</button>
+      <button class="tab-btn" id="tab-profile" onclick="showTab('profile')">Profile</button>
+    </div>
+
+    <div id="pane-feed">
+      <p class="greeting" id="greeting-text"></p>
+      <p class="subtext">Your feed goes here next — posts, likes, comments, and a friends/follow list are natural features to build on top of this auth system.</p>
+    </div>
+
+    <div id="pane-profile" class="hidden">
+      <div class="avatar" id="profile-avatar"></div>
+      <p class="name" id="profile-name"></p>
+      <p class="email" id="profile-email"></p>
+
+      <div class="field-block">
+        <div class="field-label">Bio</div>
+        <div class="field-value" id="bio-display"></div>
+        <textarea id="bio-input" class="hidden" placeholder="Tell people about yourself…"></textarea>
+      </div>
+      <button class="btn-secondary" id="bio-edit-btn" onclick="toggleBioEdit()">Edit bio</button>
+
+      <hr class="divider" />
+      <button class="btn-danger" onclick="handleLogout()">Log out</button>
+    </div>
+  </div>
 </div>
-
-</article>
-
-
-<!-- POST 3 -->
-
-<article class="post">
-
-<div class="post-head">
-
-<div class="avatar">M</div>
-
-<div>
-
-<div class="post-author">
-Marvel Universe
-</div>
-
-<div class="post-time">
-5h • 🌐
-</div>
-
-</div>
-
-<button class="more">•••</button>
-
-</div>
-
-<div class="post-content">
-
-Which character would you choose as your ultimate
-team leader? ⚡
-
-</div>
-
-<div class="post-image">
-MARVEL
-</div>
-
-<div class="post-stats">
-
-<span class="likes-count">
-84 Likes
-</span>
-
-<span>
-18 Comments • 7 Shares
-</span>
-
-</div>
-
-<div class="post-actions">
-
-<button onclick="likePost(this)">
-♡ Like
-</button>
-
-<button onclick="toggleComments(this)">
-💬 Comment
-</button>
-
-<button onclick="sharePost(this)">
-↗ Share
-</button>
-
-</div>
-
-<div class="comments">
-
-<div class="comment-form">
-
-<input placeholder="Write a comment...">
-
-<button onclick="addComment(this)">
-Send
-</button>
-
-</div>
-
-</div>
-
-</article>
-
-</div>
-
-</div>
-
-
-<!-- PROFILE -->
-
-<div id="profile" class="profile-panel">
-
-<div class="profile-cover">
-
-<div class="profile-avatar">
-J
-</div>
-
-</div>
-
-<div class="profile-info">
-
-<h2>Jony Ahmed</h2>
-
-<p>
-@jony<br>
-Welcome to my personal JARVIS Social profile.
-This is your private experimental social network.
-</p>
-
-<div class="profile-stats">
-
-<div>
-<strong id="postCount">3</strong>
-<span>POSTS</span>
-</div>
-
-<div>
-<strong>128</strong>
-<span>FRIENDS</span>
-</div>
-
-<div>
-<strong>24</strong>
-<span>FOLLOWING</span>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- SETTINGS -->
-
-<div id="settings" class="settings">
-
-<div class="widget">
-
-<h3>JARVIS SETTINGS</h3>
-
-<div class="setting-row">
-
-<div>
-<strong>Dark Mode</strong>
-<span>Change website appearance</span>
-</div>
-
-<button
-id="themeToggle"
-class="toggle on"
-onclick="toggleTheme()">
-</button>
-
-</div>
-
-<div class="setting-row">
-
-<div>
-<strong>Notifications</strong>
-<span>Browser notification system</span>
-</div>
-
-<button
-class="toggle"
-onclick="toggleSetting(this)">
-</button>
-
-</div>
-
-<div class="setting-row">
-
-<div>
-<strong>Auto Save</strong>
-<span>Save posts in this browser</span>
-</div>
-
-<button
-class="toggle on"
-onclick="toggleSetting(this)">
-</button>
-
-</div>
-
-<div class="setting-row">
-
-<div>
-<strong>Version</strong>
-<span>JARVIS Social V1.1</span>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</main>
-
-
-<!-- RIGHT -->
-
-<aside class="rightbar">
-
-<div class="widget">
-
-<h3>FRIEND REQUESTS</h3>
-
-<div class="friend">
-
-<div class="avatar">A</div>
-
-<div class="friend-info">
-
-<strong>Arif Hasan</strong>
-
-<small>5 mutual friends</small>
-
-</div>
-
-<button
-class="add"
-onclick="confirmFriend(this)">
-Confirm
-</button>
-
-</div>
-
-
-<div class="friend">
-
-<div class="avatar">R</div>
-
-<div class="friend-info">
-
-<strong>Rakib</strong>
-
-<small>2 mutual friends</small>
-
-</div>
-
-<button
-class="add"
-onclick="confirmFriend(this)">
-Confirm
-</button>
-
-</div>
-
-</div>
-
-
-<div class="widget">
-
-<h3>CONTACTS</h3>
-
-<div class="friend">
-
-<div class="avatar">P</div>
-
-<div class="friend-info">
-
-<strong>Peter</strong>
-
-<small>🟢 Active now</small>
-
-</div>
-
-</div>
-
-
-<div class="friend">
-
-<div class="avatar">M</div>
-
-<div class="friend-info">
-
-<strong>MJ</strong>
-
-<small>🟢 Active now</small>
-
-</div>
-
-</div>
-
-
-<div class="friend">
-
-<div class="avatar">T</div>
-
-<div class="friend-info">
-
-<strong>Tony</strong>
-
-<small>🟢 Active now</small>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="widget">
-
-<h3>JARVIS INFO</h3>
-
-<p style="color:var(--muted);font-size:9px;line-height:1.8">
-
-JARVIS Social V1.1<br><br>
-
-Personal social-network interface.<br>
-
-Browser-side data storage enabled.
-
-</p>
-
-</div>
-
-</aside>
-
-</div>
-
-
-<div id="toast" class="toast">
-Done
-</div>
-
 
 <script>
-
-/* ================= STATE ================= */
-
-let selectedImage=null;
-
-
-/* ================= HOME / PROFILE / SETTINGS ================= */
-
-function hideAll(){
-
-document.getElementById("home").style.display="none";
-
-document.getElementById("profile").classList.remove("show");
-
-document.getElementById("settings").classList.remove("show");
-
-}
-
-
-function showHome(){
-
-hideAll();
-
-document.getElementById("home").style.display="block";
-
-}
-
-
-function showProfile(){
-
-hideAll();
-
-document.getElementById("profile").classList.add("show");
-
-}
-
-
-function showSettings(){
-
-hideAll();
-
-document.getElementById("settings").classList.add("show");
-
-}
-
-
-/* ================= CREATE POST ================= */
-
-function createPost(){
-
-const text=document
-.getElementById("postText")
-.value.trim();
-
-if(!text && !selectedImage){
-
-showToast("Write something or select a photo.");
-
-return;
-
-}
-
-const post=document.createElement("article");
-
-post.className="post";
-
-let imageHTML="";
-
-if(selectedImage){
-
-imageHTML=`
-<div class="post-image">
-<img src="${selectedImage}">
-</div>
-`;
-
-}
-
-post.innerHTML=`
-
-<div class="post-head">
-
-<div class="avatar">J</div>
-
-<div>
-
-<div class="post-author">
-Jony Ahmed
-</div>
-
-<div class="post-time">
-Just now • 🌐
-</div>
-
-</div>
-
-<button class="more"
-onclick="showToast('Post menu')">
-•••
-</button>
-
-</div>
-
-<div class="post-content">
-${escapeHTML(text)}
-</div>
-
-${imageHTML}
-
-<div class="post-stats">
-
-<span class="likes-count">
-0 Likes
-</span>
-
-<span>
-0 Comments • 0 Shares
-</span>
-
-</div>
-
-<div class="post-actions">
-
-<button onclick="likePost(this)">
-♡ Like
-</button>
-
-<button onclick="toggleComments(this)">
-💬 Comment
-</button>
-
-<button onclick="sharePost(this)">
-↗ Share
-</button>
-
-</div>
-
-<div class="comments">
-
-<div class="comment-form">
-
-<input placeholder="Write a comment...">
-
-<button onclick="addComment(this)">
-Send
-</button>
-
-</div>
-
-</div>
-
-`;
-
-document
-.getElementById("feed")
-.prepend(post);
-
-document.getElementById("postText").value="";
-
-selectedImage=null;
-
-document.getElementById("photoInput").value="";
-
-updatePostCount();
-
-savePosts();
-
-showToast("Post published ✓");
-
-}
-
-
-/* ================= PHOTO ================= */
-
-function previewPhoto(event){
-
-const file=event.target.files[0];
-
-if(!file)return;
-
-if(file.size>5*1024*1024){
-
-showToast("Photo must be under 5MB.");
-
-event.target.value="";
-
-return;
-
-}
-
-const reader=new FileReader();
-
-reader.onload=function(e){
-
-selectedImage=e.target.result;
-
-showToast("Photo selected ✓");
-
-};
-
-reader.readAsDataURL(file);
-
-}
-
-
-/* ================= LIKE ================= */
-
-function likePost(button){
-
-const post=button.closest(".post");
-
-const count=post.querySelector(".likes-count");
-
-let number=parseInt(count.textContent)||0;
-
-if(button.classList.contains("liked")){
-
-number--;
-
-button.classList.remove("liked");
-
-button.innerHTML="♡ Like";
-
-}else{
-
-number++;
-
-button.classList.add("liked");
-
-button.innerHTML="♥ Liked";
-
-}
-
-count.textContent=number+" Likes";
-
-savePosts();
-
-}
-
-
-/* ================= COMMENTS ================= */
-
-function toggleComments(button){
-
-const comments=button
-.closest(".post")
-.querySelector(".comments");
-
-comments.classList.toggle("show");
-
-}
-
-
-function addComment(button){
-
-const input=button.previousElementSibling;
-
-const text=input.value.trim();
-
-if(!text)return;
-
-const comments=button.closest(".comments");
-
-const form=button.closest(".comment-form");
-
-const comment=document.createElement("div");
-
-comment.className="comment";
-
-comment.innerHTML=`
-
-<div class="avatar"
-style="width:28px;height:28px;font-size:8px">
-J
-</div>
-
-<div class="comment-bubble">
-
-<b>Jony</b><br>
-
-${escapeHTML(text)}
-
-</div>
-
-`;
-
-comments.insertBefore(comment,form);
-
-input.value="";
-
-savePosts();
-
-}
-
-
-/* ================= SHARE ================= */
-
-function sharePost(button){
-
-const post=button.closest(".post");
-
-const text=post
-.querySelector(".post-content")
-?.innerText || "JARVIS Social post";
-
-if(navigator.share){
-
-navigator.share({
-
-title:"JARVIS Social",
-
-text:text
-
-}).catch(()=>{});
-
-}else{
-
-if(navigator.clipboard){
-
-navigator.clipboard.writeText(text);
-
-}
-
-showToast("Post text copied ✓");
-
-}
-
-}
-
-
-/* ================= SEARCH ================= */
-
-document
-.getElementById("searchInput")
-.addEventListener("input",function(){
-
-const query=this.value
-.toLowerCase()
-.trim();
-
-document
-.querySelectorAll(".post")
-.forEach(post=>{
-
-const match=post
-.innerText
-.toLowerCase()
-.includes(query);
-
-post.style.display=match?"":"none";
-
-});
-
-});
-
-
-/* ================= THEME ================= */
-
-function toggleTheme(){
-
-document.body.classList.toggle("light");
-
-const light=document.body.classList.contains("light");
-
-localStorage.setItem("jarvisTheme",light?"light":"dark");
-
-const toggle=document.getElementById("themeToggle");
-
-if(toggle){
-
-toggle.classList.toggle("on",!light);
-
-}
-
-}
-
-
-/* ================= SETTING TOGGLE ================= */
-
-function toggleSetting(button){
-
-button.classList.toggle("on");
-
-}
-
-
-/* ================= FRIEND ================= */
-
-function confirmFriend(button){
-
-button.innerText="Added ✓";
-
-button.disabled=true;
-
-showToast("Friend request accepted.");
-
-}
-
-
-/* ================= EMOJI ================= */
-
-function addEmoji(){
-
-const textarea=document.getElementById("postText");
-
-textarea.value+=" 😊";
-
-textarea.focus();
-
-}
-
-
-/* ================= POST COUNT ================= */
-
-function updatePostCount(){
-
-const count=document
-.querySelectorAll("#feed .post")
-.length;
-
-const element=document.getElementById("postCount");
-
-if(element){
-
-element.textContent=count;
-
-}
-
-}
-
-
-/* ================= LOCAL STORAGE ================= */
-
-/*
-   This V1.1 stores the basic post information
-   in this browser only.
-*/
-
-function savePosts(){
-
-try{
-
-const posts=[...document.querySelectorAll("#feed .post")]
-.map(post=>({
-
-author:post.querySelector(".post-author")?.innerText||"",
-
-content:post.querySelector(".post-content")?.innerText||"",
-
-likes:post.querySelector(".likes-count")?.innerText||""
-
-}));
-
-localStorage.setItem(
-"jarvisSocialPosts",
-JSON.stringify(posts)
-);
-
-}catch(error){
-
-console.log("Storage unavailable");
-
-}
-
-}
-
-
-/* ================= TOAST ================= */
-
-function showToast(message){
-
-const toast=document.getElementById("toast");
-
-toast.textContent=message;
-
-toast.classList.add("show");
-
-clearTimeout(window.toastTimer);
-
-window.toastTimer=setTimeout(()=>{
-
-toast.classList.remove("show");
-
-},2200);
-
-}
-
-
-/* ================= ESCAPE ================= */
-
-function escapeHTML(text){
-
-const div=document.createElement("div");
-
-div.textContent=text;
-
-return div.innerHTML;
-
-}
-
-
-/* ================= LOAD THEME ================= */
-
-if(localStorage.getItem("jarvisTheme")==="light"){
-
-document.body.classList.add("light");
-
-const toggle=document.getElementById("themeToggle");
-
-if(toggle){
-
-toggle.classList.remove("on");
-
-}
-
-}
-
-
-/* ================= INIT ================= */
-
-updatePostCount();
-
+  // ---- Storage helpers (mock backend using localStorage) ----
+  const USERS_KEY = 'circle_users';
+  const SESSION_KEY = 'circle_session';
+  const AVATAR_COLORS = ['#2F5233', '#6C4F77', '#C9A227', '#3B4B8C', '#B23A3A', '#1F7A6C'];
+
+  function getUsers() {
+    return JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+  }
+  function saveUsers(users) {
+    localStorage.setItem(USERS_KEY, JSON.stringify(users));
+  }
+  function getSession() {
+    const raw = localStorage.getItem(SESSION_KEY);
+    return raw ? JSON.parse(raw) : null;
+  }
+  function setSession(user) {
+    localStorage.setItem(SESSION_KEY, JSON.stringify(user));
+  }
+  function clearSession() {
+    localStorage.removeItem(SESSION_KEY);
+  }
+  function randomColor() {
+    return AVATAR_COLORS[Math.floor(Math.random() * AVATAR_COLORS.length)];
+  }
+  function initials(name) {
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+  }
+
+  // ---- View switching ----
+  function showView(view) {
+    document.getElementById('view-login').classList.toggle('hidden', view !== 'login');
+    document.getElementById('view-signup').classList.toggle('hidden', view !== 'signup');
+    document.getElementById('view-main').classList.toggle('hidden', view !== 'main');
+    document.getElementById('login-error').classList.add('hidden');
+    document.getElementById('signup-error').classList.add('hidden');
+  }
+
+  function showTab(tab) {
+    document.getElementById('pane-feed').classList.toggle('hidden', tab !== 'feed');
+    document.getElementById('pane-profile').classList.toggle('hidden', tab !== 'profile');
+    document.getElementById('tab-feed').classList.toggle('active', tab === 'feed');
+    document.getElementById('tab-profile').classList.toggle('active', tab === 'profile');
+  }
+
+  // ---- Auth actions ----
+  function handleSignup() {
+    const name = document.getElementById('signup-name').value.trim();
+    const email = document.getElementById('signup-email').value.trim();
+    const password = document.getElementById('signup-password').value;
+    const errorBox = document.getElementById('signup-error');
+
+    if (!name || !email || !password) {
+      return showError(errorBox, 'Please fill out every field.');
+    }
+    if (password.length < 6) {
+      return showError(errorBox, 'Password must be at least 6 characters.');
+    }
+
+    const users = getUsers();
+    if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
+      return showError(errorBox, 'An account with this email already exists.');
+    }
+
+    const newUser = {
+      id: Date.now().toString(),
+      name, email, password, // demo only — never store plaintext passwords in a real app
+      bio: '',
+      avatarColor: randomColor(),
+      createdAt: new Date().toISOString(),
+    };
+    users.push(newUser);
+    saveUsers(users);
+    setSession(newUser);
+    renderMain(newUser);
+    showView('main');
+  }
+
+  function handleLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    const errorBox = document.getElementById('login-error');
+
+    const users = getUsers();
+    const found = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
+    if (!found) {
+      return showError(errorBox, 'Invalid email or password.');
+    }
+    setSession(found);
+    renderMain(found);
+    showView('main');
+  }
+
+  function handleLogout() {
+    clearSession();
+    document.getElementById('login-email').value = '';
+    document.getElementById('login-password').value = '';
+    showView('login');
+  }
+
+  function showError(box, msg) {
+    box.textContent = msg;
+    box.classList.remove('hidden');
+  }
+
+  // ---- Profile rendering ----
+  function renderMain(user) {
+    document.getElementById('greeting-text').textContent = `Hey ${user.name.split(' ')[0]} 👋`;
+    document.getElementById('profile-avatar').textContent = initials(user.name);
+    document.getElementById('profile-avatar').style.background = user.avatarColor;
+    document.getElementById('profile-name').textContent = user.name;
+    document.getElementById('profile-email').textContent = user.email;
+    renderBio(user.bio);
+    showTab('feed');
+  }
+
+  function renderBio(bio) {
+    const display = document.getElementById('bio-display');
+    if (bio) {
+      display.textContent = bio;
+      display.classList.remove('empty');
+    } else {
+      display.textContent = 'No bio yet — tap Edit bio to add one.';
+      display.classList.add('empty');
+    }
+  }
+
+  function toggleBioEdit() {
+    const display = document.getElementById('bio-display');
+    const input = document.getElementById('bio-input');
+    const btn = document.getElementById('bio-edit-btn');
+    const editing = !input.classList.contains('hidden');
+
+    if (!editing) {
+      input.value = display.classList.contains('empty') ? '' : display.textContent;
+      display.classList.add('hidden');
+      input.classList.remove('hidden');
+      btn.textContent = 'Save bio';
+      input.focus();
+    } else {
+      const newBio = input.value.trim();
+      const session = getSession();
+      const users = getUsers();
+      const updatedUsers = users.map(u => u.id === session.id ? { ...u, bio: newBio } : u);
+      saveUsers(updatedUsers);
+      const updatedSession = { ...session, bio: newBio };
+      setSession(updatedSession);
+      renderBio(newBio);
+      input.classList.add('hidden');
+      display.classList.remove('hidden');
+      btn.textContent = 'Edit bio';
+    }
+  }
+
+  // ---- Boot ----
+  (function init() {
+    const session = getSession();
+    if (session) {
+      renderMain(session);
+      showView('main');
+    } else {
+      showView('login');
+    }
+  })();
 </script>
-
 </body>
 </html>
