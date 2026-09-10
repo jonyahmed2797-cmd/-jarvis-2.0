@@ -1,1632 +1,352 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#f7efe3">
-<title>Love Letter 💌</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<style>
-:root{
-  --cream:#f7efe3;
-  --coral:#d97b73;
-  --coral-dk:#b9554d;
-  --pink:#f0b6c6;
-  --pink-lt:#f7d8e0;
-  --gingham:#f3c6d2;
-  --gingham-2:rgba(206,118,142,.28);
-  --maroon:#7a2230;
-  --red:#e23b4e;
-  --red-dk:#b22a3b;
-  --paper:#fdf4ef;
-  --wood:#b5793f;
-  --wood-dk:#8a5a2b;
-  --ease:cubic-bezier(.34,1.56,.64,1);
-  --font-pix:"Press Start 2P",monospace;
-  --font-body:"Pixelify Sans",monospace;
-}
+<title>
+Happy Birthday Arun 💜
+</title>
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+<link rel="stylesheet" href="style.css">
 
-html,body{
-  min-height:100%;
-}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-body{
-  min-height:100svh;
-  display:grid;
-  place-items:center;
-  padding:20px;
-  font-family:var(--font-body);
-  color:var(--maroon);
-  background:var(--cream);
-  overflow:hidden;
-  user-select:none;
-}
-
-button{
-  font:inherit;
-}
-
-.heart{
-  display:inline-block;
-  width:18px;
-  height:18px;
-  background:var(--red);
-  clip-path:polygon(
-    50% 90%,
-    10% 48%,
-    5% 30%,
-    12% 14%,
-    28% 7%,
-    42% 12%,
-    50% 23%,
-    58% 12%,
-    72% 7%,
-    88% 14%,
-    95% 30%,
-    90% 48%
-  );
-}
-
-.heart--inline{
-  width:1em;
-  height:1em;
-  vertical-align:-.1em;
-}
-
-/* ================= BACKGROUND ================= */
-
-.fx{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
-  z-index:0;
-}
-
-.fx::before{
-  content:"";
-  position:absolute;
-  width:70vmax;
-  height:70vmax;
-  left:-20%;
-  top:-25%;
-  border-radius:50%;
-  background:radial-gradient(
-    circle,
-    rgba(255,193,212,.8),
-    transparent 65%
-  );
-  animation:auroraA 18s ease-in-out infinite alternate;
-}
-
-.fx::after{
-  content:"";
-  position:absolute;
-  width:75vmax;
-  height:75vmax;
-  right:-25%;
-  bottom:-30%;
-  border-radius:50%;
-  background:radial-gradient(
-    circle,
-    rgba(255,225,196,.8),
-    transparent 65%
-  );
-  animation:auroraB 22s ease-in-out infinite alternate;
-}
-
-@keyframes auroraA{
-  to{
-    transform:translate(10vw,7vh) scale(1.15);
-  }
-}
-
-@keyframes auroraB{
-  to{
-    transform:translate(-8vw,-5vh) scale(.9);
-  }
-}
-
-.vignette{
-  position:absolute;
-  inset:0;
-  background:radial-gradient(
-    circle at center,
-    transparent 50%,
-    rgba(120,40,50,.12)
-  );
-}
-
-/* ================= CONFETTI ================= */
-
-.confetti{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:1;
-}
-
-.confetti .heart{
-  position:absolute;
-  opacity:.6;
-  animation:floatHeart linear infinite;
-}
-
-@keyframes floatHeart{
-  0%{
-    transform:translateY(15px) rotate(0) scale(.8);
-    opacity:0;
-  }
-  15%{
-    opacity:.65;
-  }
-  85%{
-    opacity:.65;
-  }
-  100%{
-    transform:translateY(-40px) rotate(15deg) scale(1.1);
-    opacity:0;
-  }
-}
-
-/* ================= MAIN ================= */
-
-.scene{
-  position:relative;
-  width:min(100%,520px);
-  min-height:620px;
-  display:grid;
-  place-items:center;
-  z-index:2;
-}
-
-.stage,
-.window{
-  grid-area:1/1;
-}
-
-/* ================= AIM GAME ================= */
-
-.stage{
-  width:100%;
-  height:min(85svh,620px);
-  position:relative;
-  transition:
-    opacity .45s ease,
-    transform .55s var(--ease);
-}
-
-.stage.is-gone{
-  opacity:0;
-  transform:scale(.65) translateY(-20px);
-  pointer-events:none;
-}
-
-.target{
-  position:absolute;
-  left:50%;
-  top:5%;
-  transform:translateX(-50%);
-  display:grid;
-  justify-items:center;
-  gap:14px;
-  cursor:pointer;
-  z-index:5;
-}
-
-.target__label{
-  font-size:1.3rem;
-  display:flex;
-  align-items:center;
-  gap:8px;
-}
-
-.target__date{
-  font-size:.95rem;
-  opacity:.75;
-}
-
-.envelope{
-  position:relative;
-  width:200px;
-  height:140px;
-  border:5px solid var(--coral);
-  border-radius:8px;
-  background:var(--paper);
-  animation:bob 3s ease-in-out infinite;
-  box-shadow:0 18px 0 -8px rgba(185,85,77,.18);
-}
-
-.envelope__flap{
-  position:absolute;
-  left:50%;
-  top:0;
-  transform:translateX(-50%);
-  width:0;
-  height:0;
-  border-left:95px solid transparent;
-  border-right:95px solid transparent;
-  border-top:68px solid var(--pink);
-}
-
-.envelope::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(
-      to top right,
-      transparent 48%,
-      var(--coral) 49% 51%,
-      transparent 52%
-    ) bottom left/50% 60% no-repeat,
-    linear-gradient(
-      to top left,
-      transparent 48%,
-      var(--coral) 49% 51%,
-      transparent 52%
-    ) bottom right/50% 60% no-repeat;
-  opacity:.6;
-}
-
-.envelope__seal{
-  position:absolute;
-  left:50%;
-  top:55px;
-  transform:translateX(-50%);
-  width:35px;
-  height:35px;
-  z-index:3;
-  display:grid;
-  place-items:center;
-  background:var(--red);
-  color:white;
-  clip-path:polygon(
-    50% 90%,
-    10% 48%,
-    5% 30%,
-    12% 14%,
-    28% 7%,
-    42% 12%,
-    50% 23%,
-    58% 12%,
-    72% 7%,
-    88% 14%,
-    95% 30%,
-    90% 48%
-  );
-  font-size:13px;
-}
-
-.target.is-hit .envelope{
-  animation:hitwobble .5s ease;
-}
-
-@keyframes bob{
-  0%,100%{
-    transform:translateY(0) rotate(-1deg);
-  }
-  50%{
-    transform:translateY(-9px) rotate(1deg);
-  }
-}
-
-@keyframes hitwobble{
-  0%,100%{transform:rotate(0)}
-  25%{transform:translateX(5px) rotate(5deg)}
-  55%{transform:translateX(-5px) rotate(-4deg)}
-  80%{transform:translateX(3px) rotate(2deg)}
-}
-
-/* ================= CUPID ================= */
-
-.archer{
-  position:absolute;
-  left:50%;
-  bottom:14%;
-  transform:translateX(-50%);
-  width:190px;
-  height:190px;
-  z-index:3;
-  pointer-events:none;
-}
-
-.cupid{
-  position:absolute;
-  left:50%;
-  bottom:0;
-  transform:translateX(-50%);
-  width:120px;
-  height:120px;
-}
-
-/* simple pixel-style cupid */
-
-.cupid__head{
-  position:absolute;
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  background:#ffd0b5;
-  left:36px;
-  top:10px;
-  border:4px solid var(--maroon);
-}
-
-.cupid__hair{
-  position:absolute;
-  left:37px;
-  top:8px;
-  width:45px;
-  height:18px;
-  background:#6b3b2c;
-  border-radius:20px 20px 5px 5px;
-  z-index:2;
-}
-
-.cupid__eye{
-  position:absolute;
-  width:5px;
-  height:5px;
-  background:#000;
-  top:29px;
-  z-index:3;
-}
-
-.cupid__eye.left{left:49px}
-.cupid__eye.right{left:67px}
-
-.cupid__body{
-  position:absolute;
-  left:30px;
-  top:55px;
-  width:60px;
-  height:55px;
-  background:#fff;
-  border:4px solid var(--maroon);
-  border-radius:25px 25px 10px 10px;
-}
-
-.cupid__wing{
-  position:absolute;
-  width:38px;
-  height:55px;
-  background:#fff;
-  border:4px solid var(--maroon);
-  border-radius:60% 40% 50% 50%;
-  top:57px;
-}
-
-.cupid__wing.left{
-  left:2px;
-  transform:rotate(-25deg);
-}
-
-.cupid__wing.right{
-  right:2px;
-  transform:rotate(25deg);
-}
-
-.bow{
-  position:absolute;
-  width:80px;
-  height:145px;
-  right:5px;
-  top:20px;
-  border:7px solid var(--wood);
-  border-left:0;
-  border-radius:0 80% 80% 0;
-  transform:rotate(-12deg);
-}
-
-.bow::after{
-  content:"";
-  position:absolute;
-  width:3px;
-  height:140px;
-  background:var(--wood-dk);
-  left:0;
-  top:0;
-}
-
-.arrow{
-  position:absolute;
-  right:-20px;
-  top:75px;
-  width:115px;
-  height:5px;
-  background:var(--wood-dk);
-  transform-origin:left center;
-  transform:rotate(-22deg);
-  z-index:5;
-}
-
-.arrow::after{
-  content:"";
-  position:absolute;
-  right:-2px;
-  top:-6px;
-  width:0;
-  height:0;
-  border-left:15px solid var(--red);
-  border-top:8px solid transparent;
-  border-bottom:8px solid transparent;
-}
-
-.hint{
-  position:absolute;
-  bottom:2%;
-  left:0;
-  right:0;
-  text-align:center;
-  font-size:.95rem;
-  opacity:.7;
-  animation:hintpulse 2.3s ease-in-out infinite;
-}
-
-@keyframes hintpulse{
-  0%,100%{opacity:.45}
-  50%{opacity:.9}
-}
-
-/* ================= WINDOW ================= */
-
-.window{
-  width:min(88vw,370px);
-  border:5px solid var(--coral);
-  border-radius:12px;
-  background:var(--pink-lt);
-  overflow:hidden;
-  opacity:0;
-  transform:scale(.72);
-  visibility:hidden;
-  pointer-events:none;
-  box-shadow:0 22px 44px -20px rgba(122,34,48,.5);
-  transition:
-    opacity .4s ease,
-    transform .55s var(--ease),
-    visibility 0s linear .55s;
-}
-
-.window.is-open{
-  opacity:1;
-  transform:scale(1);
-  visibility:visible;
-  pointer-events:auto;
-  transition:
-    opacity .4s ease,
-    transform .55s var(--ease);
-}
-
-.titlebar,
-.heartrow,
-.content{
-  opacity:0;
-  transform:translateY(12px);
-  transition:
-    opacity .45s ease,
-    transform .55s var(--ease);
-}
-
-.window.is-open .titlebar{
-  opacity:1;
-  transform:none;
-  transition-delay:.15s;
-}
-
-.window.is-open .heartrow{
-  opacity:1;
-  transform:none;
-  transition-delay:.25s;
-}
-
-.window.is-open .content{
-  opacity:1;
-  transform:none;
-  transition-delay:.35s;
-}
-
-/* ================= TITLE BAR ================= */
-
-.titlebar{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:9px 10px;
-  background:var(--pink);
-  border-bottom:4px solid var(--coral);
-}
-
-.titlebar__name{
-  font-family:var(--font-pix);
-  font-size:.65rem;
-  letter-spacing:.08em;
-}
-
-.titlebar__btns{
-  display:flex;
-  gap:5px;
-}
-
-.winbtn{
-  width:20px;
-  height:20px;
-  display:grid;
-  place-items:center;
-  border:2px solid var(--coral);
-  background:var(--paper);
-  color:var(--maroon);
-  border-radius:3px;
-  cursor:pointer;
-  font-family:var(--font-pix);
-  font-size:.5rem;
-}
-
-.winbtn:hover{
-  background:var(--red);
-  color:white;
-}
-
-/* ================= HEART ROW ================= */
-
-.heartrow{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:10px;
-  padding:9px;
-  border-bottom:4px solid var(--coral);
-}
-
-.hdot{
-  width:5px;
-  height:5px;
-  background:var(--coral);
-}
-
-/* ================= CONTENT ================= */
-
-.content{
-  position:relative;
-  min-height:350px;
-  padding:22px 18px 25px;
-  display:grid;
-  justify-items:center;
-  align-content:start;
-  gap:17px;
-  background-color:var(--gingham);
-  background-image:
-    repeating-linear-gradient(
-      0deg,
-      transparent 0 9px,
-      var(--gingham-2) 9px 18px
-    ),
-    repeating-linear-gradient(
-      90deg,
-      transparent 0 9px,
-      var(--gingham-2) 9px 18px
-    );
-}
-
-.title{
-  font-size:1.5rem;
-  line-height:1.15;
-  text-align:center;
-  text-shadow:0 2px 0 rgba(255,255,255,.5);
-}
-
-.cat{
-  position:relative;
-  width:150px;
-  height:115px;
-  animation:catbob 2.4s ease-in-out infinite;
-}
-
-/* Pixel cat */
-
-.cat__body{
-  position:absolute;
-  left:20px;
-  bottom:5px;
-  width:110px;
-  height:75px;
-  background:#fff;
-  border:5px solid var(--maroon);
-  border-radius:45% 45% 35% 35%;
-}
-
-.cat__head{
-  position:absolute;
-  left:34px;
-  top:5px;
-  width:82px;
-  height:72px;
-  background:#fff;
-  border:5px solid var(--maroon);
-  border-radius:45% 45% 40% 40%;
-  z-index:2;
-}
-
-.cat__ear{
-  position:absolute;
-  width:27px;
-  height:27px;
-  background:#fff;
-  border:5px solid var(--maroon);
-  top:-10px;
-  z-index:1;
-}
-
-.cat__ear.left{
-  left:4px;
-  transform:rotate(35deg);
-}
-
-.cat__ear.right{
-  right:4px;
-  transform:rotate(-35deg);
-}
-
-.cat__eye{
-  position:absolute;
-  width:7px;
-  height:7px;
-  background:#000;
-  top:30px;
-}
-
-.cat__eye.left{left:20px}
-.cat__eye.right{right:20px}
-
-.cat__nose{
-  position:absolute;
-  width:7px;
-  height:5px;
-  background:var(--red);
-  left:50%;
-  top:43px;
-  transform:translateX(-50%);
-}
-
-.cat__tail{
-  position:absolute;
-  right:0;
-  bottom:20px;
-  width:48px;
-  height:55px;
-  border:7px solid var(--maroon);
-  border-left:0;
-  border-bottom:0;
-  border-radius:0 80% 0 0;
-  transform:rotate(-20deg);
-}
-
-@keyframes catbob{
-  0%,100%{
-    transform:translateY(0);
-  }
-  50%{
-    transform:translateY(-6px);
-  }
-}
-
-.content.is-won .cat{
-  animation:catdance .8s ease-in-out infinite;
-}
-
-@keyframes catdance{
-  0%,100%{
-    transform:rotate(-8deg) translateY(0);
-  }
-  50%{
-    transform:rotate(8deg) translateY(-10px);
-  }
-}
-
-.cat-heart{
-  position:absolute;
-  top:88px;
-  width:27px;
-  height:27px;
-  opacity:0;
-}
-
-.content.is-won .cat-heart{
-  opacity:1;
-  animation:heartpop 1.5s ease-in-out infinite;
-}
-
-@keyframes heartpop{
-  50%{
-    transform:translateY(-12px) scale(1.15);
-  }
-}
-
-/* ================= BUTTONS ================= */
-
-.buttons{
-  display:flex;
-  gap:16px;
-  justify-content:center;
-  align-items:center;
-  min-height:50px;
-  position:relative;
-  width:100%;
-}
-
-.buttons[hidden]{
-  display:none;
-}
-
-.btn{
-  font-family:var(--font-pix);
-  font-size:.68rem;
-  padding:11px 16px;
-  color:var(--red-dk);
-  background:var(--paper);
-  border:3px solid var(--coral);
-  border-radius:6px;
-  cursor:pointer;
-  box-shadow:0 4px 0 var(--coral);
-  transition:
-    transform .14s var(--ease),
-    background .14s ease,
-    color .14s ease;
-}
-
-.btn:hover{
-  transform:translateY(-2px);
-}
-
-.btn:active{
-  transform:translateY(2px);
-  box-shadow:0 2px 0 var(--coral);
-}
-
-.btn--yes:hover{
-  background:var(--red);
-  color:#fff;
-}
-
-.btn--no{
-  position:relative;
-}
-
-/* ================= FINAL ================= */
-
-.final{
-  font-size:1.02rem;
-  line-height:1.5;
-  text-align:center;
-  max-width:30ch;
-  opacity:0;
-  transform:translateY(8px);
-  transition:
-    opacity .5s ease,
-    transform .5s var(--ease);
-}
-
-.final.is-show{
-  opacity:1;
-  transform:none;
-}
-
-.final strong{
-  font-weight:700;
-}
-
-.final mark{
-  background:#2f54d6;
-  color:#fff;
-  padding:0 4px;
-  border-radius:2px;
-}
-
-.final__date{
-  display:block;
-  font-size:.85rem;
-  margin-bottom:7px;
-  opacity:.8;
-}
-
-/* ================= RAIN ================= */
-
-.rain{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:20;
-  overflow:hidden;
-}
-
-.rainheart{
-  position:absolute;
-  top:-30px;
-  animation:rainfall linear forwards;
-}
-
-@keyframes rainfall{
-  0%{
-    opacity:0;
-    transform:translateY(0) rotate(0);
-  }
-  10%{
-    opacity:1;
-  }
-  100%{
-    opacity:0;
-    transform:
-      translateY(115vh)
-      translateX(var(--rx))
-      rotate(var(--rr));
-  }
-}
-
-/* ================= WATERMARK ================= */
-
-.brand{
-  position:fixed;
-  right:15px;
-  bottom:14px;
-  z-index:50;
-  padding:7px 12px;
-  border-radius:22px;
-  background:linear-gradient(
-    45deg,
-    #f09433,
-    #e6683c,
-    #dc2743,
-    #cc2366,
-    #bc1888
-  );
-  color:white;
-  text-decoration:none;
-  font-size:.78rem;
-  opacity:.88;
-  box-shadow:0 4px 14px rgba(0,0,0,.25);
-}
-
-@media(max-width:480px){
-
-  body{
-    padding:12px;
-  }
-
-  .scene{
-    min-height:590px;
-  }
-
-  .envelope{
-    width:165px;
-    height:116px;
-  }
-
-  .envelope__flap{
-    border-left-width:77px;
-    border-right-width:77px;
-    border-top-width:56px;
-  }
-
-  .envelope__seal{
-    top:45px;
-    width:31px;
-    height:31px;
-  }
-
-  .target__label{
-    font-size:1.1rem;
-  }
-
-  .target__date{
-    font-size:.85rem;
-  }
-
-  .title{
-    font-size:1.3rem;
-  }
-
-  .cat{
-    transform:scale(.88);
-  }
-
-  .content{
-    min-height:330px;
-    padding:18px 14px 20px;
-    gap:14px;
-  }
-
-  .btn{
-    font-size:.62rem;
-    padding:10px 13px;
-  }
-
-  .brand{
-    right:10px;
-    bottom:9px;
-    font-size:.7rem;
-  }
-}
-
-@media(prefers-reduced-motion:reduce){
-
-  *,
-  *::before,
-  *::after{
-    animation-duration:.001ms!important;
-    animation-iteration-count:1!important;
-    transition-duration:.001ms!important;
-  }
-}
-</style>
 </head>
 
 <body>
 
-<!-- Background -->
-<div class="fx">
-  <div class="vignette"></div>
+<div class="bg-glow"></div>
+
+<!-- PASSWORD -->
+
+<section id="passwordScreen" class="scene active">
+
+<div class="password-wrapper">
+
+<!-- LEFT PHOTO -->
+
+<div class="left-photo">
+
+<div class="photo-polaroid">
+
+<img src="Photo1.jpeg" alt="Brother">
+
+<p>
+Happy Birthday 💜❤️
+</p>
+
 </div>
 
-<!-- Floating hearts -->
-<div class="confetti" id="confetti"></div>
+</div>
 
-<main class="scene">
+<!-- RIGHT PASSWORD -->
 
-  <!-- ================= STATE 1 ================= -->
-  <section class="stage" id="aimStage">
+<div class="password-card">
 
-    <div class="target" id="target">
+<h2>
+Happy Birthday Arun 💜
+</h2>
 
-      <div class="target__label">
-        <span class="heart"></span>
-        A little surprise
-        <span class="heart"></span>
-      </div>
+<p>
+Enter Password
+</p>
 
-      <div class="target__date">
-        Valentine's Day 💌
-      </div>
+<div class="dots">
 
-      <div class="envelope">
-        <div class="envelope__flap"></div>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
 
-        <div class="envelope__seal">
-          ♥
-        </div>
-      </div>
+</div>
 
-    </div>
+<div class="keypad">
 
-    <!-- Cupid -->
-    <div class="archer">
+<button onclick="press('1')">1</button>
+<button onclick="press('2')">2</button>
+<button onclick="press('3')">3</button>
 
-      <div class="cupid">
+<button onclick="press('4')">4</button>
+<button onclick="press('5')">5</button>
+<button onclick="press('6')">6</button>
 
-        <div class="cupid__hair"></div>
-        <div class="cupid__head">
-          <span class="cupid__eye left"></span>
-          <span class="cupid__eye right"></span>
-        </div>
+<button onclick="press('7')">7</button>
+<button onclick="press('8')">8</button>
+<button onclick="press('9')">9</button>
 
-        <div class="cupid__body"></div>
+<button class="zero"
+onclick="press('0')">
 
-        <div class="cupid__wing left"></div>
-        <div class="cupid__wing right"></div>
+0
 
-      </div>
+</button>
 
-      <div class="bow"></div>
-      <div class="arrow"></div>
+</div>
 
-    </div>
+</div>
 
-    <div class="hint">
-      💘 Tap the envelope to open your letter
-    </div>
+</div>
 
-  </section>
+</section>
 
+<!-- DATE -->
 
-  <!-- ================= STATE 2 ================= -->
+<section id="dateScreen" class="scene">
 
-  <section class="window" id="loveWindow">
+<div class="date-box">
 
-    <header class="titlebar">
+<h1>
+07 • 06 • 2026
+</h1>
 
-      <div class="titlebar__name">
-        LOVE_LETTER.EXE
-      </div>
+<p>
+A Very Special Day 💜
+</p>
 
-      <div class="titlebar__btns">
-        <button class="winbtn" id="minBtn" aria-label="Minimize">
-          −
-        </button>
+</div>
 
-        <button class="winbtn winbtn--x" id="closeBtn" aria-label="Close">
-          ×
-        </button>
-      </div>
+</section>
 
-    </header>
+<!-- LOADING -->
 
+<section id="loadingScreen" class="scene">
 
-    <div class="heartrow">
-      <span class="heart"></span>
-      <span class="hdot"></span>
-      <span class="heart"></span>
-      <span class="hdot"></span>
-      <span class="heart"></span>
-      <span class="hdot"></span>
-      <span class="heart"></span>
-    </div>
+<div class="loading-content">
 
+<div class="cake-loader">
+🎂
+</div>
 
-    <div class="content" id="content">
+<h2>
+Preparing Memories...
+</h2>
 
-      <h1 class="title">
-        Will you be<br>
-        my Valentine? 💗
-      </h1>
+<div class="loader">
 
+<div class="loader-fill"></div>
 
-      <!-- Pixel cat -->
-      <div class="cat">
+</div>
 
-        <div class="cat__tail"></div>
+</div>
 
-        <div class="cat__body"></div>
+</section>
 
-        <div class="cat__head">
+<!-- ENVELOPE -->
 
-          <div class="cat__ear left"></div>
-          <div class="cat__ear right"></div>
+<section id="envelopeScreen" class="scene">
 
-          <div class="cat__eye left"></div>
-          <div class="cat__eye right"></div>
+<div class="envelope-page">
 
-          <div class="cat__nose"></div>
+<h1>
+Happy Birthday Brother ❤️
+</h1>
 
-        </div>
+<div class="envelope"
+onclick="openEnvelope()">
 
-      </div>
+<div class="letter">
 
-      <span class="heart cat-heart"></span>
+<h3>
+Dear Arun 💜
+</h3>
 
+<p>
+A special surprise
+is waiting for you.
+</p>
 
-      <!-- Buttons -->
+</div>
 
-      <div class="buttons" id="buttons">
+<div class="back"></div>
 
-        <button
-          class="btn btn--yes"
-          id="yesBtn">
-          YES 💗
-        </button>
+<div class="flap"></div>
 
-        <button
-          class="btn btn--no"
-          id="noBtn">
-          NO 😭
-        </button>
+<div class="seal">
+💛
+</div>
 
-      </div>
+</div>
 
+</div>
 
-      <!-- Final message -->
+</section>
 
-      <div class="final" id="final">
+<!-- PHOTO SCREEN -->
 
-        <span class="final__date">
-          February 14 💌
-        </span>
+<section id="photoScreen" class="scene">
 
-        <strong>
-          I knew you'd say yes! ❤️
-        </strong>
+<img src="Photo3.png"
+class="hero-photo">
 
-        <br><br>
+<div class="overlay"></div>
 
-        You just made my little pixel heart
-        <mark>very happy.</mark>
+<div class="floating-text">
 
-        <br><br>
+<h1>
+Best Brother 💜
+</h1>
 
-        Forever starts with one tiny
-        <span class="heart heart--inline"></span>
+<h2>
+My Hero ✨
+</h2>
 
-      </div>
+<h3>
+My Inspiration 🌟
+</h3>
+<p id="dada">Happiest Birthday My Dada 💜
 
-    </div>
+You mean the whole world to me.
+I honestly don’t know what I would do without you in my life. You are not just my brother… you are my comfort place, my strength, my happiness, and my biggest support. Every moment with you becomes special and every memory with you stays forever in my heart.
 
-  </section>
+No matter how much we fight, laugh, tease, or annoy each other, one thing will never change — my love for you. Without you, I feel incomplete. You are one of the most important reasons behind my smile and happiness. I’m truly lucky and blessed to have a brother like you, Aruna 💜
 
-</main>
+Thank you for always protecting me, supporting me, understanding me, and standing beside me in every situation. You always make life brighter just by being in it. I may not say this often, but you really mean a lot to me more than words can explain.
 
+I pray that your life is always filled with happiness, success, peace, good health, endless smiles, and all the love you deserve. May all your dreams come true and may this year bring you beautiful memories and unforgettable moments ✨
 
-<!-- Heart rain -->
-<div class="rain" id="rain"></div>
+Once again…
 
+Happiest Birthday My Dada 💜
+Without you I’m nothing 🥺
+Love you forever Miee Anna😘🤗
+</p>
 
-<!-- Watermark -->
-<a
-  class="brand"
-  href="#"
-  id="brand">
-  💗 Made with love
-</a>
+</div>
 
+<button
+class="next-btn"
+onclick="showGreeting()">
 
-<script>
+Read Message 💌
 
-/* ============================================================
-   JARVIS VALENTINE PAGE
-   Everything works inside this single HTML file.
-   ============================================================ */
+</button>
 
-const aimStage   = document.getElementById("aimStage");
-const target     = document.getElementById("target");
-const loveWindow = document.getElementById("loveWindow");
+</section>
 
-const content    = document.getElementById("content");
-const buttons    = document.getElementById("buttons");
+<!-- GREETING -->
 
-const yesBtn     = document.getElementById("yesBtn");
-const noBtn      = document.getElementById("noBtn");
+<section id="greetingScreen" class="scene">
 
-const finalMsg   = document.getElementById("final");
+<div class="greeting-layout">
 
-const rain       = document.getElementById("rain");
-const confetti   = document.getElementById("confetti");
+<div class="left-message">
 
-const closeBtn   = document.getElementById("closeBtn");
-const minBtn     = document.getElementById("minBtn");
+<h1>
+Happy Birthday Arun 💜
+</h1>
 
+<p id="messageText"></p>
 
-/* ============================================================
-   FLOATING BACKGROUND HEARTS
-   ============================================================ */
+</div>
 
-function createBackgroundHearts(){
+<div class="right-photos">
 
-  const count = 18;
+<div class="photo-card p1">
+<img src="WE1.png">
+</div>
 
-  for(let i=0;i<count;i++){
+<div class="photo-card p2">
+<img src="WE2.jpg">
+</div>
 
-    const heart = document.createElement("span");
+<div class="photo-card p3">
+<img src="WE3.png">
+</div>
 
-    heart.className = "heart";
+</div>
+<button onclick="nextPhoto()">
+     📸
+</button>
 
-    const size = 8 + Math.random()*14;
+</div>
 
-    heart.style.width = size + "px";
-    heart.style.height = size + "px";
+<button
+class="celebrate-btn"
+onclick="showCountdown()">
 
-    heart.style.left = Math.random()*100 + "%";
-    heart.style.top  = Math.random()*100 + "%";
+Celebrate 🎂
 
-    heart.style.animationDuration =
-      (4 + Math.random()*6) + "s";
+</button>
 
-    heart.style.animationDelay =
-      (-Math.random()*8) + "s";
+</section>
 
-    heart.style.opacity =
-      (.2 + Math.random()*.5);
+<!-- COUNTDOWN -->
 
-    confetti.appendChild(heart);
-  }
-}
+<section id="countScreen" class="scene">
 
-createBackgroundHearts();
+<div class="count-box">
 
+<h1 id="countNumber">
+3
+</h1>
 
-/* ============================================================
-   OPEN LOVE LETTER
-   ============================================================ */
+<p>
+Get Ready...
+</p>
 
-let opened = false;
+</div>
 
-function openLetter(){
+</section>
 
-  if(opened) return;
+<!-- CAKE -->
 
-  opened = true;
+<section id="cakeScreen" class="scene">
 
-  target.classList.add("is-hit");
+<div class="big-cake">
 
-  setTimeout(()=>{
+🎂
 
-    aimStage.classList.add("is-gone");
+<div class="candle">
+🕯️
+</div>
 
-    loveWindow.classList.add("is-open");
+</div>
 
-  },420);
+<h2>
+Tap The Cake 🎂
+</h2>
 
-}
+</section>
 
+<!-- FINAL -->
 
-/* Click envelope */
+<section id="finalScreen" class="scene">
 
-target.addEventListener("click",openLetter);
+<h1 class="final-title">
+HAPPY BIRTHDAY
+</h1>
 
+<h2>
+ARUN ❤️
+</h2>
 
-/* Keyboard support */
+<h3>
+07 • 06 • 2003
+</h3>
 
-target.setAttribute("tabindex","0");
+<p>
 
-target.addEventListener("keydown",(event)=>{
+Brother By Chance 💜
 
-  if(
-    event.key === "Enter" ||
-    event.key === " "
-  ){
+<br><br>
 
-    event.preventDefault();
+Best Friend By Choice ❤️
 
-    openLetter();
-  }
+</p>
 
-});
+<div id="effects"></div>
 
+</section>
 
-/* ============================================================
-   NO BUTTON — IT ESCAPES
-   ============================================================ */
-
-let noMoves = 0;
-
-function moveNoButton(){
-
-  noMoves++;
-
-  const parent =
-    buttons.getBoundingClientRect();
-
-  const btn =
-    noBtn.getBoundingClientRect();
-
-  const maxX =
-    Math.max(30,parent.width - btn.width - 20);
-
-  const maxY = 70;
-
-  const x =
-    (Math.random()*maxX) - maxX/2;
-
-  const y =
-    (Math.random()*maxY) - maxY/2;
-
-  noBtn.style.transform =
-    `translate(${x}px,${y}px) rotate(${Math.random()*10-5}deg)`;
-
-
-  /* After several attempts, make YES more tempting */
-
-  if(noMoves >= 3){
-
-    yesBtn.style.transform =
-      `scale(${1 + Math.min(noMoves*.04,.18)})`;
-
-  }
-
-}
-
-
-noBtn.addEventListener("mouseenter",moveNoButton);
-
-noBtn.addEventListener("touchstart",(event)=>{
-
-  event.preventDefault();
-
-  moveNoButton();
-
-},{passive:false});
-
-
-/* ============================================================
-   YES BUTTON
-   ============================================================ */
-
-yesBtn.addEventListener("click",sayYes);
-
-function sayYes(){
-
-  buttons.hidden = true;
-
-  content.classList.add("is-won");
-
-  finalMsg.classList.add("is-show");
-
-  loveWindow.classList.add("is-celebrate");
-
-  createBurst();
-
-  startHeartRain();
-
-}
-
-
-/* ============================================================
-   HEART BURST
-   ============================================================ */
-
-function createBurst(){
-
-  const rect =
-    yesBtn.getBoundingClientRect();
-
-  const centerX =
-    rect.left + rect.width/2;
-
-  const centerY =
-    rect.top + rect.height/2;
-
-  for(let i=0;i<24;i++){
-
-    const heart =
-      document.createElement("span");
-
-    heart.className = "heart";
-
-    const size =
-      8 + Math.random()*13;
-
-    heart.style.width =
-      size + "px";
-
-    heart.style.height =
-      size + "px";
-
-    heart.style.position =
-      "fixed";
-
-    heart.style.left =
-      centerX + "px";
-
-    heart.style.top =
-      centerY + "px";
-
-    heart.style.zIndex =
-      "30";
-
-    const angle =
-      Math.random()*Math.PI*2;
-
-    const distance =
-      60 + Math.random()*130;
-
-    const x =
-      Math.cos(angle)*distance;
-
-    const y =
-      Math.sin(angle)*distance;
-
-    heart.animate([
-
-      {
-        transform:"translate(-50%,-50%) scale(.3)",
-        opacity:1
-      },
-
-      {
-        transform:
-          `translate(calc(-50% + ${x}px),calc(-50% + ${y}px)) scale(1.2)`,
-        opacity:0
-      }
-
-    ],{
-
-      duration:700 + Math.random()*400,
-
-      easing:"cubic-bezier(.2,.8,.3,1)",
-
-      fill:"forwards"
-
-    });
-
-    document.body.appendChild(heart);
-
-    setTimeout(()=>{
-      heart.remove();
-    },1200);
-
-  }
-
-}
-
-
-/* ============================================================
-   HEART RAIN
-   ============================================================ */
-
-function startHeartRain(){
-
-  const total = 70;
-
-  for(let i=0;i<total;i++){
-
-    setTimeout(()=>{
-
-      const heart =
-        document.createElement("span");
-
-      heart.className =
-        "heart rainheart";
-
-      const size =
-        10 + Math.random()*20;
-
-      heart.style.width =
-        size + "px";
-
-      heart.style.height =
-        size + "px";
-
-      heart.style.left =
-        Math.random()*100 + "%";
-
-      heart.style.setProperty(
-        "--rx",
-        (Math.random()*220-110) + "px"
-      );
-
-      heart.style.setProperty(
-        "--rr",
-        (Math.random()*720-360) + "deg"
-      );
-
-      heart.style.animationDuration =
-        (3 + Math.random()*4) + "s";
-
-      rain.appendChild(heart);
-
-      setTimeout(()=>{
-        heart.remove();
-      },7500);
-
-    },i*80);
-
-  }
-
-}
-
-
-/* ============================================================
-   CLOSE / RESET
-   ============================================================ */
-
-function resetPage(){
-
-  opened = false;
-  noMoves = 0;
-
-  loveWindow.classList.remove(
-    "is-open",
-    "is-celebrate"
-  );
-
-  content.classList.remove("is-won");
-
-  finalMsg.classList.remove("is-show");
-
-  buttons.hidden = false;
-
-  noBtn.style.transform = "";
-
-  yesBtn.style.transform = "";
-
-  aimStage.classList.remove("is-gone");
-
-}
-
-
-closeBtn.addEventListener("click",resetPage);
-
-minBtn.addEventListener("click",()=>{
-
-  loveWindow.classList.remove("is-open");
-
-  setTimeout(()=>{
-    loveWindow.classList.add("is-open");
-  },700);
-
-});
-
-
-/* ============================================================
-   WATERMARK
-   ============================================================ */
-
-document.getElementById("brand")
-  .addEventListener("click",(event)=>{
-
-    event.preventDefault();
-
-  });
-
-
-/* ============================================================
-   EXTRA CLICK HEART
-   ============================================================ */
-
-document.addEventListener("click",(event)=>{
-
-  if(
-    event.target.closest(".btn") ||
-    event.target.closest(".target") ||
-    event.target.closest(".brand") ||
-    event.target.closest(".winbtn")
-  ){
-
-    return;
-  }
-
-  const heart =
-    document.createElement("span");
-
-  heart.className =
-    "heart";
-
-  heart.style.position =
-    "fixed";
-
-  heart.style.left =
-    event.clientX + "px";
-
-  heart.style.top =
-    event.clientY + "px";
-
-  heart.style.zIndex =
-    "40";
-
-  heart.animate([
-
-    {
-      transform:"translate(-50%,-50%) scale(.4)",
-      opacity:1
-    },
-
-    {
-      transform:"translate(-50%,-100px) scale(1.2)",
-      opacity:0
-    }
-
-  ],{
-
-    duration:800,
-    easing:"ease-out",
-    fill:"forwards"
-
-  });
-
-  document.body.appendChild(heart);
-
-  setTimeout(()=>{
-    heart.remove();
-  },900);
-
-});
-
-
-/* ============================================================
-   DONE
-   ============================================================ */
-
-console.log(
-  "💗 Valentine page loaded successfully."
-);
-
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
