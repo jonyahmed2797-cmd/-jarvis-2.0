@@ -2,869 +2,1034 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="theme-color" content="#12051f">
 
 <title>For Rapunzel 💜</title>
 
 <style>
-/* =========================================================
-   RAPUNZEL — DIGITAL PROPOSAL
-   Single-file HTML / CSS / JS
-========================================================= */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
 }
 
-html,
-body {
-    width: 100%;
-    min-height: 100%;
-    overflow: hidden;
+html,body{
+  width:100%;
+  height:100%;
+  overflow:hidden;
 }
 
-body {
-    font-family: Georgia, "Times New Roman", serif;
-    background: #10051d;
-    color: white;
+body{
+  font-family:Georgia,"Times New Roman",serif;
+  background:#10051d;
+  color:#fff;
 }
 
-/* =========================================================
-   BACKGROUND
-========================================================= */
-
-#app {
-    position: relative;
-    width: 100vw;
-    height: 100svh;
-    min-height: 100vh;
-    overflow: hidden;
-    background:
-        radial-gradient(
-            circle at 50% 15%,
-            rgba(117, 70, 173, .35),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 20% 80%,
-            rgba(177, 80, 157, .12),
-            transparent 35%
-        ),
-        linear-gradient(
-            180deg,
-            #0b0315 0%,
-            #160727 45%,
-            #25103b 100%
-        );
+button{
+  font-family:inherit;
 }
 
-/* Magical purple glow */
+/* =====================================================
+   MAIN WORLD
+===================================================== */
 
-#app::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(194, 139, 255, .08),
-            transparent 45%
-        );
-    z-index: 1;
-}
-
-/* =========================================================
-   MOON
-========================================================= */
-
-.moon {
-    position: absolute;
-    top: 8%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 105px;
-    height: 105px;
-    border-radius: 50%;
-    background: radial-gradient(
-        circle at 35% 30%,
-        #fffef4,
-        #fff4bd 48%,
-        #e8c878 100%
+#app{
+  position:relative;
+  width:100vw;
+  height:100svh;
+  min-height:100vh;
+  overflow:hidden;
+  background:
+    radial-gradient(
+      circle at 50% 15%,
+      rgba(130,76,180,.38),
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 20% 85%,
+      rgba(210,75,170,.13),
+      transparent 35%
+    ),
+    linear-gradient(
+      180deg,
+      #08020f 0%,
+      #150522 42%,
+      #27103c 100%
     );
-    box-shadow:
-        0 0 25px rgba(255, 244, 189, .8),
-        0 0 70px rgba(222, 190, 112, .4);
-    opacity: .95;
-    z-index: 2;
+  transition:filter 1s ease;
 }
 
-.moon::after {
-    content: "";
-    position: absolute;
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    background: #160727;
-    top: -8px;
-    right: -18px;
+#app.magic{
+  filter:brightness(1.15);
 }
 
-/* =========================================================
+/* =====================================================
+   MOON
+===================================================== */
+
+.moon{
+  position:absolute;
+  z-index:2;
+  top:7%;
+  left:50%;
+  transform:translateX(-50%);
+  width:110px;
+  height:110px;
+  border-radius:50%;
+  background:
+    radial-gradient(
+      circle at 35% 30%,
+      #ffffff 0%,
+      #fff5c8 45%,
+      #e6c976 100%
+    );
+  box-shadow:
+    0 0 25px rgba(255,245,190,.9),
+    0 0 70px rgba(255,214,112,.45),
+    0 0 120px rgba(213,158,255,.18);
+}
+
+.moon:after{
+  content:"";
+  position:absolute;
+  width:96px;
+  height:96px;
+  border-radius:50%;
+  background:#10051d;
+  top:-7px;
+  right:-18px;
+}
+
+/* =====================================================
    STARS
-========================================================= */
+===================================================== */
 
-.stars {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
+#stars{
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
 }
 
-.star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    border-radius: 50%;
-    background: white;
-    box-shadow: 0 0 6px white;
-    animation: twinkle 2.5s infinite ease-in-out;
+.star{
+  position:absolute;
+  width:2px;
+  height:2px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 7px #fff;
+  animation:twinkle 2.5s ease-in-out infinite;
 }
 
-@keyframes twinkle {
-    0%, 100% {
-        opacity: .25;
-        transform: scale(.7);
-    }
-
-    50% {
-        opacity: 1;
-        transform: scale(1.5);
-    }
+@keyframes twinkle{
+  0%,100%{
+    opacity:.2;
+    transform:scale(.7);
+  }
+  50%{
+    opacity:1;
+    transform:scale(1.5);
+  }
 }
 
-/* =========================================================
+/* =====================================================
    LANTERNS
-========================================================= */
+===================================================== */
 
-.lantern-layer {
-    position: absolute;
-    inset: 0;
-    z-index: 3;
-    pointer-events: none;
+#lanterns{
+  position:absolute;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
 }
 
-.lantern {
-    position: absolute;
-    width: 17px;
-    height: 25px;
-    border-radius: 45% 45% 38% 38%;
-    background:
-        radial-gradient(
-            circle,
-            #fff5a3 0%,
-            #ffd25b 45%,
-            #d77b28 100%
-        );
-    box-shadow:
-        0 0 10px #ffd76b,
-        0 0 30px rgba(255, 194, 77, .6);
-    opacity: .7;
-    animation: floatLantern linear infinite;
+.lantern{
+  position:absolute;
+  width:18px;
+  height:27px;
+  border-radius:45%;
+  background:
+    radial-gradient(
+      circle,
+      #fff4a0 0%,
+      #ffd35c 42%,
+      #d97825 100%
+    );
+  box-shadow:
+    0 0 12px #ffd766,
+    0 0 35px rgba(255,194,75,.6);
+  opacity:.75;
+  animation:lanternFloat linear infinite;
 }
 
-.lantern::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: -8px;
-    width: 7px;
-    height: 8px;
-    border-left: 1px solid rgba(255,255,255,.5);
-    border-right: 1px solid rgba(255,255,255,.5);
-    transform: translateX(-50%);
+.lantern:before{
+  content:"";
+  position:absolute;
+  top:-8px;
+  left:50%;
+  width:7px;
+  height:8px;
+  transform:translateX(-50%);
+  border-left:1px solid rgba(255,255,255,.5);
+  border-right:1px solid rgba(255,255,255,.5);
 }
 
-@keyframes floatLantern {
-    from {
-        transform: translateY(110vh) translateX(0);
-    }
-
-    to {
-        transform: translateY(-30vh) translateX(35px);
-    }
+@keyframes lanternFloat{
+  from{
+    transform:translateY(110vh) translateX(0);
+  }
+  to{
+    transform:translateY(-30vh) translateX(45px);
+  }
 }
 
-/* =========================================================
+/* =====================================================
    PETALS
-========================================================= */
+===================================================== */
 
-.petal-layer {
-    position: absolute;
-    inset: 0;
-    z-index: 4;
-    pointer-events: none;
+#petals{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  pointer-events:none;
 }
 
-.petal {
-    position: absolute;
-    width: 7px;
-    height: 12px;
-    border-radius: 100% 0 100% 0;
-    background: rgba(244, 158, 205, .75);
-    animation: petalFall linear infinite;
+.petal{
+  position:absolute;
+  width:7px;
+  height:12px;
+  border-radius:100% 0 100% 0;
+  background:rgba(246,155,205,.7);
+  animation:fall linear infinite;
 }
 
-@keyframes petalFall {
-    from {
-        transform:
-            translateY(-20vh)
-            rotate(0deg);
-    }
-
-    to {
-        transform:
-            translateY(120vh)
-            translateX(60px)
-            rotate(360deg);
-    }
+@keyframes fall{
+  from{
+    transform:translateY(-15vh) rotate(0deg);
+  }
+  to{
+    transform:translateY(115vh) translateX(80px) rotate(360deg);
+  }
 }
 
-/* =========================================================
+/* =====================================================
    MAGIC PARTICLES
-========================================================= */
+===================================================== */
 
-.particle-layer {
-    position: absolute;
-    inset: 0;
-    z-index: 5;
-    pointer-events: none;
+#particles{
+  position:absolute;
+  inset:0;
+  z-index:5;
+  pointer-events:none;
 }
 
-.particle {
-    position: absolute;
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    background: #ffd978;
-    box-shadow: 0 0 8px #ffd978;
-    animation: particleFloat 4s ease-in-out infinite;
+.particle{
+  position:absolute;
+  width:3px;
+  height:3px;
+  border-radius:50%;
+  background:#ffd976;
+  box-shadow:0 0 8px #ffd976;
+  animation:particleMove 4s ease-in-out infinite;
 }
 
-@keyframes particleFloat {
-    0%, 100% {
-        opacity: .1;
-        transform: translateY(10px) scale(.5);
-    }
-
-    50% {
-        opacity: .9;
-        transform: translateY(-25px) scale(1);
-    }
+@keyframes particleMove{
+  0%,100%{
+    opacity:.1;
+    transform:translateY(10px) scale(.5);
+  }
+  50%{
+    opacity:.9;
+    transform:translateY(-25px) scale(1);
+  }
 }
 
-/* =========================================================
+/* =====================================================
    SCREENS
-========================================================= */
+===================================================== */
 
-.screen {
-    position: absolute;
-    inset: 0;
-    z-index: 10;
+.screen{
+  position:absolute;
+  inset:0;
+  z-index:20;
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display:flex;
+  justify-content:center;
+  align-items:center;
 
-    padding: 25px;
+  padding:25px;
 
-    text-align: center;
+  text-align:center;
 
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
 
-    transition:
-        opacity .9s ease,
-        visibility .9s ease;
+  transition:
+    opacity .8s ease,
+    visibility .8s ease;
 }
 
-.screen.active {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
+.screen.active{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
 }
 
-/* =========================================================
+/* =====================================================
    INTRO
-========================================================= */
+===================================================== */
 
-.intro-content {
-    position: relative;
-    z-index: 20;
-    width: 100%;
-    max-width: 500px;
+.intro{
+  width:100%;
+  max-width:600px;
 }
 
-.intro-title {
-    margin-top: 145px;
-    font-size: clamp(2rem, 9vw, 3.6rem);
-    font-weight: normal;
-    letter-spacing: .5px;
-    text-shadow:
-        0 0 12px rgba(255,255,255,.25),
-        0 0 35px rgba(203,143,255,.35);
+.intro h1{
+  margin-top:135px;
+  font-size:clamp(2.1rem,9vw,4rem);
+  font-weight:normal;
+  text-shadow:
+    0 0 15px rgba(255,255,255,.2),
+    0 0 40px rgba(202,135,255,.35);
 }
 
-.intro-subtitle {
-    margin-top: 13px;
-    font-family: Arial, sans-serif;
-    font-size: .95rem;
-    color: #e7d8f2;
-    letter-spacing: 1.5px;
+.intro p{
+  margin-top:12px;
+  font-family:Arial,sans-serif;
+  font-size:.95rem;
+  letter-spacing:1.4px;
+  color:#e8d5f1;
 }
 
-.main-heart {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* =====================================================
+   HEART
+===================================================== */
 
-    width: 105px;
-    height: 105px;
+.big-heart{
+  width:110px;
+  height:110px;
 
-    margin: 32px auto 20px;
+  margin:35px auto 18px;
 
-    border: none;
-    border-radius: 50%;
+  border:none;
+  border-radius:50%;
 
-    background:
-        radial-gradient(
-            circle,
-            #ffb8e1,
-            #d85a9d 55%,
-            #8c286b
-        );
+  display:flex;
+  justify-content:center;
+  align-items:center;
 
-    box-shadow:
-        0 0 20px rgba(255, 115, 189, .65),
-        0 0 65px rgba(225, 75, 173, .35);
+  background:
+    radial-gradient(
+      circle,
+      #ffb6df,
+      #d8549c 55%,
+      #7f2765 100%
+    );
 
-    font-size: 2.5rem;
+  box-shadow:
+    0 0 25px rgba(255,110,190,.7),
+    0 0 70px rgba(224,70,170,.35);
 
-    cursor: pointer;
+  font-size:2.7rem;
 
-    animation: heartPulse 1.8s infinite;
-    transition: transform .3s ease;
+  cursor:pointer;
+
+  animation:heartPulse 1.8s infinite;
+  transition:transform .3s ease;
 }
 
-.main-heart:active {
-    transform: scale(.88);
+.big-heart:active{
+  transform:scale(.85);
 }
 
-@keyframes heartPulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.07);
-    }
+@keyframes heartPulse{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.07)}
 }
 
-.tap-text {
-    font-family: Arial, sans-serif;
-    color: #eacffb;
-    font-size: .8rem;
-    letter-spacing: 1px;
+.tap{
+  color:#e6c9f2;
+  font-family:Arial,sans-serif;
+  font-size:.8rem;
 }
 
-/* =========================================================
-   MUSIC BUTTON
-========================================================= */
+/* =====================================================
+   STORY TEXT
+===================================================== */
 
-.music-toggle {
-    position: fixed;
-    z-index: 100;
-
-    right: 18px;
-    bottom: 18px;
-
-    width: 48px;
-    height: 48px;
-
-    border: 1px solid rgba(255,255,255,.2);
-    border-radius: 50%;
-
-    background: rgba(33, 12, 50, .7);
-    backdrop-filter: blur(12px);
-
-    color: white;
-    font-size: 1.1rem;
-
-    cursor: pointer;
-
-    box-shadow: 0 0 20px rgba(206,135,255,.18);
+.story-box{
+  width:100%;
+  max-width:700px;
 }
 
-/* =========================================================
-   MESSAGE TEXT
-========================================================= */
+.line{
+  font-size:clamp(1.25rem,5.5vw,2.2rem);
+  line-height:1.55;
 
-.message-text {
-    max-width: 650px;
-    line-height: 1.65;
+  opacity:0;
+  transform:translateY(20px);
+
+  transition:
+    opacity 1s ease,
+    transform 1s ease;
 }
 
-.message-line {
-    opacity: 0;
-    transform: translateY(15px);
-    transition:
-        opacity 1s ease,
-        transform 1s ease;
-
-    font-size: clamp(1.3rem, 5.5vw, 2.1rem);
-    color: #fff5ff;
+.line.show{
+  opacity:1;
+  transform:translateY(0);
 }
 
-.message-line.show {
-    opacity: 1;
-    transform: translateY(0);
+.line + .line{
+  margin-top:30px;
 }
 
-.pause-text {
-    margin-top: 20px;
-    color: #dcbce9;
-    font-size: .9rem;
-}
-
-/* =========================================================
+/* =====================================================
    RAPUNZEL REVEAL
-========================================================= */
+===================================================== */
 
-.reveal-title {
-    font-size: clamp(1.5rem, 6vw, 2.5rem);
-    color: #f8e8ff;
-    margin-bottom: 20px;
+.reveal{
+  width:100%;
+  max-width:650px;
 }
 
-.rapunzel-image {
-    width: min(78vw, 350px);
-    height: min(78vw, 430px);
-
-    object-fit: cover;
-
-    border-radius: 22px;
-
-    border: 1px solid rgba(255, 220, 125, .5);
-
-    box-shadow:
-        0 0 25px rgba(246, 200, 100, .35),
-        0 0 80px rgba(177, 92, 220, .3);
-
-    opacity: 0;
-    transform: scale(.88);
-
-    transition:
-        opacity 1.4s ease,
-        transform 1.5s cubic-bezier(.2,.8,.2,1);
+.reveal-intro{
+  font-size:clamp(1.4rem,6vw,2.5rem);
+  color:#f8eaff;
+  margin-bottom:25px;
 }
 
-.rapunzel-image.show {
-    opacity: 1;
-    transform: scale(1);
+/*
+   CSS FAIRYTALE PORTRAIT
+   So everything remains one file.
+*/
+
+.rapunzel-art{
+  position:relative;
+  width:min(72vw,300px);
+  height:min(72vw,380px);
+
+  margin:auto;
+
+  border-radius:30px;
+
+  overflow:hidden;
+
+  background:
+    radial-gradient(
+      circle at 50% 25%,
+      #ffdca0 0 7%,
+      transparent 8%
+    ),
+    linear-gradient(
+      145deg,
+      #3b1760,
+      #7e3d96 45%,
+      #24102f
+    );
+
+  border:1px solid rgba(255,218,125,.45);
+
+  box-shadow:
+    0 0 35px rgba(255,211,119,.3),
+    0 0 90px rgba(164,84,213,.3);
 }
 
-.rapunzel-name {
-    margin-top: 20px;
-    font-family: Arial, sans-serif;
-    font-size: clamp(2rem, 10vw, 4rem);
-    letter-spacing: 5px;
-    color: #f5d98a;
+/* moon behind */
 
-    text-shadow:
-        0 0 12px rgba(255,216,120,.7),
-        0 0 35px rgba(255,216,120,.35);
+.rapunzel-art:before{
+  content:"";
+  position:absolute;
+
+  width:105px;
+  height:105px;
+
+  border-radius:50%;
+
+  top:28px;
+  left:50%;
+
+  transform:translateX(-50%);
+
+  background:
+    radial-gradient(
+      circle,
+      #fff7c7,
+      #e8c874
+    );
+
+  box-shadow:
+    0 0 30px rgba(255,222,130,.7);
 }
 
-.fairytale {
-    margin-top: 10px;
-    font-size: 1.05rem;
-    color: #ead2ef;
-    font-style: italic;
+/* hair */
+
+.hair{
+  position:absolute;
+
+  width:135px;
+  height:220px;
+
+  left:50%;
+  top:70px;
+
+  transform:translateX(-50%);
+
+  border-radius:70px 70px 50px 50px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #8c5527,
+      #d99b48,
+      #8e4d20
+    );
+
+  box-shadow:
+    0 0 20px rgba(240,171,78,.4);
 }
 
-/* =========================================================
-   MESSAGE CARD
-========================================================= */
+/* face */
 
-.card {
-    width: min(92vw, 620px);
+.face{
+  position:absolute;
 
-    padding: 35px 25px;
+  width:65px;
+  height:78px;
 
-    border-radius: 25px;
+  left:50%;
+  top:93px;
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(91,48,117,.45),
-            rgba(31,13,49,.72)
-        );
+  transform:translateX(-50%);
 
-    border: 1px solid rgba(220,183,242,.2);
+  border-radius:48% 48% 45% 45%;
 
-    box-shadow:
-        0 25px 80px rgba(0,0,0,.3),
-        inset 0 0 30px rgba(255,255,255,.02);
+  background:
+    linear-gradient(
+      145deg,
+      #ffe1c5,
+      #eab28e
+    );
 
-    backdrop-filter: blur(15px);
+  z-index:3;
 }
 
-.card p {
-    font-size: clamp(1.15rem, 4.8vw, 1.55rem);
-    line-height: 1.8;
-    color: #f9eafa;
+/* eyes */
+
+.face:before{
+  content:"•  •";
+
+  position:absolute;
+
+  left:50%;
+  top:27px;
+
+  transform:translateX(-50%);
+
+  color:#54372d;
+
+  font-size:18px;
+
+  letter-spacing:13px;
 }
 
-.card p + p {
-    margin-top: 12px;
+/* smile */
+
+.face:after{
+  content:"⌣";
+
+  position:absolute;
+
+  left:50%;
+  bottom:10px;
+
+  transform:translateX(-50%);
+
+  color:#9e4e61;
+
+  font-size:20px;
 }
 
-.card .highlight {
-    margin-top: 20px;
-    color: #f7d88a;
-    font-size: clamp(1.25rem, 5vw, 1.7rem);
+/* dress */
+
+.dress{
+  position:absolute;
+
+  left:50%;
+  bottom:-10px;
+
+  transform:translateX(-50%);
+
+  width:180px;
+  height:165px;
+
+  border-radius:90px 90px 0 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      #6d3b9d,
+      #b783d1,
+      #66358f
+    );
+
+  z-index:2;
 }
 
-/* =========================================================
+/* long braid */
+
+.braid{
+  position:absolute;
+
+  width:34px;
+  height:220px;
+
+  right:12px;
+  top:92px;
+
+  border-radius:30px;
+
+  background:
+    repeating-linear-gradient(
+      135deg,
+      #8c4d1d 0 16px,
+      #d39a46 16px 31px
+    );
+
+  transform:rotate(8deg);
+
+  z-index:4;
+}
+
+/* flowers */
+
+.flowers{
+  position:absolute;
+  inset:0;
+  z-index:8;
+
+  font-size:18px;
+}
+
+.flowers span{
+  position:absolute;
+}
+
+.flowers span:nth-child(1){
+  left:15px;
+  top:40px;
+}
+
+.flowers span:nth-child(2){
+  right:20px;
+  top:60px;
+}
+
+.flowers span:nth-child(3){
+  left:30px;
+  bottom:45px;
+}
+
+.flowers span:nth-child(4){
+  right:28px;
+  bottom:65px;
+}
+
+.rapunzel-name{
+  margin-top:22px;
+
+  font-family:Arial,sans-serif;
+
+  font-size:clamp(2rem,9vw,4rem);
+
+  letter-spacing:5px;
+
+  color:#f5d984;
+
+  text-shadow:
+    0 0 15px rgba(255,216,120,.7),
+    0 0 40px rgba(255,216,120,.3);
+}
+
+.fairytale{
+  margin-top:8px;
+
+  color:#ead3ef;
+
+  font-size:1.05rem;
+
+  font-style:italic;
+}
+
+/* =====================================================
+   MAIN MESSAGE
+===================================================== */
+
+.message-card{
+  width:min(92vw,620px);
+
+  padding:36px 25px;
+
+  border-radius:25px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(92,48,119,.5),
+      rgba(30,12,48,.78)
+    );
+
+  border:1px solid rgba(230,195,250,.2);
+
+  box-shadow:
+    0 25px 80px rgba(0,0,0,.35),
+    inset 0 0 30px rgba(255,255,255,.025);
+
+  backdrop-filter:blur(14px);
+}
+
+.message-card p{
+  font-size:clamp(1.1rem,4.8vw,1.55rem);
+  line-height:1.8;
+  color:#f9eafa;
+}
+
+.message-card p+p{
+  margin-top:12px;
+}
+
+.message-card .gold{
+  margin-top:20px;
+  color:#f6d781;
+}
+
+/* =====================================================
    PROPOSAL
-========================================================= */
+===================================================== */
 
-.proposal-content {
-    width: 100%;
-    max-width: 600px;
+.proposal-box{
+  width:100%;
+  max-width:600px;
 }
 
-.heartbeat {
-    width: 100px;
-    height: 100px;
+.heartbeat{
+  font-size:3.5rem;
+  margin-bottom:22px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    margin: 0 auto 25px;
-
-    font-size: 3.3rem;
-
-    animation: heartbeat 1s infinite;
+  animation:beat 1s infinite;
 }
 
-@keyframes heartbeat {
-    0%, 100% {
-        transform: scale(1);
-    }
-
-    15% {
-        transform: scale(1.17);
-    }
-
-    30% {
-        transform: scale(1);
-    }
-
-    45% {
-        transform: scale(1.14);
-    }
-
-    60% {
-        transform: scale(1);
-    }
+@keyframes beat{
+  0%,100%{transform:scale(1)}
+  15%{transform:scale(1.2)}
+  30%{transform:scale(1)}
+  45%{transform:scale(1.14)}
+  60%{transform:scale(1)}
 }
 
-.proposal-small {
-    font-size: 1.3rem;
-    color: #dfc5e9;
-    margin-bottom: 15px;
+.proposal-small{
+  font-size:1.3rem;
+  color:#dec3e8;
+  margin-bottom:14px;
 }
 
-.proposal-question {
-    font-size: clamp(2.4rem, 11vw, 5rem);
-    line-height: 1.05;
-    color: #fff;
-    text-shadow:
-        0 0 20px rgba(255,255,255,.15),
-        0 0 50px rgba(213,102,190,.3);
+.proposal-title{
+  font-family:Arial,sans-serif;
+  font-size:clamp(2.5rem,11vw,5rem);
+  line-height:1.05;
+  text-shadow:0 0 35px rgba(225,100,190,.25);
 }
 
-.buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+.buttons{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
 
-    width: min(85vw, 350px);
+  width:min(86vw,370px);
 
-    margin: 35px auto 0;
+  margin:35px auto 0;
 }
 
-.btn {
-    min-height: 58px;
+.btn{
+  min-height:58px;
 
-    border-radius: 30px;
+  padding:14px 20px;
 
-    padding: 14px 22px;
+  border-radius:30px;
 
-    font-family: Arial, sans-serif;
-    font-size: 1rem;
-    font-weight: bold;
+  font-family:Arial,sans-serif;
+  font-weight:bold;
+  font-size:1rem;
 
-    cursor: pointer;
+  cursor:pointer;
 
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease;
+  transition:transform .2s ease;
 }
 
-.btn:active {
-    transform: scale(.95);
+.btn:active{
+  transform:scale(.94);
 }
 
-.yes-btn {
-    border: none;
-    color: #351126;
+.yes{
+  border:none;
 
-    background:
-        linear-gradient(
-            135deg,
-            #ffd979,
-            #ffb2d9
-        );
+  color:#351125;
 
-    box-shadow:
-        0 0 25px rgba(255,205,119,.3);
+  background:
+    linear-gradient(
+      135deg,
+      #ffdc79,
+      #ffb1d9
+    );
+
+  box-shadow:
+    0 0 25px rgba(255,202,110,.35);
 }
 
-.time-btn {
-    color: #ead8ef;
-    background: rgba(255,255,255,.07);
-    border: 1px solid rgba(255,255,255,.18);
+.time{
+  color:#ead8ef;
+
+  background:rgba(255,255,255,.06);
+
+  border:1px solid rgba(255,255,255,.18);
 }
 
-/* =========================================================
-   TIME ENDING
-========================================================= */
+/* =====================================================
+   TIME END
+===================================================== */
 
-.emotional-emoji {
-    font-size: 4rem;
-    margin-bottom: 20px;
-
-    animation: gentleFloat 2.5s infinite ease-in-out;
+.time-box{
+  max-width:560px;
 }
 
-@keyframes gentleFloat {
-    0%, 100% {
-        transform: translateY(0);
-    }
+.sad{
+  font-size:4rem;
+  margin-bottom:20px;
 
-    50% {
-        transform: translateY(-9px);
-    }
+  animation:float 2.5s ease-in-out infinite;
 }
 
-.time-title {
-    font-size: clamp(1.8rem, 8vw, 3rem);
-    margin-bottom: 20px;
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
 }
 
-.time-message {
-    max-width: 550px;
-    line-height: 1.8;
-    color: #ead9ef;
-    font-size: 1.05rem;
+.time-box h2{
+  font-size:clamp(1.8rem,8vw,3rem);
+  margin-bottom:20px;
 }
 
-.time-message strong {
-    color: #f5d58b;
-    font-weight: normal;
+.time-box p{
+  color:#ead9ef;
+  line-height:1.8;
+  font-size:1.05rem;
 }
 
-.back-btn {
-    margin-top: 30px;
-
-    border: 1px solid rgba(255,255,255,.2);
-    background: rgba(255,255,255,.06);
-
-    color: white;
-
-    border-radius: 25px;
-    padding: 13px 22px;
-
-    cursor: pointer;
+.time-box .gold{
+  color:#f4d47f;
 }
 
-/* =========================================================
-   YES ENDING
-========================================================= */
+.back{
+  margin-top:30px;
 
-#yesEnding {
-    background:
-        radial-gradient(
-            circle at center,
-            rgba(165, 60, 159, .35),
-            transparent 55%
-        );
+  padding:13px 22px;
+
+  border-radius:25px;
+
+  color:white;
+
+  border:1px solid rgba(255,255,255,.2);
+
+  background:rgba(255,255,255,.06);
+
+  cursor:pointer;
 }
 
-.yes-title {
-    font-family: Arial, sans-serif;
-    font-size: clamp(2.8rem, 13vw, 6rem);
-    line-height: .95;
+/* =====================================================
+   YES END
+===================================================== */
 
-    color: #ffe18b;
-
-    text-shadow:
-        0 0 15px rgba(255,224,139,.8),
-        0 0 60px rgba(255,179,77,.45);
-
-    animation:
-        yesTitleIn 1.2s cubic-bezier(.2,.8,.2,1);
+#yesEnd{
+  background:
+    radial-gradient(
+      circle at center,
+      rgba(174,65,160,.35),
+      transparent 58%
+    );
 }
 
-@keyframes yesTitleIn {
-    from {
-        opacity: 0;
-        transform: scale(.4);
-    }
+.yes-title{
+  font-family:Arial,sans-serif;
 
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+  font-size:clamp(2.8rem,13vw,6rem);
+
+  line-height:.95;
+
+  color:#ffe08b;
+
+  text-shadow:
+    0 0 18px rgba(255,224,139,.8),
+    0 0 65px rgba(255,177,76,.45);
+
+  animation:yesIn 1.1s cubic-bezier(.2,.8,.2,1);
 }
 
-.yes-subtitle {
-    margin-top: 28px;
-
-    max-width: 550px;
-
-    font-size: clamp(1.2rem, 5vw, 1.8rem);
-    line-height: 1.6;
-
-    color: #fff4ff;
+@keyframes yesIn{
+  from{
+    opacity:0;
+    transform:scale(.35);
+  }
+  to{
+    opacity:1;
+    transform:scale(1);
+  }
 }
 
-.story-start {
-    margin-top: 15px;
+.yes-sub{
+  margin-top:28px;
 
-    font-size: clamp(1.1rem, 4.5vw, 1.5rem);
+  font-size:clamp(1.15rem,5vw,1.8rem);
 
-    color: #e8c9f0;
+  line-height:1.6;
 }
 
-.thank-you {
-    margin-top: 35px;
+.starts{
+  margin-top:14px;
 
-    font-family: Arial, sans-serif;
-    letter-spacing: 1px;
+  color:#e9c9ef;
 
-    color: #f6d781;
+  font-size:1.2rem;
 }
 
-/* =========================================================
-   CELEBRATION PARTICLES
-========================================================= */
+.thanks{
+  margin-top:34px;
 
-.celebration {
-    position: absolute;
-    inset: 0;
-    z-index: 50;
-    pointer-events: none;
-    overflow: hidden;
+  color:#f5d67e;
+
+  font-family:Arial,sans-serif;
 }
 
-.celebration-item {
-    position: absolute;
+/* =====================================================
+   MUSIC
+===================================================== */
 
-    left: 50%;
-    top: 55%;
+.music-button{
+  position:fixed;
 
-    font-size: 1.5rem;
+  z-index:100;
 
-    animation:
-        celebrationFly 2.8s cubic-bezier(.15,.7,.25,1) forwards;
+  right:18px;
+  bottom:18px;
+
+  width:50px;
+  height:50px;
+
+  border-radius:50%;
+
+  border:1px solid rgba(255,255,255,.2);
+
+  background:rgba(32,11,48,.75);
+
+  color:white;
+
+  font-size:1.1rem;
+
+  backdrop-filter:blur(10px);
+
+  cursor:pointer;
 }
 
-@keyframes celebrationFly {
-    0% {
-        opacity: 0;
-        transform:
-            translate(-50%, -50%)
-            scale(.2)
-            rotate(0deg);
-    }
+/* =====================================================
+   CELEBRATION
+===================================================== */
 
-    10% {
-        opacity: 1;
-    }
+#celebration{
+  position:absolute;
+  inset:0;
 
-    100% {
-        opacity: 0;
-        transform:
-            translate(
-                calc(-50% + var(--x)),
-                calc(-50% + var(--y))
-            )
-            scale(var(--scale))
-            rotate(var(--rotate));
-    }
+  z-index:90;
+
+  pointer-events:none;
+
+  overflow:hidden;
 }
 
-/* =========================================================
-   RESPONSIVE
-========================================================= */
+.celebrate{
+  position:absolute;
 
-@media (min-width: 700px) {
+  left:50%;
+  top:55%;
 
-    .moon {
-        width: 135px;
-        height: 135px;
-    }
-
-    .moon::after {
-        width: 115px;
-        height: 115px;
-    }
-
-    .buttons {
-        flex-direction: row;
-        width: 500px;
-    }
-
-    .btn {
-        flex: 1;
-    }
+  animation:
+    explode 3s cubic-bezier(.15,.7,.25,1) forwards;
 }
 
-/* =========================================================
+@keyframes explode{
+  0%{
+    opacity:0;
+    transform:
+      translate(-50%,-50%)
+      scale(.2)
+      rotate(0deg);
+  }
+
+  10%{
+    opacity:1;
+  }
+
+  100%{
+    opacity:0;
+    transform:
+      translate(
+        calc(-50% + var(--x)),
+        calc(-50% + var(--y))
+      )
+      scale(var(--scale))
+      rotate(var(--rotate));
+  }
+}
+
+/* =====================================================
+   DESKTOP
+===================================================== */
+
+@media(min-width:700px){
+
+  .moon{
+    width:135px;
+    height:135px;
+  }
+
+  .moon:after{
+    width:115px;
+    height:115px;
+  }
+
+  .buttons{
+    flex-direction:row;
+    width:520px;
+  }
+
+  .btn{
+    flex:1;
+  }
+}
+
+/* =====================================================
    REDUCED MOTION
-========================================================= */
+===================================================== */
 
-@media (prefers-reduced-motion: reduce) {
+@media(prefers-reduced-motion:reduce){
 
-    *,
-    *::before,
-    *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        scroll-behavior: auto !important;
-    }
-
+  *,
+  *:before,
+  *:after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
 }
 </style>
 </head>
@@ -873,960 +1038,950 @@ body {
 
 <div id="app">
 
-    <!-- BACKGROUND -->
-    <div class="moon"></div>
-    <div class="stars" id="stars"></div>
-    <div class="lantern-layer" id="lanterns"></div>
-    <div class="petal-layer" id="petals"></div>
-    <div class="particle-layer" id="particles"></div>
+  <!-- BACKGROUND -->
+  <div class="moon"></div>
+  <div id="stars"></div>
+  <div id="lanterns"></div>
+  <div id="petals"></div>
+  <div id="particles"></div>
+
+  <!-- =================================================
+       1. OPENING
+  ================================================== -->
+
+  <section id="intro" class="screen active">
+
+    <div class="intro">
+
+      <h1>
+        Hey, Rapunzel… 🌙
+      </h1>
+
+      <p>
+        I made something for you.
+      </p>
+
+      <button
+        class="big-heart"
+        id="start">
+        ❤️
+      </button>
+
+      <div class="tap">
+        Tap the heart ❤️
+      </div>
 
-    <!-- =====================================================
-         1. INTRO
-    ====================================================== -->
-
-    <section id="intro" class="screen active">
-
-        <div class="intro-content">
-
-            <h1 class="intro-title">
-                Hey, Rapunzel… 🌙
-            </h1>
-
-            <p class="intro-subtitle">
-                I made something for you.
-            </p>
-
-            <button
-                class="main-heart"
-                id="heartStart"
-                aria-label="Start the story">
-                ❤️
-            </button>
-
-            <p class="tap-text">
-                Tap the heart ❤️
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         2. HEART MESSAGE
-    ====================================================== -->
-
-    <section id="heartMessage" class="screen">
-
-        <div class="message-text">
-
-            <div class="message-line" id="heartLine1">
-                I could have just said this…
-            </div>
-
-            <div
-                class="message-line"
-                id="heartLine2"
-                style="margin-top:28px;">
-                But you deserve something a little more special.
-            </div>
-
-            <div
-                class="message-line"
-                id="heartLine3"
-                style="margin-top:28px;">
-                So… I made you a little story. ✨
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         3. STORY
-    ====================================================== -->
-
-    <section id="story" class="screen">
-
-        <div class="message-text">
-
-            <div class="message-line" id="story1">
-                There are billions of people in this world…
-            </div>
-
-            <div
-                class="message-line"
-                id="story2"
-                style="margin-top:35px;">
-                And somehow… I found someone who feels different.
-            </div>
-
-            <div
-                class="message-line"
-                id="story3"
-                style="margin-top:35px;">
-                Someone I started thinking about a little more than I expected. ❤️
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         4. RAPUNZEL REVEAL
-    ====================================================== -->
-
-    <section id="rapunzelReveal" class="screen">
-
-        <h2 class="reveal-title">
-            And then there’s you…
-        </h2>
-
-        <!-- Put rapunzel-hero.jpg beside index.html -->
-        <img
-            id="rapunzelImage"
-            class="rapunzel-image"
-            src="rapunzel-hero.jpg"
-            alt="Rapunzel">
-
-        <div class="rapunzel-name">
-            RAPUNZEL 👑
-        </div>
-
-        <div class="fairytale">
-            My favorite little fairytale.
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         5. MAIN MESSAGE
-    ====================================================== -->
-
-    <section id="mainMessage" class="screen">
-
-        <div class="card">
-
-            <p>
-                I don’t know where this story will take us…
-            </p>
-
-            <p>
-                I don’t know what the next chapter looks like…
-            </p>
-
-            <p class="highlight">
-                But I know I want to find out.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         6. PROPOSAL
-    ====================================================== -->
-
-    <section id="proposal" class="screen">
-
-        <div class="proposal-content">
-
-            <div class="heartbeat">
-                ❤️
-            </div>
-
-            <div class="proposal-small">
-                So, Rapunzel…
-            </div>
-
-            <h2 class="proposal-question">
-                Will you<br>
-                be mine? ❤️
-            </h2>
-
-            <div class="buttons">
-
-                <button
-                    class="btn yes-btn"
-                    id="yesButton">
-                    YES ❤️
-                </button>
-
-                <button
-                    class="btn time-btn"
-                    id="timeButton">
-                    I need some time… 🥺
-                </button>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =====================================================
-         7. TIME ENDING
-    ====================================================== -->
-
-    <section id="timeEnding" class="screen">
-
-        <div class="emotional-emoji">
-            🥹
-        </div>
-
-        <h2 class="time-title">
-            Okay… I understand. 🥹
-        </h2>
-
-        <div class="time-message">
-
-            <p>
-                I won’t rush you.
-            </p>
-
-            <br>
-
-            <p>
-                Take your time, Rapunzel. 🌙
-            </p>
-
-            <br>
-
-            <p>
-                But just so you know…
-                someone is quietly hoping for a happy ending. ❤️
-            </p>
-
-            <br>
-
-            <p>
-                <strong>
-                    Whenever you’re ready… ✨
-                </strong>
-            </p>
-
-        </div>
-
-        <button
-            class="back-btn"
-            id="backButton">
-            ← Read it again
-        </button>
-
-    </section>
-
-
-    <!-- =====================================================
-         8. YES ENDING
-    ====================================================== -->
-
-    <section id="yesEnding" class="screen">
-
-        <div>
-
-            <h2 class="yes-title">
-                SHE SAID YES! ❤️
-            </h2>
-
-            <p class="yes-subtitle">
-                I think this is my favorite chapter already. 👑
-            </p>
-
-            <p class="story-start">
-                Our story starts here.
-            </p>
-
-            <p class="thank-you">
-                ❤️ Thank you, Rapunzel.
-            </p>
-
-        </div>
-
-    </section>
-
-
-    <!-- CELEBRATION LAYER -->
-    <div
-        class="celebration"
-        id="celebration">
     </div>
 
-
-    <!-- MUSIC -->
-    <audio
-        id="music"
-        loop
-        preload="auto">
-        <source
-            src="royalty-free-music.mp3"
-            type="audio/mpeg">
-    </audio>
+  </section>
 
 
-    <!-- FLOATING MUSIC BUTTON -->
-    <button
-        class="music-toggle"
-        id="musicToggle"
-        aria-label="Toggle music">
-        🔇
-    </button>
+  <!-- =================================================
+       2. HEART MESSAGE
+  ================================================== -->
+
+  <section id="heartMessage" class="screen">
+
+    <div class="story-box">
+
+      <div id="h1" class="line">
+        I could have just said this…
+      </div>
+
+      <div id="h2" class="line">
+        But you deserve something a little more special.
+      </div>
+
+      <div id="h3" class="line">
+        So… I made you a little story. ✨
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =================================================
+       3. STORY
+  ================================================== -->
+
+  <section id="story" class="screen">
+
+    <div class="story-box">
+
+      <div id="s1" class="line">
+        There are billions of people in this world…
+      </div>
+
+      <div id="s2" class="line">
+        And somehow… I found someone who feels different.
+      </div>
+
+      <div id="s3" class="line">
+        Someone I started thinking about a little more than I expected. ❤️
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =================================================
+       4. RAPUNZEL REVEAL
+  ================================================== -->
+
+  <section id="reveal" class="screen">
+
+    <div class="reveal">
+
+      <div class="reveal-intro">
+        And then there’s you…
+      </div>
+
+      <div class="rapunzel-art">
+
+        <div class="hair"></div>
+
+        <div class="face"></div>
+
+        <div class="dress"></div>
+
+        <div class="braid"></div>
+
+        <div class="flowers">
+          <span>🌸</span>
+          <span>🌼</span>
+          <span>🌺</span>
+          <span>🌷</span>
+        </div>
+
+      </div>
+
+      <div class="rapunzel-name">
+        RAPUNZEL 👑
+      </div>
+
+      <div class="fairytale">
+        My favorite little fairytale.
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =================================================
+       5. MAIN MESSAGE
+  ================================================== -->
+
+  <section id="message" class="screen">
+
+    <div class="message-card">
+
+      <p>
+        I don’t know where this story will take us…
+      </p>
+
+      <p>
+        I don’t know what the next chapter looks like…
+      </p>
+
+      <p class="gold">
+        But I know I want to find out.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- =================================================
+       6. PROPOSAL
+  ================================================== -->
+
+  <section id="proposal" class="screen">
+
+    <div class="proposal-box">
+
+      <div class="heartbeat">
+        ❤️
+      </div>
+
+      <div class="proposal-small">
+        So, Rapunzel…
+      </div>
+
+      <h2 class="proposal-title">
+        Will you<br>
+        be mine? ❤️
+      </h2>
+
+      <div class="buttons">
+
+        <button
+          id="yes"
+          class="btn yes">
+          YES ❤️
+        </button>
+
+        <button
+          id="time"
+          class="btn time">
+          I need some time… 🥺
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =================================================
+       7. TIME ENDING
+  ================================================== -->
+
+  <section id="timeEnd" class="screen">
+
+    <div class="time-box">
+
+      <div class="sad">
+        🥹
+      </div>
+
+      <h2>
+        Okay… I understand. 🥹
+      </h2>
+
+      <p>
+        I won’t rush you.
+      </p>
+
+      <br>
+
+      <p>
+        Take your time, Rapunzel. 🌙
+      </p>
+
+      <br>
+
+      <p>
+        But just so you know…
+        someone is quietly hoping for a happy ending. ❤️
+      </p>
+
+      <br>
+
+      <p class="gold">
+        Whenever you’re ready… ✨
+      </p>
+
+      <button
+        id="back"
+        class="back">
+        ← Read it again
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- =================================================
+       8. YES ENDING
+  ================================================== -->
+
+  <section id="yesEnd" class="screen">
+
+    <div>
+
+      <h2 class="yes-title">
+        SHE SAID YES! ❤️
+      </h2>
+
+      <p class="yes-sub">
+        I think this is my favorite chapter already. 👑
+      </p>
+
+      <p class="starts">
+        Our story starts here.
+      </p>
+
+      <p class="thanks">
+        ❤️ Thank you, Rapunzel.
+      </p>
+
+    </div>
+
+  </section>
+
+
+  <!-- CELEBRATION -->
+  <div id="celebration"></div>
+
+  <!-- MUSIC BUTTON -->
+  <button
+    id="musicButton"
+    class="music-button">
+    🔇
+  </button>
 
 </div>
 
 
 <script>
 
-/* =========================================================
-   RAPUNZEL PROPOSAL — JAVASCRIPT
-========================================================= */
+/* =====================================================
+   BASIC HELPERS
+===================================================== */
 
-const screens = {
-    intro: document.getElementById("intro"),
-    heartMessage: document.getElementById("heartMessage"),
-    story: document.getElementById("story"),
-    rapunzelReveal: document.getElementById("rapunzelReveal"),
-    mainMessage: document.getElementById("mainMessage"),
-    proposal: document.getElementById("proposal"),
-    timeEnding: document.getElementById("timeEnding"),
-    yesEnding: document.getElementById("yesEnding")
-};
+const $ = id => document.getElementById(id);
 
-const music = document.getElementById("music");
-const musicToggle = document.getElementById("musicToggle");
+const screens = [
+  $("intro"),
+  $("heartMessage"),
+  $("story"),
+  $("reveal"),
+  $("message"),
+  $("proposal"),
+  $("timeEnd"),
+  $("yesEnd")
+];
 
-let musicPlaying = false;
+function show(screen){
 
+  screens.forEach(s =>
+    s.classList.remove("active")
+  );
 
-/* =========================================================
-   CREATE STARS
-========================================================= */
-
-const stars = document.getElementById("stars");
-
-for (let i = 0; i < 75; i++) {
-
-    const star = document.createElement("div");
-
-    star.className = "star";
-
-    star.style.left = Math.random() * 100 + "%";
-    star.style.top = Math.random() * 100 + "%";
-
-    const size = Math.random() * 2 + 1;
-
-    star.style.width = size + "px";
-    star.style.height = size + "px";
-
-    star.style.animationDelay =
-        Math.random() * 3 + "s";
-
-    stars.appendChild(star);
+  screen.classList.add("active");
 }
 
 
-/* =========================================================
-   CREATE LANTERNS
-========================================================= */
+/* =====================================================
+   STARS
+===================================================== */
 
-const lanternLayer =
-    document.getElementById("lanterns");
+for(let i=0;i<85;i++){
 
-for (let i = 0; i < 9; i++) {
+  const star = document.createElement("div");
 
-    const lantern = document.createElement("div");
+  star.className = "star";
 
-    lantern.className = "lantern";
+  star.style.left =
+    Math.random()*100 + "%";
 
-    lantern.style.left =
-        Math.random() * 100 + "%";
+  star.style.top =
+    Math.random()*100 + "%";
 
-    lantern.style.animationDuration =
-        (18 + Math.random() * 12) + "s";
+  const size =
+    1 + Math.random()*2;
 
-    lantern.style.animationDelay =
-        (-Math.random() * 25) + "s";
+  star.style.width =
+    size + "px";
 
-    lantern.style.transform =
-        `scale(${.6 + Math.random() * .7})`;
+  star.style.height =
+    size + "px";
 
-    lanternLayer.appendChild(lantern);
+  star.style.animationDelay =
+    Math.random()*4 + "s";
+
+  $("stars").appendChild(star);
 }
 
 
-/* =========================================================
-   CREATE PETALS
-========================================================= */
+/* =====================================================
+   LANTERNS
+===================================================== */
 
-const petals =
-    document.getElementById("petals");
+for(let i=0;i<10;i++){
 
-for (let i = 0; i < 15; i++) {
+  const lantern =
+    document.createElement("div");
 
-    const petal =
-        document.createElement("div");
+  lantern.className = "lantern";
 
-    petal.className = "petal";
+  lantern.style.left =
+    Math.random()*100 + "%";
 
-    petal.style.left =
-        Math.random() * 100 + "%";
+  lantern.style.animationDuration =
+    (18 + Math.random()*13) + "s";
 
-    petal.style.animationDuration =
-        (8 + Math.random() * 8) + "s";
+  lantern.style.animationDelay =
+    (-Math.random()*25) + "s";
 
-    petal.style.animationDelay =
-        (-Math.random() * 12) + "s";
+  lantern.style.opacity =
+    .45 + Math.random()*.4;
 
-    petals.appendChild(petal);
+  $("lanterns").appendChild(lantern);
 }
 
 
-/* =========================================================
-   CREATE MAGIC PARTICLES
-========================================================= */
+/* =====================================================
+   PETALS
+===================================================== */
 
-const particleLayer =
-    document.getElementById("particles");
+for(let i=0;i<18;i++){
 
-for (let i = 0; i < 35; i++) {
+  const petal =
+    document.createElement("div");
 
-    const p =
-        document.createElement("div");
+  petal.className = "petal";
 
-    p.className = "particle";
+  petal.style.left =
+    Math.random()*100 + "%";
 
-    p.style.left =
-        Math.random() * 100 + "%";
+  petal.style.animationDuration =
+    (8 + Math.random()*9) + "s";
 
-    p.style.top =
-        Math.random() * 100 + "%";
+  petal.style.animationDelay =
+    (-Math.random()*15) + "s";
 
-    p.style.animationDelay =
-        Math.random() * 5 + "s";
-
-    particleLayer.appendChild(p);
+  $("petals").appendChild(petal);
 }
 
 
-/* =========================================================
-   SCREEN SWITCH
-========================================================= */
+/* =====================================================
+   PARTICLES
+===================================================== */
 
-function showScreen(screen) {
+for(let i=0;i<38;i++){
 
-    Object.values(screens).forEach(s => {
-        s.classList.remove("active");
-    });
+  const p =
+    document.createElement("div");
 
-    screen.classList.add("active");
+  p.className = "particle";
+
+  p.style.left =
+    Math.random()*100 + "%";
+
+  p.style.top =
+    Math.random()*100 + "%";
+
+  p.style.animationDelay =
+    Math.random()*5 + "s";
+
+  $("particles").appendChild(p);
 }
 
 
-/* =========================================================
-   MUSIC
-========================================================= */
+/* =====================================================
+   SIMPLE MAGIC SOUND
+   Generated in browser — no audio file required.
+===================================================== */
 
-async function startMusic() {
+let audioContext = null;
 
-    try {
+function magicSound(){
 
-        music.volume = 0.28;
+  try{
 
-        await music.play();
+    if(!audioContext){
 
-        musicPlaying = true;
-
-        musicToggle.textContent = "🔊";
-
-    } catch (error) {
-
-        console.log(
-            "Music could not start. Check your MP3 file."
-        );
+      audioContext =
+        new (
+          window.AudioContext ||
+          window.webkitAudioContext
+        )();
 
     }
-}
 
+    const now =
+      audioContext.currentTime;
 
-musicToggle.addEventListener("click", async () => {
+    const osc =
+      audioContext.createOscillator();
 
-    if (!musicPlaying) {
+    const gain =
+      audioContext.createGain();
 
-        await startMusic();
+    osc.type = "sine";
 
-    } else {
-
-        music.pause();
-
-        musicPlaying = false;
-
-        musicToggle.textContent = "🔇";
-    }
-
-});
-
-
-/* =========================================================
-   HEART START
-========================================================= */
-
-const heartStart =
-    document.getElementById("heartStart");
-
-heartStart.addEventListener("click", async () => {
-
-    await startMusic();
-
-    heartStart.style.transform = "scale(1.35)";
-
-    createHeartBurst(
-        window.innerWidth / 2,
-        window.innerHeight / 2,
-        30
+    osc.frequency.setValueAtTime(
+      523,
+      now
     );
 
-    setTimeout(() => {
+    osc.frequency.exponentialRampToValueAtTime(
+      1046,
+      now + .5
+    );
 
-        showScreen(screens.heartMessage);
+    gain.gain.setValueAtTime(
+      .0001,
+      now
+    );
 
-        runHeartMessage();
+    gain.gain.exponentialRampToValueAtTime(
+      .08,
+      now + .03
+    );
 
-    }, 650);
+    gain.gain.exponentialRampToValueAtTime(
+      .0001,
+      now + .7
+    );
 
-});
+    osc.connect(gain);
+    gain.connect(audioContext.destination);
 
+    osc.start(now);
+    osc.stop(now+.75);
 
-/* =========================================================
-   HEART MESSAGE SEQUENCE
-========================================================= */
-
-function runHeartMessage() {
-
-    const line1 =
-        document.getElementById("heartLine1");
-
-    const line2 =
-        document.getElementById("heartLine2");
-
-    const line3 =
-        document.getElementById("heartLine3");
-
-    line1.classList.remove("show");
-    line2.classList.remove("show");
-    line3.classList.remove("show");
-
-    setTimeout(() => {
-        line1.classList.add("show");
-    }, 500);
-
-    setTimeout(() => {
-        line2.classList.add("show");
-    }, 2500);
-
-    setTimeout(() => {
-        line3.classList.add("show");
-    }, 5000);
-
-    setTimeout(() => {
-
-        showStory();
-
-    }, 8000);
-}
-
-
-/* =========================================================
-   STORY
-========================================================= */
-
-function showStory() {
-
-    showScreen(screens.story);
-
-    const s1 =
-        document.getElementById("story1");
-
-    const s2 =
-        document.getElementById("story2");
-
-    const s3 =
-        document.getElementById("story3");
-
-    s1.classList.remove("show");
-    s2.classList.remove("show");
-    s3.classList.remove("show");
-
-    setTimeout(() => {
-        s1.classList.add("show");
-    }, 500);
-
-    setTimeout(() => {
-        s2.classList.add("show");
-    }, 3000);
-
-    setTimeout(() => {
-        s3.classList.add("show");
-    }, 5700);
-
-    setTimeout(() => {
-
-        showRapunzel();
-
-    }, 9000);
-}
-
-
-/* =========================================================
-   RAPUNZEL REVEAL
-========================================================= */
-
-function showRapunzel() {
-
-    showScreen(screens.rapunzelReveal);
-
-    const image =
-        document.getElementById("rapunzelImage");
-
-    image.classList.remove("show");
-
-    setTimeout(() => {
-
-        image.classList.add("show");
-
-        createGoldenBurst(
-            window.innerWidth / 2,
-            window.innerHeight / 2,
-            55
-        );
-
-    }, 500);
-
-    setTimeout(() => {
-
-        showMainMessage();
-
-    }, 5500);
-}
-
-
-/* =========================================================
-   MAIN MESSAGE
-========================================================= */
-
-function showMainMessage() {
-
-    showScreen(screens.mainMessage);
-
-    setTimeout(() => {
-
-        showProposal();
-
-    }, 5000);
-}
-
-
-/* =========================================================
-   PROPOSAL
-========================================================= */
-
-function showProposal() {
-
-    showScreen(screens.proposal);
+  }catch(e){}
 
 }
 
 
-/* =========================================================
-   TIME BUTTON
-========================================================= */
+/* =====================================================
+   MUSIC BUTTON
+===================================================== */
 
-document
-    .getElementById("timeButton")
-    .addEventListener("click", () => {
+/*
+   Since this is ONE HTML file, there is no external MP3.
+   The button controls a tiny browser-generated ambience.
+*/
 
-        showScreen(screens.timeEnding);
+let magicEnabled = false;
 
-    });
+$("musicButton").addEventListener(
+  "click",
+  () => {
 
+    magicEnabled = !magicEnabled;
 
-/* =========================================================
-   BACK BUTTON
-========================================================= */
+    $("musicButton").textContent =
+      magicEnabled ? "🔊" : "🔇";
 
-document
-    .getElementById("backButton")
-    .addEventListener("click", () => {
-
-        showScreen(screens.intro);
-
-    });
-
-
-/* =========================================================
-   YES BUTTON
-========================================================= */
-
-document
-    .getElementById("yesButton")
-    .addEventListener("click", () => {
-
-        createMassiveCelebration();
-
-        setTimeout(() => {
-
-            showScreen(screens.yesEnding);
-
-        }, 900);
-
-    });
-
-
-/* =========================================================
-   HEART EXPLOSION
-========================================================= */
-
-function createHeartBurst(x, y, amount = 30) {
-
-    const layer =
-        document.getElementById("celebration");
-
-    for (let i = 0; i < amount; i++) {
-
-        const item =
-            document.createElement("div");
-
-        item.className =
-            "celebration-item";
-
-        item.textContent =
-            Math.random() > .35
-                ? "❤️"
-                : "✨";
-
-        const angle =
-            Math.random() * Math.PI * 2;
-
-        const distance =
-            80 + Math.random() * 180;
-
-        const xMove =
-            Math.cos(angle) * distance;
-
-        const yMove =
-            Math.sin(angle) * distance;
-
-        item.style.left = x + "px";
-        item.style.top = y + "px";
-
-        item.style.setProperty(
-            "--x",
-            xMove + "px"
-        );
-
-        item.style.setProperty(
-            "--y",
-            yMove + "px"
-        );
-
-        item.style.setProperty(
-            "--scale",
-            (.5 + Math.random() * 1.4)
-        );
-
-        item.style.setProperty(
-            "--rotate",
-            (-180 + Math.random() * 360) + "deg"
-        );
-
-        layer.appendChild(item);
-
-        setTimeout(() => {
-            item.remove();
-        }, 3000);
-    }
-}
-
-
-/* =========================================================
-   GOLDEN BURST
-========================================================= */
-
-function createGoldenBurst(x, y, amount = 50) {
-
-    const layer =
-        document.getElementById("celebration");
-
-    for (let i = 0; i < amount; i++) {
-
-        const item =
-            document.createElement("div");
-
-        item.className =
-            "celebration-item";
-
-        item.textContent =
-            Math.random() > .5
-                ? "✨"
-                : "💫";
-
-        const angle =
-            Math.random() * Math.PI * 2;
-
-        const distance =
-            100 + Math.random() * 220;
-
-        item.style.left = x + "px";
-        item.style.top = y + "px";
-
-        item.style.setProperty(
-            "--x",
-            Math.cos(angle) * distance + "px"
-        );
-
-        item.style.setProperty(
-            "--y",
-            Math.sin(angle) * distance + "px"
-        );
-
-        item.style.setProperty(
-            "--scale",
-            (.4 + Math.random() * 1.5)
-        );
-
-        item.style.setProperty(
-            "--rotate",
-            (Math.random() * 360) + "deg"
-        );
-
-        layer.appendChild(item);
-
-        setTimeout(() => {
-            item.remove();
-        }, 3000);
-    }
-}
-
-
-/* =========================================================
-   MASSIVE YES CELEBRATION
-========================================================= */
-
-function createMassiveCelebration() {
-
-    const layer =
-        document.getElementById("celebration");
-
-    const symbols = [
-        "❤️",
-        "💜",
-        "✨",
-        "💫",
-        "🌸",
-        "🏮",
-        "⭐"
-    ];
-
-    /* Main explosion */
-
-    for (let i = 0; i < 180; i++) {
-
-        const item =
-            document.createElement("div");
-
-        item.className =
-            "celebration-item";
-
-        item.textContent =
-            symbols[
-                Math.floor(
-                    Math.random() *
-                    symbols.length
-                )
-            ];
-
-        item.style.left =
-            (30 + Math.random() * 40) + "%";
-
-        item.style.top =
-            (40 + Math.random() * 20) + "%";
-
-        const angle =
-            Math.random() * Math.PI * 2;
-
-        const distance =
-            100 + Math.random() * 500;
-
-        item.style.setProperty(
-            "--x",
-            Math.cos(angle) * distance + "px"
-        );
-
-        item.style.setProperty(
-            "--y",
-            Math.sin(angle) * distance + "px"
-        );
-
-        item.style.setProperty(
-            "--scale",
-            (.4 + Math.random() * 1.8)
-        );
-
-        item.style.setProperty(
-            "--rotate",
-            (-360 + Math.random() * 720) + "deg"
-        );
-
-        item.style.animationDuration =
-            (1.8 + Math.random() * 2.2) + "s";
-
-        layer.appendChild(item);
-
-        setTimeout(() => {
-            item.remove();
-        }, 4500);
+    if(magicEnabled){
+      magicSound();
     }
 
-    /* Purple glow */
-
-    document
-        .getElementById("app")
-        .animate(
-            [
-                {
-                    filter: "brightness(1)"
-                },
-                {
-                    filter: "brightness(1.8)"
-                },
-                {
-                    filter: "brightness(1)"
-                }
-            ],
-            {
-                duration: 1000,
-                easing: "ease-out"
-            }
-        );
-}
-
-
-/* =========================================================
-   PREVENT ACCIDENTAL TOUCH SCROLL
-========================================================= */
-
-document.addEventListener(
-    "touchmove",
-    e => {
-        e.preventDefault();
-    },
-    {
-        passive: false
-    }
+  }
 );
+
+
+/* =====================================================
+   START
+===================================================== */
+
+$("start").addEventListener(
+  "click",
+  () => {
+
+    magicEnabled = true;
+
+    $("musicButton").textContent = "🔊";
+
+    magicSound();
+
+    $("start").style.transform =
+      "scale(1.35)";
+
+    heartExplosion(
+      innerWidth/2,
+      innerHeight/2,
+      35
+    );
+
+    setTimeout(
+      () => {
+
+        show($("heartMessage"));
+
+        runHeart();
+
+      },
+      650
+    );
+
+  }
+);
+
+
+/* =====================================================
+   HEART MESSAGE
+===================================================== */
+
+function runHeart(){
+
+  $("h1").classList.remove("show");
+  $("h2").classList.remove("show");
+  $("h3").classList.remove("show");
+
+  setTimeout(
+    () => $("h1").classList.add("show"),
+    500
+  );
+
+  setTimeout(
+    () => $("h2").classList.add("show"),
+    2500
+  );
+
+  setTimeout(
+    () => $("h3").classList.add("show"),
+    5000
+  );
+
+  setTimeout(
+    () => runStory(),
+    8000
+  );
+}
+
+
+/* =====================================================
+   STORY
+===================================================== */
+
+function runStory(){
+
+  show($("story"));
+
+  $("s1").classList.remove("show");
+  $("s2").classList.remove("show");
+  $("s3").classList.remove("show");
+
+  setTimeout(
+    () => $("s1").classList.add("show"),
+    500
+  );
+
+  setTimeout(
+    () => $("s2").classList.add("show"),
+    3000
+  );
+
+  setTimeout(
+    () => $("s3").classList.add("show"),
+    5700
+  );
+
+  setTimeout(
+    () => revealRapunzel(),
+    9000
+  );
+}
+
+
+/* =====================================================
+   RAPUNZEL
+===================================================== */
+
+function revealRapunzel(){
+
+  show($("reveal"));
+
+  magicSound();
+
+  goldenExplosion(
+    innerWidth/2,
+    innerHeight/2,
+    60
+  );
+
+  setTimeout(
+    () => showMainMessage(),
+    5500
+  );
+}
+
+
+/* =====================================================
+   MAIN MESSAGE
+===================================================== */
+
+function showMainMessage(){
+
+  show($("message"));
+
+  setTimeout(
+    () => show($("proposal")),
+    5000
+  );
+}
+
+
+/* =====================================================
+   TIME
+===================================================== */
+
+$("time").addEventListener(
+  "click",
+  () => {
+
+    show($("timeEnd"));
+
+  }
+);
+
+
+/* =====================================================
+   BACK
+===================================================== */
+
+$("back").addEventListener(
+  "click",
+  () => {
+
+    show($("intro"));
+
+  }
+);
+
+
+/* =====================================================
+   YES
+===================================================== */
+
+$("yes").addEventListener(
+  "click",
+  () => {
+
+    massiveCelebration();
+
+    setTimeout(
+      () => {
+
+        show($("yesEnd"));
+
+      },
+      900
+    );
+
+  }
+);
+
+
+/* =====================================================
+   HEART EXPLOSION
+===================================================== */
+
+function heartExplosion(
+  x,
+  y,
+  amount
+){
+
+  const layer =
+    $("celebration");
+
+  for(let i=0;i<amount;i++){
+
+    const item =
+      document.createElement("div");
+
+    item.className =
+      "celebrate";
+
+    item.textContent =
+      Math.random()>.35
+        ? "❤️"
+        : "✨";
+
+    item.style.left =
+      x + "px";
+
+    item.style.top =
+      y + "px";
+
+    const angle =
+      Math.random()*Math.PI*2;
+
+    const distance =
+      80 + Math.random()*220;
+
+    item.style.setProperty(
+      "--x",
+      Math.cos(angle)*distance + "px"
+    );
+
+    item.style.setProperty(
+      "--y",
+      Math.sin(angle)*distance + "px"
+    );
+
+    item.style.setProperty(
+      "--scale",
+      .5 + Math.random()*1.4
+    );
+
+    item.style.setProperty(
+      "--rotate",
+      (-180+Math.random()*360)+"deg"
+    );
+
+    layer.appendChild(item);
+
+    setTimeout(
+      () => item.remove(),
+      3200
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   GOLDEN EXPLOSION
+===================================================== */
+
+function goldenExplosion(
+  x,
+  y,
+  amount
+){
+
+  const layer =
+    $("celebration");
+
+  for(let i=0;i<amount;i++){
+
+    const item =
+      document.createElement("div");
+
+    item.className =
+      "celebrate";
+
+    item.textContent =
+      Math.random()>.5
+        ? "✨"
+        : "💫";
+
+    item.style.left =
+      x + "px";
+
+    item.style.top =
+      y + "px";
+
+    const angle =
+      Math.random()*Math.PI*2;
+
+    const distance =
+      100 + Math.random()*260;
+
+    item.style.setProperty(
+      "--x",
+      Math.cos(angle)*distance + "px"
+    );
+
+    item.style.setProperty(
+      "--y",
+      Math.sin(angle)*distance + "px"
+    );
+
+    item.style.setProperty(
+      "--scale",
+      .5 + Math.random()*1.4
+    );
+
+    item.style.setProperty(
+      "--rotate",
+      Math.random()*360 + "deg"
+    );
+
+    layer.appendChild(item);
+
+    setTimeout(
+      () => item.remove(),
+      3200
+    );
+
+  }
+
+}
+
+
+/* =====================================================
+   MASSIVE YES CELEBRATION
+===================================================== */
+
+function massiveCelebration(){
+
+  magicSound();
+
+  $("app").classList.add("magic");
+
+  const layer =
+    $("celebration");
+
+  const symbols = [
+    "❤️",
+    "💜",
+    "✨",
+    "💫",
+    "🌸",
+    "🏮",
+    "⭐"
+  ];
+
+  for(let i=0;i<200;i++){
+
+    const item =
+      document.createElement("div");
+
+    item.className =
+      "celebrate";
+
+    item.textContent =
+      symbols[
+        Math.floor(
+          Math.random()*symbols.length
+        )
+      ];
+
+    item.style.left =
+      (30+Math.random()*40)+"%";
+
+    item.style.top =
+      (40+Math.random()*20)+"%";
+
+    const angle =
+      Math.random()*Math.PI*2;
+
+    const distance =
+      120+Math.random()*550;
+
+    item.style.setProperty(
+      "--x",
+      Math.cos(angle)*distance+"px"
+    );
+
+    item.style.setProperty(
+      "--y",
+      Math.sin(angle)*distance+"px"
+    );
+
+    item.style.setProperty(
+      "--scale",
+      .4+Math.random()*1.8
+    );
+
+    item.style.setProperty(
+      "--rotate",
+      (-360+Math.random()*720)+"deg"
+    );
+
+    item.style.animationDuration =
+      (1.8+Math.random()*2.2)+"s";
+
+    layer.appendChild(item);
+
+    setTimeout(
+      () => item.remove(),
+      4500
+    );
+
+  }
+
+  setTimeout(
+    () => $("app").classList.remove("magic"),
+    1500
+  );
+
+}
 
 </script>
 
