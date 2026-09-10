@@ -1,405 +1,1632 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Circle — sign up & profile demo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f7efe3">
+<title>Love Letter 💌</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+
 <style>
-  :root {
-    --bg: #EEF1ED;
-    --panel: #FFFFFF;
-    --ink: #1B2B22;
-    --ink-soft: #55635A;
-    --line: #D8DED7;
-    --accent: #2F5233;
-    --accent-soft: #E4EBE1;
-    --gold: #C98A2B;
-    --error: #B23A3A;
-    --radius: 10px;
+:root{
+  --cream:#f7efe3;
+  --coral:#d97b73;
+  --coral-dk:#b9554d;
+  --pink:#f0b6c6;
+  --pink-lt:#f7d8e0;
+  --gingham:#f3c6d2;
+  --gingham-2:rgba(206,118,142,.28);
+  --maroon:#7a2230;
+  --red:#e23b4e;
+  --red-dk:#b22a3b;
+  --paper:#fdf4ef;
+  --wood:#b5793f;
+  --wood-dk:#8a5a2b;
+  --ease:cubic-bezier(.34,1.56,.64,1);
+  --font-pix:"Press Start 2P",monospace;
+  --font-body:"Pixelify Sans",monospace;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html,body{
+  min-height:100%;
+}
+
+body{
+  min-height:100svh;
+  display:grid;
+  place-items:center;
+  padding:20px;
+  font-family:var(--font-body);
+  color:var(--maroon);
+  background:var(--cream);
+  overflow:hidden;
+  user-select:none;
+}
+
+button{
+  font:inherit;
+}
+
+.heart{
+  display:inline-block;
+  width:18px;
+  height:18px;
+  background:var(--red);
+  clip-path:polygon(
+    50% 90%,
+    10% 48%,
+    5% 30%,
+    12% 14%,
+    28% 7%,
+    42% 12%,
+    50% 23%,
+    58% 12%,
+    72% 7%,
+    88% 14%,
+    95% 30%,
+    90% 48%
+  );
+}
+
+.heart--inline{
+  width:1em;
+  height:1em;
+  vertical-align:-.1em;
+}
+
+/* ================= BACKGROUND ================= */
+
+.fx{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:0;
+}
+
+.fx::before{
+  content:"";
+  position:absolute;
+  width:70vmax;
+  height:70vmax;
+  left:-20%;
+  top:-25%;
+  border-radius:50%;
+  background:radial-gradient(
+    circle,
+    rgba(255,193,212,.8),
+    transparent 65%
+  );
+  animation:auroraA 18s ease-in-out infinite alternate;
+}
+
+.fx::after{
+  content:"";
+  position:absolute;
+  width:75vmax;
+  height:75vmax;
+  right:-25%;
+  bottom:-30%;
+  border-radius:50%;
+  background:radial-gradient(
+    circle,
+    rgba(255,225,196,.8),
+    transparent 65%
+  );
+  animation:auroraB 22s ease-in-out infinite alternate;
+}
+
+@keyframes auroraA{
+  to{
+    transform:translate(10vw,7vh) scale(1.15);
+  }
+}
+
+@keyframes auroraB{
+  to{
+    transform:translate(-8vw,-5vh) scale(.9);
+  }
+}
+
+.vignette{
+  position:absolute;
+  inset:0;
+  background:radial-gradient(
+    circle at center,
+    transparent 50%,
+    rgba(120,40,50,.12)
+  );
+}
+
+/* ================= CONFETTI ================= */
+
+.confetti{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+}
+
+.confetti .heart{
+  position:absolute;
+  opacity:.6;
+  animation:floatHeart linear infinite;
+}
+
+@keyframes floatHeart{
+  0%{
+    transform:translateY(15px) rotate(0) scale(.8);
+    opacity:0;
+  }
+  15%{
+    opacity:.65;
+  }
+  85%{
+    opacity:.65;
+  }
+  100%{
+    transform:translateY(-40px) rotate(15deg) scale(1.1);
+    opacity:0;
+  }
+}
+
+/* ================= MAIN ================= */
+
+.scene{
+  position:relative;
+  width:min(100%,520px);
+  min-height:620px;
+  display:grid;
+  place-items:center;
+  z-index:2;
+}
+
+.stage,
+.window{
+  grid-area:1/1;
+}
+
+/* ================= AIM GAME ================= */
+
+.stage{
+  width:100%;
+  height:min(85svh,620px);
+  position:relative;
+  transition:
+    opacity .45s ease,
+    transform .55s var(--ease);
+}
+
+.stage.is-gone{
+  opacity:0;
+  transform:scale(.65) translateY(-20px);
+  pointer-events:none;
+}
+
+.target{
+  position:absolute;
+  left:50%;
+  top:5%;
+  transform:translateX(-50%);
+  display:grid;
+  justify-items:center;
+  gap:14px;
+  cursor:pointer;
+  z-index:5;
+}
+
+.target__label{
+  font-size:1.3rem;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.target__date{
+  font-size:.95rem;
+  opacity:.75;
+}
+
+.envelope{
+  position:relative;
+  width:200px;
+  height:140px;
+  border:5px solid var(--coral);
+  border-radius:8px;
+  background:var(--paper);
+  animation:bob 3s ease-in-out infinite;
+  box-shadow:0 18px 0 -8px rgba(185,85,77,.18);
+}
+
+.envelope__flap{
+  position:absolute;
+  left:50%;
+  top:0;
+  transform:translateX(-50%);
+  width:0;
+  height:0;
+  border-left:95px solid transparent;
+  border-right:95px solid transparent;
+  border-top:68px solid var(--pink);
+}
+
+.envelope::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(
+      to top right,
+      transparent 48%,
+      var(--coral) 49% 51%,
+      transparent 52%
+    ) bottom left/50% 60% no-repeat,
+    linear-gradient(
+      to top left,
+      transparent 48%,
+      var(--coral) 49% 51%,
+      transparent 52%
+    ) bottom right/50% 60% no-repeat;
+  opacity:.6;
+}
+
+.envelope__seal{
+  position:absolute;
+  left:50%;
+  top:55px;
+  transform:translateX(-50%);
+  width:35px;
+  height:35px;
+  z-index:3;
+  display:grid;
+  place-items:center;
+  background:var(--red);
+  color:white;
+  clip-path:polygon(
+    50% 90%,
+    10% 48%,
+    5% 30%,
+    12% 14%,
+    28% 7%,
+    42% 12%,
+    50% 23%,
+    58% 12%,
+    72% 7%,
+    88% 14%,
+    95% 30%,
+    90% 48%
+  );
+  font-size:13px;
+}
+
+.target.is-hit .envelope{
+  animation:hitwobble .5s ease;
+}
+
+@keyframes bob{
+  0%,100%{
+    transform:translateY(0) rotate(-1deg);
+  }
+  50%{
+    transform:translateY(-9px) rotate(1deg);
+  }
+}
+
+@keyframes hitwobble{
+  0%,100%{transform:rotate(0)}
+  25%{transform:translateX(5px) rotate(5deg)}
+  55%{transform:translateX(-5px) rotate(-4deg)}
+  80%{transform:translateX(3px) rotate(2deg)}
+}
+
+/* ================= CUPID ================= */
+
+.archer{
+  position:absolute;
+  left:50%;
+  bottom:14%;
+  transform:translateX(-50%);
+  width:190px;
+  height:190px;
+  z-index:3;
+  pointer-events:none;
+}
+
+.cupid{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:120px;
+  height:120px;
+}
+
+/* simple pixel-style cupid */
+
+.cupid__head{
+  position:absolute;
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  background:#ffd0b5;
+  left:36px;
+  top:10px;
+  border:4px solid var(--maroon);
+}
+
+.cupid__hair{
+  position:absolute;
+  left:37px;
+  top:8px;
+  width:45px;
+  height:18px;
+  background:#6b3b2c;
+  border-radius:20px 20px 5px 5px;
+  z-index:2;
+}
+
+.cupid__eye{
+  position:absolute;
+  width:5px;
+  height:5px;
+  background:#000;
+  top:29px;
+  z-index:3;
+}
+
+.cupid__eye.left{left:49px}
+.cupid__eye.right{left:67px}
+
+.cupid__body{
+  position:absolute;
+  left:30px;
+  top:55px;
+  width:60px;
+  height:55px;
+  background:#fff;
+  border:4px solid var(--maroon);
+  border-radius:25px 25px 10px 10px;
+}
+
+.cupid__wing{
+  position:absolute;
+  width:38px;
+  height:55px;
+  background:#fff;
+  border:4px solid var(--maroon);
+  border-radius:60% 40% 50% 50%;
+  top:57px;
+}
+
+.cupid__wing.left{
+  left:2px;
+  transform:rotate(-25deg);
+}
+
+.cupid__wing.right{
+  right:2px;
+  transform:rotate(25deg);
+}
+
+.bow{
+  position:absolute;
+  width:80px;
+  height:145px;
+  right:5px;
+  top:20px;
+  border:7px solid var(--wood);
+  border-left:0;
+  border-radius:0 80% 80% 0;
+  transform:rotate(-12deg);
+}
+
+.bow::after{
+  content:"";
+  position:absolute;
+  width:3px;
+  height:140px;
+  background:var(--wood-dk);
+  left:0;
+  top:0;
+}
+
+.arrow{
+  position:absolute;
+  right:-20px;
+  top:75px;
+  width:115px;
+  height:5px;
+  background:var(--wood-dk);
+  transform-origin:left center;
+  transform:rotate(-22deg);
+  z-index:5;
+}
+
+.arrow::after{
+  content:"";
+  position:absolute;
+  right:-2px;
+  top:-6px;
+  width:0;
+  height:0;
+  border-left:15px solid var(--red);
+  border-top:8px solid transparent;
+  border-bottom:8px solid transparent;
+}
+
+.hint{
+  position:absolute;
+  bottom:2%;
+  left:0;
+  right:0;
+  text-align:center;
+  font-size:.95rem;
+  opacity:.7;
+  animation:hintpulse 2.3s ease-in-out infinite;
+}
+
+@keyframes hintpulse{
+  0%,100%{opacity:.45}
+  50%{opacity:.9}
+}
+
+/* ================= WINDOW ================= */
+
+.window{
+  width:min(88vw,370px);
+  border:5px solid var(--coral);
+  border-radius:12px;
+  background:var(--pink-lt);
+  overflow:hidden;
+  opacity:0;
+  transform:scale(.72);
+  visibility:hidden;
+  pointer-events:none;
+  box-shadow:0 22px 44px -20px rgba(122,34,48,.5);
+  transition:
+    opacity .4s ease,
+    transform .55s var(--ease),
+    visibility 0s linear .55s;
+}
+
+.window.is-open{
+  opacity:1;
+  transform:scale(1);
+  visibility:visible;
+  pointer-events:auto;
+  transition:
+    opacity .4s ease,
+    transform .55s var(--ease);
+}
+
+.titlebar,
+.heartrow,
+.content{
+  opacity:0;
+  transform:translateY(12px);
+  transition:
+    opacity .45s ease,
+    transform .55s var(--ease);
+}
+
+.window.is-open .titlebar{
+  opacity:1;
+  transform:none;
+  transition-delay:.15s;
+}
+
+.window.is-open .heartrow{
+  opacity:1;
+  transform:none;
+  transition-delay:.25s;
+}
+
+.window.is-open .content{
+  opacity:1;
+  transform:none;
+  transition-delay:.35s;
+}
+
+/* ================= TITLE BAR ================= */
+
+.titlebar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:9px 10px;
+  background:var(--pink);
+  border-bottom:4px solid var(--coral);
+}
+
+.titlebar__name{
+  font-family:var(--font-pix);
+  font-size:.65rem;
+  letter-spacing:.08em;
+}
+
+.titlebar__btns{
+  display:flex;
+  gap:5px;
+}
+
+.winbtn{
+  width:20px;
+  height:20px;
+  display:grid;
+  place-items:center;
+  border:2px solid var(--coral);
+  background:var(--paper);
+  color:var(--maroon);
+  border-radius:3px;
+  cursor:pointer;
+  font-family:var(--font-pix);
+  font-size:.5rem;
+}
+
+.winbtn:hover{
+  background:var(--red);
+  color:white;
+}
+
+/* ================= HEART ROW ================= */
+
+.heartrow{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:9px;
+  border-bottom:4px solid var(--coral);
+}
+
+.hdot{
+  width:5px;
+  height:5px;
+  background:var(--coral);
+}
+
+/* ================= CONTENT ================= */
+
+.content{
+  position:relative;
+  min-height:350px;
+  padding:22px 18px 25px;
+  display:grid;
+  justify-items:center;
+  align-content:start;
+  gap:17px;
+  background-color:var(--gingham);
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0 9px,
+      var(--gingham-2) 9px 18px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 9px,
+      var(--gingham-2) 9px 18px
+    );
+}
+
+.title{
+  font-size:1.5rem;
+  line-height:1.15;
+  text-align:center;
+  text-shadow:0 2px 0 rgba(255,255,255,.5);
+}
+
+.cat{
+  position:relative;
+  width:150px;
+  height:115px;
+  animation:catbob 2.4s ease-in-out infinite;
+}
+
+/* Pixel cat */
+
+.cat__body{
+  position:absolute;
+  left:20px;
+  bottom:5px;
+  width:110px;
+  height:75px;
+  background:#fff;
+  border:5px solid var(--maroon);
+  border-radius:45% 45% 35% 35%;
+}
+
+.cat__head{
+  position:absolute;
+  left:34px;
+  top:5px;
+  width:82px;
+  height:72px;
+  background:#fff;
+  border:5px solid var(--maroon);
+  border-radius:45% 45% 40% 40%;
+  z-index:2;
+}
+
+.cat__ear{
+  position:absolute;
+  width:27px;
+  height:27px;
+  background:#fff;
+  border:5px solid var(--maroon);
+  top:-10px;
+  z-index:1;
+}
+
+.cat__ear.left{
+  left:4px;
+  transform:rotate(35deg);
+}
+
+.cat__ear.right{
+  right:4px;
+  transform:rotate(-35deg);
+}
+
+.cat__eye{
+  position:absolute;
+  width:7px;
+  height:7px;
+  background:#000;
+  top:30px;
+}
+
+.cat__eye.left{left:20px}
+.cat__eye.right{right:20px}
+
+.cat__nose{
+  position:absolute;
+  width:7px;
+  height:5px;
+  background:var(--red);
+  left:50%;
+  top:43px;
+  transform:translateX(-50%);
+}
+
+.cat__tail{
+  position:absolute;
+  right:0;
+  bottom:20px;
+  width:48px;
+  height:55px;
+  border:7px solid var(--maroon);
+  border-left:0;
+  border-bottom:0;
+  border-radius:0 80% 0 0;
+  transform:rotate(-20deg);
+}
+
+@keyframes catbob{
+  0%,100%{
+    transform:translateY(0);
+  }
+  50%{
+    transform:translateY(-6px);
+  }
+}
+
+.content.is-won .cat{
+  animation:catdance .8s ease-in-out infinite;
+}
+
+@keyframes catdance{
+  0%,100%{
+    transform:rotate(-8deg) translateY(0);
+  }
+  50%{
+    transform:rotate(8deg) translateY(-10px);
+  }
+}
+
+.cat-heart{
+  position:absolute;
+  top:88px;
+  width:27px;
+  height:27px;
+  opacity:0;
+}
+
+.content.is-won .cat-heart{
+  opacity:1;
+  animation:heartpop 1.5s ease-in-out infinite;
+}
+
+@keyframes heartpop{
+  50%{
+    transform:translateY(-12px) scale(1.15);
+  }
+}
+
+/* ================= BUTTONS ================= */
+
+.buttons{
+  display:flex;
+  gap:16px;
+  justify-content:center;
+  align-items:center;
+  min-height:50px;
+  position:relative;
+  width:100%;
+}
+
+.buttons[hidden]{
+  display:none;
+}
+
+.btn{
+  font-family:var(--font-pix);
+  font-size:.68rem;
+  padding:11px 16px;
+  color:var(--red-dk);
+  background:var(--paper);
+  border:3px solid var(--coral);
+  border-radius:6px;
+  cursor:pointer;
+  box-shadow:0 4px 0 var(--coral);
+  transition:
+    transform .14s var(--ease),
+    background .14s ease,
+    color .14s ease;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+}
+
+.btn:active{
+  transform:translateY(2px);
+  box-shadow:0 2px 0 var(--coral);
+}
+
+.btn--yes:hover{
+  background:var(--red);
+  color:#fff;
+}
+
+.btn--no{
+  position:relative;
+}
+
+/* ================= FINAL ================= */
+
+.final{
+  font-size:1.02rem;
+  line-height:1.5;
+  text-align:center;
+  max-width:30ch;
+  opacity:0;
+  transform:translateY(8px);
+  transition:
+    opacity .5s ease,
+    transform .5s var(--ease);
+}
+
+.final.is-show{
+  opacity:1;
+  transform:none;
+}
+
+.final strong{
+  font-weight:700;
+}
+
+.final mark{
+  background:#2f54d6;
+  color:#fff;
+  padding:0 4px;
+  border-radius:2px;
+}
+
+.final__date{
+  display:block;
+  font-size:.85rem;
+  margin-bottom:7px;
+  opacity:.8;
+}
+
+/* ================= RAIN ================= */
+
+.rain{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:20;
+  overflow:hidden;
+}
+
+.rainheart{
+  position:absolute;
+  top:-30px;
+  animation:rainfall linear forwards;
+}
+
+@keyframes rainfall{
+  0%{
+    opacity:0;
+    transform:translateY(0) rotate(0);
+  }
+  10%{
+    opacity:1;
+  }
+  100%{
+    opacity:0;
+    transform:
+      translateY(115vh)
+      translateX(var(--rx))
+      rotate(var(--rr));
+  }
+}
+
+/* ================= WATERMARK ================= */
+
+.brand{
+  position:fixed;
+  right:15px;
+  bottom:14px;
+  z-index:50;
+  padding:7px 12px;
+  border-radius:22px;
+  background:linear-gradient(
+    45deg,
+    #f09433,
+    #e6683c,
+    #dc2743,
+    #cc2366,
+    #bc1888
+  );
+  color:white;
+  text-decoration:none;
+  font-size:.78rem;
+  opacity:.88;
+  box-shadow:0 4px 14px rgba(0,0,0,.25);
+}
+
+@media(max-width:480px){
+
+  body{
+    padding:12px;
   }
 
-  * { box-sizing: border-box; }
-
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'Inter', system-ui, sans-serif;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
+  .scene{
+    min-height:590px;
   }
 
-  .wrap { width: 100%; max-width: 420px; }
-
-  .logo {
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 28px;
-    letter-spacing: -0.01em;
-    color: var(--accent);
-    text-align: left;
-    margin: 0 0 6px 4px;
+  .envelope{
+    width:165px;
+    height:116px;
   }
 
-  .tagline {
-    font-size: 14px;
-    color: var(--ink-soft);
-    margin: 0 0 24px 4px;
+  .envelope__flap{
+    border-left-width:77px;
+    border-right-width:77px;
+    border-top-width:56px;
   }
 
-  .panel {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 28px;
+  .envelope__seal{
+    top:45px;
+    width:31px;
+    height:31px;
   }
 
-  h1.title {
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 22px;
-    margin: 0 0 20px;
+  .target__label{
+    font-size:1.1rem;
   }
 
-  label {
-    display: block;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--ink-soft);
-    margin: 16px 0 6px;
-  }
-  label:first-of-type { margin-top: 0; }
-
-  input, textarea {
-    width: 100%;
-    font-family: inherit;
-    font-size: 15px;
-    padding: 11px 12px;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    background: #FBFBFA;
-    color: var(--ink);
-  }
-  input:focus, textarea:focus, button:focus-visible, a:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 1px;
+  .target__date{
+    font-size:.85rem;
   }
 
-  textarea { resize: vertical; min-height: 72px; }
-
-  button {
-    width: 100%;
-    font-family: inherit;
-    font-size: 15px;
-    font-weight: 600;
-    padding: 12px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    margin-top: 20px;
+  .title{
+    font-size:1.3rem;
   }
 
-  .btn-primary { background: var(--accent); color: #fff; }
-  .btn-primary:hover { background: #274629; }
-  .btn-secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
-  .btn-secondary:hover { background: var(--accent-soft); }
-  .btn-danger { background: transparent; color: var(--error); border: 1px solid var(--error); }
-  .btn-danger:hover { background: #F7EAEA; }
-
-  .switch-line {
-    text-align: center;
-    font-size: 14px;
-    color: var(--ink-soft);
-    margin-top: 18px;
-  }
-  .switch-line a { color: var(--accent); font-weight: 600; text-decoration: none; cursor: pointer; }
-  .switch-line a:hover { text-decoration: underline; }
-
-  .error-msg {
-    background: #F7EAEA;
-    color: var(--error);
-    font-size: 13px;
-    padding: 10px 12px;
-    border-radius: 8px;
-    margin-top: 16px;
+  .cat{
+    transform:scale(.88);
   }
 
-  .hidden { display: none !important; }
-
-  /* Profile / feed view */
-  .topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 18px;
+  .content{
+    min-height:330px;
+    padding:18px 14px 20px;
+    gap:14px;
   }
 
-  .avatar {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-family: 'Fraunces', serif;
-    font-size: 24px;
-    font-weight: 600;
-    margin: 4px auto 14px;
+  .btn{
+    font-size:.62rem;
+    padding:10px 13px;
   }
 
-  .name { font-family: 'Fraunces', serif; font-size: 20px; text-align: center; margin: 0; }
-  .email { font-size: 13px; color: var(--ink-soft); text-align: center; margin: 4px 0 20px; }
-
-  .field-block { margin-bottom: 18px; }
-  .field-label { font-size: 12px; font-weight: 600; color: var(--ink-soft); text-transform: none; margin-bottom: 5px; }
-  .field-value { font-size: 15px; line-height: 1.5; }
-  .field-value.empty { color: var(--ink-soft); font-style: italic; }
-
-  .divider { border: none; border-top: 1px solid var(--line); margin: 22px 0; }
-
-  .greeting { font-family: 'Fraunces', serif; font-size: 20px; margin: 0 0 8px; }
-  .subtext { font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin: 0; }
-
-  .tabs { display: flex; gap: 8px; margin-bottom: 20px; }
-  .tab-btn {
-    flex: 1; margin: 0; padding: 9px; font-size: 13px; font-weight: 600;
-    border: 1px solid var(--line); border-radius: 8px; background: #FBFBFA; color: var(--ink-soft);
+  .brand{
+    right:10px;
+    bottom:9px;
+    font-size:.7rem;
   }
-  .tab-btn.active { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+}
+
+@media(prefers-reduced-motion:reduce){
+
+  *,
+  *::before,
+  *::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+  }
+}
 </style>
 </head>
+
 <body>
 
-<div class="wrap">
-  <div class="logo">circle</div>
-  <p class="tagline">A tiny social-app demo — profiles &amp; auth, no server required.</p>
-
-  <!-- LOGIN -->
-  <div id="view-login" class="panel">
-    <h1 class="title">Log in</h1>
-    <label for="login-email">Email</label>
-    <input id="login-email" type="email" autocomplete="email" />
-    <label for="login-password">Password</label>
-    <input id="login-password" type="password" autocomplete="current-password" />
-    <div id="login-error" class="error-msg hidden"></div>
-    <button class="btn-primary" onclick="handleLogin()">Log in</button>
-    <p class="switch-line">New here? <a onclick="showView('signup')">Create an account</a></p>
-  </div>
-
-  <!-- SIGNUP -->
-  <div id="view-signup" class="panel hidden">
-    <h1 class="title">Create your account</h1>
-    <label for="signup-name">Full name</label>
-    <input id="signup-name" type="text" autocomplete="name" />
-    <label for="signup-email">Email</label>
-    <input id="signup-email" type="email" autocomplete="email" />
-    <label for="signup-password">Password</label>
-    <input id="signup-password" type="password" autocomplete="new-password" placeholder="At least 6 characters" />
-    <div id="signup-error" class="error-msg hidden"></div>
-    <button class="btn-primary" onclick="handleSignup()">Sign up</button>
-    <p class="switch-line">Already have an account? <a onclick="showView('login')">Log in</a></p>
-  </div>
-
-  <!-- MAIN (feed / profile) -->
-  <div id="view-main" class="panel hidden">
-    <div class="tabs">
-      <button class="tab-btn active" id="tab-feed" onclick="showTab('feed')">Home</button>
-      <button class="tab-btn" id="tab-profile" onclick="showTab('profile')">Profile</button>
-    </div>
-
-    <div id="pane-feed">
-      <p class="greeting" id="greeting-text"></p>
-      <p class="subtext">Your feed goes here next — posts, likes, comments, and a friends/follow list are natural features to build on top of this auth system.</p>
-    </div>
-
-    <div id="pane-profile" class="hidden">
-      <div class="avatar" id="profile-avatar"></div>
-      <p class="name" id="profile-name"></p>
-      <p class="email" id="profile-email"></p>
-
-      <div class="field-block">
-        <div class="field-label">Bio</div>
-        <div class="field-value" id="bio-display"></div>
-        <textarea id="bio-input" class="hidden" placeholder="Tell people about yourself…"></textarea>
-      </div>
-      <button class="btn-secondary" id="bio-edit-btn" onclick="toggleBioEdit()">Edit bio</button>
-
-      <hr class="divider" />
-      <button class="btn-danger" onclick="handleLogout()">Log out</button>
-    </div>
-  </div>
+<!-- Background -->
+<div class="fx">
+  <div class="vignette"></div>
 </div>
 
+<!-- Floating hearts -->
+<div class="confetti" id="confetti"></div>
+
+<main class="scene">
+
+  <!-- ================= STATE 1 ================= -->
+  <section class="stage" id="aimStage">
+
+    <div class="target" id="target">
+
+      <div class="target__label">
+        <span class="heart"></span>
+        A little surprise
+        <span class="heart"></span>
+      </div>
+
+      <div class="target__date">
+        Valentine's Day 💌
+      </div>
+
+      <div class="envelope">
+        <div class="envelope__flap"></div>
+
+        <div class="envelope__seal">
+          ♥
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Cupid -->
+    <div class="archer">
+
+      <div class="cupid">
+
+        <div class="cupid__hair"></div>
+        <div class="cupid__head">
+          <span class="cupid__eye left"></span>
+          <span class="cupid__eye right"></span>
+        </div>
+
+        <div class="cupid__body"></div>
+
+        <div class="cupid__wing left"></div>
+        <div class="cupid__wing right"></div>
+
+      </div>
+
+      <div class="bow"></div>
+      <div class="arrow"></div>
+
+    </div>
+
+    <div class="hint">
+      💘 Tap the envelope to open your letter
+    </div>
+
+  </section>
+
+
+  <!-- ================= STATE 2 ================= -->
+
+  <section class="window" id="loveWindow">
+
+    <header class="titlebar">
+
+      <div class="titlebar__name">
+        LOVE_LETTER.EXE
+      </div>
+
+      <div class="titlebar__btns">
+        <button class="winbtn" id="minBtn" aria-label="Minimize">
+          −
+        </button>
+
+        <button class="winbtn winbtn--x" id="closeBtn" aria-label="Close">
+          ×
+        </button>
+      </div>
+
+    </header>
+
+
+    <div class="heartrow">
+      <span class="heart"></span>
+      <span class="hdot"></span>
+      <span class="heart"></span>
+      <span class="hdot"></span>
+      <span class="heart"></span>
+      <span class="hdot"></span>
+      <span class="heart"></span>
+    </div>
+
+
+    <div class="content" id="content">
+
+      <h1 class="title">
+        Will you be<br>
+        my Valentine? 💗
+      </h1>
+
+
+      <!-- Pixel cat -->
+      <div class="cat">
+
+        <div class="cat__tail"></div>
+
+        <div class="cat__body"></div>
+
+        <div class="cat__head">
+
+          <div class="cat__ear left"></div>
+          <div class="cat__ear right"></div>
+
+          <div class="cat__eye left"></div>
+          <div class="cat__eye right"></div>
+
+          <div class="cat__nose"></div>
+
+        </div>
+
+      </div>
+
+      <span class="heart cat-heart"></span>
+
+
+      <!-- Buttons -->
+
+      <div class="buttons" id="buttons">
+
+        <button
+          class="btn btn--yes"
+          id="yesBtn">
+          YES 💗
+        </button>
+
+        <button
+          class="btn btn--no"
+          id="noBtn">
+          NO 😭
+        </button>
+
+      </div>
+
+
+      <!-- Final message -->
+
+      <div class="final" id="final">
+
+        <span class="final__date">
+          February 14 💌
+        </span>
+
+        <strong>
+          I knew you'd say yes! ❤️
+        </strong>
+
+        <br><br>
+
+        You just made my little pixel heart
+        <mark>very happy.</mark>
+
+        <br><br>
+
+        Forever starts with one tiny
+        <span class="heart heart--inline"></span>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+
+<!-- Heart rain -->
+<div class="rain" id="rain"></div>
+
+
+<!-- Watermark -->
+<a
+  class="brand"
+  href="#"
+  id="brand">
+  💗 Made with love
+</a>
+
+
 <script>
-  // ---- Storage helpers (mock backend using localStorage) ----
-  const USERS_KEY = 'circle_users';
-  const SESSION_KEY = 'circle_session';
-  const AVATAR_COLORS = ['#2F5233', '#6C4F77', '#C9A227', '#3B4B8C', '#B23A3A', '#1F7A6C'];
 
-  function getUsers() {
-    return JSON.parse(localStorage.getItem(USERS_KEY) || '[]');
+/* ============================================================
+   JARVIS VALENTINE PAGE
+   Everything works inside this single HTML file.
+   ============================================================ */
+
+const aimStage   = document.getElementById("aimStage");
+const target     = document.getElementById("target");
+const loveWindow = document.getElementById("loveWindow");
+
+const content    = document.getElementById("content");
+const buttons    = document.getElementById("buttons");
+
+const yesBtn     = document.getElementById("yesBtn");
+const noBtn      = document.getElementById("noBtn");
+
+const finalMsg   = document.getElementById("final");
+
+const rain       = document.getElementById("rain");
+const confetti   = document.getElementById("confetti");
+
+const closeBtn   = document.getElementById("closeBtn");
+const minBtn     = document.getElementById("minBtn");
+
+
+/* ============================================================
+   FLOATING BACKGROUND HEARTS
+   ============================================================ */
+
+function createBackgroundHearts(){
+
+  const count = 18;
+
+  for(let i=0;i<count;i++){
+
+    const heart = document.createElement("span");
+
+    heart.className = "heart";
+
+    const size = 8 + Math.random()*14;
+
+    heart.style.width = size + "px";
+    heart.style.height = size + "px";
+
+    heart.style.left = Math.random()*100 + "%";
+    heart.style.top  = Math.random()*100 + "%";
+
+    heart.style.animationDuration =
+      (4 + Math.random()*6) + "s";
+
+    heart.style.animationDelay =
+      (-Math.random()*8) + "s";
+
+    heart.style.opacity =
+      (.2 + Math.random()*.5);
+
+    confetti.appendChild(heart);
   }
-  function saveUsers(users) {
-    localStorage.setItem(USERS_KEY, JSON.stringify(users));
-  }
-  function getSession() {
-    const raw = localStorage.getItem(SESSION_KEY);
-    return raw ? JSON.parse(raw) : null;
-  }
-  function setSession(user) {
-    localStorage.setItem(SESSION_KEY, JSON.stringify(user));
-  }
-  function clearSession() {
-    localStorage.removeItem(SESSION_KEY);
-  }
-  function randomColor() {
-    return AVATAR_COLORS[Math.floor(Math.random() * AVATAR_COLORS.length)];
-  }
-  function initials(name) {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+}
+
+createBackgroundHearts();
+
+
+/* ============================================================
+   OPEN LOVE LETTER
+   ============================================================ */
+
+let opened = false;
+
+function openLetter(){
+
+  if(opened) return;
+
+  opened = true;
+
+  target.classList.add("is-hit");
+
+  setTimeout(()=>{
+
+    aimStage.classList.add("is-gone");
+
+    loveWindow.classList.add("is-open");
+
+  },420);
+
+}
+
+
+/* Click envelope */
+
+target.addEventListener("click",openLetter);
+
+
+/* Keyboard support */
+
+target.setAttribute("tabindex","0");
+
+target.addEventListener("keydown",(event)=>{
+
+  if(
+    event.key === "Enter" ||
+    event.key === " "
+  ){
+
+    event.preventDefault();
+
+    openLetter();
   }
 
-  // ---- View switching ----
-  function showView(view) {
-    document.getElementById('view-login').classList.toggle('hidden', view !== 'login');
-    document.getElementById('view-signup').classList.toggle('hidden', view !== 'signup');
-    document.getElementById('view-main').classList.toggle('hidden', view !== 'main');
-    document.getElementById('login-error').classList.add('hidden');
-    document.getElementById('signup-error').classList.add('hidden');
+});
+
+
+/* ============================================================
+   NO BUTTON — IT ESCAPES
+   ============================================================ */
+
+let noMoves = 0;
+
+function moveNoButton(){
+
+  noMoves++;
+
+  const parent =
+    buttons.getBoundingClientRect();
+
+  const btn =
+    noBtn.getBoundingClientRect();
+
+  const maxX =
+    Math.max(30,parent.width - btn.width - 20);
+
+  const maxY = 70;
+
+  const x =
+    (Math.random()*maxX) - maxX/2;
+
+  const y =
+    (Math.random()*maxY) - maxY/2;
+
+  noBtn.style.transform =
+    `translate(${x}px,${y}px) rotate(${Math.random()*10-5}deg)`;
+
+
+  /* After several attempts, make YES more tempting */
+
+  if(noMoves >= 3){
+
+    yesBtn.style.transform =
+      `scale(${1 + Math.min(noMoves*.04,.18)})`;
+
   }
 
-  function showTab(tab) {
-    document.getElementById('pane-feed').classList.toggle('hidden', tab !== 'feed');
-    document.getElementById('pane-profile').classList.toggle('hidden', tab !== 'profile');
-    document.getElementById('tab-feed').classList.toggle('active', tab === 'feed');
-    document.getElementById('tab-profile').classList.toggle('active', tab === 'profile');
+}
+
+
+noBtn.addEventListener("mouseenter",moveNoButton);
+
+noBtn.addEventListener("touchstart",(event)=>{
+
+  event.preventDefault();
+
+  moveNoButton();
+
+},{passive:false});
+
+
+/* ============================================================
+   YES BUTTON
+   ============================================================ */
+
+yesBtn.addEventListener("click",sayYes);
+
+function sayYes(){
+
+  buttons.hidden = true;
+
+  content.classList.add("is-won");
+
+  finalMsg.classList.add("is-show");
+
+  loveWindow.classList.add("is-celebrate");
+
+  createBurst();
+
+  startHeartRain();
+
+}
+
+
+/* ============================================================
+   HEART BURST
+   ============================================================ */
+
+function createBurst(){
+
+  const rect =
+    yesBtn.getBoundingClientRect();
+
+  const centerX =
+    rect.left + rect.width/2;
+
+  const centerY =
+    rect.top + rect.height/2;
+
+  for(let i=0;i<24;i++){
+
+    const heart =
+      document.createElement("span");
+
+    heart.className = "heart";
+
+    const size =
+      8 + Math.random()*13;
+
+    heart.style.width =
+      size + "px";
+
+    heart.style.height =
+      size + "px";
+
+    heart.style.position =
+      "fixed";
+
+    heart.style.left =
+      centerX + "px";
+
+    heart.style.top =
+      centerY + "px";
+
+    heart.style.zIndex =
+      "30";
+
+    const angle =
+      Math.random()*Math.PI*2;
+
+    const distance =
+      60 + Math.random()*130;
+
+    const x =
+      Math.cos(angle)*distance;
+
+    const y =
+      Math.sin(angle)*distance;
+
+    heart.animate([
+
+      {
+        transform:"translate(-50%,-50%) scale(.3)",
+        opacity:1
+      },
+
+      {
+        transform:
+          `translate(calc(-50% + ${x}px),calc(-50% + ${y}px)) scale(1.2)`,
+        opacity:0
+      }
+
+    ],{
+
+      duration:700 + Math.random()*400,
+
+      easing:"cubic-bezier(.2,.8,.3,1)",
+
+      fill:"forwards"
+
+    });
+
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{
+      heart.remove();
+    },1200);
+
   }
 
-  // ---- Auth actions ----
-  function handleSignup() {
-    const name = document.getElementById('signup-name').value.trim();
-    const email = document.getElementById('signup-email').value.trim();
-    const password = document.getElementById('signup-password').value;
-    const errorBox = document.getElementById('signup-error');
+}
 
-    if (!name || !email || !password) {
-      return showError(errorBox, 'Please fill out every field.');
+
+/* ============================================================
+   HEART RAIN
+   ============================================================ */
+
+function startHeartRain(){
+
+  const total = 70;
+
+  for(let i=0;i<total;i++){
+
+    setTimeout(()=>{
+
+      const heart =
+        document.createElement("span");
+
+      heart.className =
+        "heart rainheart";
+
+      const size =
+        10 + Math.random()*20;
+
+      heart.style.width =
+        size + "px";
+
+      heart.style.height =
+        size + "px";
+
+      heart.style.left =
+        Math.random()*100 + "%";
+
+      heart.style.setProperty(
+        "--rx",
+        (Math.random()*220-110) + "px"
+      );
+
+      heart.style.setProperty(
+        "--rr",
+        (Math.random()*720-360) + "deg"
+      );
+
+      heart.style.animationDuration =
+        (3 + Math.random()*4) + "s";
+
+      rain.appendChild(heart);
+
+      setTimeout(()=>{
+        heart.remove();
+      },7500);
+
+    },i*80);
+
+  }
+
+}
+
+
+/* ============================================================
+   CLOSE / RESET
+   ============================================================ */
+
+function resetPage(){
+
+  opened = false;
+  noMoves = 0;
+
+  loveWindow.classList.remove(
+    "is-open",
+    "is-celebrate"
+  );
+
+  content.classList.remove("is-won");
+
+  finalMsg.classList.remove("is-show");
+
+  buttons.hidden = false;
+
+  noBtn.style.transform = "";
+
+  yesBtn.style.transform = "";
+
+  aimStage.classList.remove("is-gone");
+
+}
+
+
+closeBtn.addEventListener("click",resetPage);
+
+minBtn.addEventListener("click",()=>{
+
+  loveWindow.classList.remove("is-open");
+
+  setTimeout(()=>{
+    loveWindow.classList.add("is-open");
+  },700);
+
+});
+
+
+/* ============================================================
+   WATERMARK
+   ============================================================ */
+
+document.getElementById("brand")
+  .addEventListener("click",(event)=>{
+
+    event.preventDefault();
+
+  });
+
+
+/* ============================================================
+   EXTRA CLICK HEART
+   ============================================================ */
+
+document.addEventListener("click",(event)=>{
+
+  if(
+    event.target.closest(".btn") ||
+    event.target.closest(".target") ||
+    event.target.closest(".brand") ||
+    event.target.closest(".winbtn")
+  ){
+
+    return;
+  }
+
+  const heart =
+    document.createElement("span");
+
+  heart.className =
+    "heart";
+
+  heart.style.position =
+    "fixed";
+
+  heart.style.left =
+    event.clientX + "px";
+
+  heart.style.top =
+    event.clientY + "px";
+
+  heart.style.zIndex =
+    "40";
+
+  heart.animate([
+
+    {
+      transform:"translate(-50%,-50%) scale(.4)",
+      opacity:1
+    },
+
+    {
+      transform:"translate(-50%,-100px) scale(1.2)",
+      opacity:0
     }
-    if (password.length < 6) {
-      return showError(errorBox, 'Password must be at least 6 characters.');
-    }
 
-    const users = getUsers();
-    if (users.some(u => u.email.toLowerCase() === email.toLowerCase())) {
-      return showError(errorBox, 'An account with this email already exists.');
-    }
+  ],{
 
-    const newUser = {
-      id: Date.now().toString(),
-      name, email, password, // demo only — never store plaintext passwords in a real app
-      bio: '',
-      avatarColor: randomColor(),
-      createdAt: new Date().toISOString(),
-    };
-    users.push(newUser);
-    saveUsers(users);
-    setSession(newUser);
-    renderMain(newUser);
-    showView('main');
-  }
+    duration:800,
+    easing:"ease-out",
+    fill:"forwards"
 
-  function handleLogin() {
-    const email = document.getElementById('login-email').value.trim();
-    const password = document.getElementById('login-password').value;
-    const errorBox = document.getElementById('login-error');
+  });
 
-    const users = getUsers();
-    const found = users.find(u => u.email.toLowerCase() === email.toLowerCase() && u.password === password);
-    if (!found) {
-      return showError(errorBox, 'Invalid email or password.');
-    }
-    setSession(found);
-    renderMain(found);
-    showView('main');
-  }
+  document.body.appendChild(heart);
 
-  function handleLogout() {
-    clearSession();
-    document.getElementById('login-email').value = '';
-    document.getElementById('login-password').value = '';
-    showView('login');
-  }
+  setTimeout(()=>{
+    heart.remove();
+  },900);
 
-  function showError(box, msg) {
-    box.textContent = msg;
-    box.classList.remove('hidden');
-  }
+});
 
-  // ---- Profile rendering ----
-  function renderMain(user) {
-    document.getElementById('greeting-text').textContent = `Hey ${user.name.split(' ')[0]} 👋`;
-    document.getElementById('profile-avatar').textContent = initials(user.name);
-    document.getElementById('profile-avatar').style.background = user.avatarColor;
-    document.getElementById('profile-name').textContent = user.name;
-    document.getElementById('profile-email').textContent = user.email;
-    renderBio(user.bio);
-    showTab('feed');
-  }
 
-  function renderBio(bio) {
-    const display = document.getElementById('bio-display');
-    if (bio) {
-      display.textContent = bio;
-      display.classList.remove('empty');
-    } else {
-      display.textContent = 'No bio yet — tap Edit bio to add one.';
-      display.classList.add('empty');
-    }
-  }
+/* ============================================================
+   DONE
+   ============================================================ */
 
-  function toggleBioEdit() {
-    const display = document.getElementById('bio-display');
-    const input = document.getElementById('bio-input');
-    const btn = document.getElementById('bio-edit-btn');
-    const editing = !input.classList.contains('hidden');
+console.log(
+  "💗 Valentine page loaded successfully."
+);
 
-    if (!editing) {
-      input.value = display.classList.contains('empty') ? '' : display.textContent;
-      display.classList.add('hidden');
-      input.classList.remove('hidden');
-      btn.textContent = 'Save bio';
-      input.focus();
-    } else {
-      const newBio = input.value.trim();
-      const session = getSession();
-      const users = getUsers();
-      const updatedUsers = users.map(u => u.id === session.id ? { ...u, bio: newBio } : u);
-      saveUsers(updatedUsers);
-      const updatedSession = { ...session, bio: newBio };
-      setSession(updatedSession);
-      renderBio(newBio);
-      input.classList.add('hidden');
-      display.classList.remove('hidden');
-      btn.textContent = 'Edit bio';
-    }
-  }
-
-  // ---- Boot ----
-  (function init() {
-    const session = getSession();
-    if (session) {
-      renderMain(session);
-      showView('main');
-    } else {
-      showView('login');
-    }
-  })();
 </script>
+
 </body>
 </html>
